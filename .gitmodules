@@ -1,0 +1,3 @@
+[submodule "mrestapi"]
+	path = mrestapi
+	url = ssh://git@git.milosolutions.com:8922/milo-code-database/mrestapi.git

@@ -4,7 +4,7 @@
 ## (c) Milo Solutions, 2016
 
 include(../version.pri)
-
+include(../mrestapi/mrestapi.pri)
 # Warning! QStringBuilder can crash your app! See last point here:
 # https://www.kdab.com/uncovering-32-qt-best-practices-compile-time-clazy/
 # !!!
