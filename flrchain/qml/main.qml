@@ -7,4 +7,9 @@ ApplicationWindow {
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
 
+    Loader {
+        id: page
+        anchors.fill: parent
+        source: "qrc:/LoginScreen.qml"
+    }
 }

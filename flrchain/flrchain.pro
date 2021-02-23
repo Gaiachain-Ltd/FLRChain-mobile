@@ -10,15 +10,31 @@ include(../mrestapi/mrestapi.pri)
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick
-
+QT += quick core network
 TEMPLATE = app
 CONFIG += c++14
 TARGET = template
 
-HEADERS +=
+INCLUDEPATH += src/APICommunication
 
-SOURCES += src/main.cpp 
+HEADERS += \
+    src/session.h \
+    src/settings.h \
+    src/user.h \
+    src/userptr.h \
+    src/APICommunication/restapiclient.h \
+    src/APICommunication/apirequest.h \
+    src/APICommunication/requests/loginrequest.h \
+    src/APICommunication/requests/registerrequest.h
+
+SOURCES += src/main.cpp  \
+    src/session.cpp \
+    src/settings.cpp \
+    src/user.cpp \
+    src/APICommunication/restapiclient.cpp \
+    src/APICommunication/apirequest.cpp \
+    src/APICommunication/requests/loginrequest.cpp \
+    src/APICommunication/requests/registerrequest.cpp
 
 RESOURCES +=  \
     qml/qml.qrc \

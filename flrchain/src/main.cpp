@@ -25,6 +25,8 @@ SOFTWARE.
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include "session.h"
+#include "restapiclient.h"
 
 int main(int argc, char *argv[]) {
 
@@ -35,6 +37,13 @@ int main(int argc, char *argv[]) {
     app.setApplicationName("FLRChain");
 
     QQmlApplicationEngine engine;
+
+    RestAPIClient client;
+
+    Session session;
+    session.setClient(&client);
+    engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
