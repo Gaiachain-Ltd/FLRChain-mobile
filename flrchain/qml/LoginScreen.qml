@@ -76,7 +76,7 @@ Item {
             text: qsTr("Need an account?")
 
             onClicked: {
-                page.source = "qrc:/RegistrationScreen.qml"
+                stack.pushPage("qrc:/RegistrationScreen.qml");
             }
         }
     }

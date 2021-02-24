@@ -105,7 +105,7 @@ Item {
             text: qsTr("Already have an account?")
 
             onClicked: {
-                page.source = "qrc:/LoginScreen.qml"
+                stack.pop()
             }
         }
     }

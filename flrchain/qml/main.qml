@@ -1,15 +1,28 @@
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.4
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Controls 2.15
 
 ApplicationWindow {
     visible: true
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
 
-    Loader {
-        id: page
+    onClosing: {
+        close.accepted = false;
+        if (stack.depth > 1) {
+            stack.pop();
+        }
+        else {
+            Qt.quit()
+        }
+    }
+
+    PagesView {
+        id: stack
         anchors.fill: parent
-        source: "qrc:/LoginScreen.qml"
+
+        Component.onCompleted: {
+            stack.pushPage("qrc:/LoginScreen.qml");
+        }
     }
 }

@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>LoginScreen.qml</file>
         <file>RegistrationScreen.qml</file>
+        <file>PagesView.qml</file>
     </qresource>
 </RCC>
