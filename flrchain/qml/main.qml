@@ -22,7 +22,7 @@ ApplicationWindow {
         anchors.fill: parent
 
         Component.onCompleted: {
-            stack.pushPage("qrc:/LoginScreen.qml");
+            stack.pushPage("qrc:/WorkScreen.qml");
         }
     }
 }

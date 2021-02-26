@@ -27,6 +27,7 @@ SOFTWARE.
 #include <QQmlContext>
 #include "session.h"
 #include "restapiclient.h"
+#include "platformbridge.h"
 
 int main(int argc, char *argv[]) {
 
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]) {
     Session session;
     session.setClient(&client);
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
+    engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

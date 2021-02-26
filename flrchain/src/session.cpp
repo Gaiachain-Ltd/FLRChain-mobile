@@ -8,12 +8,14 @@
 #include <QLoggingCategory>
 #include <QDebug>
 #include "settings.h"
+#include "filemanager.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
 Session::Session(QObject *parent) : QObject(parent)
 {
     mCurrentUser = UserPtr::create();
+    FileManager fileManager;
 }
 
 Session::~Session()

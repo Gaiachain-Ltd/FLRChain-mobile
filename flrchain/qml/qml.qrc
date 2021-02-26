@@ -4,5 +4,6 @@
         <file>LoginScreen.qml</file>
         <file>RegistrationScreen.qml</file>
         <file>PagesView.qml</file>
+        <file>WorkScreen.qml</file>
     </qresource>
 </RCC>

@@ -10,7 +10,7 @@ include(../mrestapi/mrestapi.pri)
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick core network
+QT += quick core network androidextras
 TEMPLATE = app
 CONFIG += c++14
 TARGET = template
@@ -18,6 +18,7 @@ TARGET = template
 INCLUDEPATH += src/APICommunication
 
 HEADERS += \
+    src/filemanager.h \
     src/session.h \
     src/settings.h \
     src/user.h \
@@ -25,16 +26,21 @@ HEADERS += \
     src/APICommunication/restapiclient.h \
     src/APICommunication/apirequest.h \
     src/APICommunication/requests/loginrequest.h \
-    src/APICommunication/requests/registerrequest.h
+    src/APICommunication/requests/registerrequest.h \
+    src/platformbridgeprivate.h \
+    src/platformbridge.h
 
 SOURCES += src/main.cpp  \
+    src/filemanager.cpp \
     src/session.cpp \
     src/settings.cpp \
     src/user.cpp \
     src/APICommunication/restapiclient.cpp \
     src/APICommunication/apirequest.cpp \
     src/APICommunication/requests/loginrequest.cpp \
-    src/APICommunication/requests/registerrequest.cpp
+    src/APICommunication/requests/registerrequest.cpp \
+    src/platformbridgeandroid.cpp \
+    src/platformbridge.cpp
 
 RESOURCES +=  \
     qml/qml.qrc \
@@ -69,6 +75,7 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    android/src/com/application/flrchain/FLRActivity.java
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
