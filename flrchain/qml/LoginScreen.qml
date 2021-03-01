@@ -11,6 +11,7 @@ Item {
         }
 
         function onLoginSuccessful(token){
+            stack.clear();
             stack.pushPage("qrc:/WorkScreen.qml");
         }
     }
@@ -38,7 +39,7 @@ Item {
             Layout.fillWidth: true
             Layout.preferredHeight: 100
             placeholderText: "Password"
-            echoMode: TextInput.PasswordEchoOnEdit
+            echoMode: TextInput.Password
         }
 
         CheckBox {

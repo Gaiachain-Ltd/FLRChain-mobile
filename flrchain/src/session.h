@@ -34,7 +34,6 @@ signals:
     void registrationError(const QString& errors) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
-    void projectsDataReply() const;
 
 private:
     void onLoginSuccessful(const QString& token);

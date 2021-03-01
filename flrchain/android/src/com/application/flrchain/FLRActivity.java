@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import android.webkit.MimeTypeMap;
 
 public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
@@ -75,7 +76,7 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
             }
 
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String suffix = contentUri.toString().substring(contentUri.toString().lastIndexOf("."));
+            String suffix = "." + getMimeType(contentUri);
             String imageFileName = getFilesDir() + "/photos/" + "IMG_" + timeStamp  + suffix;
 
             if(!copy(contentUri.toString(), imageFileName)){
@@ -96,6 +97,22 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
         }
 
         startedActivity = 0;
+    }
+
+    public String getMimeType(Uri uri) {
+        String extension;
+
+         //Check uri format to avoid null
+         if (uri.getScheme().equals(getContentResolver().SCHEME_CONTENT)) {
+             //If scheme is a content
+             final MimeTypeMap mime = MimeTypeMap.getSingleton();
+             extension = mime.getExtensionFromMimeType(getApplicationContext().getContentResolver().getType(uri));
+         } else {
+            //If scheme is a File
+             extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
+
+         }
+       return extension;
     }
 
  @Override
