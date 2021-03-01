@@ -3,11 +3,14 @@
 #include "restapiclient.h"
 #include "requests/registerrequest.h"
 #include "requests/loginrequest.h"
+#include "requests/projectsdatarequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
 #include <QDebug>
 #include "settings.h"
+#include "datamanager.h"
+
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -89,6 +92,26 @@ void Session::registerUser(const QString& email, const QString& password)
     mClient->send(request);
 }
 
+
+void Session::getProjectsData() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send login request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<ProjectsDataRequest>::create(getToken());
+    connect(request.data(), &ProjectsDataRequest::projectsDataReply,
+            m_dataManager, &DataManager::getProjectsData);
+
+    mClient->send(request);
+}
+
 void Session::setRememberMe(const bool val)
 {
     Settings::instance()->setValue(Settings::RememberMe, val);
@@ -107,4 +130,9 @@ void Session::setToken(const QByteArray &val)
 QByteArray Session::getToken() const
 {
    return Settings::instance()->getValue(Settings::Token).toByteArray();
+}
+
+void Session::setDataManager(DataManager *dataManager)
+{
+    m_dataManager = dataManager;
 }

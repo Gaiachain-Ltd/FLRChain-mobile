@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPointer>
 #include "userptr.h"
+#include "datamanager.h"
 
 class RestAPIClient;
 
@@ -24,6 +25,8 @@ public:
     Q_INVOKABLE void setRememberMe(const bool val);
     Q_INVOKABLE bool getRememberMe() const;
     QByteArray getToken() const;
+    Q_INVOKABLE void getProjectsData() const;
+    void setDataManager(DataManager *dataManager);
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
@@ -31,6 +34,7 @@ signals:
     void registrationError(const QString& errors) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
+    void projectsDataReply() const;
 
 private:
     void onLoginSuccessful(const QString& token);
@@ -42,6 +46,7 @@ private:
 
     UserPtr mCurrentUser;
     QPointer<RestAPIClient> mClient;
+    DataManager *m_dataManager;
 };
 
 #endif // SESSION_H

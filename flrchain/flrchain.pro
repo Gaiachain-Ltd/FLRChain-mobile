@@ -20,27 +20,33 @@ INCLUDEPATH += src/APICommunication
 HEADERS += \
     src/datamanager.h \
     src/filemanager.h \
+    src/project.h \
     src/session.h \
     src/settings.h \
+    src/task.h \
     src/user.h \
     src/userptr.h \
     src/APICommunication/restapiclient.h \
     src/APICommunication/apirequest.h \
     src/APICommunication/requests/loginrequest.h \
     src/APICommunication/requests/registerrequest.h \
+    src/APICommunication/requests/projectsdatarequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h
 
 SOURCES += src/main.cpp  \
     src/datamanager.cpp \
     src/filemanager.cpp \
+    src/project.cpp \
     src/session.cpp \
     src/settings.cpp \
+    src/task.cpp \
     src/user.cpp \
     src/APICommunication/restapiclient.cpp \
     src/APICommunication/apirequest.cpp \
     src/APICommunication/requests/loginrequest.cpp \
     src/APICommunication/requests/registerrequest.cpp \
+    src/APICommunication/requests/projectsdatarequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp
 
