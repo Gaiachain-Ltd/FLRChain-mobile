@@ -3,6 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
 ApplicationWindow {
+    id: mainWindow
     visible: true
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
@@ -22,7 +23,12 @@ ApplicationWindow {
         anchors.fill: parent
 
         Component.onCompleted: {
-            stack.pushPage("qrc:/WorkScreen.qml");
+            if(session.hasToken() && session.getRememberMe()){
+                stack.pushPage("qrc:/WorkScreen.qml");
+            }
+            else{
+                stack.pushPage("qrc:/LoginScreen.qml");
+            }
         }
     }
 }

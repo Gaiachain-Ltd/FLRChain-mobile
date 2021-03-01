@@ -16,6 +16,10 @@ import android.content.pm.PackageManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.app.ActivityCompat;
 import java.util.ArrayList;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 
 public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
@@ -70,12 +74,18 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
                 return;
             }
 
-            System.out.println(contentUri.toString());
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String suffix = contentUri.toString().substring(contentUri.toString().lastIndexOf("."));
+            String imageFileName = getFilesDir() + "/photos/" + "IMG_" + timeStamp  + suffix;
+
+            if(!copy(contentUri.toString(), imageFileName)){
+               imageFileName = "";
+            }
 
             switch (requestCode) {
 
                 case FILE_SELECT_RESULT_CODE:
-                    fileSelectionCallback(contentUri.toString());
+                    fileSelectionCallback(imageFileName);
                     break;
 
                 default:
@@ -160,25 +170,86 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
                 REQUEST_PERMISSION_CAMERA_READ);
     }
 
+    public boolean copy(String srcPath, String descPath) {
+        boolean res = false;
+     
+        InputStream is = getInputStream(getApplicationContext(), srcPath);
+        OutputStream os = getOutputStream(getApplicationContext(), descPath);
 
+        if (is == null || os == null)
+            return false;
 
-public String getImagePath(Uri uri){
-   Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-   cursor.moveToFirst();
-   String document_id = cursor.getString(0);
-   document_id = document_id.substring(document_id.lastIndexOf(":")+1);
-   cursor.close();
+        try {
+            // Transfer bytes from in to out
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = is.read(buf)) > 0) {
+                os.write(buf, 0, len);
+            }
+        } catch (Exception e1) {
+           System.out.println(e1.getMessage());
+        } finally {
+            try{
+                is.close();
+                os.close();
+            } catch (Exception e2) {
+                System.out.println(e2.getMessage());
+            }
+        }
+        return true;
+    }
 
-   cursor = getContentResolver().query( 
-   android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-   null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-   cursor.moveToFirst();
-   String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-   cursor.close();
+   public static InputStream getInputStream(Context context, final String path) {
+        InputStream in = null;
+        Uri uri = getUri(path);
 
-   return path;
-}
+        if (uri == null)
+            return null;
 
+        try {
+            in = context.getContentResolver().openInputStream(uri);
+        } catch (Exception e1) {
+            try {
+                in = new FileInputStream(path);
+            } catch (Exception e2) {
+            System.out.println(e2.getMessage());
+            }
+        }
+
+        return in;
+    }
+
+    public static OutputStream getOutputStream(Context context, final String path) {
+        OutputStream in = null;
+        Uri uri = getUri(path);
+
+        if (uri == null)
+            return null;
+
+        try {
+            in = context.getContentResolver().openOutputStream(uri);
+        } catch (Exception e1) {
+            try {
+                in = new FileOutputStream(path);
+            } catch (Exception e2) {
+                System.out.println(e2.getMessage());
+            }
+        }
+
+        return in;
+    }
+
+    public static Uri getUri(final String path) {
+        Uri uri = null;
+
+        try {
+            uri = Uri.parse(path);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return uri;
+    }
     //=================//
     // PRIVATE METHODS //
     //=================//

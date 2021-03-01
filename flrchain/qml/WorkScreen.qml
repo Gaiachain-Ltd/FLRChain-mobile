@@ -5,16 +5,17 @@ import QtQuick.Layouts 1.15
 Item {
 
     Connections{
-        target: platform
-        function onFileSelected(pathToFile){
-            console.log(pathToFile)
-            img.source =  qsTr("file:///") + pathToFile
+        target: dataManager
+
+        function onDisplayPhoto(filePath){
+            img.source =  qsTr("file:///") + filePath
+
         }
 
-        function onCapturedMedia(pathToFile){
-            console.log(pathToFile)
-            img.source =  qsTr("file:///") + pathToFile
+        function onPhotoError(){
+            log.text = "File error"
         }
+
     }
 
     Rectangle{
@@ -31,7 +32,7 @@ Item {
             anchors.fill: parent
             Button{
                 Layout.preferredWidth: parent.width * 0.9
-                Layout.preferredHeight: 150
+                Layout.preferredHeight: 110
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Upload photo")
 
@@ -42,7 +43,7 @@ Item {
 
             Button{
                 Layout.preferredWidth: parent.width * 0.9
-                Layout.preferredHeight: 150
+                Layout.preferredHeight: 110
                 Layout.alignment: Qt.AlignHCenter
 
                 text: qsTr("Take photo")
@@ -50,18 +51,18 @@ Item {
                     platform.capture()
                 }
             }
+
             Image {
                 id: img
                 Layout.preferredWidth: parent.width * 0.9
+                Layout.preferredHeight: parent.height * 0.4
                 Layout.alignment: Qt.AlignHCenter
-                sourceSize.width: 1024
-                sourceSize.height: 1024
-                //   fillMode: Image.PreserveAspectFit
+                fillMode: Image.PreserveAspectCrop
             }
 
-            Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+            Text{
+                id: log
+                text: ""
             }
         }
     }

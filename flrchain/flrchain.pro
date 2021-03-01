@@ -18,6 +18,7 @@ TARGET = template
 INCLUDEPATH += src/APICommunication
 
 HEADERS += \
+    src/datamanager.h \
     src/filemanager.h \
     src/session.h \
     src/settings.h \
@@ -31,6 +32,7 @@ HEADERS += \
     src/platformbridge.h
 
 SOURCES += src/main.cpp  \
+    src/datamanager.cpp \
     src/filemanager.cpp \
     src/session.cpp \
     src/settings.cpp \

@@ -10,6 +10,10 @@ Item {
             log.text = qsTr("Registration error")
             log.text = error
         }
+
+        function onRegistrationSuccessful(){
+            stack.pushPage("qrc:/LoginScreen.qml");
+        }
     }
 
     function validateData(){

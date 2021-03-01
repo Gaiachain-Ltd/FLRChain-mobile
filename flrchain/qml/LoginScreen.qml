@@ -9,6 +9,10 @@ Item {
         function onLoginError(error){
             log.text = qsTr("Login error")
         }
+
+        function onLoginSuccessful(token){
+            stack.pushPage("qrc:/WorkScreen.qml");
+        }
     }
 
     ColumnLayout {

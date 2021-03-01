@@ -9,6 +9,22 @@ class FileManager : public QObject
 
 public:
     explicit FileManager(QObject *parent = nullptr);
+    Q_INVOKABLE void handleFileData(const QString &filePath);
+    Q_INVOKABLE void copySelectedFile(const QString &filePath);
+
+    void removeCurrentFile();
+    QString photosPath() const;
+    void setPhotosPath(const QString &photosPath);
+
+    QString currentPhotoPath() const;
+    void setCurrentPhotoPath(const QString &currentPhotoPath);
+
+signals:
+    void displayPhoto(const QString &filePath);
+    void photoError();
+private:
+    QString mPhotosPath;
+    QString mCurrentPhotoPath;
 };
 
 #endif // FILEMANAGER_H

@@ -28,6 +28,7 @@ SOFTWARE.
 #include "session.h"
 #include "restapiclient.h"
 #include "platformbridge.h"
+#include "datamanager.h"
 
 int main(int argc, char *argv[]) {
 
@@ -42,10 +43,11 @@ int main(int argc, char *argv[]) {
     RestAPIClient client;
 
     Session session;
+    DataManager dataManager;
     session.setClient(&client);
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
-
+    engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
