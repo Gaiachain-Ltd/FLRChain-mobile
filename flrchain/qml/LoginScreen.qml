@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
+import "qrc:/CustomControls" as Custom
+
 Item {
 
     Connections{
@@ -16,72 +18,136 @@ Item {
         }
     }
 
-    ColumnLayout {
-        anchors.top: parent.top
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.margins: 30
-        width: parent.width * 0.9
-        spacing: 50
-        Text {
-            text: "Sign In With Email"
-            Layout.alignment: Qt.AlignHCenter
-        }
+    Rectangle {
+        id: background
+        color: "#FAFAFD"
+        anchors.fill: parent
 
-        TextField {
-            id: userEmail
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            placeholderText: "Email"
-        }
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.leftMargin: 30
+            anchors.rightMargin: 30
+            anchors.topMargin: 20
+            anchors.bottomMargin: 16
 
-        TextField {
-            id: password
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            placeholderText: "Password"
-            echoMode: TextInput.Password
-        }
-
-        CheckBox {
-            checked: session.getRememberMe()
-            text: qsTr("Remember me")
-            onCheckedChanged: {
-                session.setRememberMe(checked)
+            Image {
+                id: logo
+                source: ""
+                Layout.preferredWidth: 120
+                Layout.preferredHeight: 42
+                Layout.alignment: Qt.AlignHCenter
+                sourceSize: Qt.size(128,42)
             }
-        }
 
-        TextArea {
-            id: log
-            readOnly: true
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
-
-        Button {
-            id: signInButton
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            enabled: userEmail.text.length && password.text.length
-            text: qsTr("Sign In")
-
-            onClicked: {
-                session.login(userEmail.text, password.text)
+            Image {
+                id: logoImg
+                source: ""
+                Layout.preferredWidth: 298
+                Layout.fillHeight: true
+                Layout.maximumHeight: 140
+                Layout.preferredHeight: 140
+                Layout.topMargin: 20
+                Layout.alignment: Qt.AlignHCenter
+                sourceSize: Qt.size(298, 140)
             }
-        }
 
-        Item{
-            Layout.preferredHeight: 50
-            Layout.fillWidth: true
-        }
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.topMargin: 10
+                Layout.preferredHeight: 0.65 * mainWindow.height
+                color: "white"
+                radius: 7
 
-        Button {
-            id: registerButton
-            Layout.fillWidth: true
-            Layout.preferredHeight: 100
-            text: qsTr("Need an account?")
+                ColumnLayout{
+                    anchors.fill: parent
+                    anchors.margins: 20
+                    spacing: 15
 
-            onClicked: {
-                stack.pushPage("qrc:/RegistrationScreen.qml");
+                    Label {
+                        text: qsTr("Login")
+                        font.pixelSize: 20
+                        color: "#23BC3D"
+                    }
+
+                    Label {
+                        text: qsTr("Welcome back")
+                        font.pixelSize: 12
+                        font.weight: Font.DemiBold
+                        color: "#778699"
+                        Layout.topMargin: -10
+                    }
+
+                    Rectangle {
+                        color: "#E2E9F0"
+                        height: 2
+                        Layout.fillWidth: true
+                        Layout.leftMargin: -20
+                        Layout.rightMargin: -20
+                    }
+
+                    Custom.TextInput {
+                        id: userEmail
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        placeholderText: qsTr("Please enter your email...")
+                    }
+
+                    Custom.TextInput {
+                        id: password
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        placeholderText: qsTr("Please enter your password...")
+                        echoMode: TextInput.Password
+                    }
+
+                    Custom.CheckBox {
+                        checked: session.getRememberMe()
+                        text: qsTr("Remember me")
+                        onCheckedChanged: {
+                            session.setRememberMe(checked)
+                        }
+                    }
+
+                    TextArea {
+                        id: log
+                        readOnly: true
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                    }
+
+                    Custom.Button {
+                        id: signInButton
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 42
+                        enabled: userEmail.text.length && password.text.length
+                        text: qsTr("Log In")
+
+                        onClicked: {
+                            session.login(userEmail.text, password.text)
+                        }
+                    }
+
+                    Custom.Button {
+                        id: registerButton
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 42
+                        text: qsTr("Need an account?")
+                        bgColor: "#06BCC1"
+
+                        onClicked: {
+                            stack.pushPage("qrc:/RegistrationScreen.qml");
+                        }
+                    }
+
+                    Label {
+                        text: qsTr("Forgot password?")
+                        font.pixelSize: 12
+                        color: "#23BC3D"
+                        Layout.alignment: Qt.AlignHCenter
+                    }
+
+                }
             }
         }
     }

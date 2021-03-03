@@ -5,5 +5,11 @@
         <file>RegistrationScreen.qml</file>
         <file>PagesView.qml</file>
         <file>WorkScreen.qml</file>
+        <file>CustomControls/TextInput.qml</file>
+        <file>CustomControls/IconButton.qml</file>
+        <file>CustomControls/Header.qml</file>
+        <file>CustomControls/Button.qml</file>
+        <file>CustomControls/CheckBox.qml</file>
+        <file>CustomControls/ImageButton.qml</file>
     </qresource>
 </RCC>
