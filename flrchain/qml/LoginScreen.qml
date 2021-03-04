@@ -6,10 +6,13 @@ import "qrc:/CustomControls" as Custom
 
 Item {
 
+    property bool errorMode: false
+
     Connections{
         target: session
         function onLoginError(error){
-            log.text = qsTr("Login error")
+            log.text = error
+            errorMode = true
         }
 
         function onLoginSuccessful(token){
@@ -91,6 +94,13 @@ Item {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("Please enter your email...")
+                        color: errorMode ? "#FE2121" : "#253F50"
+                        onTextChanged: {
+                            if(errorMode) {
+                                errorMode = false
+                                log.text = ""
+                            }
+                        }
                     }
 
                     Custom.TextInput {
@@ -99,6 +109,13 @@ Item {
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
+                        color: errorMode ? "#FE2121" : "#253F50"
+                        onTextChanged: {
+                            if(errorMode){
+                                errorMode = false
+                                log.text = ""
+                            }
+                        }
                     }
 
                     Custom.CheckBox {
@@ -113,7 +130,8 @@ Item {
                         id: log
                         readOnly: true
                         Layout.fillWidth: true
-                        Layout.fillHeight: true
+                        font.pixelSize: 12
+                        color: "#FE2121"
                     }
 
                     Custom.Button {

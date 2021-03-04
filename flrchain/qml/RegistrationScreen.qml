@@ -6,11 +6,13 @@ import "qrc:/CustomControls" as Custom
 
 Item {
 
+    property bool errorMode: false
+
     Connections{
         target: session
         function onRegistrationError(error){
-            // log.text = qsTr("Registration error")
-            // log.text = error
+            errorMode = true
+            log.text = error
         }
 
         function onRegistrationSuccessful(){
@@ -21,11 +23,11 @@ Item {
     function validateData(){
         if(!name.text.length || !surname.text.length || !userEmail.text.length
                 || !password.text.length  || !repeatPassword.text.length) {
-            //  log.text = qsTr("Please fill all fields")
+            log.text = qsTr("Please fill out all fields")
             return
         }
         else if(password.text !== repeatPassword.text) {
-            //  log.text = qsTr("Passwords are not equal")
+            log.text = qsTr("Passwords are not equal")
             return
         }
 
@@ -108,6 +110,13 @@ Item {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("Email")
+                        color: errorMode ? "#FE2121" : "#253F50"
+                        onTextChanged: {
+                            if(errorMode){
+                                errorMode = false
+                                log.text = ""
+                            }
+                        }
                     }
 
                     Custom.TextInput {
@@ -128,6 +137,7 @@ Item {
                         id: password
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
+                        echoMode: TextInput.Password
                         placeholderText: qsTr("Password")
                     }
 
@@ -135,7 +145,19 @@ Item {
                         id: repeatPassword
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
+                        echoMode: TextInput.Password
                         placeholderText: qsTr("Repeat password")
+                    }
+
+                    TextArea {
+                        id: log
+                        readOnly: true
+                        font.pixelSize: 12
+                        font.weight: Font.DemiBold
+                        color: "#FE2121"
+                        Layout.fillWidth: true
+                        Layout.fillHeight: true
+                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     }
 
                     Custom.Button {

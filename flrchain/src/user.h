@@ -8,7 +8,9 @@
 class User : public QObject
 {
     Q_OBJECT
-
+    Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
+    Q_PROPERTY(QString firstName READ firstName WRITE setFirstName NOTIFY firstNameChanged)
+    Q_PROPERTY(QString lastName READ lastName WRITE setLastName NOTIFY lastNameChanged)
 public:
     User(QObject *parent = nullptr);
     QString email() const;

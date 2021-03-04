@@ -29,6 +29,7 @@ SOFTWARE.
 #include "restapiclient.h"
 #include "platformbridge.h"
 #include "datamanager.h"
+#include "user.h"
 
 int main(int argc, char *argv[]) {
 
@@ -51,6 +52,8 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
+    qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
