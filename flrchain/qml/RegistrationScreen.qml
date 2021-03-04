@@ -29,7 +29,7 @@ Item {
             return
         }
 
-        session.registerUser(userEmail, password)
+        session.registerUser(userEmail.text, password.text)
     }
 
     Rectangle {
@@ -90,21 +90,21 @@ Item {
 
 
                     Custom.TextInput {
-                        id: firstName
+                        id: name
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("First name")
                     }
 
                     Custom.TextInput {
-                        id: lastName
+                        id: surname
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("Last name")
                     }
 
                     Custom.TextInput {
-                        id: email
+                        id: userEmail
                         Layout.fillWidth: true
                         Layout.preferredHeight: 36
                         placeholderText: qsTr("Email")

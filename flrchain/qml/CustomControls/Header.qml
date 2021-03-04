@@ -39,6 +39,7 @@ Rectangle{
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             iconSrc: ""
+            onClicked: menu.open()
         }
     }
 

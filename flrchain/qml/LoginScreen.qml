@@ -14,7 +14,7 @@ Item {
 
         function onLoginSuccessful(token){
             stack.clear();
-            stack.pushPage("qrc:/WorkScreen.qml");
+            stack.pushPage("qrc:/Dashboard.qml");
         }
     }
 

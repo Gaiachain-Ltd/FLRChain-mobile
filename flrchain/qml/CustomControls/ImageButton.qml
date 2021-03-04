@@ -6,6 +6,7 @@ Button {
 
     property string bgColor: "#23BC3D"
     property string iconSrc: ""
+    property string textColor: "#253F50"
 
     background: Rectangle {
         anchors.fill: parent
@@ -15,7 +16,7 @@ Button {
 
     contentItem: Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 21
+        anchors.leftMargin: 20
         color: "transparent"
         Row {
             anchors.verticalCenter: parent.verticalCenter
@@ -32,7 +33,7 @@ Button {
             Text {
                 text: button.text
                 font.pixelSize: 15
-                color: "#253F50"
+                color: textColor
                 font.weight: Font.DemiBold
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter

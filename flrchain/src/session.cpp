@@ -53,9 +53,15 @@ void Session::onRegistrationSuccessful()
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
                          const QString &email)
 {
-    if (!firstName.isEmpty()) user()->setFirstName(firstName);
-    if (!lastName.isEmpty()) user()->setLastName(lastName);
-    if (!email.isEmpty()) user()->setEmail(email);
+    if (!firstName.isEmpty()) {
+        user()->setFirstName(firstName);
+    }
+    if (!lastName.isEmpty()){
+        user()->setLastName(lastName);
+    }
+    if (!email.isEmpty()) {
+        user()->setEmail(email);
+    }
 }
 
 void Session::login(const QString &email, const QByteArray &password)
@@ -119,7 +125,7 @@ void Session::setRememberMe(const bool val)
 
 bool Session::getRememberMe() const
 {
-   return Settings::instance()->getValue(Settings::RememberMe).toBool();
+    return Settings::instance()->getValue(Settings::RememberMe).toBool();
 }
 
 void Session::setToken(const QByteArray &val)
@@ -129,7 +135,7 @@ void Session::setToken(const QByteArray &val)
 
 QByteArray Session::getToken() const
 {
-   return Settings::instance()->getValue(Settings::Token).toByteArray();
+    return Settings::instance()->getValue(Settings::Token).toByteArray();
 }
 
 void Session::setDataManager(DataManager *dataManager)

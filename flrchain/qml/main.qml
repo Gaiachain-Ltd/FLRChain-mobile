@@ -18,13 +18,19 @@ ApplicationWindow {
         }
     }
 
+
+    Menu{
+        id: menu
+    }
+
+
     PagesView {
         id: stack
         anchors.fill: parent
 
         Component.onCompleted: {
             if(session.hasToken() && session.getRememberMe()){
-                stack.pushPage("qrc:/WorkScreen.qml");
+                stack.pushPage("qrc:/Dashboard.qml");
             }
             else{
                 stack.pushPage("qrc:/LoginScreen.qml");

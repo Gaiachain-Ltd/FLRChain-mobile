@@ -11,5 +11,8 @@
         <file>CustomControls/Button.qml</file>
         <file>CustomControls/CheckBox.qml</file>
         <file>CustomControls/ImageButton.qml</file>
+        <file>Dashboard.qml</file>
+        <file>Menu.qml</file>
+        <file>CustomControls/ShadowedRectangle.qml</file>
     </qresource>
 </RCC>

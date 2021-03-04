@@ -56,90 +56,94 @@ Item {
                 font.pixelSize: 17
                 color: "#253F50"
             }
-
-            Rectangle{
+            Custom.ShadowedRectangle {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 Layout.topMargin: 30
-                color: "white"
-                radius: 10
 
-                ColumnLayout{
+                Rectangle{
                     anchors.fill: parent
-                    anchors.bottomMargin: 30
-                    spacing: 20
+                    color: "white"
+                    radius: 10
 
-                    Label {
-                        text: qsTr("Photo")
-                        font.pixelSize: 12
-                        color: "#253F50"
-                        font.weight: Font.DemiBold
-                    }
+                    ColumnLayout{
+                        anchors.fill: parent
+                        anchors.margins: 20
+                        anchors.bottomMargin: 30
+                        spacing: 20
 
-                    Custom.ImageButton{
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: 42
-                        Layout.alignment: Qt.AlignHCenter
-                        bgColor: "#F7F9FB"
-                        text: qsTr("Upload from gallery...")
-                        visible: !photoVisible
-
-                        onClicked: {
-                            platform.selectFile();
+                        Label {
+                            text: qsTr("Photo")
+                            font.pixelSize: 12
+                            color: "#253F50"
+                            font.weight: Font.DemiBold
                         }
-                    }
 
-                    Custom.ImageButton{
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: 42
-                        Layout.alignment: Qt.AlignHCenter
-                        bgColor: "#F7F9FB"
-                        visible: !photoVisible
-                        text: qsTr("Take photo...")
-                        onClicked: {
-                            platform.capture()
-                        }
-                    }
+                        Custom.ImageButton{
+                            Layout.preferredWidth: parent.width
+                            Layout.preferredHeight: 42
+                            Layout.alignment: Qt.AlignHCenter
+                            bgColor: "#F7F9FB"
+                            text: qsTr("Upload from gallery...")
+                            visible: !photoVisible
 
-                    Image {
-                        id: img
-                        visible: photoVisible
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 200
-                        Layout.alignment: Qt.AlignHCenter
-                        fillMode: Image.PreserveAspectCrop
-
-                        Custom.IconButton {
-                            id: closeButton
-                            anchors.right: parent.right
-                            anchors.top: parent.top
-                            anchors.margins: 10
-                            width: 30
-                            height: 30
-                            iconSize: 30
-                            iconContainerSize: 30
-                            iconSrc: ""
                             onClicked: {
-                                img.source = ""
-                                photoVisible = false
+                                platform.selectFile();
                             }
                         }
-                    }
 
-                    Item {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                    }
+                        Custom.ImageButton{
+                            Layout.preferredWidth: parent.width
+                            Layout.preferredHeight: 42
+                            Layout.alignment: Qt.AlignHCenter
+                            bgColor: "#F7F9FB"
+                            visible: !photoVisible
+                            text: qsTr("Take photo...")
+                            onClicked: {
+                                platform.capture()
+                            }
+                        }
 
-                    Custom.Button{
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: 42
-                        Layout.alignment: Qt.AlignHCenter
-                        enabled: photoVisible
-                        opacity: enabled ? 1 : 0.5
+                        Image {
+                            id: img
+                            visible: photoVisible
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: 200
+                            Layout.alignment: Qt.AlignHCenter
+                            fillMode: Image.PreserveAspectCrop
 
-                        text: qsTr("Upload")
-                        onClicked: {
+                            Custom.IconButton {
+                                id: closeButton
+                                anchors.right: parent.right
+                                anchors.top: parent.top
+                                anchors.margins: 10
+                                width: 30
+                                height: 30
+                                iconSize: 30
+                                iconContainerSize: 30
+                                iconSrc: ""
+                                onClicked: {
+                                    img.source = ""
+                                    photoVisible = false
+                                }
+                            }
+                        }
+
+                        Item {
+                            Layout.fillHeight: true
+                            Layout.fillWidth: true
+                        }
+
+                        Custom.Button{
+                            Layout.preferredWidth: parent.width
+                            Layout.preferredHeight: 42
+                            Layout.alignment: Qt.AlignHCenter
+                            enabled: photoVisible
+                            opacity: enabled ? 1 : 0.5
+
+                            text: qsTr("Upload")
+                            onClicked: {
+                            }
                         }
                     }
                 }
