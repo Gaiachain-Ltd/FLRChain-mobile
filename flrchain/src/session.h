@@ -19,7 +19,7 @@ public:
     ~Session();
     void setClient(RestAPIClient *client);
     Q_INVOKABLE bool hasToken() const;
-    Q_INVOKABLE void login(const QString& email, const QByteArray& password);
+    Q_INVOKABLE void login(const QString& email, const QString& password);
     Q_INVOKABLE void registerUser(const QString& email, const QString& password);
     User* user() const;
     Q_INVOKABLE void setRememberMe(const bool val);
@@ -39,7 +39,7 @@ signals:
 
 private:
     void onLoginSuccessful(const QString& token);
-    void onRegistrationSuccessful();
+    void onRegistrationSuccessful(const QString &email, const QString &password);
     void onUserInfo(const QString& firstName,
                     const QString& lastName,
                     const QString& email);

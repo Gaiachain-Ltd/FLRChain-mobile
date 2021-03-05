@@ -25,6 +25,8 @@ RegisterRequest::RegisterRequest(const QString& email, const QString& password)
         m_requestDocument.setObject(object);
         m_priority = Priority::High;
         m_type = Type::Post;
+        m_email = email;
+        m_password = password;
     } else {
         qCDebug(requestRegister) << "Error: missing registration info"
                                  << email << password.length();
@@ -53,19 +55,7 @@ void RegisterRequest::errorHandler(const QString &error)
 
 void RegisterRequest::parse()
 {
-    const QJsonObject object(m_replyDocument.object());
-    const QString token(object.value(QLatin1String("Token")).toString());
-
-    if (token.isEmpty()) {
-        qCDebug(requestRegister) << "Error in parsing server reply"
-                                 << m_replyDocument.toJson()
-                                 << token;
-        emit registerError("Error in parsing server reply");
-        return;
-    }
-
-    qCDebug(requestRegister) << "Registration successful" << token;
-    emit registrationSuccessful(token);
+    emit registrationSuccessful(m_email, m_password);
 }
 
 bool RegisterRequest::isTokenRequired() const

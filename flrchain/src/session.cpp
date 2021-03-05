@@ -51,9 +51,9 @@ void Session::onLoginSuccessful(const QString &token)
     emit loginSuccessful(token);
 }
 
-void Session::onRegistrationSuccessful()
+void Session::onRegistrationSuccessful(const QString &email, const QString &password)
 {
-
+    login(email, password);
 }
 
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
@@ -70,7 +70,7 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     }
 }
 
-void Session::login(const QString &email, const QByteArray &password)
+void Session::login(const QString &email, const QString &password)
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send login request!";
