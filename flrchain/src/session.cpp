@@ -184,3 +184,12 @@ void Session::setDataManager(DataManager *dataManager)
 {
     m_dataManager = dataManager;
 }
+
+void Session::logout()
+{
+    mCurrentUser->clear();
+    m_dataManager->cleanData();
+    setRememberMe(0);
+    setToken(QByteArray());
+}
+

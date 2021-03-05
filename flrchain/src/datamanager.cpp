@@ -4,14 +4,14 @@
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
-    m_manager = new FileManager;
+    m_fileManager = new FileManager;
     m_workerThread = new QThread();
-    m_manager->moveToThread(m_workerThread);
+    m_fileManager->moveToThread(m_workerThread);
     m_workerThread->start();
 
-    connect(m_manager, &FileManager::displayPhoto,
+    connect(m_fileManager, &FileManager::displayPhoto,
             this, &DataManager::displayPhoto);
-    connect(m_manager, &FileManager::photoError,
+    connect(m_fileManager, &FileManager::photoError,
             this, &DataManager::photoError);
 }
 
@@ -50,6 +50,7 @@ void DataManager::cleanData()
    m_projects.clear();
    m_joinedProjects.clear();
    m_workList.clear();
+   m_fileManager->removeCurrentFile();
 }
 
 void DataManager::projectsDataReceived(const QVariantList &projects, const QVariantList &joinedProjects)

@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE void getWorkData() const;
     Q_INVOKABLE void getUserInfo() const;
     void setDataManager(DataManager *dataManager);
+    Q_INVOKABLE void logout();
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
