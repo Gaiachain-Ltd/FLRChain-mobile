@@ -4,6 +4,7 @@
 #include "requests/registerrequest.h"
 #include "requests/loginrequest.h"
 #include "requests/projectsdatarequest.h"
+#include "requests/workdatarequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -86,7 +87,7 @@ void Session::login(const QString &email, const QByteArray &password)
 void Session::registerUser(const QString& email, const QString& password)
 {
     if (mClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send login request!";
+        qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
 
@@ -102,7 +103,7 @@ void Session::registerUser(const QString& email, const QString& password)
 void Session::getProjectsData() const
 {
     if (mClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send login request!";
+        qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
 
@@ -113,7 +114,26 @@ void Session::getProjectsData() const
 
     auto request = QSharedPointer<ProjectsDataRequest>::create(getToken());
     connect(request.data(), &ProjectsDataRequest::projectsDataReply,
-            m_dataManager, &DataManager::getProjectsData);
+            m_dataManager, &DataManager::projectsDataReceived);
+
+    mClient->send(request);
+}
+
+void Session::getWorkData() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<WorkDataRequest>::create(getToken());
+    connect(request.data(), &WorkDataRequest::workDataReply,
+            m_dataManager, &DataManager::workDataReceived);
 
     mClient->send(request);
 }

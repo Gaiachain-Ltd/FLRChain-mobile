@@ -156,7 +156,6 @@ Item {
                         font.weight: Font.DemiBold
                         color: "#FE2121"
                         Layout.fillWidth: true
-                        Layout.fillHeight: true
                         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     }
 

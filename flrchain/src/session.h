@@ -26,6 +26,7 @@ public:
     Q_INVOKABLE bool getRememberMe() const;
     QByteArray getToken() const;
     Q_INVOKABLE void getProjectsData() const;
+    Q_INVOKABLE void getWorkData() const;
     void setDataManager(DataManager *dataManager);
 signals:
     void loginSuccessful(const QString& token) const;

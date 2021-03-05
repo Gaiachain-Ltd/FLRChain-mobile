@@ -25,6 +25,11 @@ QVariantList DataManager::getJoinedProjects() const
     return m_joinedProjects;
 }
 
+QVariantList DataManager::getWorkList() const
+{
+    return m_workList;
+}
+
 void DataManager::setProjects(const QVariantList &projects)
 {
     m_projects = projects;
@@ -35,16 +40,28 @@ void DataManager::setJoinedProjects(const QVariantList &joinedProjects)
     m_joinedProjects = joinedProjects;
 }
 
+void DataManager::setWorkList(const QVariantList &workList)
+{
+    m_workList = workList;
+}
+
 void DataManager::cleanData()
 {
    m_projects.clear();
    m_joinedProjects.clear();
+   m_workList.clear();
 }
 
-void DataManager::getProjectsData(const QVariantList &projects, const QVariantList &joinedProjects)
+void DataManager::projectsDataReceived(const QVariantList &projects, const QVariantList &joinedProjects)
 {
-    cleanData();
-
+    m_projects.clear();
+    m_joinedProjects.clear();
     setProjects(projects);
     setJoinedProjects(joinedProjects);
+}
+
+void DataManager::workDataReceived(const QVariantList &workList)
+{
+    m_workList.clear();
+    setWorkList(workList);
 }

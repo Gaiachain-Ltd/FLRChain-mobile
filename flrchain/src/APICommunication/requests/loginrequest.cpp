@@ -26,7 +26,6 @@ LoginRequest::LoginRequest(const QString &email, const QString &password)
         m_requestDocument.setObject(object);
         m_priority = Priority::High;
         m_type = Type::Post;
-        m_email = email;
     } else {
         qCDebug(requestLogin) << "Error: missing login info"
                               << email << password.length();
@@ -66,7 +65,7 @@ void LoginRequest::parse()
     const QString lastName(object.value(QLatin1String("last_name")).toString());
     const QString email(object.value(QLatin1String("email")).toString());
 
-    emit userInfo(firstName, lastName, m_email);
+    emit userInfo(firstName, lastName, email);
 
     qCDebug(requestLogin) << "Login successful" << token.length();
     emit loginSuccessful(token);

@@ -16,6 +16,14 @@ Drawer {
         height: contentItem.height
         color: "white"
         radius: 10
+
+        Rectangle {
+            color: "white"
+            anchors.top: parent.top
+            width: parent.width
+            height: 8
+        }
+
     }
 
     contentItem: Rectangle {
@@ -30,16 +38,10 @@ Drawer {
             anchors.leftMargin: 20
             anchors.rightMargin: 20
 
-            Rectangle {
-                color: "white"
-                Layout.preferredHeight: 5
-                Layout.fillWidth: true
-            }
-
             RowLayout{
                 id: row
                 Layout.leftMargin: 20
-                Layout.topMargin: 15
+                Layout.topMargin: 20
 
                 Label {
                     id:username

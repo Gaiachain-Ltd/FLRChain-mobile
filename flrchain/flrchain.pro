@@ -31,8 +31,10 @@ HEADERS += \
     src/APICommunication/requests/loginrequest.h \
     src/APICommunication/requests/registerrequest.h \
     src/APICommunication/requests/projectsdatarequest.h \
+    src/APICommunication/requests/workdatarequest.h \
     src/platformbridgeprivate.h \
-    src/platformbridge.h
+    src/platformbridge.h \
+    src/work.h
 
 SOURCES += src/main.cpp  \
     src/datamanager.cpp \
@@ -47,8 +49,10 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/loginrequest.cpp \
     src/APICommunication/requests/registerrequest.cpp \
     src/APICommunication/requests/projectsdatarequest.cpp \
+    src/APICommunication/requests/workdatarequest.cpp \
     src/platformbridgeandroid.cpp \
-    src/platformbridge.cpp
+    src/platformbridge.cpp \
+    src/work.cpp
 
 RESOURCES +=  \
     qml/qml.qrc \
