@@ -32,6 +32,7 @@ HEADERS += \
     src/APICommunication/requests/registerrequest.h \
     src/APICommunication/requests/projectsdatarequest.h \
     src/APICommunication/requests/workdatarequest.h \
+    src/APICommunication/requests/userinforequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
     src/work.h
@@ -50,6 +51,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/registerrequest.cpp \
     src/APICommunication/requests/projectsdatarequest.cpp \
     src/APICommunication/requests/workdatarequest.cpp \
+    src/APICommunication/requests/userinforequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
     src/work.cpp

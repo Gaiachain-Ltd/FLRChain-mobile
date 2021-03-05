@@ -61,12 +61,6 @@ void LoginRequest::parse()
         return;
     }
 
-    const QString firstName(object.value(QLatin1String("first_name")).toString());
-    const QString lastName(object.value(QLatin1String("last_name")).toString());
-    const QString email(object.value(QLatin1String("email")).toString());
-
-    emit userInfo(firstName, lastName, email);
-
     qCDebug(requestLogin) << "Login successful" << token.length();
     emit loginSuccessful(token);
 }

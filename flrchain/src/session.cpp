@@ -5,6 +5,7 @@
 #include "requests/loginrequest.h"
 #include "requests/projectsdatarequest.h"
 #include "requests/workdatarequest.h"
+#include "requests/userinforequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -18,6 +19,9 @@ Q_LOGGING_CATEGORY(session, "core.session")
 Session::Session(QObject *parent) : QObject(parent)
 {
     mCurrentUser = UserPtr::create();
+    if(hasToken()){
+        getUserInfo();
+    }
 }
 
 Session::~Session()
@@ -43,6 +47,7 @@ User* Session::user() const
 void Session::onLoginSuccessful(const QString &token)
 {
     setToken(token.toUtf8());
+    getUserInfo();
     emit loginSuccessful(token);
 }
 
@@ -78,8 +83,6 @@ void Session::login(const QString &email, const QByteArray &password)
             this, &Session::onLoginSuccessful);
     connect(request.data(), &LoginRequest::loginError,
             this, &Session::loginError);
-    connect(request.data(), &LoginRequest::userInfo,
-            this, &Session::onUserInfo);
 
     mClient->send(request);
 }
@@ -134,6 +137,25 @@ void Session::getWorkData() const
     auto request = QSharedPointer<WorkDataRequest>::create(getToken());
     connect(request.data(), &WorkDataRequest::workDataReply,
             m_dataManager, &DataManager::workDataReceived);
+
+    mClient->send(request);
+}
+
+void Session::getUserInfo() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<UserInfoRequest>::create(getToken());
+    connect(request.data(), &UserInfoRequest::userInfoReply,
+            this, &Session::onUserInfo);
 
     mClient->send(request);
 }

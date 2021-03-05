@@ -27,6 +27,7 @@ public:
     QByteArray getToken() const;
     Q_INVOKABLE void getProjectsData() const;
     Q_INVOKABLE void getWorkData() const;
+    Q_INVOKABLE void getUserInfo() const;
     void setDataManager(DataManager *dataManager);
 signals:
     void loginSuccessful(const QString& token) const;

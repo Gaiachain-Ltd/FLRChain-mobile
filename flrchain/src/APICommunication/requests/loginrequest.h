@@ -19,11 +19,6 @@ public:
 
 signals:
     void loginSuccessful(const QString &token) const;
-    void invalidPassword() const;
-    void invalidUsername() const;
-    void userInfo(const QString& firstName,
-                  const QString& lastName,
-                  const QString& email) const;
     void loginError(const QString &msgs) const;
 protected:
     virtual void parse() override final;
