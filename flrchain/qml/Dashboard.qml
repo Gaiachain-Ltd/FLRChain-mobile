@@ -64,7 +64,7 @@ Item {
                             Layout.preferredHeight: 26
                             iconSize: 26
                             iconSrc: ""
-                            onClicked: stack.pushPage("qrc:/WorkScreen.qml");
+                            onClicked: stack.pushPage("qrc:/ProjectListScreen.qml");
                         }
                     }
 

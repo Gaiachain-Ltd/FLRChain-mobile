@@ -14,5 +14,10 @@
         <file>Dashboard.qml</file>
         <file>Menu.qml</file>
         <file>CustomControls/ShadowedRectangle.qml</file>
+        <file>ProjectListScreen.qml</file>
+        <file>ProjectDetailsScreen.qml</file>
+        <file>Delegates/ProjectDetailsDelegate.qml</file>
+        <file>Delegates/ProjectDelegate.qml</file>
+        <file>Delegates/WorkDelegate.qml</file>
     </qresource>
 </RCC>

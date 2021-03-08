@@ -11,9 +11,9 @@ class FileManager;
 class DataManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList projects  READ getProjects WRITE setProjects)
-    Q_PROPERTY(QVariantList joinedProjects  READ getJoinedProjects WRITE setJoinedProjects)
-    Q_PROPERTY(QVariantList workList  READ getWorkList WRITE setWorkList)
+    Q_PROPERTY(QVariantList projects  READ getProjects WRITE setProjects NOTIFY projectsChanged)
+    Q_PROPERTY(QVariantList joinedProjects  READ getJoinedProjects WRITE setJoinedProjects NOTIFY joinedProjectsChanged)
+    Q_PROPERTY(QVariantList workList  READ getWorkList WRITE setWorkList NOTIFY workListChanged)
 
 public:
     explicit DataManager(QObject *parent = nullptr);
@@ -31,6 +31,10 @@ public slots:
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
+    void projectsChanged() const;
+    void joinedProjectsChanged() const;
+    void workListChanged() const;
+
 private:
     QThread *m_workerThread;
     FileManager *m_fileManager;

@@ -33,16 +33,19 @@ QVariantList DataManager::getWorkList() const
 void DataManager::setProjects(const QVariantList &projects)
 {
     m_projects = projects;
+    emit projectsChanged();
 }
 
 void DataManager::setJoinedProjects(const QVariantList &joinedProjects)
 {
     m_joinedProjects = joinedProjects;
+    emit joinedProjectsChanged();
 }
 
 void DataManager::setWorkList(const QVariantList &workList)
 {
     m_workList = workList;
+    emit workListChanged();
 }
 
 void DataManager::cleanData()
