@@ -8,6 +8,9 @@ Button {
     property string iconSrc: ""
     property string textColor: "#253F50"
 
+    implicitWidth: parent.width
+    implicitHeight: 42
+
     background: Rectangle {
         anchors.fill: parent
         radius: 10

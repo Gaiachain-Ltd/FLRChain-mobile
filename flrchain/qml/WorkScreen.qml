@@ -56,6 +56,7 @@ Item {
                 font.pixelSize: 17
                 color: "#253F50"
             }
+
             Custom.ShadowedRectangle {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
@@ -80,8 +81,6 @@ Item {
                         }
 
                         Custom.ImageButton{
-                            Layout.preferredWidth: parent.width
-                            Layout.preferredHeight: 42
                             Layout.alignment: Qt.AlignHCenter
                             bgColor: "#F7F9FB"
                             text: qsTr("Upload from gallery...")
@@ -93,8 +92,6 @@ Item {
                         }
 
                         Custom.ImageButton{
-                            Layout.preferredWidth: parent.width
-                            Layout.preferredHeight: 42
                             Layout.alignment: Qt.AlignHCenter
                             bgColor: "#F7F9FB"
                             visible: !photoVisible
@@ -120,7 +117,6 @@ Item {
                                 width: 30
                                 height: 30
                                 iconSize: 30
-                                iconContainerSize: 30
                                 iconSrc: ""
                                 onClicked: {
                                     img.source = ""
@@ -135,8 +131,6 @@ Item {
                         }
 
                         Custom.Button{
-                            Layout.preferredWidth: parent.width
-                            Layout.preferredHeight: 42
                             Layout.alignment: Qt.AlignHCenter
                             enabled: photoVisible
                             opacity: enabled ? 1 : 0.5

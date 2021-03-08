@@ -10,7 +10,7 @@ WorkDataRequest::WorkDataRequest(const QByteArray &token) : ApiRequest("")
 {
     m_priority = Priority::Normal;
     m_type = Type::Get;
-    setToken(token);
+    m_token = token;
     connect(this, &WorkDataRequest::replyError, this, &WorkDataRequest::errorHandler);
 }
 

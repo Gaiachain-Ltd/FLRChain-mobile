@@ -39,164 +39,164 @@ Item {
         color: "#FAFAFD"
         anchors.fill: parent
 
-        ColumnLayout {
-            anchors.fill: parent
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.leftMargin: 30
-            anchors.rightMargin: 30
+        Flickable {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
             anchors.topMargin: 20
-            anchors.bottomMargin: 16
+            contentHeight: mainColumn.height
+            boundsBehavior: Flickable.StopAtBounds
+            clip: true
 
-            Image {
-                id: logo
-                source: ""
-                Layout.preferredWidth: 120
-                Layout.preferredHeight: 42
-                Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(128,42)
-            }
+            ColumnLayout {
+                id: mainColumn
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.leftMargin: 30
+                anchors.rightMargin: 30
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.topMargin: 10
-                Layout.fillHeight: true
+                Image {
+                    id: logo
+                    source: ""
+                    Layout.preferredWidth: 120
+                    Layout.preferredHeight: 42
+                    Layout.alignment: Qt.AlignHCenter
+                    sourceSize: Qt.size(128,42)
+                }
 
-                color: "white"
-                radius: 7
-                ColumnLayout{
-                    anchors.fill: parent
-                    anchors.margins: 20
-                    spacing: 10
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.topMargin: 30
+                    Layout.bottomMargin: 16
+                    Layout.preferredHeight: childrenRect.height
 
-                    Label {
-                        text: qsTr("Register")
-                        font.pixelSize: 20
-                        color: "#23BC3D"
-                    }
+                    color: "white"
+                    radius: 7
+                    ColumnLayout{
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.margins: 20
+                        spacing: 15
 
-                    Label {
-                        text: qsTr("Fill the form, make sure it is correct")
-                        font.pixelSize: 12
-                        font.weight: Font.DemiBold
-                        color: "#778699"
-                        Layout.topMargin: -10
-                    }
+                        Label {
+                            Layout.topMargin: 20
+                            text: qsTr("Register")
+                            font.pixelSize: 20
+                            color: "#23BC3D"
+                        }
 
-                    Rectangle {
-                        color: "#E2E9F0"
-                        height: 2
-                        Layout.fillWidth: true
-                        Layout.leftMargin: -20
-                        Layout.rightMargin: -20
-                    }
+                        Label {
+                            text: qsTr("Fill the form, make sure it is correct")
+                            font.pixelSize: 12
+                            font.weight: Font.DemiBold
+                            color: "#778699"
+                            Layout.topMargin: -5
+                        }
+
+                        Rectangle {
+                            color: "#E2E9F0"
+                            height: 2
+                            Layout.topMargin: 10
+                            Layout.fillWidth: true
+                            Layout.leftMargin: -20
+                            Layout.rightMargin: -20
+                        }
 
 
-                    Custom.TextInput {
-                        id: name
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        placeholderText: qsTr("First name")
-                    }
+                        Custom.TextInput {
+                            id: name
+                            placeholderText: qsTr("First name")
+                        }
 
-                    Custom.TextInput {
-                        id: surname
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        placeholderText: qsTr("Last name")
-                    }
+                        Custom.TextInput {
+                            id: surname
+                            placeholderText: qsTr("Last name")
+                        }
 
-                    Custom.TextInput {
-                        id: userEmail
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        placeholderText: qsTr("Email")
-                        color: errorMode ? "#FE2121" : "#253F50"
-                        onTextChanged: {
-                            if(errorMode){
-                                errorMode = false
-                                log.text = ""
+                        Custom.TextInput {
+                            id: userEmail
+                            placeholderText: qsTr("Email")
+                            color: errorMode ? "#FE2121" : "#253F50"
+                            onTextChanged: {
+                                if(errorMode){
+                                    errorMode = false
+                                    log.text = ""
+                                }
                             }
                         }
-                    }
 
-                    Custom.TextInput {
-                        id: phone
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        placeholderText: qsTr("Phone")
-                    }
-
-                    Custom.TextInput {
-                        id: villageName
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        placeholderText: qsTr("Village name")
-                    }
-
-                    Custom.TextInput {
-                        id: password
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        echoMode: TextInput.Password
-                        placeholderText: qsTr("Password")
-                    }
-
-                    Custom.TextInput {
-                        id: repeatPassword
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
-                        echoMode: TextInput.Password
-                        placeholderText: qsTr("Repeat password")
-                    }
-
-                    TextArea {
-                        id: log
-                        readOnly: true
-                        font.pixelSize: 12
-                        font.weight: Font.DemiBold
-                        color: "#FE2121"
-                        Layout.fillWidth: true
-                        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    }
-
-                    Custom.Button {
-                        id: registerButton
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 42
-                        text: qsTr("Register")
-
-                        onClicked: {
-                            validateData()
+                        Custom.TextInput {
+                            id: phone
+                            placeholderText: qsTr("Phone")
                         }
-                    }
 
-                    Custom.Button {
-                        id: loginButton
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 42
-                        text: qsTr("Log in")
-
-                        onClicked: {
-                            stack.pop()
+                        Custom.TextInput {
+                            id: villageName
+                            placeholderText: qsTr("Village name")
                         }
-                    }
 
-                    Label {
-                        text: qsTr("By creating this account, you agree with our")
-                        font.pixelSize: 12
-                        color: "#606060"
-                        Layout.alignment: Qt.AlignHCenter
-                    }
+                        Custom.TextInput {
+                            id: password
+                            echoMode: TextInput.Password
+                            placeholderText: qsTr("Password")
+                        }
 
-                    Label {
-                        text: qsTr("Terms & Conditions")
-                        font.pixelSize: 12
-                        color: "#23BC3D"
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: -10
+                        Custom.TextInput {
+                            id: repeatPassword
+                            echoMode: TextInput.Password
+                            placeholderText: qsTr("Repeat password")
+                        }
+
+                        TextArea {
+                            id: log
+                            readOnly: true
+                            font.pixelSize: 12
+                            font.weight: Font.DemiBold
+                            color: "#FE2121"
+                            Layout.fillWidth: true
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                        }
+
+                        Custom.Button {
+                            id: registerButton
+                            text: qsTr("Register")
+
+                            onClicked: {
+                                validateData()
+                            }
+                        }
+
+                        Custom.Button {
+                            id: loginButton
+                            text: qsTr("Log in")
+                            bgColor: "#06BCC1"
+
+                            onClicked: {
+                                stack.pop()
+                            }
+                        }
+
+                        Label {
+                            text: qsTr("By creating this account, you agree with our")
+                            font.pixelSize: 12
+                            color: "#606060"
+                            Layout.alignment: Qt.AlignHCenter
+                        }
+
+                        Label {
+                            text: qsTr("Terms & Conditions")
+                            font.pixelSize: 12
+                            color: "#23BC3D"
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.topMargin: -10
+                            Layout.bottomMargin: 20
+                        }
                     }
                 }
             }
         }
     }
+
 }

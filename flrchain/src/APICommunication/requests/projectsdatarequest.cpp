@@ -11,7 +11,7 @@ ProjectsDataRequest::ProjectsDataRequest(const QByteArray &token) : ApiRequest("
 {
     m_priority = Priority::Normal;
     m_type = Type::Get;
-    setToken(token);
+    m_token = token;
     connect(this, &ProjectsDataRequest::replyError, this, &ProjectsDataRequest::errorHandler);
 }
 

@@ -58,7 +58,6 @@ void PlatformBridgePrivate::captureCallback(JNIEnv *env, jobject, jstring path)
 
 void PlatformBridgePrivate::selectFile()
 {
-
     QString mimeTypeToApply;
     mimeTypeToApply = "image/*";
 
@@ -71,7 +70,6 @@ void PlatformBridgePrivate::selectFile()
 void PlatformBridgePrivate::fileSelectionCallback(JNIEnv *env, jobject, jstring path)
 {
     Q_UNUSED(env);
-
 
     if (path == nullptr) {
         qDebug("File path is null!");
@@ -116,10 +114,6 @@ static JNINativeMethod media_activity_methods[] = {
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
     Q_UNUSED(reserved)
-
-#ifdef SUPPORT_VOIP
-    pj_jni_jvm = vm;
-#endif
 
     JNIEnv *env;
     if (vm->GetEnv(reinterpret_cast<void**>(&env), JNI_VERSION_1_6) != JNI_OK) {

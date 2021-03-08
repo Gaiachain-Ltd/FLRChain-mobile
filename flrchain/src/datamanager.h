@@ -33,7 +33,7 @@ signals:
     void photoError();
 private:
     QThread *m_workerThread;
-    FileManager *m_manager;
+    FileManager *m_fileManager;
     QVariantList m_projects;
     QVariantList m_joinedProjects;
     QVariantList m_workList;

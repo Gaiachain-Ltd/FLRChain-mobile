@@ -2,10 +2,12 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-
 TextField
 {
     id: textInput
+    implicitWidth: parent.width
+    implicitHeight: 36
+
     background: Rectangle {
         radius: 10
         implicitWidth: parent.width

@@ -58,41 +58,42 @@ Item {
             Rectangle {
                 Layout.fillWidth: true
                 Layout.topMargin: 10
-                Layout.preferredHeight: 0.65 * mainWindow.height
+                Layout.preferredHeight: childrenRect.height
+
                 color: "white"
                 radius: 7
 
                 ColumnLayout{
-                    anchors.fill: parent
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.margins: 20
                     spacing: 15
 
                     Label {
+                        Layout.topMargin: 20
                         text: qsTr("Login")
                         font.pixelSize: 20
                         color: "#23BC3D"
                     }
 
                     Label {
+                        Layout.topMargin: -10
                         text: qsTr("Welcome back")
                         font.pixelSize: 12
                         font.weight: Font.DemiBold
                         color: "#778699"
-                        Layout.topMargin: -10
                     }
 
                     Rectangle {
-                        color: "#E2E9F0"
-                        height: 2
                         Layout.fillWidth: true
                         Layout.leftMargin: -20
                         Layout.rightMargin: -20
+                        color: "#E2E9F0"
+                        height: 2
                     }
 
                     Custom.TextInput {
                         id: userEmail
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
                         placeholderText: qsTr("Please enter your email...")
                         color: errorMode ? "#FE2121" : "#253F50"
                         onTextChanged: {
@@ -105,8 +106,6 @@ Item {
 
                     Custom.TextInput {
                         id: password
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 36
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
                         color: errorMode ? "#FE2121" : "#253F50"
@@ -136,8 +135,6 @@ Item {
 
                     Custom.Button {
                         id: signInButton
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 42
                         enabled: userEmail.text.length && password.text.length
                         text: qsTr("Log In")
 
@@ -148,8 +145,6 @@ Item {
 
                     Custom.Button {
                         id: registerButton
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: 42
                         text: qsTr("Need an account?")
                         bgColor: "#06BCC1"
 
@@ -159,10 +154,11 @@ Item {
                     }
 
                     Label {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.bottomMargin: 20
                         text: qsTr("Forgot password?")
                         font.pixelSize: 12
                         color: "#23BC3D"
-                        Layout.alignment: Qt.AlignHCenter
                     }
 
                 }

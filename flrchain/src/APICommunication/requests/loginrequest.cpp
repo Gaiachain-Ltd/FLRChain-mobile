@@ -57,7 +57,7 @@ void LoginRequest::parse()
         qCDebug(requestLogin) << "Error in parsing server reply"
                               << m_replyDocument.toJson()
                               << token;
-        emit loginError("Error in parsing server reply");
+        emit loginError("Login error");
         return;
     }
 

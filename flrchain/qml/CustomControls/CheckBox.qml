@@ -36,7 +36,6 @@ CheckBox {
         verticalAlignment: Qt.AlignVCenter
         leftPadding: contentRec.width + spacing
         font.pixelSize: 12
-        topPadding: 0
     }
 
     spacing: 5

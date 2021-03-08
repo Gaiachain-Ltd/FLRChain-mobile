@@ -23,7 +23,6 @@ Drawer {
             width: parent.width
             height: 8
         }
-
     }
 
     contentItem: Rectangle {

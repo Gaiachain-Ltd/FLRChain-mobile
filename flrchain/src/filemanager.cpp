@@ -20,7 +20,7 @@ FileManager::FileManager(QObject *parent) : QObject(parent)
     connect(PlatformBridge::instance(), &PlatformBridge::capturedMedia,
             this, &FileManager::handleFileData);
     connect(PlatformBridge::instance(), &PlatformBridge::fileSelected,
-            this, &FileManager::copySelectedFile);
+            this, &FileManager::onFileSelected);
 }
 
 void FileManager::handleFileData(const QString &filePath)
@@ -45,7 +45,7 @@ void FileManager::handleFileData(const QString &filePath)
     emit photoError();
 }
 
-void FileManager::copySelectedFile(const QString &filePath)
+void FileManager::onFileSelected(const QString &filePath)
 {
     if(!filePath.isEmpty()){
         handleFileData(filePath);

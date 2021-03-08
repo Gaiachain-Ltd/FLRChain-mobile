@@ -6,13 +6,9 @@ Button
     id: control
 
     property int radius: 0
-
     property string iconSrc: ""
-
     property int iconSize: 15
-
     property int iconContainerSize: iconSize
-
 
     width: 15
     height: 15

@@ -6,6 +6,9 @@ Button {
 
     property string bgColor: "#23BC3D"
 
+    implicitHeight: 42
+    implicitWidth: parent.width
+
     background: Rectangle {
         anchors.fill: parent
         radius: 10

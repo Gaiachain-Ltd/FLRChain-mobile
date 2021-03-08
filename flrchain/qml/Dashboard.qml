@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.15
 import "qrc:/CustomControls" as Custom
 
 Item {
-    id: screen
 
     Custom.Header {
         id: header
@@ -18,19 +17,18 @@ Item {
 
     Rectangle {
         id: background
-        color: "white"
         anchors.top: header.bottom
+        anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
 
         ColumnLayout {
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
+            anchors.fill: parent
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 30
             anchors.bottomMargin: 170
-            width: parent.width * 0.9
+            anchors.leftMargin: 20
+            anchors.rightMargin: 20
             spacing: 40
 
             Custom.ShadowedRectangle {
@@ -147,7 +145,6 @@ Item {
                     }
                 }
             }
-
         }
     }
 }
