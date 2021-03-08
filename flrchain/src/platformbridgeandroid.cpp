@@ -87,7 +87,6 @@ void PlatformBridgePrivate::fileSelectionCallback(JNIEnv *env, jobject, jstring 
     QString str = QString::fromUtf8(nativeString);
 
     sptr_q_ptr->fileSelected(str);
-
 }
 
 

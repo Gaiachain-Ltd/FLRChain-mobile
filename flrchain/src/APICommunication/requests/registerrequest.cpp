@@ -1,9 +1,7 @@
 #include "registerrequest.h"
 
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QJsonArray>
 
 #include <QLoggingCategory>
 #include <QDebug>
@@ -23,10 +21,8 @@ RegisterRequest::RegisterRequest(const QString& email, const QString& password)
         object.insert(QLatin1String("password"), QJsonValue(password));
 
         m_requestDocument.setObject(object);
-        m_priority = Priority::High;
-        m_type = Type::Post;
-        m_email = email;
-        m_password = password;
+        setPriority(Priority::High);
+        setType(Type::Post);
     } else {
         qCDebug(requestRegister) << "Error: missing registration info"
                                  << email << password.length();
@@ -55,7 +51,7 @@ void RegisterRequest::errorHandler(const QString &error)
 
 void RegisterRequest::parse()
 {
-    emit registrationSuccessful(m_email, m_password);
+    emit registrationSuccessful();
 }
 
 bool RegisterRequest::isTokenRequired() const

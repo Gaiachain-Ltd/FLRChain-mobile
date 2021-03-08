@@ -4,7 +4,6 @@
 #include "apirequest.h"
 
 #include <QString>
-#include <QStringList>
 #include <QObject>
 
 class ProjectsDataRequest : public ApiRequest

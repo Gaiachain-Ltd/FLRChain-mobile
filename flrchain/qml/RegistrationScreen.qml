@@ -12,7 +12,7 @@ Item {
         target: session
         function onRegistrationError(error){
             errorMode = true
-            log.text = error
+            errorLabel.text = error
         }
 
         function onRegistrationSuccessful(){
@@ -23,11 +23,11 @@ Item {
     function validateData(){
         if(!name.text.length || !surname.text.length || !userEmail.text.length
                 || !password.text.length  || !repeatPassword.text.length) {
-            log.text = qsTr("Please fill out all fields")
+            errorLabel.text = qsTr("Please fill out all fields")
             return
         }
         else if(password.text !== repeatPassword.text) {
-            log.text = qsTr("Passwords are not equal")
+            errorLabel.text = qsTr("Passwords are not equal")
             return
         }
 
@@ -51,7 +51,6 @@ Item {
 
             ColumnLayout {
                 id: mainColumn
-                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.left: parent.left
                 anchors.right: parent.right
                 anchors.leftMargin: 30
@@ -122,7 +121,7 @@ Item {
                             onTextChanged: {
                                 if(errorMode){
                                     errorMode = false
-                                    log.text = ""
+                                    errorLabel.text = ""
                                 }
                             }
                         }
@@ -150,7 +149,7 @@ Item {
                         }
 
                         TextArea {
-                            id: log
+                            id: errorLabel
                             readOnly: true
                             font.pixelSize: 12
                             font.weight: Font.DemiBold
@@ -198,5 +197,4 @@ Item {
             }
         }
     }
-
 }

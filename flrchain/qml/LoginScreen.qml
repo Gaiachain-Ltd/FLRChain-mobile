@@ -11,7 +11,7 @@ Item {
     Connections{
         target: session
         function onLoginError(error){
-            log.text = error
+            errorLabel.text = error
             errorMode = true
         }
 
@@ -28,7 +28,6 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.leftMargin: 30
             anchors.rightMargin: 30
             anchors.topMargin: 20
@@ -99,7 +98,7 @@ Item {
                         onTextChanged: {
                             if(errorMode) {
                                 errorMode = false
-                                log.text = ""
+                                errorLabel.text = ""
                             }
                         }
                     }
@@ -112,7 +111,7 @@ Item {
                         onTextChanged: {
                             if(errorMode){
                                 errorMode = false
-                                log.text = ""
+                                errorLabel.text = ""
                             }
                         }
                     }
@@ -126,7 +125,7 @@ Item {
                     }
 
                     TextArea {
-                        id: log
+                        id: errorLabel
                         readOnly: true
                         Layout.fillWidth: true
                         font.pixelSize: 12

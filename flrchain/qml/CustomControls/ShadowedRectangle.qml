@@ -13,4 +13,3 @@ Rectangle {
         cornerRadius: 10
     }
 }
-

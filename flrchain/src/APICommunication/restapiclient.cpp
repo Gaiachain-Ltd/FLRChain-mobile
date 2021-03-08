@@ -9,5 +9,3 @@ RestAPIClient::RestAPIClient(QObject *parent)
     : MRestRequestManager(parent)
 {
 }
-
-

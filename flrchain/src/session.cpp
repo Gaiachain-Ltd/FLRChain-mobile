@@ -51,11 +51,6 @@ void Session::onLoginSuccessful(const QString &token)
     emit loginSuccessful(token);
 }
 
-void Session::onRegistrationSuccessful(const QString &email, const QString &password)
-{
-    login(email, password);
-}
-
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
                          const QString &email)
 {
@@ -96,7 +91,7 @@ void Session::registerUser(const QString& email, const QString& password)
 
     auto request = QSharedPointer<RegisterRequest>::create(email, password);
     connect(request.data(), &RegisterRequest::registrationSuccessful,
-            this, &Session::onRegistrationSuccessful);
+            this, &Session::registrationSuccessful);
     connect(request.data(), &RegisterRequest::registerError,
             this, &Session::registrationError);
     mClient->send(request);

@@ -4,9 +4,9 @@
 
 UserInfoRequest::UserInfoRequest(const QByteArray &token) : ApiRequest("info")
 {
-    m_priority = Priority::Normal;
-    m_type = Type::Get;
-    m_token = token;
+    setPriority(Priority::Normal);
+    setType(Type::Get);
+    setToken(token);
     connect(this, &UserInfoRequest::replyError, this, &UserInfoRequest::errorHandler);
 }
 

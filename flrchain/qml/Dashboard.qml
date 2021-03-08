@@ -24,7 +24,6 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.horizontalCenter: parent.horizontalCenter
             anchors.topMargin: 30
             anchors.bottomMargin: 170
             anchors.leftMargin: 20

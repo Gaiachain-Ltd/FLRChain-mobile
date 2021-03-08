@@ -18,11 +18,9 @@ ApplicationWindow {
         }
     }
 
-
     Menu{
         id: menu
     }
-
 
     PagesView {
         id: stack

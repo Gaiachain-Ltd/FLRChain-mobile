@@ -43,7 +43,6 @@ Item {
             anchors.rightMargin: 30
             anchors.topMargin: 20
             anchors.bottomMargin: 16
-            anchors.horizontalCenter: parent.horizontalCenter
 
             Label {
                 text: qsTr("Eum Repellendus Aut")

@@ -6,9 +6,7 @@
 #include <QObject>
 #include <QAbstractNativeEventFilter>
 
-#ifdef Q_OS_ANDROID
-    #include <QtAndroid>
-#endif
+#include <QtAndroid>
 
 class PlatformBridgePrivate : public QObject, public QAbstractNativeEventFilter
 {

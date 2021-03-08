@@ -33,14 +33,13 @@ public:
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
-    void registrationSuccessful(const QString& apiToken) const;
+    void registrationSuccessful() const;
     void registrationError(const QString& errors) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
 
 private:
     void onLoginSuccessful(const QString& token);
-    void onRegistrationSuccessful(const QString &email, const QString &password);
     void onUserInfo(const QString& firstName,
                     const QString& lastName,
                     const QString& email);

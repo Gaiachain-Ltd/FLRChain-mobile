@@ -1,6 +1,5 @@
 #include "workdatarequest.h"
 
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
@@ -8,9 +7,9 @@
 
 WorkDataRequest::WorkDataRequest(const QByteArray &token) : ApiRequest("")
 {
-    m_priority = Priority::Normal;
-    m_type = Type::Get;
-    m_token = token;
+    setPriority(Priority::Normal);
+    setType(Type::Get);
+    setToken(token);
     connect(this, &WorkDataRequest::replyError, this, &WorkDataRequest::errorHandler);
 }
 

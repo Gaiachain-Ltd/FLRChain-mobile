@@ -1,9 +1,7 @@
 #include "loginrequest.h"
 
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonValue>
-#include <QJsonArray>
 
 #include <QLoggingCategory>
 #include <QDebug>
@@ -24,8 +22,8 @@ LoginRequest::LoginRequest(const QString &email, const QString &password)
         object.insert(QLatin1String("password"), QJsonValue(password));
 
         m_requestDocument.setObject(object);
-        m_priority = Priority::High;
-        m_type = Type::Post;
+        setPriority(Priority::High);
+        setType(Type::Post);
     } else {
         qCDebug(requestLogin) << "Error: missing login info"
                               << email << password.length();

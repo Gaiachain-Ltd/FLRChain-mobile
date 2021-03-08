@@ -2,7 +2,6 @@ package com.application.flrchain;
 
 import android.Manifest;
 import android.content.Intent;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import android.net.Uri;
@@ -24,7 +23,7 @@ import android.webkit.MimeTypeMap;
 
 public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
-    static final int FILE_SELECT_RESULT_CODE = 3;
+    static final int FILE_SELECT_RESULT_CODE = 2;
 
     static final int REQUEST_PERMISSION_CAMERA = 1;
     static final int REQUEST_PERMISSION_READ_STORAGE = 2;
