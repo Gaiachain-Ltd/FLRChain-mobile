@@ -6,3 +6,6 @@
 *  Android SDK 26
 *  JDK 8
 *  Compiler: Android Clang(C++,...,NDK 21)
+
+**Instructions:**
+* Project uses mrestapi submodule for communication with API, to pull it use: *git submodule update --init* after cloning the repository
