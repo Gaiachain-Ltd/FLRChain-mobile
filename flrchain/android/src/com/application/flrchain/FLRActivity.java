@@ -36,13 +36,13 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
     private int startedActivity = 0;
 
-    public FLRActivity() {} 
+    public FLRActivity() {}
 
- @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         System.out.println("RESULT " + requestCode + " / " + resultCode);
 
-        if ( requestCode == FLRMedia.CAPTURE_PHOTO_ACTIVITY_RESULT) {
+        if (requestCode == FLRMedia.CAPTURE_PHOTO_ACTIVITY_RESULT) {
 
             if (resultCode == RESULT_OK) {
                 capture.checkResult(requestCode, resultCode, data);
@@ -76,14 +76,13 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String suffix = "." + getMimeType(contentUri);
-            String imageFileName = getFilesDir() + "/photos/" + "IMG_" + timeStamp  + suffix;
+            String imageFileName = getFilesDir() + "/photos/" + "IMG_" + timeStamp + suffix;
 
-            if(!copy(contentUri.toString(), imageFileName)){
-               imageFileName = "";
+            if (!copy(contentUri.toString(), imageFileName)) {
+                imageFileName = "";
             }
 
             switch (requestCode) {
-
                 case FILE_SELECT_RESULT_CODE:
                     fileSelectionCallback(imageFileName);
                     break;
@@ -92,7 +91,6 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
                     activityClosedCallback();
                     break;
             }
-
         }
 
         startedActivity = 0;
@@ -101,20 +99,19 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     public String getMimeType(Uri uri) {
         String extension;
 
-         //Check uri format to avoid null
-         if (uri.getScheme().equals(getContentResolver().SCHEME_CONTENT)) {
-             //If scheme is a content
-             final MimeTypeMap mime = MimeTypeMap.getSingleton();
-             extension = mime.getExtensionFromMimeType(getApplicationContext().getContentResolver().getType(uri));
-         } else {
+        //Check uri format to avoid null
+        if (uri.getScheme().equals(getContentResolver().SCHEME_CONTENT)) {
+            //If scheme is a content
+            final MimeTypeMap mime = MimeTypeMap.getSingleton();
+            extension = mime.getExtensionFromMimeType(getApplicationContext().getContentResolver().getType(uri));
+        } else {
             //If scheme is a File
-             extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
-
-         }
-       return extension;
+            extension = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(new File(uri.getPath())).toString());
+        }
+        return extension;
     }
 
- @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
 
         if (grantResults.length == 0) {
@@ -152,13 +149,13 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
             captureMedia();
         } else {
 
-            ArrayList<String> permissions = new ArrayList<String>();
+            ArrayList <String> permissions = new ArrayList <String> ();
 
-            if ( false == cameraPermissionGranted ) {
+            if (false == cameraPermissionGranted) {
                 permissions.add(Manifest.permission.CAMERA);
             }
 
-            if ( false == storagePermissionGranted ) {
+            if (false == storagePermissionGranted) {
                 permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             }
 
@@ -172,8 +169,10 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
         } else {
             mimeTypeFilterToApply = mimeTypeFilter;
 
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_READ_STORAGE);
+            ActivityCompat.requestPermissions(this, new String[] {
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                },
+                REQUEST_PERMISSION_READ_STORAGE);
         }
     }
 
@@ -182,13 +181,15 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     }
 
     public void requestCameraPermission() {
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA},
-                REQUEST_PERMISSION_CAMERA_READ);
+        ActivityCompat.requestPermissions(this, new String[] {
+                Manifest.permission.CAMERA
+            },
+            REQUEST_PERMISSION_CAMERA_READ);
     }
 
     public boolean copy(String srcPath, String descPath) {
         boolean res = false;
-     
+
         InputStream is = getInputStream(getApplicationContext(), srcPath);
         OutputStream os = getOutputStream(getApplicationContext(), descPath);
 
@@ -203,9 +204,9 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
                 os.write(buf, 0, len);
             }
         } catch (Exception e1) {
-           System.out.println(e1.getMessage());
+            System.out.println(e1.getMessage());
         } finally {
-            try{
+            try {
                 is.close();
                 os.close();
             } catch (Exception e2) {
@@ -215,20 +216,18 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
         return true;
     }
 
-   public static InputStream getInputStream(Context context, final String path) {
+    public static InputStream getInputStream(Context context, final String path) {
         InputStream in = null;
         Uri uri = getUri(path);
 
         if (uri == null)
             return null;
 
-        try {
-            in = context.getContentResolver().openInputStream(uri);
+        try { in = context.getContentResolver().openInputStream(uri);
         } catch (Exception e1) {
-            try {
-                in = new FileInputStream(path);
+            try { in = new FileInputStream(path);
             } catch (Exception e2) {
-            System.out.println(e2.getMessage());
+                System.out.println(e2.getMessage());
             }
         }
 
@@ -242,11 +241,9 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
         if (uri == null)
             return null;
 
-        try {
-            in = context.getContentResolver().openOutputStream(uri);
+        try { in = context.getContentResolver().openOutputStream(uri);
         } catch (Exception e1) {
-            try {
-                in = new FileOutputStream(path);
+            try { in = new FileOutputStream(path);
             } catch (Exception e2) {
                 System.out.println(e2.getMessage());
             }
@@ -270,7 +267,7 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     // PRIVATE METHODS //
     //=================//
 
-    private void captureMedia(){
+    private void captureMedia() {
         capture.capturePhoto();
     }
 
