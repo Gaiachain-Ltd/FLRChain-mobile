@@ -1,10 +1,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 Button {
     id: button
 
-    property string bgColor: "#23BC3D"
+    property string bgColor: Style.accentColor
 
     implicitHeight: 42
     implicitWidth: parent.width
@@ -17,8 +18,8 @@ Button {
 
     contentItem: Text {
         text: button.text
-        font.pixelSize: 15
-        color: "#FFFFFF"
+        font.pixelSize: Style.fontMedium
+        color: Style.bgColor
         font.weight: Font.DemiBold
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

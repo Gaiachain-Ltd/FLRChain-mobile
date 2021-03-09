@@ -1,12 +1,13 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 Button {
     id: button
 
-    property string bgColor: "#23BC3D"
+    property string bgColor: Style.accentColor
     property string iconSrc: ""
-    property string textColor: "#253F50"
+    property string textColor: Style.darkLabelColor
 
     implicitWidth: parent.width
     implicitHeight: 42
@@ -19,8 +20,8 @@ Button {
 
     contentItem: Rectangle {
         anchors.fill: parent
-        anchors.leftMargin: 20
-        color: "transparent"
+        anchors.leftMargin: Style.baseMargin
+        color: Style.colorTransparent
         Row {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 15
@@ -35,7 +36,7 @@ Button {
 
             Text {
                 text: button.text
-                font.pixelSize: 15
+                font.pixelSize: Style.fontMedium
                 color: textColor
                 font.weight: Font.DemiBold
                 horizontalAlignment: Text.AlignHCenter

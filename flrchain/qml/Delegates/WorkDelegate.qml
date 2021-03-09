@@ -1,30 +1,31 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 Column {
     spacing: 20
 
     Rectangle {
-        color: "#72809D"
+        color: Style.mediumLabelColor
         height: 191
         width: parent.width
         radius: 10
         Rectangle{
             anchors.bottom: parent.top
-            anchors.bottomMargin: -10
+            anchors.bottomMargin: -Style.smallMargin
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: Style.baseMargin
             height: 20
             width: 54
-            color: "#23BC3D"
+            color: Style.accentColor
             radius: 4
 
             Label{
                 anchors.centerIn: parent
-                font.pixelSize: 12
+                font.pixelSize: Style.fontTiny
                 font.weight: Font.DemiBold
                 text: "Accepted"
-                color: "#FFFFFF"
+                color: Style.bgColor
             }
         }
 
@@ -33,15 +34,15 @@ Column {
             anchors.right: parent.right
             height: 40
             width: 74
-            color: "#23BC3D"
+            color: Style.accentColor
             radius: 4
 
             Label{
                 anchors.centerIn: parent
-                font.pixelSize: 17
+                font.pixelSize: Style.fontBig
                 font.weight: Font.Bold
                 text: "10 USDC"
-                color: "#FFFFFF"
+                color: Style.bgColor
             }
         }
     }
@@ -51,22 +52,22 @@ Column {
         Image {
             source: ""
             asynchronous: true
-            width: 18
-            height: 18
+            width: Style.iconSize
+            height: Style.iconSize
             fillMode: Image.PreserveAspectFit
         }
 
         Label{
-            font.pixelSize: 12
+            font.pixelSize: Style.fontTiny
             font.weight: Font.DemiBold
             text: "August 24, 2020"
-            color: "#72809D"
+            color: Style.mediumLabelColor
         }
     }
 
     Rectangle{
         height: 2
         width: parent.width
-        color: "#E2E9F0"
+        color: Style.grayBgColor
     }
 }

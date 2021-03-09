@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -15,51 +16,50 @@ Item {
             id: contentRect
             width: parent.width
             height: childrenRect.height
-            color: "white"
+            color: Style.bgColor
             radius: 10
 
             ColumnLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: 20
-                anchors.rightMargin: 20
+                anchors.leftMargin: Style.baseMargin
+                anchors.rightMargin: Style.baseMargin
                 spacing: 8
 
                 Label{
-                    Layout.topMargin: 20
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.baseMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Action"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Label{
-                    font.pixelSize: 14
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Plant Fruit trees on farmland"
-                    color: "#72809D"
+                    color: Style.mediumLabelColor
                 }
 
                 Label {
-                    Layout.topMargin: 10
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.smallMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Rewards per unit"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Label{
-                    font.pixelSize: 14
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "2 USDC"
-                    color: "#72809D"
+                    color: Style.mediumLabelColor
                 }
 
                 Custom.Button{
-                    Layout.topMargin: 10
-                    Layout.bottomMargin: 20
+                    Layout.topMargin: Style.smallMargin
+                    Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 42
                     text: qsTr("Earn reward")
                     onClicked: stack.pushPage("qrc:/WorkScreen.qml");
                 }

@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -24,10 +25,10 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.topMargin: 30
+            anchors.topMargin: Style.bigMargin
             anchors.bottomMargin: 170
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
             spacing: 40
 
             Custom.ShadowedRectangle {
@@ -38,19 +39,19 @@ Item {
                 Rectangle{
                     anchors.fill: parent
                     radius: 10
-                    color: "white"
+                    color: Style.bgColor
 
                     RowLayout{
                         id: row
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.margins: 20
+                        anchors.margins: Style.baseMargin
 
                         Label {
                             text: "Earn rewards"
-                            font.pixelSize: 22
-                            color: "#23BC3D"
+                            font.pixelSize: Style.fontUltra
+                            color: Style.accentColor
                         }
 
                         Item{
@@ -70,10 +71,10 @@ Item {
                     Label {
                         anchors.top: row.bottom
                         anchors.left: parent.left
-                        anchors.leftMargin: 20
+                        anchors.leftMargin: Style.baseMargin
                         text: "4 projects"
-                        font.pixelSize: 14
-                        color: "#778699"
+                        font.pixelSize: Style.fontSmall
+                        color: Style.baseLabelColor
                         font.weight: Font.DemiBold
                     }
 
@@ -82,7 +83,7 @@ Item {
                         radius: 10
                         height: 90
                         width: parent.width
-                        color: "white"
+                        color: Style.bgColor
                     }
                 }
             }
@@ -95,19 +96,19 @@ Item {
                 Rectangle{
                     anchors.fill: parent
                     radius: 10
-                    color: "#FFFCE2"
+                    color: Style.yellowDelegateColor
 
                     RowLayout{
                         id: contentRow
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.margins: 20
+                        anchors.margins: Style.baseMargin
 
                         Label {
                             text: "Wallet"
-                            font.pixelSize: 22
-                            color: "#FFC423"
+                            font.pixelSize: Style.fontUltra
+                            color: Style.yellowLabelColor
                         }
 
                         Item{
@@ -128,10 +129,10 @@ Item {
                     Label {
                         anchors.top: contentRow.bottom
                         anchors.left: parent.left
-                        anchors.leftMargin: 20
+                        anchors.leftMargin: Style.baseMargin
                         text: "Balance: 321 USDC"
-                        font.pixelSize: 14
-                        color: "#778699"
+                        font.pixelSize: Style.fontSmall
+                        color: Style.baseLabelColor
                         font.weight: Font.DemiBold
                     }
 
@@ -140,7 +141,7 @@ Item {
                         height: 90
                         radius: 10
                         width: parent.width
-                        color: "transparent"
+                        color: Style.colorTransparent
                     }
                 }
             }

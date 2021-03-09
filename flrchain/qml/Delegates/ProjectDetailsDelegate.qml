@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -15,42 +16,42 @@ Item {
             id: contentRect
             width: parent.width
             height: childrenRect.height
-            color: "white"
+            color: Style.bgColor
             radius: 10
 
             Rectangle{
                 anchors.bottom: parent.top
-                anchors.bottomMargin: -10
+                anchors.bottomMargin: -Style.smallMargin
                 anchors.left: parent.left
-                anchors.leftMargin: 20
+                anchors.leftMargin: Style.baseMargin
                 height: 20
                 width: 54
-                color: "#23BC3D"
+                color: Style.accentColor
                 radius: 4
                 visible: true
 
                 Label {
                     anchors.centerIn: parent
-                    font.pixelSize: 12
+                    font.pixelSize: Style.fontTiny
                     font.weight: Font.DemiBold
                     text: "Joined"
-                    color: "#FFFFFF"
+                    color: Style.bgColor
                 }
             }
 
             ColumnLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: 20
-                anchors.rightMargin: 20
+                anchors.leftMargin: Style.baseMargin
+                anchors.rightMargin: Style.baseMargin
                 spacing: 10
 
                 Label{
-                    Layout.topMargin: 30
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.bigMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Project deadline"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Row {
@@ -58,24 +59,24 @@ Item {
                     Image {
                         source: ""
                         asynchronous: true
-                        width: 18
-                        height: 18
+                        width: Style.iconSize
+                        height: width
                         fillMode: Image.PreserveAspectFit
                     }
                     Label{
-                        font.pixelSize: 12
+                        font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
                         text: "August 24, 2020"
-                        color: "#72809D"
+                        color: Style.mediumLabelColor
                     }
                 }
 
                 Label {
-                    Layout.topMargin: 10
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.smallMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Investment time"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Row {
@@ -83,25 +84,25 @@ Item {
                     Image {
                         source: ""
                         asynchronous: true
-                        width: 18
-                        height: 18
+                        width: Style.iconSize
+                        height: Style.iconSize
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Label{
-                        font.pixelSize: 12
+                        font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
                         text: "May 02, 2020 - May 25, 2020"
-                        color: "#72809D"
+                        color: Style.mediumLabelColor
                     }
                 }
 
                 Label{
-                    Layout.topMargin: 10
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.smallMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Project status"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Row {
@@ -109,25 +110,25 @@ Item {
                     Image {
                         source: ""
                         asynchronous: true
-                        width: 18
-                        height: 18
+                        width: Style.iconSize
+                        height: Style.iconSize
                         fillMode: Image.PreserveAspectFit
                     }
 
                     Label {
-                        font.pixelSize: 12
+                        font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
                         text: "Ongoing"
-                        color: "#72809D"
+                        color: Style.mediumLabelColor
                     }
                 }
 
                 Label {
-                    Layout.topMargin: 10
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.smallMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Description"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Text {
@@ -135,15 +136,15 @@ Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 66
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: "#72809D"
+                    color: Style.mediumLabelColor
                 }
 
                 Label{
-                    Layout.topMargin: 10
-                    font.pixelSize: 14
+                    Layout.topMargin: Style.smallMargin
+                    font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Photo"
-                    color: "#23BC3D"
+                    color: Style.accentColor
                 }
 
                 Image {
@@ -153,10 +154,9 @@ Item {
                 }
 
                 Custom.Button{
-                    Layout.topMargin: 10
-                    Layout.bottomMargin: 20
+                    Layout.topMargin: Style.smallMargin
+                    Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 42
                     text: qsTr("Earn reward")
                     onClicked: stack.pushPage("qrc:/WorkScreen.qml");
                 }

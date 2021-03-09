@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 Button
 {
@@ -18,8 +19,8 @@ Button
         width: control.width
         height: control.height
 
-        color: "#00ffffff"
-        border.color: "#00ffffff"
+        color: Style.colorTransparent
+        border.color: Style.colorTransparent
 
         radius: control.radius
     }

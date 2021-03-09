@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -36,7 +37,7 @@ Item {
 
     Rectangle {
         id: background
-        color: "#FAFAFD"
+        color: Style.shadowedBgColor
         anchors.fill: parent
 
         Flickable {
@@ -44,7 +45,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.topMargin: 20
+            anchors.topMargin: Style.baseMargin
             contentHeight: mainColumn.height
             boundsBehavior: Flickable.StopAtBounds
             clip: true
@@ -53,8 +54,8 @@ Item {
                 id: mainColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: 30
-                anchors.rightMargin: 30
+                anchors.leftMargin: Style.bigMargin
+                anchors.rightMargin: Style.bigMargin
 
                 Image {
                     id: logo
@@ -67,40 +68,40 @@ Item {
 
                 Rectangle {
                     Layout.fillWidth: true
-                    Layout.topMargin: 30
+                    Layout.topMargin: Style.bigMargin
                     Layout.bottomMargin: 16
                     Layout.preferredHeight: childrenRect.height
 
-                    color: "white"
+                    color: Style.bgColor
                     radius: 7
                     ColumnLayout{
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.margins: 20
+                        anchors.margins: Style.baseMargin
                         spacing: 15
 
                         Label {
-                            Layout.topMargin: 20
+                            Layout.topMargin: Style.baseMargin
                             text: qsTr("Register")
-                            font.pixelSize: 20
-                            color: "#23BC3D"
+                            font.pixelSize: Style.fontLarge
+                            color: Style.accentColor
                         }
 
                         Label {
                             text: qsTr("Fill the form, make sure it is correct")
-                            font.pixelSize: 12
+                            font.pixelSize: Style.fontTiny
                             font.weight: Font.DemiBold
-                            color: "#778699"
+                            color: Style.baseLabelColor
                             Layout.topMargin: -5
                         }
 
                         Rectangle {
-                            color: "#E2E9F0"
+                            color: Style.grayBgColor
                             height: 2
-                            Layout.topMargin: 10
+                            Layout.topMargin: Style.smallMargin
                             Layout.fillWidth: true
-                            Layout.leftMargin: -20
-                            Layout.rightMargin: -20
+                            Layout.leftMargin: -Style.baseMargin
+                            Layout.rightMargin: -Style.baseMargin
                         }
 
 
@@ -117,7 +118,7 @@ Item {
                         Custom.TextInput {
                             id: userEmail
                             placeholderText: qsTr("Email")
-                            color: errorMode ? "#FE2121" : "#253F50"
+                            color: errorMode ? Style.errorColor : Style.darkLabelColor
                             onTextChanged: {
                                 if(errorMode){
                                     errorMode = false
@@ -151,9 +152,9 @@ Item {
                         TextArea {
                             id: errorLabel
                             readOnly: true
-                            font.pixelSize: 12
+                            font.pixelSize: Style.fontTiny
                             font.weight: Font.DemiBold
-                            color: "#FE2121"
+                            color: Style.errorColor
                             Layout.fillWidth: true
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
@@ -170,7 +171,7 @@ Item {
                         Custom.Button {
                             id: loginButton
                             text: qsTr("Log in")
-                            bgColor: "#06BCC1"
+                            bgColor: Style.buttonSecColor
 
                             onClicked: {
                                 stack.pop()
@@ -179,18 +180,18 @@ Item {
 
                         Label {
                             text: qsTr("By creating this account, you agree with our")
-                            font.pixelSize: 12
+                            font.pixelSize: Style.fontTiny
                             color: "#606060"
                             Layout.alignment: Qt.AlignHCenter
                         }
 
                         Label {
                             text: qsTr("Terms & Conditions")
-                            font.pixelSize: 12
-                            color: "#23BC3D"
+                            font.pixelSize: Style.fontTiny
+                            color: Style.accentColor
                             Layout.alignment: Qt.AlignHCenter
-                            Layout.topMargin: -10
-                            Layout.bottomMargin: 20
+                            Layout.topMargin: -Style.smallMargin
+                            Layout.bottomMargin: Style.baseMargin
                         }
                     }
                 }

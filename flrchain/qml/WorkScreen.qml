@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -12,7 +13,7 @@ Item {
         target: dataManager
 
         function onDisplayPhoto(filePath){
-            img.source =  qsTr("file:///") + filePath
+            img.source =  "file:///" + filePath
             photoVisible = true
         }
 
@@ -31,7 +32,7 @@ Item {
 
     Rectangle {
         id: background
-        color: "white"
+        color: Style.bgColor
         anchors.top: header.bottom
         anchors.left: parent.left
         anchors.right: parent.right
@@ -39,49 +40,49 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.leftMargin: 30
-            anchors.rightMargin: 30
-            anchors.topMargin: 20
+            anchors.leftMargin: Style.bigMargin
+            anchors.rightMargin: Style.bigMargin
+            anchors.topMargin: Style.baseMargin
             anchors.bottomMargin: 16
 
             Label {
                 text: qsTr("Eum Repellendus Aut")
-                font.pixelSize: 22
-                color: "#253F50"
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
             }
 
             Label {
                 text: qsTr("Plant Fruit trees on farmland")
-                font.pixelSize: 17
-                color: "#253F50"
+                font.pixelSize: Style.fontBig
+                color: Style.darkLabelColor
             }
 
             Custom.ShadowedRectangle {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-                Layout.topMargin: 30
+                Layout.topMargin: Style.bigMargin
 
                 Rectangle{
                     anchors.fill: parent
-                    color: "white"
+                    color: Style.bgColor
                     radius: 10
 
                     ColumnLayout{
                         anchors.fill: parent
-                        anchors.margins: 20
-                        anchors.bottomMargin: 30
+                        anchors.margins: Style.baseMargin
+                        anchors.bottomMargin: Style.bigMargin
                         spacing: 20
 
                         Label {
                             text: qsTr("Photo")
-                            font.pixelSize: 12
-                            color: "#253F50"
+                            font.pixelSize: Style.fontTiny
+                            color: Style.darkLabelColor
                             font.weight: Font.DemiBold
                         }
 
                         Custom.ImageButton{
                             Layout.alignment: Qt.AlignHCenter
-                            bgColor: "#F7F9FB"
+                            bgColor: Style.inputBgColor
                             text: qsTr("Upload from gallery...")
                             visible: !photoVisible
 
@@ -92,7 +93,7 @@ Item {
 
                         Custom.ImageButton{
                             Layout.alignment: Qt.AlignHCenter
-                            bgColor: "#F7F9FB"
+                            bgColor: Style.inputBgColor
                             visible: !photoVisible
                             text: qsTr("Take photo...")
                             onClicked: {

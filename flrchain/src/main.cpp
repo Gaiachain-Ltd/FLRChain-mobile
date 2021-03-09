@@ -53,6 +53,7 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
+    qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 Rectangle{
     id: headerContainer
@@ -15,8 +16,8 @@ Rectangle{
         anchors.verticalCenter: parent.verticalCenter
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.leftMargin: 20
-        anchors.rightMargin: 20
+        anchors.leftMargin: Style.baseMargin
+        anchors.rightMargin: Style.baseMargin
 
         IconButton {
             id: backButton
@@ -30,7 +31,7 @@ Rectangle{
             text: title
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            color: "#23BC3D"
+            color: Style.accentColor
         }
 
         IconButton {
@@ -46,6 +47,6 @@ Rectangle{
         anchors.bottom: headerContainer.bottom
         height: 2
         width: parent.width
-        color: "#E2E9F0"
+        color: Style.grayBgColor
     }
 }

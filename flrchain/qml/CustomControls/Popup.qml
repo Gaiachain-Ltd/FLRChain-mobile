@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 Popup {
     id: popup
@@ -15,7 +16,7 @@ Popup {
     property string title: ""
 
     background: Rectangle {
-        color: "white"
+        color: Style.bgColor
         radius: 10
     }
 
@@ -26,7 +27,7 @@ Popup {
 
         Image {
             source: ""
-            Layout.topMargin: 30
+            Layout.topMargin: Style.bigMargin
             Layout.preferredWidth: 72
             Layout.preferredHeight: 72
             Layout.alignment: Qt.AlignHCenter
@@ -35,8 +36,8 @@ Popup {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            font.pointSize: 22
-            color: "#253F50"
+            font.pointSize: Style.fontUltra
+            color: Style.darkLabelColor
             text: title
         }
     }

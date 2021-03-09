@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -28,28 +29,28 @@ Item {
             id: mainColumn
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
             spacing: 20
 
             Label {
                 id: title
-                Layout.topMargin: 20
+                Layout.topMargin: Style.baseMargin
                 text: qsTr("Eum Repellendus Aut")
-                font.pixelSize: 22
-                color: "#253F50"
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
             }
 
             Delegates.ProjectDetailsDelegate{
-                Layout.topMargin: 20
+                Layout.topMargin: Style.baseMargin
                 Layout.fillWidth: true
             }
 
             Label {
-                Layout.topMargin: 20
+                Layout.topMargin: Style.baseMargin
                 text: qsTr("Tasks (2)")
-                font.pixelSize: 22
-                color: "#253F50"
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
             }
 
             Delegates.TaskDelegate {
@@ -58,10 +59,10 @@ Item {
             }
 
             Label {
-                Layout.topMargin: 20
+                Layout.topMargin: Style.baseMargin
                 text: qsTr("Work history")
-                font.pixelSize: 22
-                color: "#253F50"
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
             }
 
             Delegates.WorkDelegate {

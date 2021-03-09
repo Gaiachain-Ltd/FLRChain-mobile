@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import com.flrchain.style 1.0
 
 TextField
 {
@@ -11,16 +12,16 @@ TextField
         radius: 10
         implicitWidth: parent.width
         implicitHeight: 100
-        color: "#F7F9FB"
+        color: Style.inputBgColor
     }
 
     verticalAlignment: Qt.AlignVCenter
     horizontalAlignment: Qt.AlignLeft
 
-    color: "#253F50"
+    color: Style.darkLabelColor
     font.weight: Font.DemiBold
-    font.pixelSize: 12
+    font.pixelSize: Style.fontTiny
     placeholderText: textInput.placeholderText
-    placeholderTextColor: "#C0C7D4"
-    leftPadding: 20
+    placeholderTextColor: Style.placeholderColor
+    leftPadding: Style.baseMargin
 }

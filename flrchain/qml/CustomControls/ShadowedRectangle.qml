@@ -1,9 +1,10 @@
 import QtQuick 2.15
 import QtGraphicalEffects 1.15
+import com.flrchain.style 1.0
 
 Rectangle {
     radius: 10
-    color: "#00000014"
+    color: Style.colorTransparent
 
     RectangularGlow {
         anchors.fill: parent

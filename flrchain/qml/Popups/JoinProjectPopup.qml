@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
+
 import "qrc:/CustomControls" as Custom
 
 Custom.Popup {
@@ -9,23 +11,23 @@ Custom.Popup {
     ColumnLayout {
         Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
-        Layout.leftMargin: 20
-        Layout.rightMargin: 20
+        Layout.leftMargin: Style.baseMargin
+        Layout.rightMargin: Style.baseMargin
         spacing: 20
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            font.pointSize: 14
+            font.pointSize: Style.fontSmall
             font.weight: Font.DemiBold
-            color: "#253F50"
+            color: Style.darkLabelColor
             text: qsTr("Are you sure you want to join to the project")
         }
 
         Label {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: -15
-            font.pointSize: 14
-            color: "#23BC3D"
+            font.pointSize: Style.fontSmall
+            color: Style.accentColor
             text: qsTr("Eum Repellendus Aut")
         }
 
@@ -40,8 +42,8 @@ Custom.Popup {
         Custom.Button {
             id: loginButton
             text: qsTr("Cancel")
-            Layout.bottomMargin: 10
-            bgColor: "#06BCC1"
+            Layout.bottomMargin: Style.smallMargin
+            bgColor: Style.buttonSecColor
 
             onClicked: {
             }

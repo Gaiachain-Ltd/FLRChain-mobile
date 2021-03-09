@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -23,14 +24,14 @@ Item {
 
     Rectangle {
         id: background
-        color: "#FAFAFD"
+        color: Style.shadowedBgColor
         anchors.fill: parent
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.leftMargin: 30
-            anchors.rightMargin: 30
-            anchors.topMargin: 20
+            anchors.leftMargin: Style.bigMargin
+            anchors.rightMargin: Style.bigMargin
+            anchors.topMargin: Style.baseMargin
             anchors.bottomMargin: 16
 
             Image {
@@ -49,52 +50,52 @@ Item {
                 Layout.fillHeight: true
                 Layout.maximumHeight: 140
                 Layout.preferredHeight: 140
-                Layout.topMargin: 20
+                Layout.topMargin: Style.baseMargin
                 Layout.alignment: Qt.AlignHCenter
                 sourceSize: Qt.size(298, 140)
             }
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: 10
+                Layout.topMargin: Style.smallMargin
                 Layout.preferredHeight: childrenRect.height
 
-                color: "white"
+                color: Style.bgColor
                 radius: 7
 
                 ColumnLayout{
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    anchors.margins: 20
+                    anchors.margins: Style.baseMargin
                     spacing: 15
 
                     Label {
-                        Layout.topMargin: 20
+                        Layout.topMargin: Style.baseMargin
                         text: qsTr("Login")
-                        font.pixelSize: 20
-                        color: "#23BC3D"
+                        font.pixelSize: Style.fontLarge
+                        color: Style.accentColor
                     }
 
                     Label {
-                        Layout.topMargin: -10
+                        Layout.topMargin: -Style.smallMargin
                         text: qsTr("Welcome back")
-                        font.pixelSize: 12
+                        font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        color: "#778699"
+                        color: Style.baseLabelColor
                     }
 
                     Rectangle {
                         Layout.fillWidth: true
-                        Layout.leftMargin: -20
-                        Layout.rightMargin: -20
-                        color: "#E2E9F0"
+                        Layout.leftMargin: -Style.baseMargin
+                        Layout.rightMargin: -Style.baseMargin
+                        color: Style.grayBgColor
                         height: 2
                     }
 
                     Custom.TextInput {
                         id: userEmail
                         placeholderText: qsTr("Please enter your email...")
-                        color: errorMode ? "#FE2121" : "#253F50"
+                        color: errorMode ? Style.errorColor : Style.darkLabelColor
                         onTextChanged: {
                             if(errorMode) {
                                 errorMode = false
@@ -107,7 +108,7 @@ Item {
                         id: password
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
-                        color: errorMode ? "#FE2121" : "#253F50"
+                        color: errorMode ? Style.errorColor : Style.darkLabelColor
                         onTextChanged: {
                             if(errorMode){
                                 errorMode = false
@@ -128,8 +129,8 @@ Item {
                         id: errorLabel
                         readOnly: true
                         Layout.fillWidth: true
-                        font.pixelSize: 12
-                        color: "#FE2121"
+                        font.pixelSize: Style.fontTiny
+                        color: Style.errorColor
                     }
 
                     Custom.Button {
@@ -145,7 +146,7 @@ Item {
                     Custom.Button {
                         id: registerButton
                         text: qsTr("Need an account?")
-                        bgColor: "#06BCC1"
+                        bgColor: Style.buttonSecColor
 
                         onClicked: {
                             stack.pushPage("qrc:/RegistrationScreen.qml");
@@ -154,10 +155,10 @@ Item {
 
                     Label {
                         Layout.alignment: Qt.AlignHCenter
-                        Layout.bottomMargin: 20
+                        Layout.bottomMargin: Style.baseMargin
                         text: qsTr("Forgot password?")
-                        font.pixelSize: 12
-                        color: "#23BC3D"
+                        font.pixelSize: Style.fontTiny
+                        color: Style.accentColor
                     }
 
                 }

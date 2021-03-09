@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -14,11 +15,11 @@ Drawer {
     background: Rectangle{
         width: parent.width
         height: contentItem.height
-        color: "white"
+        color: Style.bgColor
         radius: 10
 
         Rectangle {
-            color: "white"
+            color: Style.bgColor
             anchors.top: parent.top
             width: parent.width
             height: 8
@@ -34,19 +35,19 @@ Drawer {
             id: column
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
 
             RowLayout{
                 id: row
-                Layout.leftMargin: 20
-                Layout.topMargin: 20
+                Layout.leftMargin: Style.baseMargin
+                Layout.topMargin: Style.baseMargin
 
                 Label {
                     id:username
                     text: qsTr("UserName")
-                    font.pixelSize: 20
-                    color: "#23BC3D"
+                    font.pixelSize: Style.fontLarge
+                    color: Style.accentColor
                 }
 
                 Item{
@@ -65,27 +66,27 @@ Drawer {
 
             Label {
                 id: usermail
-                Layout.leftMargin: 20
+                Layout.leftMargin: Style.baseMargin
                 text: qsTr("UserEmail")
-                font.pixelSize: 14
-                color: "#606C83"
+                font.pixelSize: Style.fontSmall
+                color: Style.darkLabelColor
                 font.weight: Font.DemiBold
             }
 
             Rectangle {
-                color: "#EDEEF2"
+                color: Style.sectionColor
                 Layout.preferredHeight: 2
                 Layout.fillWidth: true
-                Layout.leftMargin: -20
-                Layout.rightMargin: -20
-                Layout.topMargin: 20
+                Layout.leftMargin: -Style.baseMargin
+                Layout.rightMargin: -Style.baseMargin
+                Layout.topMargin: Style.baseMargin
             }
 
             Custom.ImageButton{
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: buttonHeight
-                bgColor: "transparent"
-                textColor: "#778699"
+                bgColor: Style.colorTransparent
+                textColor: Style.baseLabelColor
                 text: qsTr("Home")
                 iconSrc: ""
                 onClicked: {
@@ -93,7 +94,7 @@ Drawer {
             }
 
             Rectangle {
-                color: "#EDEEF2"
+                color: Style.sectionColor
                 Layout.preferredHeight: 1
                 Layout.fillWidth: true
             }
@@ -101,8 +102,8 @@ Drawer {
             Custom.ImageButton{
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: buttonHeight
-                bgColor: "transparent"
-                textColor: "#778699"
+                bgColor: Style.colorTransparent
+                textColor: Style.baseLabelColor
                 text: qsTr("Earn rewards")
                 iconSrc: ""
 
@@ -111,7 +112,7 @@ Drawer {
             }
 
             Rectangle {
-                color: "#EDEEF2"
+                color: Style.sectionColor
                 Layout.preferredHeight: 1
                 Layout.fillWidth: true
             }
@@ -119,8 +120,8 @@ Drawer {
             Custom.ImageButton{
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: buttonHeight
-                bgColor: "transparent"
-                textColor: "#778699"
+                bgColor: Style.colorTransparent
+                textColor: Style.baseLabelColor
                 text: qsTr("Wallet")
                 iconSrc: ""
 
@@ -129,7 +130,7 @@ Drawer {
             }
 
             Rectangle {
-                color: "#EDEEF2"
+                color: Style.sectionColor
                 Layout.preferredHeight: 1
                 Layout.fillWidth: true
             }
@@ -137,8 +138,8 @@ Drawer {
             Custom.ImageButton{
                 Layout.preferredWidth: parent.width
                 Layout.preferredHeight: buttonHeight
-                bgColor: "transparent"
-                textColor: "#FE2121"
+                bgColor: Style.colorTransparent
+                textColor: Style.errorColor
                 text: qsTr("Log out")
                 iconSrc: ""
 

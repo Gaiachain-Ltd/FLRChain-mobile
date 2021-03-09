@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -20,7 +21,7 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.topMargin: 20
+        anchors.topMargin: Style.baseMargin
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
@@ -29,16 +30,16 @@ Item {
             id: mainColumn
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.leftMargin: 20
-            anchors.rightMargin: 20
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
             height: listView.contentHeight + 60
 
             spacing: 20
 
             Label {
                 text: qsTr("Eum Repellendus Aut")
-                font.pixelSize: 22
-                color: "#253F50"
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
             }
 
             Delegates.ProjectDelegate {
