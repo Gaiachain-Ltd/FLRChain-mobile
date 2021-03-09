@@ -93,3 +93,6 @@ DISTFILES += \
     android/src/com/application/flrchain/FLRActivity.java
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
+
+API_URL = "http://195.201.81.231:8000/api/v1/"
+DEFINES += APIUrl='"\\\"$$API_URL\\\""'

@@ -10,6 +10,6 @@ ApiRequest::ApiRequest(const QString &method)
 void ApiRequest::setMethod(const QString &apiMethodPath)
 {
     mApiMethod = apiMethodPath;
-    setAddress(QUrl("http://195.201.81.231:8000/api/v1/" + mApiMethod + "/?format=json"));
+    setAddress(QUrl(APIUrl + mApiMethod + "/?format=json"));
 }
 
