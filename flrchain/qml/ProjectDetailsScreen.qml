@@ -52,6 +52,11 @@ Item {
                 color: "#253F50"
             }
 
+            Delegates.TaskDelegate {
+                Layout.fillWidth: true
+
+            }
+
             Label {
                 Layout.topMargin: 20
                 text: qsTr("Work history")
