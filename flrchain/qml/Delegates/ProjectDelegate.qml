@@ -28,7 +28,7 @@ Item {
 
                 Item{
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 20
+                    Layout.preferredHeight: 10
                 }
 
                 Rectangle{

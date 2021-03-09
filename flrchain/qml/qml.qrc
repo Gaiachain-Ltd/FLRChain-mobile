@@ -20,5 +20,7 @@
         <file>Delegates/ProjectDelegate.qml</file>
         <file>Delegates/WorkDelegate.qml</file>
         <file>Delegates/TaskDelegate.qml</file>
+        <file>CustomControls/Popup.qml</file>
+        <file>Popups/JoinProjectPopup.qml</file>
     </qresource>
 </RCC>
