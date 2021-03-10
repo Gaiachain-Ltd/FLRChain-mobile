@@ -23,5 +23,6 @@
         <file>CustomControls/Popup.qml</file>
         <file>Popups/JoinProjectPopup.qml</file>
         <file>AppStyle.qml</file>
+        <file>Delegates/BalanceDelegate.qml</file>
     </qresource>
 </RCC>

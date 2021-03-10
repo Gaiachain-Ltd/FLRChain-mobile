@@ -66,8 +66,8 @@ Column {
     }
 
     Rectangle{
-        height: 2
+        height: 1
         width: parent.width
-        color: Style.grayBgColor
+        color: Style.sectionColor
     }
 }

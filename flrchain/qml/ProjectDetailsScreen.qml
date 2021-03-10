@@ -57,9 +57,18 @@ Item {
                 color: Style.darkLabelColor
             }
 
-            Delegates.TaskDelegate {
-                Layout.fillWidth: true
+            ListView {
+                id: tasksList
+                model: exampleModel
+                interactive: false
 
+                Layout.fillWidth: true
+                Layout.preferredHeight: contentHeight
+                spacing: 20
+
+                delegate: Delegates.TaskDelegate {
+                    width: parent.width
+                }
             }
 
             Label {
@@ -69,13 +78,84 @@ Item {
                 color: Style.darkLabelColor
             }
 
-            Delegates.WorkDelegate {
+            Delegates.BalanceDelegate {
                 Layout.fillWidth: true
+                buttonVisible: false
+                title: qsTr("Total rewards")
+                value: 30
+            }
 
+            Custom.ShadowedRectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: childrenRect.height
+                Layout.bottomMargin: Style.baseMargin
+                Layout.topMargin: Style.smallMargin
+
+                Rectangle{
+                    id: contentRect
+                    width: parent.width
+                    height: childrenRect.height
+                    color: Style.bgColor
+                    radius: 10
+
+                    ColumnLayout {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.leftMargin: Style.baseMargin
+                        anchors.rightMargin: Style.baseMargin
+                        spacing: 20
+
+                        Label{
+                            Layout.topMargin: Style.baseMargin
+                            font.pixelSize: Style.fontSmall
+                            font.weight: Font.DemiBold
+                            text: qsTr("Earned rewards")
+                            color: Style.accentColor
+                        }
+
+                        Rectangle {
+                            color: Style.sectionColor
+                            Layout.preferredHeight: 1
+                            Layout.fillWidth: true
+                            Layout.leftMargin: -Style.baseMargin
+                            Layout.rightMargin: -Style.baseMargin
+                        }
+
+                        ListView {
+                            id: workList
+                            model: exampleModel
+                            interactive: false
+
+                            Layout.fillWidth: true
+                            Layout.preferredHeight: contentHeight
+                            spacing: 20
+
+                            delegate: Delegates.WorkDelegate {
+                                width: parent.width
+                            }
+                        }
+                        Item{
+                            Layout.fillWidth: true
+                        }
+
+                    }
+                }
             }
         }
     }
+
     Popups.JoinProjectPopup{
         id: joinPopup
+    }
+
+    ListModel {
+        id: exampleModel
+
+        ListElement {
+        }
+        ListElement {
+        }
+        ListElement {
+        }
     }
 }
