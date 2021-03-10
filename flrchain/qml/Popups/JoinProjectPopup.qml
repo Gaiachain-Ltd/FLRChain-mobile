@@ -9,7 +9,6 @@ Custom.Popup {
     title: qsTr("Send request")
 
     ColumnLayout {
-        Layout.alignment: Qt.AlignHCenter
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
         Layout.rightMargin: Style.baseMargin
@@ -32,17 +31,18 @@ Custom.Popup {
         }
 
         Custom.Button {
-            id: registerButton
             text: qsTr("Send request")
+            Layout.fillWidth: true
 
             onClicked: {
+                session.joinProject(0)
             }
         }
 
         Custom.Button {
-            id: loginButton
             text: qsTr("Cancel")
             Layout.bottomMargin: Style.smallMargin
+            Layout.fillWidth: true
             bgColor: Style.buttonSecColor
 
             onClicked: {

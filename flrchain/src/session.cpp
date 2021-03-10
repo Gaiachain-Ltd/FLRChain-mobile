@@ -6,6 +6,7 @@
 #include "requests/projectsdatarequest.h"
 #include "requests/workdatarequest.h"
 #include "requests/userinforequest.h"
+#include "requests/joinprojectrequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -151,6 +152,25 @@ void Session::getUserInfo() const
     auto request = QSharedPointer<UserInfoRequest>::create(getToken());
     connect(request.data(), &UserInfoRequest::userInfoReply,
             this, &Session::onUserInfo);
+
+    mClient->send(request);
+}
+
+void Session::joinProject(const int projectId) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
+    connect(request.data(), &JoinProjectRequest::joinProjectReply,
+            this, &Session::projectJoined);
 
     mClient->send(request);
 }

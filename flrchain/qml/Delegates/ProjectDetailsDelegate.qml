@@ -8,6 +8,9 @@ import "qrc:/CustomControls" as Custom
 Item {
     height: childrenRect.height
     width: parent.width
+
+    property alias button: btn
+
     Custom.ShadowedRectangle {
         height: childrenRect.height
         width: parent.width
@@ -154,11 +157,11 @@ Item {
                 }
 
                 Custom.Button{
+                    id: btn
                     Layout.topMargin: Style.smallMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: qsTr("Earn reward")
-                    onClicked: stack.pushPage("qrc:/WorkScreen.qml");
+                    text: qsTr("Join")
                 }
             }
         }

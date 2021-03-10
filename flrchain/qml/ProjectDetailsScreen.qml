@@ -5,6 +5,7 @@ import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
+import "qrc:/Popups" as Popups
 
 Item {
 
@@ -44,6 +45,9 @@ Item {
             Delegates.ProjectDetailsDelegate{
                 Layout.topMargin: Style.baseMargin
                 Layout.fillWidth: true
+                button.onClicked: {
+                    joinPopup.open()
+                }
             }
 
             Label {
@@ -70,5 +74,8 @@ Item {
 
             }
         }
+    }
+    Popups.JoinProjectPopup{
+        id: joinPopup
     }
 }
