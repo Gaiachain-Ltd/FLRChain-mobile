@@ -31,6 +31,7 @@ public:
     Q_INVOKABLE void joinProject(const int projectId) const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
+    void loadData();
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
@@ -39,6 +40,7 @@ signals:
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
     void projectJoined() const;
+    void clientInitialized() const;
 
 private:
     void onLoginSuccessful(const QString& token);

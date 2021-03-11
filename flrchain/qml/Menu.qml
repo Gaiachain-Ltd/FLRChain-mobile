@@ -45,7 +45,7 @@ Drawer {
 
                 Label {
                     id:username
-                    text: qsTr("UserName")
+                    text: session.user.firstName + " " + session.user.lastName
                     font.pixelSize: Style.fontLarge
                     color: Style.accentColor
                 }
@@ -67,7 +67,7 @@ Drawer {
             Label {
                 id: usermail
                 Layout.leftMargin: Style.baseMargin
-                text: qsTr("UserEmail")
+                text: session.user.email
                 font.pixelSize: Style.fontSmall
                 color: Style.darkLabelColor
                 font.weight: Font.DemiBold

@@ -17,6 +17,7 @@ public:
 
 protected:
     QString mApiMethod;
+    virtual void customizeRequest(QNetworkRequest &request);
 };
 
 #endif // APIREQUEST_H

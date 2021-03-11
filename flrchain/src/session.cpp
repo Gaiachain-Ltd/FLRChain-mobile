@@ -20,9 +20,8 @@ Q_LOGGING_CATEGORY(session, "core.session")
 Session::Session(QObject *parent) : QObject(parent)
 {
     mCurrentUser = UserPtr::create();
-    if(hasToken()){
-        getUserInfo();
-    }
+    connect(this, &Session::clientInitialized,
+            this, &Session::loadData);
 }
 
 Session::~Session()
@@ -33,6 +32,7 @@ Session::~Session()
 void Session::setClient(RestAPIClient *client)
 {
     mClient = client;
+    emit clientInitialized();
 }
 
 bool Session::hasToken() const
@@ -206,5 +206,12 @@ void Session::logout()
     m_dataManager->cleanData();
     setRememberMe(0);
     setToken(QByteArray());
+}
+
+void Session::loadData()
+{
+    if(hasToken()){
+        getUserInfo();
+    }
 }
 

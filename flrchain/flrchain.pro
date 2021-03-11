@@ -96,5 +96,5 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-API_URL = "http://195.201.81.231:8000/api/v1/"
+API_URL = "https://flrchain.milosolutions.com:8000/api/v1/"
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
