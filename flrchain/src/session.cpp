@@ -49,6 +49,7 @@ void Session::onLoginSuccessful(const QString &token)
 {
     setToken(token.toUtf8());
     getUserInfo();
+    getProjectsData();
     emit loginSuccessful(token);
 }
 

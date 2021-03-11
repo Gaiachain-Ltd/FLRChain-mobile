@@ -1,6 +1,7 @@
 #include "project.h"
 
-Project::Project() :
+Project::Project(QObject *parent):
+    QObject(parent),
     m_id(),
     m_name(QString()),
     m_description(QString()),
@@ -67,50 +68,80 @@ QVariantList Project::tasks() const
 
 void Project::setId(const int id)
 {
-    m_id = id;
+    if (m_id != id) {
+        m_id = id;
+        emit idChanged(id);
+    }
 }
 
 void Project::setName(const QString &name)
 {
-    m_name = name;
+    if (m_name != name) {
+        m_name = name;
+        emit nameChanged(name);
+    }
 }
 
 void Project::setDescription(const QString &description)
 {
-    m_description = description;
+    if (m_description != description) {
+        m_description = description;
+        emit descriptionChanged(description);
+    }
 }
 
 void Project::setJoined(const bool joined)
 {
-    m_joined = joined;
+    if (m_joined != joined) {
+        m_joined = joined;
+        emit joinedChanged(joined);
+    }
 }
 
 void Project::setStatus(const QString &status)
 {
-    m_status = status;
+    if (m_status != status) {
+        m_status = status;
+        emit statusChanged(status);
+    }
 }
 
 void Project::setDeadline(const QString &deadline)
 {
-    m_deadline = deadline;
+    if (m_deadline != deadline) {
+        m_deadline = deadline;
+        emit deadlineChanged(deadline);
+    }
 }
 
 void Project::setInvestmentStart(const QString &investmentStart)
 {
-    m_investmentStart = investmentStart;
+    if (m_investmentStart != investmentStart) {
+        m_investmentStart = investmentStart;
+        emit investmentStartChanged(investmentStart);
+    }
 }
 
 void Project::setInvestmentEnd(const QString &investmentEnd)
 {
-    m_investmentEnd = investmentEnd;
+    if (m_investmentEnd != investmentEnd) {
+        m_investmentEnd = investmentEnd;
+        emit investmentEndChanged(investmentEnd);
+    }
 }
 
 void Project::setPhoto(const QString &photo)
 {
-    m_status = photo;
+    if (m_photo != photo) {
+        m_photo = photo;
+        emit photoChanged(photo);
+    }
 }
 
 void Project::setTasks(const QVariantList &tasks)
 {
-    m_tasks = tasks;
+    if (m_tasks != tasks) {
+        m_tasks = tasks;
+        emit tasksChanged(tasks);
+    }
 }

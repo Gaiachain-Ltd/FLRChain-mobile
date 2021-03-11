@@ -3,9 +3,9 @@
 #include <QObject>
 
 
-class Work
+class Work : public QObject
 {
-    Q_GADGET
+    Q_OBJECT
     Q_PROPERTY(int id READ id WRITE setId)
     Q_PROPERTY(int projectId READ projectId WRITE setProjectId)
     Q_PROPERTY(QString status READ status WRITE setStatus)
@@ -14,7 +14,7 @@ class Work
     Q_PROPERTY(double amount READ amount WRITE setAmount)
 
 public:
-    Work();
+    Work(QObject *parent = nullptr);
 
     int id() const;
     int projectId() const;
@@ -41,4 +41,3 @@ private:
 };
 
 #endif // WORK_H
-Q_DECLARE_METATYPE(Work)

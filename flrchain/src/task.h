@@ -2,14 +2,14 @@
 #define TASK_H
 #include <QObject>
 
-class Task
+class Task : public QObject
 {
-    Q_GADGET
+    Q_OBJECT
     Q_PROPERTY(int projectId READ projectId WRITE setProjectId)
     Q_PROPERTY(QString action READ action WRITE setAction)
     Q_PROPERTY(double reward READ reward WRITE setReward)
 public:
-    Task();
+    Task(QObject *parent = nullptr);
     int projectId() const;
     QString action() const;
     double reward() const;

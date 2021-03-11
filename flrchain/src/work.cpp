@@ -1,6 +1,7 @@
 #include "work.h"
 
-Work::Work() :
+Work::Work(QObject *parent):
+    QObject(parent),
     m_id(),
     m_projectId(),
     m_status(QString()),

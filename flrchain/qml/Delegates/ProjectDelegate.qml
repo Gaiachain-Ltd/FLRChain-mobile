@@ -9,6 +9,9 @@ Item {
     height: childrenRect.height
     width: parent.width
 
+    property var projectItem
+    property int projectIndex: -1
+
     Custom.ShadowedRectangle {
         width: parent.width
         height: childrenRect.height
@@ -50,7 +53,7 @@ Item {
                 Label{
                     font.pixelSize: Style.fontUltra
                     font.weight: Font.DemiBold
-                    text: "Praesentium Aliquam Et"
+                    text: projectItem.name
                     color: Style.darkLabelColor
                 }
 
@@ -67,7 +70,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: "August 24, 2020"
+                        text: projectItem.deadline
                         color: Style.mediumLabelColor
                     }
 
@@ -101,7 +104,7 @@ Item {
                 }
 
                 Text {
-                    text: qsTr("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore ma jdsds dlsldasldajdjsajldsldasljdsaljjldasjl")
+                    text: projectItem.description
                     Layout.fillWidth: true
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: Style.mediumLabelColor
@@ -114,7 +117,9 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Earn reward")
-                    onClicked: stack.pushPage("qrc:/ProjectDetailsScreen.qml");
+                    onClicked:{
+                        stack.pushPage("qrc:/ProjectDetailsScreen.qml");
+                    }
                 }
             }
         }

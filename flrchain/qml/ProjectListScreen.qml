@@ -37,14 +37,9 @@ Item {
             spacing: 20
 
             Label {
-                text: qsTr("Eum Repellendus Aut")
+                text: qsTr("Project list (%1)").arg(listView.count)
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
-            }
-
-            Delegates.ProjectDelegate {
-                id: exampleDelegate
-                Layout.fillWidth: true
             }
 
             ListView {
@@ -57,7 +52,8 @@ Item {
                 spacing: 20
 
                 delegate: Delegates.ProjectDelegate {
-
+                    projectItem: dataManager.projects[index]
+                    projectIndex: index
                 }
             }
         }

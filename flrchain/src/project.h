@@ -4,22 +4,22 @@
 #include <QVariantList>
 #include <QVariant>
 
-class Project
+class Project : public QObject
 {
-    Q_GADGET
-    Q_PROPERTY(int id READ id WRITE setId)
-    Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QString description READ description WRITE setDescription)
-    Q_PROPERTY(bool joined READ joined WRITE setJoined)
-    Q_PROPERTY(QString status READ status WRITE setStatus)
-    Q_PROPERTY(QString deadline READ deadline WRITE setDeadline)
-    Q_PROPERTY(QString investmentStart READ investmentStart WRITE setInvestmentStart)
-    Q_PROPERTY(QString investmentEnd READ investmentEnd WRITE setInvestmentEnd)
-    Q_PROPERTY(QString photo READ photo WRITE setPhoto)
-    Q_PROPERTY(QVariantList tasks READ tasks WRITE setTasks)
+    Q_OBJECT
+    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
+    Q_PROPERTY(bool joined READ joined WRITE setJoined NOTIFY joinedChanged)
+    Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
+    Q_PROPERTY(QString deadline READ deadline WRITE setDeadline NOTIFY deadlineChanged)
+    Q_PROPERTY(QString investmentStart READ investmentStart WRITE setInvestmentStart NOTIFY investmentStartChanged)
+    Q_PROPERTY(QString investmentEnd READ investmentEnd WRITE setInvestmentEnd NOTIFY investmentEndChanged)
+    Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged)
+    Q_PROPERTY(QVariantList tasks READ tasks WRITE setTasks NOTIFY tasksChanged)
 
 public:
-    Project();
+    Project(QObject *parent = nullptr);
 
     int id() const;
     QString name() const;
@@ -43,6 +43,18 @@ public slots:
     void setInvestmentEnd(const QString &investmentEnd);
     void setPhoto(const QString &photo);
     void setTasks(const QVariantList &tasks);
+
+signals:
+    void idChanged(int id);
+    void nameChanged(QString name);
+    void descriptionChanged(QString description);
+    void joinedChanged(bool joined);
+    void statusChanged(QString status);
+    void deadlineChanged(QString deadline);
+    void investmentStartChanged(QString investmentStart);
+    void investmentEndChanged(QString investmentEnd);
+    void photoChanged(QString photo);
+    void tasksChanged(QVariantList tasks);
 
 private:
     int m_id;

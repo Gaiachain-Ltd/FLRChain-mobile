@@ -14,7 +14,7 @@ public:
     ProjectsDataRequest(const QByteArray &token);
     void errorHandler(const QString& error);
 signals:
-    void projectsDataReply(QVariantList projectsList, QVariantList joinedProjectsList) const;
+    void projectsDataReply(QVariantList projectsList) const;
 protected:
     virtual void parse() override final;
 };

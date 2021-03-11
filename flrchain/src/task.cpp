@@ -1,6 +1,7 @@
 #include "task.h"
 
-Task::Task() :
+Task::Task(QObject *parent) :
+    QObject(parent),
     m_projectId(),
     m_action(QString()),
     m_reward()
