@@ -7,7 +7,8 @@ import "qrc:/CustomControls" as Custom
 
 Custom.Popup {
     id: popup
-    title: qsTr("Send request")
+    title: ""
+    property string contentText: ""
 
     ColumnLayout {
         Layout.fillWidth: true
@@ -20,31 +21,12 @@ Custom.Popup {
             font.pointSize: Style.fontSmall
             font.weight: Font.DemiBold
             color: Style.darkLabelColor
-            text: qsTr("Are you sure you want to join to the project")
-        }
-
-        Label {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: -15
-            font.pointSize: Style.fontSmall
-            color: Style.accentColor
-            text: qsTr("Eum Repellendus Aut")
+            text: contentText
         }
 
         Custom.Button {
-            text: qsTr("Send request")
+            text: qsTr("OK")
             Layout.fillWidth: true
-
-            onClicked: {
-                session.joinProject(0)
-            }
-        }
-
-        Custom.Button {
-            text: qsTr("Cancel")
-            Layout.bottomMargin: Style.smallMargin
-            Layout.fillWidth: true
-            bgColor: Style.buttonSecColor
 
             onClicked: {
                 popup.close()

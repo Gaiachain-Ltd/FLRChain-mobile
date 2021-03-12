@@ -25,6 +25,16 @@ QVariantList DataManager::getWorkList() const
     return m_workList;
 }
 
+QVariantList DataManager::getTransactionsList() const
+{
+    return m_transactionsList;
+}
+
+double DataManager::getWalletBalance() const
+{
+    return m_walletBalance;
+}
+
 void DataManager::setProjects(const QVariantList &projects)
 {
     m_projects = projects;
@@ -37,11 +47,31 @@ void DataManager::setWorkList(const QVariantList &workList)
     emit workListChanged();
 }
 
+void DataManager::setTransactionsList(const QVariantList &transactionsList)
+{
+    m_transactionsList = transactionsList;
+    emit transactionsListChanged();
+}
+
+void DataManager::setWalletBalance(const double walletBalance)
+{
+    if (m_walletBalance != walletBalance) {
+        m_walletBalance = walletBalance;
+        emit walletBalanceChanged();
+    }
+}
+
+void DataManager::cashOutReplyReceived(const bool result)
+{
+    qDebug() << "Cashout result" << result;
+}
+
 void DataManager::cleanData()
 {
-   m_projects.clear();
-   m_workList.clear();
-   m_fileManager->removeCurrentFile();
+    m_projects.clear();
+    m_workList.clear();
+    m_transactionsList.clear();
+    m_fileManager->removeCurrentFile();
 }
 
 void DataManager::projectsDataReceived(const QVariantList &projects)
@@ -54,4 +84,10 @@ void DataManager::workDataReceived(const QVariantList &workList)
 {
     m_workList.clear();
     setWorkList(workList);
+}
+
+void DataManager::transactionsDataReceived(const QVariantList &transactionsList)
+{
+    m_transactionsList.clear();
+    setTransactionsList(transactionsList);
 }

@@ -28,5 +28,6 @@
         <file>Delegates/TransactionDelegate.qml</file>
         <file>Popups/TransactionPopup.qml</file>
         <file>Popups/TransferSuccessPopup.qml</file>
+        <file>Popups/ErrorPopup.qml</file>
     </qresource>
 </RCC>

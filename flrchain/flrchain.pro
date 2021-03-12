@@ -24,6 +24,7 @@ HEADERS += \
     src/session.h \
     src/settings.h \
     src/task.h \
+    src/transaction.h \
     src/user.h \
     src/userptr.h \
     src/APICommunication/restapiclient.h \
@@ -34,6 +35,9 @@ HEADERS += \
     src/APICommunication/requests/workdatarequest.h \
     src/APICommunication/requests/userinforequest.h \
     src/APICommunication/requests/joinprojectrequest.h \
+    src/APICommunication/requests/cashoutrequest.h \
+    src/APICommunication/requests/transactionhistoryrequest.h \
+    src/APICommunication/requests/walletbalancerequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
     src/work.h
@@ -45,6 +49,7 @@ SOURCES += src/main.cpp  \
     src/session.cpp \
     src/settings.cpp \
     src/task.cpp \
+    src/transaction.cpp \
     src/user.cpp \
     src/APICommunication/restapiclient.cpp \
     src/APICommunication/apirequest.cpp \
@@ -54,6 +59,9 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/workdatarequest.cpp \
     src/APICommunication/requests/userinforequest.cpp \
     src/APICommunication/requests/joinprojectrequest.cpp \
+    src/APICommunication/requests/cashoutrequest.cpp \
+    src/APICommunication/requests/transactionhistoryrequest.cpp \
+    src/APICommunication/requests/walletbalancerequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
     src/work.cpp

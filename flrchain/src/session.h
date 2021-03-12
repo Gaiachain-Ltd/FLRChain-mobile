@@ -29,6 +29,9 @@ public:
     Q_INVOKABLE void getWorkData() const;
     Q_INVOKABLE void getUserInfo() const;
     Q_INVOKABLE void joinProject(const int projectId) const;
+    Q_INVOKABLE void getTransactionsData() const;
+    Q_INVOKABLE void getWalletBalance() const;
+    Q_INVOKABLE void cashOut(const double amount, const QString &address) const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
     void loadData();

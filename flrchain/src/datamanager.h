@@ -12,29 +12,41 @@ class DataManager : public QObject
     Q_OBJECT
     Q_PROPERTY(QVariantList projects  READ getProjects WRITE setProjects NOTIFY projectsChanged)
     Q_PROPERTY(QVariantList workList  READ getWorkList WRITE setWorkList NOTIFY workListChanged)
+    Q_PROPERTY(QVariantList transactionsList  READ getTransactionsList WRITE setTransactionsList NOTIFY transactionsListChanged)
+    Q_PROPERTY(double walletBalance READ getWalletBalance WRITE setWalletBalance NOTIFY walletBalanceChanged)
 
 public:
     explicit DataManager(QObject *parent = nullptr);
     QVariantList getProjects() const;
     QVariantList getWorkList() const;
+    QVariantList getTransactionsList() const;
+    double getWalletBalance() const;
     void cleanData();
     void projectsDataReceived(const QVariantList &projects);
     void workDataReceived(const QVariantList &work);
+    void transactionsDataReceived(const QVariantList &transactions);
 
 public slots:
     void setProjects(const QVariantList &projects);
     void setWorkList(const QVariantList &work);
+    void setTransactionsList(const QVariantList &transactions);
+    void setWalletBalance(const double walletBalance);
+    void cashOutReplyReceived(const bool result);
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
     void projectsChanged() const;
     void workListChanged() const;
+    void transactionsListChanged() const;
+    void walletBalanceChanged() const;
 
 private:
     QThread *m_workerThread;
     FileManager *m_fileManager;
     QVariantList m_projects;
     QVariantList m_workList;
+    QVariantList m_transactionsList;
+    double m_walletBalance;
 };
 
 #endif // DATAMANAGER_H

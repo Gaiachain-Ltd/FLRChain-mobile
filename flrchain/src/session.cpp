@@ -7,6 +7,9 @@
 #include "requests/workdatarequest.h"
 #include "requests/userinforequest.h"
 #include "requests/joinprojectrequest.h"
+#include "requests/transactionhistoryrequest.h"
+#include "requests/walletbalancerequest.h"
+#include "requests/cashoutrequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -175,6 +178,63 @@ void Session::joinProject(const int projectId) const
 
     mClient->send(request);
 }
+
+void Session::getTransactionsData() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<TransactionHistoryRequest>::create(getToken());
+    connect(request.data(), &TransactionHistoryRequest::projectsDataReply,
+            m_dataManager, &DataManager::transactionsDataReceived);
+
+    mClient->send(request);
+}
+
+void Session::getWalletBalance() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<WalletBalanceRequest>::create(getToken());
+    connect(request.data(), &WalletBalanceRequest::walletBalanceReply,
+            m_dataManager, &DataManager::setWalletBalance);
+
+    mClient->send(request);
+}
+
+void Session::cashOut(const double amount, const QString& address) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<CashOutRequest>::create(amount, address, getToken());
+    connect(request.data(), &CashOutRequest::transferReply,
+            m_dataManager, &DataManager::cashOutReplyReceived);
+    mClient->send(request);
+}
+
 
 void Session::setRememberMe(const bool val)
 {
