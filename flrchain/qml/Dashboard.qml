@@ -121,8 +121,7 @@ Item {
                             Layout.preferredHeight: 26
                             iconSize: 26
                             iconSrc: ""
-                            onClicked: {
-                            }
+                            onClicked: stack.pushPage("qrc:/WalletScreen.qml");
                         }
                     }
 

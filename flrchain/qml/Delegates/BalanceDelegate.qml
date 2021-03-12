@@ -11,6 +11,7 @@ Item {
     property bool buttonVisible: true
     property string title: "Balance"
     property real value: 0.0
+    property alias btn: cashOutBtn
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -55,6 +56,7 @@ Item {
                 }
 
                 Custom.Button {
+                    id: cashOutBtn
                     Layout.fillWidth: true
                     text: qsTr("Cash out")
                     visible: buttonVisible

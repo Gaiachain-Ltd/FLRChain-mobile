@@ -24,5 +24,9 @@
         <file>Popups/JoinProjectPopup.qml</file>
         <file>AppStyle.qml</file>
         <file>Delegates/BalanceDelegate.qml</file>
+        <file>WalletScreen.qml</file>
+        <file>Delegates/TransactionDelegate.qml</file>
+        <file>Popups/TransactionPopup.qml</file>
+        <file>Popups/TransferSuccessPopup.qml</file>
     </qresource>
 </RCC>

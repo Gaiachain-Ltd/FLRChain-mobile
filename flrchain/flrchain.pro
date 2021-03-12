@@ -98,3 +98,14 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
 API_URL = "https://flrchain.milosolutions.com:8000/api/v1/"
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
+SSL_PATH = /home/milodev/projects/openssl/android_openssl-master
+
+ANDROID_EXTRA_LIBS += \
+    $$SSL_PATH/latest/arm/libcrypto_1_1.so \
+    $$SSL_PATH/latest/arm/libssl_1_1.so \
+    $$SSL_PATH/latest/arm64/libcrypto_1_1.so \
+    $$SSL_PATH/latest/arm64/libssl_1_1.so \
+    $$SSL_PATH/latest/x86/libcrypto_1_1.so \
+    $$SSL_PATH/latest/x86/libssl_1_1.so \
+    $$SSL_PATH/latest/x86_64/libcrypto_1_1.so \
+    $$SSL_PATH/latest/x86_64/libssl_1_1.so
