@@ -5,4 +5,8 @@
             <solid android:color="#FFFFFFFF"/>
         </shape>
     </item>
+    <item>
+         <bitmap android:src="@drawable/splash"
+         android:gravity="fill" />
+    </item>
 </layer-list>
