@@ -25,6 +25,7 @@ Rectangle{
             iconSrc: ""
             anchors.verticalCenter: parent.verticalCenter
             visible: backButtonVisible
+            onClicked: pageManager.back()
         }
 
         Label {

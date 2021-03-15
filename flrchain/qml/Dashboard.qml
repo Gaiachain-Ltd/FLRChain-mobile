@@ -64,7 +64,9 @@ Item {
                             Layout.preferredHeight: 26
                             iconSize: 26
                             iconSrc: ""
-                            onClicked: stack.pushPage("qrc:/ProjectListScreen.qml");
+                            onClicked: {
+                                pageManager.enterProjectListScreen()
+                            }
                         }
                     }
 
@@ -72,7 +74,7 @@ Item {
                         anchors.top: row.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: Style.baseMargin
-                        text: "4 projects"
+                        text: qsTr("%1 projects").arg(dataManager.projectsCount)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
                         font.weight: Font.DemiBold
@@ -121,7 +123,7 @@ Item {
                             Layout.preferredHeight: 26
                             iconSize: 26
                             iconSrc: ""
-                            onClicked: stack.pushPage("qrc:/WalletScreen.qml");
+                            onClicked: pageManager.enterWalletScreen()
                         }
                     }
 
@@ -129,7 +131,7 @@ Item {
                         anchors.top: contentRow.bottom
                         anchors.left: parent.left
                         anchors.leftMargin: Style.baseMargin
-                        text: "Balance: 321 USDC"
+                        text: qsTr("Balance: %1 USDC").arg(dataManager.walletBalance)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
                         font.weight: Font.DemiBold

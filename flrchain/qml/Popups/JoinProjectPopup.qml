@@ -8,6 +8,8 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Send request")
+    property string projectName: ""
+    property int projectId: -1
 
     ColumnLayout {
         Layout.fillWidth: true
@@ -28,7 +30,7 @@ Custom.Popup {
             Layout.topMargin: -15
             font.pointSize: Style.fontSmall
             color: Style.accentColor
-            text: qsTr("Eum Repellendus Aut")
+            text: projectName
         }
 
         Custom.Button {
@@ -36,7 +38,7 @@ Custom.Popup {
             Layout.fillWidth: true
 
             onClicked: {
-                session.joinProject(0)
+                session.joinProject(projectId)
             }
         }
 

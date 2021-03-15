@@ -35,9 +35,15 @@ double DataManager::getWalletBalance() const
     return m_walletBalance;
 }
 
+int DataManager::getProjectsCount() const
+{
+    return m_projectsCount;
+}
+
 void DataManager::setProjects(const QVariantList &projects)
 {
     m_projects = projects;
+    setProjectsCount(m_projects.count());
     emit projectsChanged();
 }
 
@@ -59,6 +65,12 @@ void DataManager::setWalletBalance(const double walletBalance)
         m_walletBalance = walletBalance;
         emit walletBalanceChanged();
     }
+}
+
+void DataManager::setProjectsCount(const int projectsCount)
+{
+    m_projectsCount = projectsCount;
+    emit projectsCountChanged();
 }
 
 void DataManager::cashOutReplyReceived(const bool result)

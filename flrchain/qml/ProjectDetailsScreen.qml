@@ -8,6 +8,31 @@ import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
 Item {
+    id: detailsScreen
+    property int itemId: -1
+    property string projectName: ""
+    property string projectDeadline: ""
+    property string projectDescription: ""
+    property string projectStartDate: ""
+    property string projectEndDate: ""
+    property string projectStatus: ""
+    property bool projectJoined: false
+    property var tasks
+
+    Connections{
+        target: pageManager
+        function onSetupProjectDetailsScreen(projectId){
+            itemId = projectId
+            projectName = dataManager.projects[projectId].name
+            tasks = dataManager.projects[projectId].tasks
+            projectDeadline = dataManager.projects[projectId].deadline
+            projectDescription = dataManager.projects[projectId].description
+            projectStartDate = dataManager.projects[projectId].investmentStart
+            projectEndDate = dataManager.projects[projectId].investmentEnd
+            projectStatus = dataManager.projects[projectId].status
+            projectJoined = dataManager.projects[projectId].joined
+        }
+    }
 
     Custom.Header {
         id: header
@@ -37,14 +62,22 @@ Item {
             Label {
                 id: title
                 Layout.topMargin: Style.baseMargin
-                text: qsTr("Eum Repellendus Aut")
+                text: projectName
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
             }
 
             Delegates.ProjectDetailsDelegate{
+                deadline: projectDeadline
+                description: projectDescription
+                startDate: projectStartDate
+                status: projectStatus
+                joined: projectJoined
+                endDate: projectEndDate
+
                 Layout.topMargin: Style.baseMargin
                 Layout.fillWidth: true
+                Layout.preferredHeight: childrenRect.height
                 button.onClicked: {
                     joinPopup.open()
                 }
@@ -52,14 +85,14 @@ Item {
 
             Label {
                 Layout.topMargin: Style.baseMargin
-                text: qsTr("Tasks (2)")
+                text: qsTr("Tasks (%1)").arg(tasksList.count)
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
             }
 
             ListView {
                 id: tasksList
-                model: exampleModel
+                model: tasks
                 interactive: false
 
                 Layout.fillWidth: true
@@ -67,7 +100,10 @@ Item {
                 spacing: 20
 
                 delegate: Delegates.TaskDelegate {
+                    taskItem: tasks[index]
+                    projectName: detailsScreen.projectName
                     width: parent.width
+                    buttonVisible: projectJoined && projectStatus === "Ongoing"
                 }
             }
 
@@ -144,8 +180,10 @@ Item {
         }
     }
 
-    Popups.JoinProjectPopup{
+    Popups.JoinProjectPopup {
         id: joinPopup
+        projectId: itemId
+        projectName: detailsScreen.projectName
     }
 
     ListModel {

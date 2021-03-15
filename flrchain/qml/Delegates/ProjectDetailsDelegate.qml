@@ -10,6 +10,12 @@ Item {
     width: parent.width
 
     property alias button: btn
+    property string deadline: ""
+    property string description: ""
+    property string startDate: ""
+    property string endDate: ""
+    property string status: ""
+    property bool joined: false
 
     Custom.ShadowedRectangle {
         height: childrenRect.height
@@ -31,7 +37,7 @@ Item {
                 width: 54
                 color: Style.accentColor
                 radius: 4
-                visible: true
+                visible: joined
 
                 Label {
                     anchors.centerIn: parent
@@ -69,7 +75,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: "August 24, 2020"
+                        text: deadline
                         color: Style.mediumLabelColor
                     }
                 }
@@ -95,7 +101,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: "May 02, 2020 - May 25, 2020"
+                        text: startDate + " - " + endDate
                         color: Style.mediumLabelColor
                     }
                 }
@@ -121,7 +127,7 @@ Item {
                     Label {
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: "Ongoing"
+                        text: status
                         color: Style.mediumLabelColor
                     }
                 }
@@ -135,9 +141,9 @@ Item {
                 }
 
                 Text {
-                    text: qsTr("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore")
+                    text: description
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 66
+                    Layout.preferredHeight: contentHeight
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: Style.mediumLabelColor
                 }
@@ -162,6 +168,7 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")
+                    visible: status === "Ongoing" && !joined
                 }
             }
         }

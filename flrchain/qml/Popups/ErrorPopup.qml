@@ -24,13 +24,12 @@ Custom.Popup {
             text: contentText
         }
 
-        Custom.Button {
-            text: qsTr("OK")
-            Layout.fillWidth: true
-
-            onClicked: {
-                popup.close()
-            }
+    }
+    Custom.Button {
+        text: qsTr("OK")
+        anchors.bottom: parent.bottom
+        onClicked: {
+            popup.close()
         }
     }
 }

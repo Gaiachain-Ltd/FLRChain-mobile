@@ -33,7 +33,7 @@ Custom.Popup {
         RowLayout{
             Layout.topMargin: -Style.smallMargin
             Layout.fillWidth: true
-            Layout.preferredHeight: amountInput.height
+            Layout.preferredHeight: 56
             Custom.TextInput {
                 id: amountInput
                 Layout.preferredHeight: 56
@@ -47,7 +47,7 @@ Custom.Popup {
 
             Rectangle{
                 Layout.fillWidth: true
-                Layout.preferredHeight: amountInput.height
+                Layout.preferredHeight: 56
                 Label {
                     anchors.centerIn: parent
                     font.pointSize: Style.fontUltra

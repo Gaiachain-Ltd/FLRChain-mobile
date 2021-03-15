@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
+import com.flrchain.objects 1.0
+
 ApplicationWindow {
     id: mainWindow
     visible: true
@@ -10,12 +12,7 @@ ApplicationWindow {
 
     onClosing: {
         close.accepted = false;
-        if (stack.depth > 1) {
-            stack.pop();
-        }
-        else {
-            Qt.quit()
-        }
+        pageManager.back()
     }
 
     Menu{
@@ -28,11 +25,59 @@ ApplicationWindow {
 
         Component.onCompleted: {
             if(session.hasToken() && session.getRememberMe()){
-                stack.pushPage("qrc:/Dashboard.qml");
+                pageManager.enterDashboardScreen()
             }
             else{
-                stack.pushPage("qrc:/LoginScreen.qml");
+                pageManager.enterLoginScreen()
             }
+        }
+    }
+
+    Connections
+    {
+        target: pageManager
+
+        function onPushPage(page)
+        {
+            switch (page)
+            {
+            case Pages.LoginScreen:
+                stack.push("qrc:/LoginScreen.qml");
+                break;
+            case Pages.RegistrationScreen:
+                stack.push("qrc:/RegistrationScreen.qml");
+                break;
+            case Pages.Dashboard:
+                stack.push("qrc:/Dashboard.qml");
+                break;
+            case Pages.ProjectListScreen:
+                stack.push("qrc:/ProjectListScreen.qml");
+                break;
+            case Pages.ProjectDetailsScreen:
+                stack.push("qrc:/ProjectDetailsScreen.qml")
+                break;
+            case Pages.WorkScreen:
+                stack.push("qrc:/WorkScreen.qml");
+                break;
+            case Pages.WalletScreen:
+                stack.push("qrc:/WalletScreen.qml");
+                break;
+            }
+        }
+
+        function onPopPage()
+        {
+            if (stack.depth > 1) {
+                stack.pop();
+            }
+            else {
+                Qt.quit()
+            }
+        }
+
+        function onClearStack()
+        {
+            stack.clear()
         }
     }
 }

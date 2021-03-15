@@ -17,7 +17,7 @@ Item {
         }
 
         function onRegistrationSuccessful(){
-            stack.pushPage("qrc:/LoginScreen.qml");
+            pageManager.enterLoginScreen();
         }
     }
 
@@ -174,7 +174,7 @@ Item {
                             bgColor: Style.buttonSecColor
 
                             onClicked: {
-                                stack.pop()
+                                pageManager.enterLoginScreen()
                             }
                         }
 

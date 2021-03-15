@@ -10,7 +10,7 @@ Item {
     width: parent.width
 
     property var projectItem
-    property int projectIndex: -1
+    property int projectIndex
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -40,6 +40,7 @@ Item {
                     Layout.preferredWidth: 54
                     color: Style.accentColor
                     radius: 4
+                    visible: projectItem.joined
 
                     Label{
                         anchors.centerIn: parent
@@ -85,7 +86,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: "Ongoing"
+                        text: projectItem.status
                         color: Style.accentColor
                     }
 
@@ -116,9 +117,10 @@ Item {
                     Layout.topMargin: Style.smallMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: qsTr("Earn reward")
+                    text: projectItem.status === "Ongoing" ? projectItem.joined ? qsTr("Earn reward") : qsTr("Join") : qsTr("Details")
+                    bgColor: projectItem.status === "Ongoing" ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
-                        stack.pushPage("qrc:/ProjectDetailsScreen.qml");
+                        pageManager.enterProjectDetailsScreen(projectIndex)
                     }
                 }
             }

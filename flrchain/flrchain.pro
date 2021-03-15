@@ -20,6 +20,8 @@ INCLUDEPATH += src/APICommunication
 HEADERS += \
     src/datamanager.h \
     src/filemanager.h \
+    src/pagemanager.h \
+    src/pages.h \
     src/project.h \
     src/session.h \
     src/settings.h \
@@ -45,6 +47,7 @@ HEADERS += \
 SOURCES += src/main.cpp  \
     src/datamanager.cpp \
     src/filemanager.cpp \
+    src/pagemanager.cpp \
     src/project.cpp \
     src/session.cpp \
     src/settings.cpp \

@@ -6,8 +6,12 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Item {
-
+    id: workScreen
     property bool photoVisible: false
+    property int projectId: -1
+    property int taskId: -1
+    property string taskName: ""
+    property string projectName: ""
 
     Connections{
         target: dataManager
@@ -20,6 +24,16 @@ Item {
         function onPhotoError(){
         }
 
+    }
+
+    Connections{
+        target: pageManager
+        function onSetupWorkScreen(projectId, taskId, projectName, taskName){
+            workScreen.projectId = projectId
+            workScreen.taskId = taskId
+            workScreen.projectName = projectName
+            workScreen.taskName = taskName
+        }
     }
 
     Custom.Header {
@@ -46,13 +60,13 @@ Item {
             anchors.bottomMargin: 16
 
             Label {
-                text: qsTr("Eum Repellendus Aut")
+                text: projectName
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
             }
 
             Label {
-                text: qsTr("Plant Fruit trees on farmland")
+                text: taskName
                 font.pixelSize: Style.fontBig
                 color: Style.darkLabelColor
             }

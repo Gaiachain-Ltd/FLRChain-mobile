@@ -6,6 +6,10 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Item {
+    property var taskItem
+    property string projectName: ""
+    property bool buttonVisible: false
+
     height: childrenRect.height
     width: parent.width
     Custom.ShadowedRectangle {
@@ -37,7 +41,7 @@ Item {
                 Label{
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Plant Fruit trees on farmland"
+                    text: taskItem.action
                     color: Style.mediumLabelColor
                 }
 
@@ -52,16 +56,23 @@ Item {
                 Label{
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "2 USDC"
+                    text: qsTr("%1 USDC").arg(taskItem.reward)
                     color: Style.mediumLabelColor
                 }
 
                 Custom.Button{
                     Layout.topMargin: Style.smallMargin
-                    Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Earn reward")
-                    onClicked: stack.pushPage("qrc:/WorkScreen.qml");
+                    visible: buttonVisible
+                    onClicked: {
+                        pageManager.enterWorkScreen(taskItem.projectId, taskItem.taskId, projectName, taskItem.action)
+                    }
+                }
+
+                Item{
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Style.smallMargin
                 }
             }
         }

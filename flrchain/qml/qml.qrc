@@ -29,5 +29,6 @@
         <file>Popups/TransactionPopup.qml</file>
         <file>Popups/TransferSuccessPopup.qml</file>
         <file>Popups/ErrorPopup.qml</file>
+        <file>Popups/WorkSuccessPopup.qml</file>
     </qresource>
 </RCC>

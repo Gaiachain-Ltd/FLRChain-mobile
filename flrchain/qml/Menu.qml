@@ -90,6 +90,8 @@ Drawer {
                 text: qsTr("Home")
                 iconSrc: ""
                 onClicked: {
+                    drawer.close()
+                    pageManager.enterDashboardScreen()
                 }
             }
 
@@ -108,6 +110,8 @@ Drawer {
                 iconSrc: ""
 
                 onClicked: {
+                    drawer.close()
+                    pageManager.enterProjectListScreen()
                 }
             }
 
@@ -126,6 +130,8 @@ Drawer {
                 iconSrc: ""
 
                 onClicked: {
+                    drawer.close()
+                    pageManager.enterWalletScreen()
                 }
             }
 

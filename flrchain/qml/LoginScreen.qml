@@ -17,8 +17,7 @@ Item {
         }
 
         function onLoginSuccessful(token){
-            stack.clear();
-            stack.pushPage("qrc:/Dashboard.qml");
+            pageManager.enterDashboardScreen();
         }
     }
 
@@ -149,7 +148,7 @@ Item {
                         bgColor: Style.buttonSecColor
 
                         onClicked: {
-                            stack.pushPage("qrc:/RegistrationScreen.qml");
+                            pageManager.enterRegistrationScreen()
                         }
                     }
 
