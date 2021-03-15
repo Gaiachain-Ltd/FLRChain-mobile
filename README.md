@@ -9,3 +9,11 @@
 
 **Instructions:**
 * Project uses mrestapi submodule for communication with API, to pull it use: *git submodule update --init* after cloning the repository
+
+* Adding OpenSSL support
+    1. Download repository from: https://github.com/KDAB/android_openssl (Alternatively you can Build OpenSSL libraries manually, 
+       detailed instructions: https://doc.qt.io/qt-5/android-openssl-support.html )
+    2. In flrchain/flrchain.pro change SSL_PATH to the path where the downloaded repository has been unpacked
+
+**Licences:**
+*  OpenSSL - OpenSSL Licence (https://www.openssl.org/source/license.html)
