@@ -273,6 +273,7 @@ void Session::loadData()
 {
     if(hasToken()){
         getUserInfo();
+        getProjectsData();
     }
 }
 

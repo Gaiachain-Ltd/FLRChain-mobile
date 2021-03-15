@@ -49,8 +49,8 @@ int main(int argc, char *argv[]) {
 
     Session session;
     DataManager dataManager;
-    session.setClient(&client);
     session.setDataManager(&dataManager);
+    session.setClient(&client);
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
