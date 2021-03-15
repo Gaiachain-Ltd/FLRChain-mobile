@@ -14,6 +14,7 @@ Popup {
     focus: true
 
     property string title: ""
+    property string iconSrc: ""
 
     background: Rectangle {
         color: Style.bgColor
@@ -26,7 +27,7 @@ Popup {
         spacing: 20
 
         Image {
-            source: ""
+            source: iconSrc
             Layout.topMargin: Style.bigMargin
             Layout.preferredWidth: 72
             Layout.preferredHeight: 72

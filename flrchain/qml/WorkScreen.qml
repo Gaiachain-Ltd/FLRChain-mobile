@@ -99,6 +99,7 @@ Item {
                             bgColor: Style.inputBgColor
                             text: qsTr("Upload from gallery...")
                             visible: !photoVisible
+                            iconSrc: "qrc:/img/icon-upload.svg"
 
                             onClicked: {
                                 platform.selectFile();
@@ -110,6 +111,7 @@ Item {
                             bgColor: Style.inputBgColor
                             visible: !photoVisible
                             text: qsTr("Take photo...")
+                            iconSrc: "qrc:/img/icon-camera.svg"
                             onClicked: {
                                 platform.capture()
                             }
@@ -131,7 +133,7 @@ Item {
                                 width: 30
                                 height: 30
                                 iconSize: 30
-                                iconSrc: ""
+                                iconSrc: "qrc:/img/icon-delete.svg"
                                 onClicked: {
                                     img.source = ""
                                     photoVisible = false

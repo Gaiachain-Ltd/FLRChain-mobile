@@ -10,6 +10,7 @@ Custom.Popup {
     title: qsTr("Send request")
     property string projectName: ""
     property int projectId: -1
+    iconSrc: "qrc:/img/icon-confirmation.svg"
 
     ColumnLayout {
         Layout.fillWidth: true

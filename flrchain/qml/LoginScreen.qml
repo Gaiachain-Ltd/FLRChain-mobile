@@ -35,7 +35,7 @@ Item {
 
             Image {
                 id: logo
-                source: ""
+                source: "qrc:/img/logo-login.svg"
                 Layout.preferredWidth: 120
                 Layout.preferredHeight: 42
                 Layout.alignment: Qt.AlignHCenter
@@ -44,14 +44,14 @@ Item {
 
             Image {
                 id: logoImg
-                source: ""
+                source: "qrc:/img/trees-login.svg"
                 Layout.preferredWidth: 298
                 Layout.fillHeight: true
                 Layout.maximumHeight: 140
                 Layout.preferredHeight: 140
                 Layout.topMargin: Style.baseMargin
                 Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(298, 140)
+                sourceSize: Qt.size(298, 141)
             }
 
             Rectangle {

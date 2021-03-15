@@ -61,11 +61,12 @@ Item {
                 RowLayout {
                     spacing: 5
                     Image {
-                        source: ""
+                        source: "qrc:/img/icon-calendar.svg"
                         asynchronous: true
                         width: Style.iconSize
                         height: Style.iconSize
                         fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
                     }
 
                     Label{
@@ -76,11 +77,13 @@ Item {
                     }
 
                     Image {
-                        source: ""
+                        Layout.leftMargin: 5
+                        source: projectItem.status === "Ongoing" ? "qrc:/img/icon-ongoing.svg" : projectItem.status === "Suspended" ? "qrc:/img/icon-suspended.svg" : "qrc:/img/icon-finished.svg"
                         asynchronous: true
                         width: Style.iconSize
                         height: Style.iconSize
                         fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
                     }
 
                     Label{

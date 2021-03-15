@@ -8,6 +8,7 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Transaction")
+    iconSrc: "qrc:/img/icon-transaction.svg"
 
     ColumnLayout {
         Layout.fillWidth: true

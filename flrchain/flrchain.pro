@@ -10,7 +10,7 @@ include(../mrestapi/mrestapi.pri)
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick core network androidextras
+QT += quick core network androidextras svg
 TEMPLATE = app
 CONFIG += c++14
 TARGET = template

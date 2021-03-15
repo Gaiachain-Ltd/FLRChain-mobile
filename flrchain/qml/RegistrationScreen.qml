@@ -59,7 +59,8 @@ Item {
 
                 Image {
                     id: logo
-                    source: ""
+                    source: "qrc:/img/logo-login.svg"
+                    Layout.topMargin: 30
                     Layout.preferredWidth: 120
                     Layout.preferredHeight: 42
                     Layout.alignment: Qt.AlignHCenter

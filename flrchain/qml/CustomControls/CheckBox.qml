@@ -21,10 +21,11 @@ CheckBox {
             anchors.fill: parent
 
             Image{
-                source: ""
-                height: 10
-                width: 10
+                source: "qrc:/img/checkbox-check.svg"
+                height: 16
+                width: 16
                 anchors.centerIn: parent
+                sourceSize: Qt.size(16,16)
             }
         }
     }

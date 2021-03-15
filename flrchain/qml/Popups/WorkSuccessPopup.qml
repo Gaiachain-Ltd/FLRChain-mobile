@@ -8,6 +8,7 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Successfully added")
+    iconSrc: "qrc:/img/icon-success.svg"
 
     ColumnLayout {
         Layout.fillWidth: true

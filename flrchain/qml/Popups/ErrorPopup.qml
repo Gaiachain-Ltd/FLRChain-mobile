@@ -9,6 +9,7 @@ Custom.Popup {
     id: popup
     title: ""
     property string contentText: ""
+    iconSrc: "qrc:/img/icon-popup-faile.svg"
 
     ColumnLayout {
         Layout.fillWidth: true

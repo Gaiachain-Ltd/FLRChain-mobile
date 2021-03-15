@@ -63,7 +63,7 @@ Item {
                             Layout.preferredWidth: 26
                             Layout.preferredHeight: 26
                             iconSize: 26
-                            iconSrc: ""
+                            iconSrc: "qrc:/img/dashboard-arrow-green.svg"
                             onClicked: {
                                 pageManager.enterProjectListScreen()
                             }
@@ -80,12 +80,12 @@ Item {
                         font.weight: Font.DemiBold
                     }
 
-                    Rectangle{
-                        anchors.bottom: parent.bottom
-                        radius: 10
-                        height: 90
+                    Image {
+                        source: "qrc:/img/dashboard-earn-rewards.svg"
                         width: parent.width
-                        color: Style.bgColor
+                        height: 90
+                        anchors.bottom: parent.bottom
+                        sourceSize: Qt.size(width, height)
                     }
                 }
             }
@@ -122,7 +122,7 @@ Item {
                             Layout.preferredWidth: 26
                             Layout.preferredHeight: 26
                             iconSize: 26
-                            iconSrc: ""
+                            iconSrc: "qrc:/img/dashboard-arrow-yellow.svg"
                             onClicked: pageManager.enterWalletScreen()
                         }
                     }
@@ -137,12 +137,13 @@ Item {
                         font.weight: Font.DemiBold
                     }
 
-                    Rectangle{
+                    Image {
+                        source: "qrc:/img/dashboard-wallet.svg"
+                        width: 190
+                        height: 100
+                        sourceSize: Qt.size(width, height)
                         anchors.bottom: parent.bottom
-                        height: 90
-                        radius: 10
-                        width: parent.width
-                        color: Style.colorTransparent
+                        anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
             }

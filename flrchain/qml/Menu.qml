@@ -56,10 +56,10 @@ Drawer {
                 }
 
                 Custom.IconButton {
-                    Layout.preferredWidth: 26
-                    Layout.preferredHeight: 26
-                    iconSize: 26
-                    iconSrc: ""
+                    Layout.preferredWidth: 21
+                    Layout.preferredHeight: 21
+                    iconSize: 21
+                    iconSrc: "qrc:/img/icon-close-menu.svg"
                     onClicked: drawer.close()
                 }
             }
@@ -88,7 +88,9 @@ Drawer {
                 bgColor: Style.colorTransparent
                 textColor: Style.baseLabelColor
                 text: qsTr("Home")
-                iconSrc: ""
+                iconSrc: "qrc:/img/icon-menu-home.svg"
+                imgHeight: 18
+                imgWidth: 18
                 onClicked: {
                     drawer.close()
                     pageManager.enterDashboardScreen()
@@ -107,8 +109,9 @@ Drawer {
                 bgColor: Style.colorTransparent
                 textColor: Style.baseLabelColor
                 text: qsTr("Earn rewards")
-                iconSrc: ""
-
+                iconSrc: "qrc:/img/icon-menu-earn-rewards.svg"
+                imgHeight: 18
+                imgWidth: 18
                 onClicked: {
                     drawer.close()
                     pageManager.enterProjectListScreen()
@@ -127,8 +130,9 @@ Drawer {
                 bgColor: Style.colorTransparent
                 textColor: Style.baseLabelColor
                 text: qsTr("Wallet")
-                iconSrc: ""
-
+                iconSrc: "qrc:/img/icon-menu-wallet.svg"
+                imgHeight: 18
+                imgWidth: 18
                 onClicked: {
                     drawer.close()
                     pageManager.enterWalletScreen()
@@ -147,8 +151,9 @@ Drawer {
                 bgColor: Style.colorTransparent
                 textColor: Style.errorColor
                 text: qsTr("Log out")
-                iconSrc: ""
-
+                iconSrc: "qrc:/img/icon-menu-logout.svg"
+                imgHeight: 18
+                imgWidth: 18
                 onClicked: {
                 }
             }

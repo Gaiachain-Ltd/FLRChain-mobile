@@ -22,10 +22,13 @@ Rectangle{
         IconButton {
             id: backButton
             anchors.left: parent.left
-            iconSrc: ""
+            iconSrc: "qrc:/img/icon-back.svg"
             anchors.verticalCenter: parent.verticalCenter
             visible: backButtonVisible
             onClicked: pageManager.back()
+            width: 18
+            height: 18
+            iconSize: 18
         }
 
         Label {
@@ -39,8 +42,11 @@ Rectangle{
             id: menuButton
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            iconSrc: ""
+            iconSrc: "qrc:/img/icon-menu.svg"
             onClicked: menu.open()
+            width: 26
+            height: 26
+            iconSize: 26
         }
     }
 

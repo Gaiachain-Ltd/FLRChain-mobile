@@ -48,6 +48,7 @@ Button
                 height: control.iconSize
 
                 fillMode: Image.PreserveAspectFit
+                sourceSize: Qt.size(width, height)
             }
         }
     }

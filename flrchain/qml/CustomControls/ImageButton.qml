@@ -8,6 +8,8 @@ Button {
     property string bgColor: Style.accentColor
     property string iconSrc: ""
     property string textColor: Style.darkLabelColor
+    property int imgHeight: 24
+    property int imgWidth: 24
 
     implicitWidth: parent.width
     implicitHeight: 42
@@ -29,9 +31,10 @@ Button {
             Image {
                 source: button.iconSrc
                 asynchronous: true
-                width: 24
-                height: 24
+                width: imgWidth
+                height: imgHeight
                 fillMode: Image.PreserveAspectFit
+                sourceSize: Qt.size(width, height)
             }
 
             Text {

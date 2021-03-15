@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
 Column {
@@ -16,16 +17,31 @@ Column {
             anchors.left: parent.left
             anchors.leftMargin: Style.baseMargin
             height: 20
-            width: 54
+            width: row.width + Style.baseMargin
             color: Style.accentColor
             radius: 4
 
-            Label{
-                anchors.centerIn: parent
-                font.pixelSize: Style.fontTiny
-                font.weight: Font.DemiBold
-                text: "Accepted"
-                color: Style.bgColor
+            RowLayout{
+                id: row
+                spacing: 5
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                Image {
+                    source: "qrc:/img/icon-accepted.svg"
+                    asynchronous: true
+                    width: 13
+                    height: 10
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size(width, height)
+                    Layout.alignment: Qt.AlignVCenter
+                }
+
+                Label{
+                    font.pixelSize: Style.fontTiny
+                    font.weight: Font.DemiBold
+                    text: "Accepted"
+                    color: Style.bgColor
+                }
             }
         }
 
@@ -50,11 +66,12 @@ Column {
     Row {
         spacing: 5
         Image {
-            source: ""
+            source: "qrc:/img/icon-calendar.svg"
             asynchronous: true
             width: Style.iconSize
             height: Style.iconSize
             fillMode: Image.PreserveAspectFit
+            sourceSize: Qt.size(width, height)
         }
 
         Label{
