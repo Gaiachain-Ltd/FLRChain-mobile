@@ -34,10 +34,10 @@ Item {
             anchors.bottomMargin: 16
 
             Item{
-               Layout.fillHeight: true
-               Layout.preferredHeight: 40
-               Layout.maximumHeight: 40
-               Layout.fillWidth: true
+                Layout.fillHeight: true
+                Layout.preferredHeight: 40
+                Layout.maximumHeight: 40
+                Layout.fillWidth: true
             }
 
             Image {
@@ -46,7 +46,7 @@ Item {
                 Layout.preferredWidth: 120
                 Layout.preferredHeight: 42
                 Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(128,42)
+                sourceSize: Qt.size(120,42)
             }
 
             Image {
@@ -80,7 +80,7 @@ Item {
                     }
 
                     Label {
-                        Layout.topMargin: -Style.smallMargin
+                        Layout.topMargin: -Style.tinyMargin
                         text: qsTr("Welcome back")
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
@@ -103,7 +103,7 @@ Item {
 
                     Custom.TextInput {
                         id: userEmail
-                        Layout.topMargin: -Style.smallMargin
+                        Layout.topMargin: -Style.tinyMargin
                         placeholderText: qsTr("Please enter your email...")
                         color: errorMode ? Style.errorColor : Style.darkLabelColor
                         onTextChanged: {
@@ -122,7 +122,7 @@ Item {
 
                     Custom.TextInput {
                         id: password
-                        Layout.topMargin: -Style.smallMargin
+                        Layout.topMargin: -Style.tinyMargin
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
                         color: errorMode ? Style.errorColor : Style.darkLabelColor
@@ -144,7 +144,7 @@ Item {
 
                     Label {
                         id: errorLabel
-                        Layout.topMargin: -15
+                        Layout.topMargin: -Style.smallMargin
                         Layout.fillWidth: true
                         font.pixelSize: Style.fontTiny
                         color: Style.errorColor
@@ -177,7 +177,6 @@ Item {
                         font.pixelSize: Style.fontTiny
                         color: Style.accentColor
                     }
-
                 }
             }
         }

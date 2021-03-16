@@ -31,7 +31,8 @@ property int fontLarge: 20
 property int fontUltra: 22
 
 //margins
-property int smallMargin: 10
+property int tinyMargin: 10
+property int smallMargin: 15
 property int baseMargin: 20
 property int bigMargin: 30
 

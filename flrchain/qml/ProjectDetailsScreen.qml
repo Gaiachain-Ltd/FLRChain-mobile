@@ -125,7 +125,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: childrenRect.height
                 Layout.bottomMargin: Style.baseMargin
-                Layout.topMargin: Style.smallMargin
+                Layout.topMargin: Style.tinyMargin
 
                 Rectangle{
                     id: contentRect

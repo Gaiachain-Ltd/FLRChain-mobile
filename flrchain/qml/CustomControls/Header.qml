@@ -28,7 +28,7 @@ Rectangle{
             onClicked: pageManager.back()
             width: 26
             height: 26
-            iconSize: 18
+            iconSize: Style.iconSize
         }
 
         Label {

@@ -121,7 +121,7 @@ Item {
                 }
 
                 Custom.Button{
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: projectItem.status === "Ongoing" ? projectItem.joined ? qsTr("Earn reward") : qsTr("Join") : qsTr("Details")

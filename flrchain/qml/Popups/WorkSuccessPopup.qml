@@ -29,7 +29,7 @@ Custom.Popup {
 
             Label {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: -15
+                Layout.topMargin: -Style.smallMargin
                 font.pointSize: Style.fontSmall
                 color: Style.darkLabelColor
                 font.weight: Font.Bold
@@ -50,7 +50,7 @@ Custom.Popup {
 
             Label {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.topMargin: -15
+                Layout.topMargin: -Style.smallMargin
                 font.pointSize: Style.fontSmall
                 color: Style.darkLabelColor
                 font.weight: Font.Bold

@@ -12,7 +12,7 @@ class TransactionHistoryRequest : public ApiRequest
 
 public:
     TransactionHistoryRequest(const QByteArray &token);
-    void errorHandler(const QString& error);
+    void errorHandler(const QString &error);
 signals:
     void projectsDataReply(QVariantList walletList) const;
 protected:

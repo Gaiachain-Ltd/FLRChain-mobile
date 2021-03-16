@@ -64,7 +64,7 @@ Item {
                     Layout.preferredWidth: 120
                     Layout.preferredHeight: 42
                     Layout.alignment: Qt.AlignHCenter
-                    sourceSize: Qt.size(128,42)
+                    sourceSize: Qt.size(120,42)
                 }
 
                 Rectangle {
@@ -99,7 +99,7 @@ Item {
                         Rectangle {
                             color: Style.grayBgColor
                             height: 2
-                            Layout.topMargin: Style.smallMargin
+                            Layout.topMargin: Style.tinyMargin
                             Layout.fillWidth: true
                             Layout.leftMargin: -Style.baseMargin
                             Layout.rightMargin: -Style.baseMargin
@@ -113,7 +113,7 @@ Item {
 
                         Custom.TextInput {
                             id: name
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("First name")
                         }
 
@@ -125,7 +125,7 @@ Item {
 
                         Custom.TextInput {
                             id: surname
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("Last name")
                         }
 
@@ -137,7 +137,7 @@ Item {
 
                         Custom.TextInput {
                             id: userEmail
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("Email")
                             color: errorMode ? Style.errorColor : Style.darkLabelColor
                             onTextChanged: {
@@ -156,7 +156,7 @@ Item {
 
                         Custom.TextInput {
                             id: phone
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("Phone")
                         }
 
@@ -168,7 +168,7 @@ Item {
 
                         Custom.TextInput {
                             id: villageName
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("Village name")
                         }
 
@@ -180,7 +180,7 @@ Item {
 
                         Custom.TextInput {
                             id: password
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             echoMode: TextInput.Password
                             placeholderText: qsTr("Password")
                         }
@@ -193,7 +193,7 @@ Item {
 
                         Custom.TextInput {
                             id: repeatPassword
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             echoMode: TextInput.Password
                             placeholderText: qsTr("Repeat password")
                         }
@@ -239,7 +239,7 @@ Item {
                             font.pixelSize: Style.fontTiny
                             color: Style.accentColor
                             Layout.alignment: Qt.AlignHCenter
-                            Layout.topMargin: -Style.smallMargin
+                            Layout.topMargin: -Style.tinyMargin
                             Layout.bottomMargin: Style.baseMargin
                         }
                     }

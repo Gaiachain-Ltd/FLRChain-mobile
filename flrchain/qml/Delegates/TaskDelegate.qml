@@ -46,7 +46,7 @@ Item {
                 }
 
                 Label {
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Rewards per unit"
@@ -61,7 +61,7 @@ Item {
                 }
 
                 Custom.Button{
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     Layout.fillWidth: true
                     text: qsTr("Earn reward")
                     visible: buttonVisible
@@ -72,7 +72,7 @@ Item {
 
                 Item{
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Style.smallMargin
+                    Layout.preferredHeight: Style.tinyMargin
                 }
             }
         }

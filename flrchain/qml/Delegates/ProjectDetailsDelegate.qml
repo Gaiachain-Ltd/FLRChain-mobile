@@ -30,7 +30,7 @@ Item {
 
             Rectangle{
                 anchors.bottom: parent.top
-                anchors.bottomMargin: -Style.smallMargin
+                anchors.bottomMargin: -Style.tinyMargin
                 anchors.left: parent.left
                 anchors.leftMargin: Style.baseMargin
                 height: 20
@@ -82,7 +82,7 @@ Item {
                 }
 
                 Label {
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Investment time"
@@ -109,7 +109,7 @@ Item {
                 }
 
                 Label{
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Project status"
@@ -136,7 +136,7 @@ Item {
                 }
 
                 Label {
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Description"
@@ -152,7 +152,7 @@ Item {
                 }
 
                 Label{
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
                     text: "Photo"
@@ -167,7 +167,7 @@ Item {
 
                 Custom.Button{
                     id: btn
-                    Layout.topMargin: Style.smallMargin
+                    Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")

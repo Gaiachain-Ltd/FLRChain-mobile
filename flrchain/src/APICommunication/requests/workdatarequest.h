@@ -14,7 +14,7 @@ class WorkDataRequest : public ApiRequest
 
 public:
     WorkDataRequest(const QByteArray &token);
-    void errorHandler(const QString& error);
+    void errorHandler(const QString &error);
 signals:
     void workDataReply(QVariantList workList) const;
 protected:

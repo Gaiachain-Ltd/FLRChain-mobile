@@ -2,7 +2,6 @@
 #define WORK_H
 #include <QObject>
 
-
 class Work : public QObject
 {
     Q_OBJECT

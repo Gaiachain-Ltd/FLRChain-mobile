@@ -13,7 +13,7 @@ Column {
         radius: 10
         Rectangle{
             anchors.bottom: parent.top
-            anchors.bottomMargin: -Style.smallMargin
+            anchors.bottomMargin: -Style.tinyMargin
             anchors.left: parent.left
             anchors.leftMargin: Style.baseMargin
             height: 20

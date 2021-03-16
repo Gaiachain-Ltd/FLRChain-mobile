@@ -33,7 +33,7 @@ Custom.Popup {
         }
 
         RowLayout{
-            Layout.topMargin: -Style.smallMargin
+            Layout.topMargin: -Style.tinyMargin
             Layout.fillWidth: true
             Layout.preferredHeight: 56
             Custom.TextInput {
@@ -68,7 +68,7 @@ Custom.Popup {
         }
 
         Custom.TextInput {
-            Layout.topMargin: -Style.smallMargin
+            Layout.topMargin: -Style.tinyMargin
             Layout.fillWidth: true
             placeholderText: qsTr("+00 111 222 111")
             color: Style.darkLabelColor
@@ -84,7 +84,7 @@ Custom.Popup {
 
         Custom.Button {
             text: qsTr("Cancel")
-            Layout.bottomMargin: Style.smallMargin
+            Layout.bottomMargin: Style.tinyMargin
             Layout.fillWidth: true
             bgColor: Style.buttonSecColor
 

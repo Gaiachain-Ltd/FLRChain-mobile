@@ -8,7 +8,7 @@
 
 Q_LOGGING_CATEGORY(requestRegister, "request.register")
 
-RegisterRequest::RegisterRequest(const QString& email, const QString& password)
+RegisterRequest::RegisterRequest(const QString &email, const QString &password)
     : ApiRequest("register")
 {
     connect(this, &RegisterRequest::replyError,

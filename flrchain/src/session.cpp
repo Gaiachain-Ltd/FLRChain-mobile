@@ -234,7 +234,6 @@ void Session::cashOut(const double amount, const QString& address) const
     mClient->send(request);
 }
 
-
 void Session::setRememberMe(const bool val)
 {
     Settings::instance()->setValue(Settings::RememberMe, val);
@@ -275,4 +274,3 @@ void Session::loadData()
         getProjectsData();
     }
 }
-

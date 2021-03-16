@@ -12,11 +12,11 @@ class UserInfoRequest : public ApiRequest
 
 public:
     UserInfoRequest(const QByteArray &token);
-    void errorHandler(const QString& error);
+    void errorHandler(const QString &error);
 signals:
-    void userInfoReply(const QString& firstName,
-                        const QString& lastName,
-                        const QString& email) const;
+    void userInfoReply(const QString &firstName,
+                        const QString &lastName,
+                        const QString &email) const;
 protected:
     virtual void parse() override final;
 };

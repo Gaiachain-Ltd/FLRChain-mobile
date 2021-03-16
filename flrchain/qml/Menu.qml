@@ -89,8 +89,8 @@ Drawer {
                 textColor: Style.baseLabelColor
                 text: qsTr("Home")
                 iconSrc: "qrc:/img/icon-menu-home.svg"
-                imgHeight: 18
-                imgWidth: 18
+                imgHeight: Style.iconSize
+                imgWidth: Style.iconSize
                 onClicked: {
                     drawer.close()
                     pageManager.enterDashboardScreen()
@@ -110,8 +110,8 @@ Drawer {
                 textColor: Style.baseLabelColor
                 text: qsTr("Earn rewards")
                 iconSrc: "qrc:/img/icon-menu-earn-rewards.svg"
-                imgHeight: 18
-                imgWidth: 18
+                imgHeight: Style.iconSize
+                imgWidth: Style.iconSize
                 onClicked: {
                     drawer.close()
                     pageManager.enterProjectListScreen()
@@ -131,8 +131,8 @@ Drawer {
                 textColor: Style.baseLabelColor
                 text: qsTr("Wallet")
                 iconSrc: "qrc:/img/icon-menu-wallet.svg"
-                imgHeight: 18
-                imgWidth: 18
+                imgHeight: Style.iconSize
+                imgWidth: Style.iconSize
                 onClicked: {
                     drawer.close()
                     pageManager.enterWalletScreen()
@@ -152,8 +152,8 @@ Drawer {
                 textColor: Style.errorColor
                 text: qsTr("Log out")
                 iconSrc: "qrc:/img/icon-menu-logout.svg"
-                imgHeight: 18
-                imgWidth: 18
+                imgHeight: Style.iconSize
+                imgWidth: Style.iconSize
                 onClicked: {
                 }
             }

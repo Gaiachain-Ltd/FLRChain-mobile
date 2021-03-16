@@ -28,7 +28,7 @@ Custom.Popup {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: -15
+            Layout.topMargin: -Style.smallMargin
             font.pointSize: Style.fontSmall
             color: Style.accentColor
             text: projectName
@@ -45,7 +45,7 @@ Custom.Popup {
 
         Custom.Button {
             text: qsTr("Cancel")
-            Layout.bottomMargin: Style.smallMargin
+            Layout.bottomMargin: Style.tinyMargin
             Layout.fillWidth: true
             bgColor: Style.buttonSecColor
 
