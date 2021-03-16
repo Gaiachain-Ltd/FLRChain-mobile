@@ -10,8 +10,8 @@ class CashOutRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    CashOutRequest(const double amount, const QString& address, const QByteArray &token);
-    void errorHandler(const QString& error);
+    CashOutRequest(const double amount, const QString &address, const QByteArray &token);
+    void errorHandler(const QString &error);
 
 signals:
     void transferReply(const bool successful) const;

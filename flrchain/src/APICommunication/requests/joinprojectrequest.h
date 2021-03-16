@@ -9,8 +9,8 @@ class JoinProjectRequest: public ApiRequest
 {
     Q_OBJECT
 public:
-    JoinProjectRequest(const int projectId, const QByteArray& token);
-    void errorHandler(const QString& error);
+    JoinProjectRequest(const int projectId, const QByteArray &token);
+    void errorHandler(const QString &error);
 signals:
     void joinProjectReply() const;
 protected:

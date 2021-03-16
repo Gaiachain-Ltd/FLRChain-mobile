@@ -4,7 +4,6 @@
 
 JoinProjectRequest::JoinProjectRequest(const int projectId, const QByteArray &token) : ApiRequest("")
 {
-
     QJsonObject object;
     object.insert(QLatin1String("project_id"), QJsonValue(projectId));
 

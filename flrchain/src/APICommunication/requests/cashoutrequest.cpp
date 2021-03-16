@@ -2,7 +2,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-CashOutRequest::CashOutRequest(const double amount, const QString& address, const QByteArray &token)
+CashOutRequest::CashOutRequest(const double amount, const QString &address, const QByteArray &token)
     : ApiRequest("")
 {
     connect(this, &CashOutRequest::replyError,

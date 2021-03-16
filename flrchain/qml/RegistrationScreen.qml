@@ -54,8 +54,8 @@ Item {
                 id: mainColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: Style.bigMargin
-                anchors.rightMargin: Style.bigMargin
+                anchors.leftMargin: Style.baseMargin
+                anchors.rightMargin: Style.baseMargin
 
                 Image {
                     id: logo
@@ -105,19 +105,39 @@ Item {
                             Layout.rightMargin: -Style.baseMargin
                         }
 
+                        Label {
+                            text: qsTr("First name")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
+                        }
 
                         Custom.TextInput {
                             id: name
+                            Layout.topMargin: -Style.smallMargin
                             placeholderText: qsTr("First name")
+                        }
+
+                        Label {
+                            text: qsTr("Last name")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
                         }
 
                         Custom.TextInput {
                             id: surname
+                            Layout.topMargin: -Style.smallMargin
                             placeholderText: qsTr("Last name")
+                        }
+
+                        Label {
+                            text: qsTr("Email")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
                         }
 
                         Custom.TextInput {
                             id: userEmail
+                            Layout.topMargin: -Style.smallMargin
                             placeholderText: qsTr("Email")
                             color: errorMode ? Style.errorColor : Style.darkLabelColor
                             onTextChanged: {
@@ -128,24 +148,52 @@ Item {
                             }
                         }
 
+                        Label {
+                            text: qsTr("Phone")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
+                        }
+
                         Custom.TextInput {
                             id: phone
+                            Layout.topMargin: -Style.smallMargin
                             placeholderText: qsTr("Phone")
+                        }
+
+                        Label {
+                            text: qsTr("Village name")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
                         }
 
                         Custom.TextInput {
                             id: villageName
+                            Layout.topMargin: -Style.smallMargin
                             placeholderText: qsTr("Village name")
+                        }
+
+                        Label {
+                            text: qsTr("Password")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
                         }
 
                         Custom.TextInput {
                             id: password
+                            Layout.topMargin: -Style.smallMargin
                             echoMode: TextInput.Password
                             placeholderText: qsTr("Password")
                         }
 
+                        Label {
+                            text: qsTr("Re-password")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
+                        }
+
                         Custom.TextInput {
                             id: repeatPassword
+                            Layout.topMargin: -Style.smallMargin
                             echoMode: TextInput.Password
                             placeholderText: qsTr("Repeat password")
                         }

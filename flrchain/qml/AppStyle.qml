@@ -22,6 +22,7 @@ property color errorColor: "#FE2121"
 property color sectionColor: "#EDEEF2"
 
 //font
+property int fontMicro: 10
 property int fontTiny: 12
 property int fontSmall: 14
 property int fontMedium: 15

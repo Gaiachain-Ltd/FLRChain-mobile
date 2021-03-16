@@ -51,8 +51,7 @@ User* Session::user() const
 void Session::onLoginSuccessful(const QString &token)
 {
     setToken(token.toUtf8());
-    getUserInfo();
-    getProjectsData();
+    loadData();
     emit loginSuccessful(token);
 }
 

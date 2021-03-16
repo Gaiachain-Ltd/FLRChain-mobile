@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
+import QtGraphicalEffects 1.15
 
 import "qrc:/CustomControls" as Custom
 
@@ -54,8 +55,8 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.leftMargin: Style.bigMargin
-            anchors.rightMargin: Style.bigMargin
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
             anchors.topMargin: Style.baseMargin
             anchors.bottomMargin: 16
 
@@ -124,14 +125,27 @@ Item {
                             Layout.preferredHeight: 200
                             Layout.alignment: Qt.AlignHCenter
                             fillMode: Image.PreserveAspectCrop
+                            layer.enabled: true
+                            layer.effect: OpacityMask {
+                                maskSource: Item {
+                                    width: img.width
+                                    height: img.height
+                                    Rectangle {
+                                        anchors.centerIn: parent
+                                        width: img.width
+                                        height: img.height
+                                        radius: 10
+                                    }
+                                }
+                            }
 
                             Custom.IconButton {
                                 id: closeButton
                                 anchors.right: parent.right
                                 anchors.top: parent.top
-                                anchors.margins: 10
-                                width: 30
-                                height: 30
+                                anchors.margins: 5
+                                width: 40
+                                height: 40
                                 iconSize: 30
                                 iconSrc: "qrc:/img/icon-delete.svg"
                                 onClicked: {

@@ -19,6 +19,7 @@ Custom.Popup {
         Text {
             text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer is to be made")
             Layout.fillWidth: true
+            Layout.preferredHeight: 62
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
             color: Style.darkLabelColor
             horizontalAlignment: Text.AlignHCenter

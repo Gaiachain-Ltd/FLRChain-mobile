@@ -52,7 +52,7 @@ Item {
                     font.pixelSize: 29
                     font.weight: Font.DemiBold
                     text: value + " USDC"
-                    color: Style.darkLabelColor
+                    color: Style.mediumLabelColor
                 }
 
                 Custom.Button {

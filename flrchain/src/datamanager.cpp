@@ -69,8 +69,10 @@ void DataManager::setWalletBalance(const double walletBalance)
 
 void DataManager::setProjectsCount(const int projectsCount)
 {
-    m_projectsCount = projectsCount;
-    emit projectsCountChanged();
+    if (m_projectsCount != projectsCount) {
+        m_projectsCount = projectsCount;
+        emit projectsCountChanged();
+    }
 }
 
 void DataManager::cashOutReplyReceived(const bool result)
@@ -84,6 +86,8 @@ void DataManager::cleanData()
     m_workList.clear();
     m_transactionsList.clear();
     m_fileManager->removeCurrentFile();
+    m_projectsCount = 0;
+    m_walletBalance = 0.0;
 }
 
 void DataManager::projectsDataReceived(const QVariantList &projects)

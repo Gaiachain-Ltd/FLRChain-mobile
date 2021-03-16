@@ -26,8 +26,8 @@ Rectangle{
             anchors.verticalCenter: parent.verticalCenter
             visible: backButtonVisible
             onClicked: pageManager.back()
-            width: 18
-            height: 18
+            width: 26
+            height: 26
             iconSize: 18
         }
 

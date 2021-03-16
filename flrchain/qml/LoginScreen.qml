@@ -28,10 +28,17 @@ Item {
 
         ColumnLayout {
             anchors.fill: parent
-            anchors.leftMargin: Style.bigMargin
-            anchors.rightMargin: Style.bigMargin
+            anchors.leftMargin: Style.baseMargin
+            anchors.rightMargin: Style.baseMargin
             anchors.topMargin: Style.baseMargin
             anchors.bottomMargin: 16
+
+            Item{
+               Layout.fillHeight: true
+               Layout.preferredHeight: 40
+               Layout.maximumHeight: 40
+               Layout.fillWidth: true
+            }
 
             Image {
                 id: logo
@@ -46,17 +53,14 @@ Item {
                 id: logoImg
                 source: "qrc:/img/trees-login.svg"
                 Layout.preferredWidth: 298
-                Layout.fillHeight: true
-                Layout.maximumHeight: 140
                 Layout.preferredHeight: 140
                 Layout.topMargin: Style.baseMargin
                 Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(298, 141)
+                sourceSize: Qt.size(298, 140)
             }
 
             Rectangle {
                 Layout.fillWidth: true
-                Layout.topMargin: Style.smallMargin
                 Layout.preferredHeight: childrenRect.height
 
                 color: Style.bgColor
@@ -91,8 +95,15 @@ Item {
                         height: 2
                     }
 
+                    Label {
+                        text: qsTr("Email")
+                        font.pixelSize: Style.fontMicro
+                        color: Style.mediumLabelColor
+                    }
+
                     Custom.TextInput {
                         id: userEmail
+                        Layout.topMargin: -Style.smallMargin
                         placeholderText: qsTr("Please enter your email...")
                         color: errorMode ? Style.errorColor : Style.darkLabelColor
                         onTextChanged: {
@@ -103,8 +114,15 @@ Item {
                         }
                     }
 
+                    Label {
+                        text: qsTr("Password")
+                        font.pixelSize: Style.fontMicro
+                        color: Style.mediumLabelColor
+                    }
+
                     Custom.TextInput {
                         id: password
+                        Layout.topMargin: -Style.smallMargin
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
                         color: errorMode ? Style.errorColor : Style.darkLabelColor
@@ -124,9 +142,9 @@ Item {
                         }
                     }
 
-                    TextArea {
+                    Label {
                         id: errorLabel
-                        readOnly: true
+                        Layout.topMargin: -15
                         Layout.fillWidth: true
                         font.pixelSize: Style.fontTiny
                         color: Style.errorColor
