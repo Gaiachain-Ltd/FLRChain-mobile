@@ -32,7 +32,8 @@ Item {
             return
         }
 
-        session.registerUser(userEmail.text, password.text)
+        session.registerUser(userEmail.text, password.text, name.text,
+                             surname.text, phone.text, villageName.text)
     }
 
     Rectangle {

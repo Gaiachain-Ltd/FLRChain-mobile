@@ -20,7 +20,8 @@ public:
     void setClient(RestAPIClient *client);
     Q_INVOKABLE bool hasToken() const;
     Q_INVOKABLE void login(const QString& email, const QString& password);
-    Q_INVOKABLE void registerUser(const QString& email, const QString& password);
+    Q_INVOKABLE void registerUser(const QString& email, const QString& password, const QString &firstName,
+                                  const QString &lastName, const QString &phone, const QString &village);
     User* user() const;
     Q_INVOKABLE void setRememberMe(const bool val);
     Q_INVOKABLE bool getRememberMe() const;

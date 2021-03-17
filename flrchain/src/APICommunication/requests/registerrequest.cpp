@@ -8,7 +8,8 @@
 
 Q_LOGGING_CATEGORY(requestRegister, "request.register")
 
-RegisterRequest::RegisterRequest(const QString &email, const QString &password)
+RegisterRequest::RegisterRequest(const QString &email, const QString &password, const QString &firstName,
+                                 const QString &lastName, const QString &phone, const QString &village)
     : ApiRequest("register")
 {
     connect(this, &RegisterRequest::replyError,
@@ -19,6 +20,10 @@ RegisterRequest::RegisterRequest(const QString &email, const QString &password)
         QJsonObject object;
         object.insert(QLatin1String("email"), QJsonValue(email));
         object.insert(QLatin1String("password"), QJsonValue(password));
+        object.insert(QLatin1String("first_name"), QJsonValue(firstName));
+        object.insert(QLatin1String("last_name"), QJsonValue(lastName));
+        object.insert(QLatin1String("phone"), QJsonValue(phone));
+        object.insert(QLatin1String("village"), QJsonValue(village));
 
         m_requestDocument.setObject(object);
         setPriority(Priority::High);

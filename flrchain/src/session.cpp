@@ -86,14 +86,15 @@ void Session::login(const QString &email, const QString &password)
     mClient->send(request);
 }
 
-void Session::registerUser(const QString& email, const QString& password)
+void Session::registerUser(const QString& email, const QString& password, const QString &firstName,
+                           const QString &lastName, const QString &phone, const QString &village)
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    auto request = QSharedPointer<RegisterRequest>::create(email, password);
+    auto request = QSharedPointer<RegisterRequest>::create(email, password, firstName, lastName, phone, village);
     connect(request.data(), &RegisterRequest::registrationSuccessful,
             this, &Session::registrationSuccessful);
     connect(request.data(), &RegisterRequest::registerError,

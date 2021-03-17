@@ -10,7 +10,8 @@ class RegisterRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    RegisterRequest(const QString& email, const QString& password);
+    RegisterRequest(const QString& email, const QString& password, const QString &firstName,
+                    const QString &lastName, const QString &phone, const QString &village);
     void errorHandler(const QString& error);
 
 signals:
