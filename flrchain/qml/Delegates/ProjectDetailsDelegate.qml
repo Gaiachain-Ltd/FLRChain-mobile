@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -15,7 +16,7 @@ Item {
     property string startDate: ""
     property string endDate: ""
     property string status: ""
-    property bool joined: false
+    property int assignmentStatus: Project.Undefined
 
     Custom.ShadowedRectangle {
         height: childrenRect.height
@@ -28,24 +29,12 @@ Item {
             color: Style.bgColor
             radius: 10
 
-            Rectangle{
+            Custom.StatusLabel{
+                status: assignmentStatus
                 anchors.bottom: parent.top
                 anchors.bottomMargin: -Style.tinyMargin
                 anchors.left: parent.left
                 anchors.leftMargin: Style.baseMargin
-                height: 20
-                width: 54
-                color: Style.accentColor
-                radius: 4
-                visible: joined
-
-                Label {
-                    anchors.centerIn: parent
-                    font.pixelSize: Style.fontTiny
-                    font.weight: Font.DemiBold
-                    text: "Joined"
-                    color: Style.bgColor
-                }
             }
 
             ColumnLayout {
@@ -171,7 +160,7 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")
-                    visible: status === "Ongoing" && !joined
+                    visible: status === "Ongoing" && assignmentStatus === Project.Undefined
                 }
             }
         }

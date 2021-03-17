@@ -173,7 +173,7 @@ void Session::joinProject(const int projectId) const
 
     auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
-            this, &Session::projectJoined);
+            m_dataManager, &DataManager::projectJoinRequested);
 
     mClient->send(request);
 }

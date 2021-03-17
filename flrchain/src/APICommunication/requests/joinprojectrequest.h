@@ -12,9 +12,11 @@ public:
     JoinProjectRequest(const int projectId, const QByteArray &token);
     void errorHandler(const QString &error);
 signals:
-    void joinProjectReply() const;
+    void joinProjectReply(const int projectId) const;
 protected:
     virtual void parse() override final;
+private:
+    int m_projectId;
 };
 
 #endif // JOINPROJECTREQUEST_H

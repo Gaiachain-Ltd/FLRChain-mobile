@@ -35,6 +35,7 @@ public slots:
     void setTransactionsList(const QVariantList &transactions);
     void setWalletBalance(const double walletBalance);
     void cashOutReplyReceived(const bool result);
+    void projectJoinRequested(const int projectId);
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();

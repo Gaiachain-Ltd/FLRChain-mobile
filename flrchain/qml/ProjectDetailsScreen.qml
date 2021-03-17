@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -16,13 +17,13 @@ Item {
     property string projectStartDate: ""
     property string projectEndDate: ""
     property string projectStatus: ""
-    property bool projectJoined: false
+    property int projectAssignmentStatus: Project.Undefined
     property var tasks
 
     Connections{
         target: pageManager
         function onSetupProjectDetailsScreen(projectId){
-            itemId = projectId
+            itemId = dataManager.projects[projectId].id
             projectName = dataManager.projects[projectId].name
             tasks = dataManager.projects[projectId].tasks
             projectDeadline = dataManager.projects[projectId].deadline
@@ -30,7 +31,7 @@ Item {
             projectStartDate = dataManager.projects[projectId].investmentStart
             projectEndDate = dataManager.projects[projectId].investmentEnd
             projectStatus = dataManager.projects[projectId].status
-            projectJoined = dataManager.projects[projectId].joined
+            projectAssignmentStatus = dataManager.projects[projectId].assignmentStatus
         }
     }
 
@@ -72,8 +73,8 @@ Item {
                 description: projectDescription
                 startDate: projectStartDate
                 status: projectStatus
-                joined: projectJoined
                 endDate: projectEndDate
+                assignmentStatus: projectAssignmentStatus
 
                 Layout.topMargin: Style.baseMargin
                 Layout.fillWidth: true
@@ -103,7 +104,7 @@ Item {
                     taskItem: tasks[index]
                     projectName: detailsScreen.projectName
                     width: parent.width
-                    buttonVisible: projectJoined && projectStatus === "Ongoing"
+                    buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === "Ongoing"
                 }
             }
 

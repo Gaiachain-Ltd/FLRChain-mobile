@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -11,6 +12,7 @@ Item {
 
     property var projectItem
     property int projectIndex
+    property bool joined: projectItem.assignmentStatus === Project.Joined
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -35,20 +37,8 @@ Item {
                     Layout.preferredHeight: 10
                 }
 
-                Rectangle{
-                    Layout.preferredHeight: 21
-                    Layout.preferredWidth: 54
-                    color: Style.accentColor
-                    radius: 4
-                    visible: projectItem.joined
-
-                    Label{
-                        anchors.centerIn: parent
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: "Joined"
-                        color: Style.bgColor
-                    }
+                Custom.StatusLabel{
+                    status: projectItem.assignmentStatus
                 }
 
                 Label{
@@ -124,11 +114,11 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: projectItem.status === "Ongoing" ? projectItem.joined ? qsTr("Earn reward") : qsTr("Join") : qsTr("Details")
+                    text: projectItem.status === "Ongoing" ? joined ? qsTr("Earn reward") : qsTr("Join") : qsTr("Details")
                     bgColor: projectItem.status === "Ongoing" ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
-                        pageManager.enterProjectDetailsScreen(projectIndex)
-                    }
+                         pageManager.enterProjectDetailsScreen(projectIndex)
+                  }
                 }
             }
         }

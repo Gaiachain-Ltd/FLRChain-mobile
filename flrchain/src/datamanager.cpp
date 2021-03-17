@@ -1,5 +1,6 @@
 #include "datamanager.h"
 #include "filemanager.h"
+#include "project.h"
 #include <QDebug>
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
@@ -78,6 +79,17 @@ void DataManager::setProjectsCount(const int projectsCount)
 void DataManager::cashOutReplyReceived(const bool result)
 {
     qDebug() << "Cashout result" << result;
+}
+
+void DataManager::projectJoinRequested(const int projectId)
+{
+   for(int i = 0; i< m_projects.size() ; ++i){
+       Project *project = m_projects[i].value<Project*>();
+       if(project->id() == projectId){
+           project->setAssignmentStatus(Project::AssignmentStatus::Pending);
+           break;
+       }
+   }
 }
 
 void DataManager::cleanData()

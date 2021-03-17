@@ -40,6 +40,7 @@ Custom.Popup {
 
             onClicked: {
                 session.joinProject(projectId)
+                popup.close()
             }
         }
 

@@ -5,13 +5,13 @@ Project::Project(QObject *parent):
     m_id(),
     m_name(QString()),
     m_description(QString()),
-    m_joined(0),
     m_status(QString()),
     m_deadline(QString()),
     m_investmentStart(QString()),
     m_investmentEnd(QString()),
     m_photo(QString()),
-    m_tasks(QVariantList())
+    m_tasks(QVariantList()),
+    m_assignmentStatus()
 {
 
 }
@@ -29,11 +29,6 @@ QString Project::name() const
 QString Project::description() const
 {
     return m_description;
-}
-
-bool Project::joined() const
-{
-    return m_joined;
 }
 
 QString Project::status() const
@@ -66,6 +61,11 @@ QVariantList Project::tasks() const
     return m_tasks;
 }
 
+int Project::assignmentStatus() const
+{
+    return m_assignmentStatus;
+}
+
 void Project::setId(const int id)
 {
     if (m_id != id) {
@@ -87,14 +87,6 @@ void Project::setDescription(const QString &description)
     if (m_description != description) {
         m_description = description;
         emit descriptionChanged(description);
-    }
-}
-
-void Project::setJoined(const bool joined)
-{
-    if (m_joined != joined) {
-        m_joined = joined;
-        emit joinedChanged(joined);
     }
 }
 
@@ -143,5 +135,13 @@ void Project::setTasks(const QVariantList &tasks)
     if (m_tasks != tasks) {
         m_tasks = tasks;
         emit tasksChanged(tasks);
+    }
+}
+
+void Project::setAssignmentStatus(const int status)
+{
+    if (m_assignmentStatus != status) {
+        m_assignmentStatus = status;
+        emit assignmentStatusChanged(status);
     }
 }

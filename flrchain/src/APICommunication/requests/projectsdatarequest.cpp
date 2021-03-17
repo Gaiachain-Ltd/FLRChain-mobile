@@ -39,7 +39,12 @@ void ProjectsDataRequest::parse()
         Project *project = new Project();
         project->setId(projectObject.value(QLatin1String("id")).toInt());
         project->setName(projectObject.value(QLatin1String("title")).toString());
-        project->setJoined(projectObject.value(QLatin1String("joined")).toBool());
+        if(projectObject.value(QLatin1String("assignment_status")).isNull()){
+            project->setAssignmentStatus(-1);
+        }
+        else {
+            project->setAssignmentStatus(projectObject.value(QLatin1String("assignment_status")).toInt());
+        }
         project->setStatus(projectObject.value(QLatin1String("status")).toString());
         project->setDeadline(projectObject.value(QLatin1String("end")).toString());
         project->setInvestmentStart(projectObject.value(QLatin1String("start")).toString());
@@ -54,6 +59,7 @@ void ProjectsDataRequest::parse()
             QJsonObject taskObject = tasksArray.at(i).toObject();
             Task *task = new Task();
             task->setProjectId(project->id());
+            task->setTaskId(taskObject.value(QLatin1String("id")).toInt());
             task->setAction(taskObject.value(QLatin1String("action")).toString());
             task->setReward(taskObject.value(QLatin1String("reward")).toDouble());
 

@@ -2,15 +2,12 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-JoinProjectRequest::JoinProjectRequest(const int projectId, const QByteArray &token) : ApiRequest("")
+JoinProjectRequest::JoinProjectRequest(const int projectId, const QByteArray &token) : ApiRequest(QString("projects/%1/assignments").arg(projectId))
 {
-    QJsonObject object;
-    object.insert(QLatin1String("project_id"), QJsonValue(projectId));
-
-    m_requestDocument.setObject(object);
     setPriority(Priority::Normal);
     setType(Type::Post);
     setToken(token);
+    m_projectId = projectId;
     connect(this, &JoinProjectRequest::replyError, this, &JoinProjectRequest::errorHandler);
 }
 
@@ -21,5 +18,5 @@ void JoinProjectRequest::errorHandler(const QString &error)
 
 void JoinProjectRequest::parse()
 {
-    emit joinProjectReply();
+    emit joinProjectReply(m_projectId);
 }

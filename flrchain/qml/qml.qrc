@@ -30,5 +30,6 @@
         <file>Popups/TransferSuccessPopup.qml</file>
         <file>Popups/ErrorPopup.qml</file>
         <file>Popups/WorkSuccessPopup.qml</file>
+        <file>CustomControls/StatusLabel.qml</file>
     </qresource>
 </RCC>

@@ -32,6 +32,7 @@ SOFTWARE.
 #include "user.h"
 #include "pages.h"
 #include "pagemanager.h"
+#include "project.h"
 
 int main(int argc, char *argv[]) {
 
@@ -59,6 +60,7 @@ int main(int argc, char *argv[]) {
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
     qmlRegisterUncreatableType<Pages>("com.flrchain.objects", 1, 0, "Pages", "Pages");
+    qmlRegisterType<Project>("com.flrchain.objects", 1, 0, "Project");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
