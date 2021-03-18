@@ -44,6 +44,7 @@ signals:
     void transactionsListChanged() const;
     void walletBalanceChanged() const;
     void projectsCountChanged() const;
+    void joinRequestSent(const int projectId) const;
 
 private:
     QThread *m_workerThread;

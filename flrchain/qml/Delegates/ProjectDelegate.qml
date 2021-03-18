@@ -13,6 +13,7 @@ Item {
     property var projectItem
     property int projectIndex
     property bool joined: projectItem.assignmentStatus === Project.Joined
+    property bool undefinedStatus: projectItem.assignmentStatus === Project.Undefined
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -114,8 +115,8 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: projectItem.status === "Ongoing" ? joined ? qsTr("Earn reward") : qsTr("Join") : qsTr("Details")
-                    bgColor: projectItem.status === "Ongoing" ? Style.accentColor : Style.buttonSecColor
+                    text: projectItem.status === "Ongoing" ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+                    bgColor: projectItem.status === "Ongoing" && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
                          pageManager.enterProjectDetailsScreen(projectIndex)
                   }

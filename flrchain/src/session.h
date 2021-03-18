@@ -43,7 +43,6 @@ signals:
     void registrationError(const QString& errors) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
-    void projectJoinRequested(const int projectId) const;
     void clientInitialized() const;
 
 private:

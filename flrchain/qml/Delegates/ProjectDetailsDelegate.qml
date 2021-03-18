@@ -19,7 +19,7 @@ Item {
     property int assignmentStatus: Project.Undefined
 
     Custom.ShadowedRectangle {
-        height: childrenRect.height
+        height: contentRect.height
         width: parent.width
 
         Rectangle{

@@ -87,6 +87,7 @@ void DataManager::projectJoinRequested(const int projectId)
        Project *project = m_projects[i].value<Project*>();
        if(project->id() == projectId){
            project->setAssignmentStatus(Project::AssignmentStatus::Pending);
+           emit joinRequestSent(projectId);
            break;
        }
    }

@@ -35,6 +35,15 @@ Item {
         }
     }
 
+    Connections{
+        target: dataManager
+        function onJoinRequestSent(projectId){
+            if(projectId === itemId){
+                projectAssignmentStatus = Project.Pending
+            }
+        }
+    }
+
     Custom.Header {
         id: header
         anchors.top: parent.top
