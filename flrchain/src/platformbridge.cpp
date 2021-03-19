@@ -27,3 +27,14 @@ void PlatformBridge::selectFile() const
 {
     d_ptr->selectFile();
 }
+
+bool PlatformBridge::internetAvailable() const
+{
+    return d_ptr->m_internetAvailable;
+}
+
+void PlatformBridge::setInternetAvailable(const bool internetAvailable)
+{
+    d_ptr->m_internetAvailable = internetAvailable;
+    emit internetAvailableChanged(internetAvailable);
+}

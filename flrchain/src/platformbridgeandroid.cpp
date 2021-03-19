@@ -98,6 +98,19 @@ void PlatformBridgePrivate::activityClosedCallback(JNIEnv *env, jobject)
     }
 }
 
+void PlatformBridgePrivate::networkAvailableCallback(JNIEnv *env, jobject, jboolean isAvailable)
+{
+    Q_UNUSED(env);
+
+    bool available = bool(isAvailable == JNI_TRUE);
+
+    qDebug() << "NETWORK" << available;
+
+    if (sptr_q_ptr != nullptr){
+        sptr_q_ptr->setInternetAvailable(available);
+    }
+}
+
 static JNINativeMethod flr_activity_methods[] = {
     { "fileSelectionCallback", "(Ljava/lang/String;)V", (void*)&PlatformBridgePrivate::fileSelectionCallback },
     { "activityClosedCallback", "()V", (void*)&PlatformBridgePrivate::activityClosedCallback }
@@ -109,6 +122,9 @@ static JNINativeMethod media_activity_methods[] = {
     { "captureCallback", "(Ljava/lang/String;)V", (void*)&PlatformBridgePrivate::captureCallback }
 };
 
+static JNINativeMethod flr_network_methods[] = {
+    { "networkAvailableCallback", "(Z)V", (void*)&PlatformBridgePrivate::networkAvailableCallback }
+};
 
 jint JNI_OnLoad(JavaVM *vm, void *reserved)
 {
@@ -121,6 +137,6 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
 
     env->RegisterNatives(env->FindClass("com/application/flrchain/FLRMedia"), media_activity_methods, 1);
     env->RegisterNatives(env->FindClass("com/application/flrchain/FLRActivity"), flr_activity_methods, 2);
-
+    env->RegisterNatives(env->FindClass("com/application/flrchain/FLRNetworkReceiver"), flr_network_methods, 1);
     return JNI_VERSION_1_6;
 }

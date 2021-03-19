@@ -56,7 +56,8 @@ Item {
 
         function onJoinRequestSent(projectId){
             if(projectId === itemId){
-                projectAssignmentStatus = Project.Pending
+                busyIndicator.visible = true
+                session.getProjectDetails(projectId)
             }
         }
     }

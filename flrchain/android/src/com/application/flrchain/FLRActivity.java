@@ -20,6 +20,9 @@ import java.io.InputStream;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import android.webkit.MimeTypeMap;
+import android.os.Bundle;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 
 public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
@@ -37,6 +40,14 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     private int startedActivity = 0;
 
     public FLRActivity() {}
+
+    public FLRNetworkReceiver networkReceiver = new FLRNetworkReceiver();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerReceiver(networkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
