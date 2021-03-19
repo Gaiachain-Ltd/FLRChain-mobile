@@ -118,8 +118,8 @@ Item {
                     text: projectItem.status === "Ongoing" ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
                     bgColor: projectItem.status === "Ongoing" && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
-                         pageManager.enterProjectDetailsScreen(projectIndex)
-                  }
+                         pageManager.enterProjectDetailsScreen(projectItem.id)
+                    }
                 }
             }
         }

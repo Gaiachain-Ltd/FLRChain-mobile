@@ -5,12 +5,12 @@
 #include <QThread>
 #include <QVariantList>
 #include <QVariant>
-
+#include "project.h"
 class FileManager;
+
 class DataManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList projects  READ getProjects WRITE setProjects NOTIFY projectsChanged)
     Q_PROPERTY(QVariantList workList  READ getWorkList WRITE setWorkList NOTIFY workListChanged)
     Q_PROPERTY(QVariantList transactionsList  READ getTransactionsList WRITE setTransactionsList NOTIFY transactionsListChanged)
     Q_PROPERTY(double walletBalance READ getWalletBalance WRITE setWalletBalance NOTIFY walletBalanceChanged)
@@ -29,13 +29,11 @@ public:
     void transactionsDataReceived(const QVariantList &transactions);
 
 public slots:
-    void setProjects(const QVariantList &projects);
     void setProjectsCount(const int count);
     void setWorkList(const QVariantList &work);
     void setTransactionsList(const QVariantList &transactions);
     void setWalletBalance(const double walletBalance);
     void cashOutReplyReceived(const bool result);
-    void projectJoinRequested(const int projectId);
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
@@ -45,11 +43,12 @@ signals:
     void walletBalanceChanged() const;
     void projectsCountChanged() const;
     void joinRequestSent(const int projectId) const;
+    void projectDetailsReceived(Project *project);
+    void projectsReceived(const QVariantList &projects);
 
 private:
     QThread *m_workerThread;
     FileManager *m_fileManager;
-    QVariantList m_projects;
     QVariantList m_workList;
     QVariantList m_transactionsList;
     double m_walletBalance = 0.0;

@@ -37,7 +37,7 @@ signals:
     // Page setups
     void setupProjectDetailsScreen(const int projectId);
     void setupWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
-
+    void backTriggered();
 private:
     PageManager();
     static PageManager *m_instance;

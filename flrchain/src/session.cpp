@@ -10,6 +10,7 @@
 #include "requests/transactionhistoryrequest.h"
 #include "requests/walletbalancerequest.h"
 #include "requests/cashoutrequest.h"
+#include "requests/projectdetailsrequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -174,7 +175,7 @@ void Session::joinProject(const int projectId) const
 
     auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
-            m_dataManager, &DataManager::projectJoinRequested);
+            m_dataManager, &DataManager::joinRequestSent);
 
     mClient->send(request);
 }
@@ -232,6 +233,25 @@ void Session::cashOut(const double amount, const QString& address) const
     auto request = QSharedPointer<CashOutRequest>::create(amount, address, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
             m_dataManager, &DataManager::cashOutReplyReceived);
+    mClient->send(request);
+}
+
+void Session::getProjectDetails(const int projectId) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<ProjectDetailsRequest>::create(getToken(), projectId);
+    connect(request.data(), &ProjectDetailsRequest::projectDetailsReply,
+            m_dataManager, &DataManager::projectDetailsReceived);
+
     mClient->send(request);
 }
 

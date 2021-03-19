@@ -16,11 +16,6 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
             this, &DataManager::photoError);
 }
 
-QVariantList DataManager::getProjects() const
-{
-    return m_projects;
-}
-
 QVariantList DataManager::getWorkList() const
 {
     return m_workList;
@@ -39,13 +34,6 @@ double DataManager::getWalletBalance() const
 int DataManager::getProjectsCount() const
 {
     return m_projectsCount;
-}
-
-void DataManager::setProjects(const QVariantList &projects)
-{
-    m_projects = projects;
-    setProjectsCount(m_projects.count());
-    emit projectsChanged();
 }
 
 void DataManager::setWorkList(const QVariantList &workList)
@@ -81,21 +69,8 @@ void DataManager::cashOutReplyReceived(const bool result)
     qDebug() << "Cashout result" << result;
 }
 
-void DataManager::projectJoinRequested(const int projectId)
-{
-   for(int i = 0; i< m_projects.size() ; ++i){
-       Project *project = m_projects[i].value<Project*>();
-       if(project->id() == projectId){
-           project->setAssignmentStatus(Project::AssignmentStatus::Pending);
-           emit joinRequestSent(projectId);
-           break;
-       }
-   }
-}
-
 void DataManager::cleanData()
 {
-    m_projects.clear();
     m_workList.clear();
     m_transactionsList.clear();
     m_fileManager->removeCurrentFile();
@@ -105,8 +80,8 @@ void DataManager::cleanData()
 
 void DataManager::projectsDataReceived(const QVariantList &projects)
 {
-    m_projects.clear();
-    setProjects(projects);
+    emit projectsReceived(projects);
+    setProjectsCount(projects.count());
 }
 
 void DataManager::workDataReceived(const QVariantList &workList)

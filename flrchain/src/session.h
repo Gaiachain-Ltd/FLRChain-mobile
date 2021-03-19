@@ -33,6 +33,7 @@ public:
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
     Q_INVOKABLE void cashOut(const double amount, const QString &address) const;
+    Q_INVOKABLE void getProjectDetails(const int projectId) const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
     void loadData();

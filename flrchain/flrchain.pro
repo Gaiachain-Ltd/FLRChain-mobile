@@ -40,6 +40,7 @@ HEADERS += \
     src/APICommunication/requests/cashoutrequest.h \
     src/APICommunication/requests/transactionhistoryrequest.h \
     src/APICommunication/requests/walletbalancerequest.h \
+    src/APICommunication/requests/projectdetailsrequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
     src/work.h
@@ -65,6 +66,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/cashoutrequest.cpp \
     src/APICommunication/requests/transactionhistoryrequest.cpp \
     src/APICommunication/requests/walletbalancerequest.cpp \
+    src/APICommunication/requests/projectdetailsrequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
     src/work.cpp

@@ -59,7 +59,7 @@ bool PageManager::back()
         m_visiblePages.pop_back();
         qDebug() << "Page stack after Pop: " << m_visiblePages;
     }
-
+    emit backTriggered();
     return true;
 }
 

@@ -7,6 +7,37 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
 Item {
+    id: projectsScreen
+    property var modelData
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: true
+        visible: false
+    }
+
+    Connections{
+        target: dataManager
+        function onProjectsReceived(projects){
+            modelData = projects
+            busyIndicator.visible = false
+        }
+    }
+
+    Component.onCompleted: {
+        busyIndicator.visible = true
+        session.getProjectsData()
+    }
+
+    Connections{
+        target: pageManager
+        function onBackTriggered(){
+            busyIndicator.visible = true
+            session.getProjectsData()
+        }
+    }
+
     Custom.Header {
         id: header
         anchors.top: parent.top
@@ -25,6 +56,7 @@ Item {
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
+        visible: !busyIndicator.visible
 
         ColumnLayout {
             id: mainColumn
@@ -44,7 +76,7 @@ Item {
 
             ListView {
                 id: listView
-                model: dataManager.projects
+                model: modelData
                 interactive: false
 
                 Layout.fillWidth: true
@@ -52,7 +84,7 @@ Item {
                 spacing: 20
 
                 delegate: Delegates.ProjectDelegate {
-                    projectItem: dataManager.projects[index]
+                    projectItem: listView.model[index]
                     projectIndex: index
                 }
             }

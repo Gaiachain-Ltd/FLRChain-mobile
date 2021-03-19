@@ -20,27 +20,52 @@ Item {
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
 
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: true
+        visible: false
+    }
+
+    Component.onCompleted: {
+        busyIndicator.visible = true
+    }
+
     Connections{
         target: pageManager
         function onSetupProjectDetailsScreen(projectId){
-            itemId = dataManager.projects[projectId].id
-            projectName = dataManager.projects[projectId].name
-            tasks = dataManager.projects[projectId].tasks
-            projectDeadline = dataManager.projects[projectId].deadline
-            projectDescription = dataManager.projects[projectId].description
-            projectStartDate = dataManager.projects[projectId].investmentStart
-            projectEndDate = dataManager.projects[projectId].investmentEnd
-            projectStatus = dataManager.projects[projectId].status
-            projectAssignmentStatus = dataManager.projects[projectId].assignmentStatus
+            session.getProjectDetails(projectId)
         }
     }
 
     Connections{
         target: dataManager
+        function onProjectDetailsReceived(project){
+            itemId = project.id
+            projectName = project.name
+            tasks = project.tasks
+            projectDeadline = project.deadline
+            projectDescription = project.description
+            projectStartDate = project.investmentStart
+            projectEndDate = project.investmentEnd
+            projectStatus = project.status
+            projectAssignmentStatus = project.assignmentStatus
+
+            busyIndicator.visible = false
+        }
+
         function onJoinRequestSent(projectId){
             if(projectId === itemId){
                 projectAssignmentStatus = Project.Pending
             }
+        }
+    }
+
+    Connections{
+        target: pageManager
+        function onBackTriggered(){
+            busyIndicator.visible = true
+            session.getProjectDetails(itemId)
         }
     }
 
@@ -60,7 +85,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         contentHeight: mainColumn.height
-
+        visible: !busyIndicator.visible
         ColumnLayout {
             id: mainColumn
             anchors.left: parent.left
