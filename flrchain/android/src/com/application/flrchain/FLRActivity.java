@@ -274,6 +274,11 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
 
         return uri;
     }
+
+    public void checkConnection() {
+        networkReceiver.checkConnection(getApplicationContext());
+    }
+
     //=================//
     // PRIVATE METHODS //
     //=================//

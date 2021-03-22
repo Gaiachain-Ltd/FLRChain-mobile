@@ -19,6 +19,7 @@
 #include <QDebug>
 #include "settings.h"
 #include "datamanager.h"
+#include "platformbridge.h"
 
 
 Q_LOGGING_CATEGORY(session, "core.session")
@@ -28,6 +29,11 @@ Session::Session(QObject *parent) : QObject(parent)
     mCurrentUser = UserPtr::create();
     connect(this, &Session::clientInitialized,
             this, &Session::loadData);
+
+    connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
+            this, &Session::setInternetConnection);
+
+    PlatformBridge::instance()->checkConnection();
 }
 
 Session::~Session()
@@ -335,4 +341,17 @@ void Session::loadData()
         getUserInfo();
         getProjectsData();
     }
+}
+
+void Session::setInternetConnection(const bool internetConnection)
+{
+    if (m_internetConnection != internetConnection) {
+        m_internetConnection = internetConnection;
+        emit internetConnectionChanged(internetConnection);
+    }
+}
+
+bool Session::internetConnection()
+{
+    return m_internetConnection;
 }

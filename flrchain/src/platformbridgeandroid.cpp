@@ -67,6 +67,11 @@ void PlatformBridgePrivate::selectFile()
                                                   mimeTypeFilterObj.object<jstring>());
 }
 
+void PlatformBridgePrivate::checkConnection()
+{
+    QtAndroid::androidActivity().callMethod<void>("checkConnection", "()V");
+}
+
 void PlatformBridgePrivate::fileSelectionCallback(JNIEnv *env, jobject, jstring path)
 {
     Q_UNUSED(env);
@@ -107,7 +112,7 @@ void PlatformBridgePrivate::networkAvailableCallback(JNIEnv *env, jobject, jbool
     qDebug() << "NETWORK" << available;
 
     if (sptr_q_ptr != nullptr){
-        sptr_q_ptr->setInternetAvailable(available);
+        sptr_q_ptr->networkAvailableChanged(available);
     }
 }
 

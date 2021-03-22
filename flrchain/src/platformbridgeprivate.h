@@ -22,6 +22,7 @@ class PlatformBridgePrivate : public QObject, public QAbstractNativeEventFilter
 
     void capture();
     void selectFile();
+    void checkConnection();
 public:
     bool nativeEventFilter(const QByteArray &eventType, void *message, long *result);
 
@@ -30,8 +31,6 @@ public:
     static void fileSelectionCallback(JNIEnv *env, jobject, jstring path);
     static void activityClosedCallback(JNIEnv *env, jobject);
     static void networkAvailableCallback(JNIEnv *env, jobject, jboolean isAvailable);
-private:
-    bool m_internetAvailable = false;
 
 }; // class PlatformBridgePrivate
 

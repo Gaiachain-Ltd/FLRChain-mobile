@@ -28,13 +28,7 @@ void PlatformBridge::selectFile() const
     d_ptr->selectFile();
 }
 
-bool PlatformBridge::internetAvailable() const
+void PlatformBridge::checkConnection() const
 {
-    return d_ptr->m_internetAvailable;
-}
-
-void PlatformBridge::setInternetAvailable(const bool internetAvailable)
-{
-    d_ptr->m_internetAvailable = internetAvailable;
-    emit internetAvailableChanged(internetAvailable);
+    d_ptr->checkConnection();
 }

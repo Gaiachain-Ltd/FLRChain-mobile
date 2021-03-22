@@ -13,6 +13,7 @@ class Session : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(User* user READ user NOTIFY userChanged)
+    Q_PROPERTY(bool internetConnection WRITE setInternetConnection READ internetConnection NOTIFY internetConnectionChanged)
 
 public:
     explicit Session(QObject *parent = nullptr);
@@ -23,6 +24,7 @@ public:
     Q_INVOKABLE void registerUser(const QString& email, const QString& password, const QString &firstName,
                                   const QString &lastName, const QString &phone, const QString &village);
     User* user() const;
+    bool internetConnection();
     Q_INVOKABLE void setRememberMe(const bool val);
     Q_INVOKABLE bool getRememberMe() const;
     QByteArray getToken() const;
@@ -39,6 +41,8 @@ public:
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
     void loadData();
+public slots:
+    void setInternetConnection(const bool internetConnection);
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
@@ -50,6 +54,7 @@ signals:
     void photoDownloaded(const QString &path, const int workId) const;
     void fileDownloadError(const int workId) const;
     void workAdded(const QString &taskName, const QString &projectName) const;
+    void internetConnectionChanged(bool internetConnection);
 private:
     void onLoginSuccessful(const QString& token);
     void onUserInfo(const QString& firstName,
@@ -60,6 +65,7 @@ private:
     UserPtr mCurrentUser;
     QPointer<RestAPIClient> mClient;
     DataManager *m_dataManager;
+    bool m_internetConnection;
 };
 
 #endif // SESSION_H

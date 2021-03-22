@@ -12,11 +12,15 @@ public class FLRNetworkReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(final Context context, final Intent intent) {
-        if (checkInternet(context)) {
-           networkAvailableCallback(true);
-        } else {
-           networkAvailableCallback(false);
-        }
+         checkConnection(context);
+    }
+
+    void checkConnection(Context context) {
+         if (checkInternet(context)) {
+             networkAvailableCallback(true);
+         } else {
+             networkAvailableCallback(false);
+         }
     }
 
     boolean checkInternet(Context context) {
