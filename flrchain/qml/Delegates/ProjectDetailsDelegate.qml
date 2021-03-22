@@ -15,8 +15,10 @@ Item {
     property string description: ""
     property string startDate: ""
     property string endDate: ""
-    property string status: ""
+    property int status: Project.InvestmentUnknown
     property int assignmentStatus: Project.Undefined
+    property bool investmentOngoing: status === Project.InvestmentOngoing
+    property bool investmentFinished: status === Project.InvestmentFinished
 
     Custom.ShadowedRectangle {
         height: contentRect.height
@@ -108,7 +110,7 @@ Item {
                 Row {
                     spacing: 5
                     Image {
-                        source: status === "Ongoing" ? "qrc:/img/icon-ongoing.svg" : status === "Suspended" ? "qrc:/img/icon-suspended.svg" : "qrc:/img/icon-finished.svg"
+                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
                         asynchronous: true
                         width: Style.iconSize
                         height: Style.iconSize
@@ -119,7 +121,7 @@ Item {
                     Label {
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: status
+                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Suspended")
                         color: Style.mediumLabelColor
                     }
                 }
@@ -160,7 +162,7 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")
-                    visible: status === "Ongoing" && assignmentStatus === Project.Undefined
+                    visible: investmentOngoing && assignmentStatus === Project.Undefined
                 }
             }
         }

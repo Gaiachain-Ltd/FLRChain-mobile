@@ -16,7 +16,7 @@ Item {
     property string projectDescription: ""
     property string projectStartDate: ""
     property string projectEndDate: ""
-    property string projectStatus: ""
+    property int projectStatus: Project.InvestmentUnknown
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
     property var workData
@@ -173,7 +173,7 @@ Item {
                     taskItem: tasks[index]
                     projectName: detailsScreen.projectName
                     width: parent.width
-                    buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === "Ongoing"
+                    buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === Project.InvestmentOngoing
                 }
             }
 

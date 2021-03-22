@@ -31,7 +31,14 @@ void ProjectDetailsRequest::parse()
     else {
         project->setAssignmentStatus(projectObject.value(QLatin1String("assignment_status")).toInt());
     }
-    project->setStatus(projectObject.value(QLatin1String("status")).toString());
+
+    if(projectObject.value(QLatin1String("investment")).isNull()){
+        project->setStatus(-1);
+    }
+    else {
+        project->setStatus(projectObject.value(QLatin1String("investment")).toObject()
+                           .value(QLatin1String("status")).toInt());
+    }
     project->setDeadline(projectObject.value(QLatin1String("end")).toString());
     project->setInvestmentStart(projectObject.value(QLatin1String("start")).toString());
     project->setInvestmentEnd(projectObject.value(QLatin1String("end")).toString());

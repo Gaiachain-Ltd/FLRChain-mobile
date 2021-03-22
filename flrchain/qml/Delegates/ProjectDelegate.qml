@@ -14,6 +14,8 @@ Item {
     property int projectIndex
     property bool joined: projectItem.assignmentStatus === Project.Joined
     property bool undefinedStatus: projectItem.assignmentStatus === Project.Undefined
+    property bool investmentOngoing: projectItem.status === Project.InvestmentOngoing
+    property bool investmentFinished: projectItem.status === Project.InvestmentFinished
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -74,7 +76,7 @@ Item {
                         Layout.preferredWidth: Style.iconSize
                         Layout.preferredHeight: Style.iconSize
                         Layout.leftMargin: 5
-                        source: projectItem.status === "Ongoing" ? "qrc:/img/icon-ongoing.svg" : projectItem.status === "Suspended" ? "qrc:/img/icon-suspended.svg" : "qrc:/img/icon-finished.svg"
+                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
                         asynchronous: true
 
                         fillMode: Image.PreserveAspectFit
@@ -84,8 +86,8 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: projectItem.status
-                        color: Style.accentColor
+                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Suspended")
+                        color: investmentOngoing ? Style.accentColor : investmentFinished ? Style.errorColor : Style.yellowLabelColor
                     }
 
                     Item{
@@ -115,8 +117,8 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: projectItem.status === "Ongoing" ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
-                    bgColor: projectItem.status === "Ongoing" && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
+                    text: investmentOngoing ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+                    bgColor: investmentOngoing && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
                          pageManager.enterProjectDetailsScreen(projectItem.id)
                     }

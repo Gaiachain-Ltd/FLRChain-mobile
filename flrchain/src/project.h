@@ -10,7 +10,7 @@ class Project : public QObject
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
-    Q_PROPERTY(QString status READ status WRITE setStatus NOTIFY statusChanged)
+    Q_PROPERTY(int status READ status WRITE setStatus NOTIFY statusChanged)
     Q_PROPERTY(QString deadline READ deadline WRITE setDeadline NOTIFY deadlineChanged)
     Q_PROPERTY(QString investmentStart READ investmentStart WRITE setInvestmentStart NOTIFY investmentStartChanged)
     Q_PROPERTY(QString investmentEnd READ investmentEnd WRITE setInvestmentEnd NOTIFY investmentEndChanged)
@@ -30,10 +30,19 @@ public:
 
     Q_ENUM(AssignmentStatus)
 
+    enum InvestmentStatus {
+        InvestmentUnknown = -1,
+        InvestmentFinished = 0,
+        InvestmentOngoing = 1,
+        InvestmentSuspended = 2
+    }; // enum InvestmentStatus
+
+    Q_ENUM(InvestmentStatus)
+
     int id() const;
     QString name() const;
     QString description() const;
-    QString status() const;
+    int status() const;
     QString deadline() const;
     QString investmentStart() const;
     QString investmentEnd() const;
@@ -45,7 +54,7 @@ public slots:
     void setId(const int id);
     void setName(const QString &name);
     void setDescription(const QString &description);
-    void setStatus(const QString &status);
+    void setStatus(const int status);
     void setDeadline(const QString &deadline);
     void setInvestmentStart(const QString &investmentStart);
     void setInvestmentEnd(const QString &investmentEnd);
@@ -57,7 +66,7 @@ signals:
     void idChanged(int id);
     void nameChanged(QString name);
     void descriptionChanged(QString description);
-    void statusChanged(QString status);
+    void statusChanged(int status);
     void deadlineChanged(QString deadline);
     void investmentStartChanged(QString investmentStart);
     void investmentEndChanged(QString investmentEnd);
@@ -69,7 +78,7 @@ private:
     int m_id;
     QString m_name;
     QString m_description;
-    QString m_status;
+    int m_status;
     QString m_deadline;
     QString m_investmentStart;
     QString m_investmentEnd;

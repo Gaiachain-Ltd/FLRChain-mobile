@@ -5,7 +5,7 @@ Project::Project(QObject *parent):
     m_id(),
     m_name(QString()),
     m_description(QString()),
-    m_status(QString()),
+    m_status(),
     m_deadline(QString()),
     m_investmentStart(QString()),
     m_investmentEnd(QString()),
@@ -31,7 +31,7 @@ QString Project::description() const
     return m_description;
 }
 
-QString Project::status() const
+int Project::status() const
 {
     return m_status;
 }
@@ -90,7 +90,7 @@ void Project::setDescription(const QString &description)
     }
 }
 
-void Project::setStatus(const QString &status)
+void Project::setStatus(const int status)
 {
     if (m_status != status) {
         m_status = status;
