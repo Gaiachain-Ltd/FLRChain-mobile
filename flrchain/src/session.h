@@ -27,13 +27,15 @@ public:
     Q_INVOKABLE bool getRememberMe() const;
     QByteArray getToken() const;
     Q_INVOKABLE void getProjectsData() const;
-    Q_INVOKABLE void getWorkData() const;
+    Q_INVOKABLE void getWorkData(const int projectId) const;
     Q_INVOKABLE void getUserInfo() const;
     Q_INVOKABLE void joinProject(const int projectId) const;
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
     Q_INVOKABLE void cashOut(const double amount, const QString &address) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
+    Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
+    Q_INVOKABLE void sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
     void loadData();
@@ -45,7 +47,9 @@ signals:
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
     void clientInitialized() const;
-
+    void photoDownloaded(const QString &path, const int workId) const;
+    void fileDownloadError(const int workId) const;
+    void workAdded(const QString &taskName, const QString &projectName) const;
 private:
     void onLoginSuccessful(const QString& token);
     void onUserInfo(const QString& firstName,

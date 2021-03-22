@@ -19,6 +19,7 @@ Item {
     property string projectStatus: ""
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
+    property var workData
 
     BusyIndicator {
         id: busyIndicator
@@ -35,6 +36,13 @@ Item {
         target: pageManager
         function onSetupProjectDetailsScreen(projectId){
             session.getProjectDetails(projectId)
+            session.getWorkData(projectId)
+        }
+
+        function onBackTriggered(){
+            busyIndicator.visible = true
+            session.getProjectDetails(itemId)
+            session.getWorkData(itemId)
         }
     }
 
@@ -50,8 +58,6 @@ Item {
             projectEndDate = project.investmentEnd
             projectStatus = project.status
             projectAssignmentStatus = project.assignmentStatus
-
-            busyIndicator.visible = false
         }
 
         function onJoinRequestSent(projectId){
@@ -60,13 +66,41 @@ Item {
                 session.getProjectDetails(projectId)
             }
         }
+
+        function onWorkReceived(workList){
+            if(workList.length === 0){
+                busyIndicator.visible = false
+                return;
+            }
+            workData = workList
+
+            for(var i = 0; i< workList.length; ++i)
+            {
+                session.downloadPhoto(workList[i].photoPath, workList[i].id)
+            }
+        }
     }
 
     Connections{
-        target: pageManager
-        function onBackTriggered(){
-            busyIndicator.visible = true
-            session.getProjectDetails(itemId)
+        target: session
+        function onPhotoDownloaded(path, workId){
+            for(var i = 0; i< workData.length; ++i)
+            {
+                if(workData[i].id === workId){
+                    workData[i].localPath = "file:///" + path
+
+                    if(i === workData.length - 1){
+                        busyIndicator.visible = false
+                    }
+                    return;
+                }
+            }
+        }
+
+        function onFileDownloadError(workId){
+            if(workData[workData.length - 1].id === workId){
+                busyIndicator.visible = false
+            }
         }
     }
 
@@ -143,75 +177,83 @@ Item {
                 }
             }
 
-            Label {
-                Layout.topMargin: Style.baseMargin
-                text: qsTr("Work history")
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
-            }
-
-            Delegates.BalanceDelegate {
+            ColumnLayout{
+                id: workColumn
                 Layout.fillWidth: true
-                buttonVisible: false
-                title: qsTr("Total rewards")
-                value: 30
-            }
+                visible: workList.count !== 0
 
-            Custom.ShadowedRectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: childrenRect.height
-                Layout.bottomMargin: Style.baseMargin
-                Layout.topMargin: Style.tinyMargin
+                Label {
+                    Layout.topMargin: Style.baseMargin
+                    text: qsTr("Work history")
+                    font.pixelSize: Style.fontUltra
+                    color: Style.darkLabelColor
+                }
 
-                Rectangle{
-                    id: contentRect
-                    width: parent.width
-                    height: childrenRect.height
-                    color: Style.bgColor
-                    radius: 10
+                Delegates.BalanceDelegate {
+                    Layout.fillWidth: true
+                    buttonVisible: false
+                    title: qsTr("Total rewards")
+                    value: 30
+                }
 
-                    ColumnLayout {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: Style.baseMargin
-                        anchors.rightMargin: Style.baseMargin
-                        spacing: 20
+                Custom.ShadowedRectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: childrenRect.height
+                    Layout.topMargin: Style.tinyMargin
 
-                        Label{
-                            Layout.topMargin: Style.baseMargin
-                            font.pixelSize: Style.fontSmall
-                            font.weight: Font.DemiBold
-                            text: qsTr("Earned rewards")
-                            color: Style.accentColor
-                        }
+                    Rectangle{
+                        id: contentRect
+                        width: parent.width
+                        height: childrenRect.height
+                        color: Style.bgColor
+                        radius: 10
 
-                        Rectangle {
-                            color: Style.sectionColor
-                            Layout.preferredHeight: 1
-                            Layout.fillWidth: true
-                            Layout.leftMargin: -Style.baseMargin
-                            Layout.rightMargin: -Style.baseMargin
-                        }
-
-                        ListView {
-                            id: workList
-                            model: exampleModel
-                            interactive: false
-
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: contentHeight
+                        ColumnLayout {
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.leftMargin: Style.baseMargin
+                            anchors.rightMargin: Style.baseMargin
                             spacing: 20
 
-                            delegate: Delegates.WorkDelegate {
-                                width: parent.width
+                            Label{
+                                Layout.topMargin: Style.baseMargin
+                                font.pixelSize: Style.fontSmall
+                                font.weight: Font.DemiBold
+                                text: qsTr("Earned rewards")
+                                color: Style.accentColor
+                            }
+
+                            Rectangle {
+                                color: Style.sectionColor
+                                Layout.preferredHeight: 1
+                                Layout.fillWidth: true
+                                Layout.leftMargin: -Style.baseMargin
+                                Layout.rightMargin: -Style.baseMargin
+                            }
+
+                            ListView {
+                                id: workList
+                                model: workData
+                                interactive: false
+
+                                Layout.fillWidth: true
+                                Layout.preferredHeight: contentHeight
+                                spacing: 20
+
+                                delegate: Delegates.WorkDelegate {
+                                    width: parent.width
+                                    localPhotoPath: workData[index].localPath
+                                }
+                            }
+                            Item{
+                                Layout.fillWidth: true
                             }
                         }
-                        Item{
-                            Layout.fillWidth: true
-                        }
-
                     }
                 }
+            }
+            Item{
+                Layout.fillWidth: true
             }
         }
     }
@@ -220,16 +262,5 @@ Item {
         id: joinPopup
         projectId: itemId
         projectName: detailsScreen.projectName
-    }
-
-    ListModel {
-        id: exampleModel
-
-        ListElement {
-        }
-        ListElement {
-        }
-        ListElement {
-        }
     }
 }

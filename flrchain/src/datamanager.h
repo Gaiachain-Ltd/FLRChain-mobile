@@ -11,26 +11,21 @@ class FileManager;
 class DataManager : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QVariantList workList  READ getWorkList WRITE setWorkList NOTIFY workListChanged)
     Q_PROPERTY(QVariantList transactionsList  READ getTransactionsList WRITE setTransactionsList NOTIFY transactionsListChanged)
     Q_PROPERTY(double walletBalance READ getWalletBalance WRITE setWalletBalance NOTIFY walletBalanceChanged)
     Q_PROPERTY(int projectsCount READ getProjectsCount WRITE setProjectsCount NOTIFY projectsCountChanged)
 
 public:
     explicit DataManager(QObject *parent = nullptr);
-    QVariantList getProjects() const;
-    QVariantList getWorkList() const;
     QVariantList getTransactionsList() const;
     int getProjectsCount() const;
     double getWalletBalance() const;
     void cleanData();
     void projectsDataReceived(const QVariantList &projects);
-    void workDataReceived(const QVariantList &work);
     void transactionsDataReceived(const QVariantList &transactions);
-
+    Q_INVOKABLE QString getPhotosPath();
 public slots:
     void setProjectsCount(const int count);
-    void setWorkList(const QVariantList &work);
     void setTransactionsList(const QVariantList &transactions);
     void setWalletBalance(const double walletBalance);
     void cashOutReplyReceived(const bool result);
@@ -45,11 +40,11 @@ signals:
     void joinRequestSent(const int projectId) const;
     void projectDetailsReceived(Project *project);
     void projectsReceived(const QVariantList &projects);
+    void workReceived(const QVariantList &work);
 
 private:
     QThread *m_workerThread;
     FileManager *m_fileManager;
-    QVariantList m_workList;
     QVariantList m_transactionsList;
     double m_walletBalance = 0.0;
     int m_projectsCount = 0;

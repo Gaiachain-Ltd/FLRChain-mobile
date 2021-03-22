@@ -10,6 +10,9 @@ Custom.Popup {
     title: qsTr("Successfully added")
     iconSrc: "qrc:/img/icon-success.svg"
 
+    property string taskName: ""
+    property string projectName: ""
+
     ColumnLayout {
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
@@ -33,7 +36,7 @@ Custom.Popup {
                 font.pointSize: Style.fontSmall
                 color: Style.darkLabelColor
                 font.weight: Font.Bold
-                text: qsTr("Eum Repellendus Aut")
+                text: projectName
             }
         }
 
@@ -54,7 +57,7 @@ Custom.Popup {
                 font.pointSize: Style.fontSmall
                 color: Style.darkLabelColor
                 font.weight: Font.Bold
-                text: qsTr("Plant fruit trees on farmland")
+                text: taskName
             }
         }
 
@@ -73,6 +76,7 @@ Custom.Popup {
 
             onClicked: {
                 popup.close()
+                pageManager.back()
             }
         }
 

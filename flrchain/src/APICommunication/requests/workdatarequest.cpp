@@ -5,7 +5,7 @@
 #include <QJsonArray>
 #include "../work.h"
 
-WorkDataRequest::WorkDataRequest(const QByteArray &token) : ApiRequest("")
+WorkDataRequest::WorkDataRequest(const QByteArray &token, const int projectId) : ApiRequest(QString("projects/%1/activities").arg(projectId))
 {
     setPriority(Priority::Normal);
     setType(Type::Get);
@@ -21,16 +21,11 @@ void WorkDataRequest::errorHandler(const QString &error)
 void WorkDataRequest::parse()
 {
     QJsonObject response(m_replyDocument.object());
-
     QVariantList workList;
 
-    QJsonArray workArray = response.value(QLatin1String("work")).toArray();
+    QJsonArray workArray = response.value(QLatin1String("results")).toArray();
 
     const int arraySize = workArray.count();
-    if(arraySize == 0) {
-        qDebug("No resources available");
-        return;
-    }
 
     for(int i = 0; i < arraySize; ++i) {
         QJsonObject workObject = workArray.at(i).toObject();

@@ -7,6 +7,7 @@ Work::Work(QObject *parent):
     m_status(QString()),
     m_date(QString()),
     m_photoPath(QString()),
+    m_localPath(QString()),
     m_amount(0.0)
 {
 
@@ -37,6 +38,11 @@ QString Work::photoPath() const
     return m_photoPath;
 }
 
+QString Work::localPath() const
+{
+    return m_localPath;
+}
+
 double Work::amount() const
 {
     return m_amount;
@@ -54,20 +60,40 @@ void Work::setProjectId(const int id)
 
 void Work::setPhotoPath(const QString &photoPath)
 {
-    m_photoPath = photoPath;
+    if (m_photoPath != photoPath) {
+        m_photoPath = photoPath;
+        emit photoPathChanged(photoPath);
+    }
+}
+
+void Work::setLocalPath(const QString &localPath)
+{
+    if (m_localPath != localPath) {
+        m_localPath = localPath;
+        emit localPathChanged(localPath);
+    }
 }
 
 void Work::setAmount(const double amount)
 {
-    m_amount = amount;
+    if (m_amount != amount) {
+        m_amount = amount;
+        emit amountChanged(amount);
+    }
 }
 
 void Work::setStatus(const QString &status)
 {
-    m_status = status;
+    if (m_status != status) {
+        m_status = status;
+        emit statusChanged(status);
+    }
 }
 
 void Work::setDate(const QString &date)
 {
-    m_date = date;
+    if (m_date != date) {
+        m_date = date;
+        emit dateChanged(date);
+    }
 }

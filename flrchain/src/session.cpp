@@ -11,6 +11,8 @@
 #include "requests/walletbalancerequest.h"
 #include "requests/cashoutrequest.h"
 #include "requests/projectdetailsrequest.h"
+#include "requests/getimagerequest.h"
+#include "requests/sendworkrequest.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -123,7 +125,7 @@ void Session::getProjectsData() const
     mClient->send(request);
 }
 
-void Session::getWorkData() const
+void Session::getWorkData(const int projectId) const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -135,10 +137,9 @@ void Session::getWorkData() const
         return;
     }
 
-    auto request = QSharedPointer<WorkDataRequest>::create(getToken());
+    auto request = QSharedPointer<WorkDataRequest>::create(getToken(), projectId);
     connect(request.data(), &WorkDataRequest::workDataReply,
-            m_dataManager, &DataManager::workDataReceived);
-
+            m_dataManager, &DataManager::workReceived);
     mClient->send(request);
 }
 
@@ -251,6 +252,46 @@ void Session::getProjectDetails(const int projectId) const
     auto request = QSharedPointer<ProjectDetailsRequest>::create(getToken(), projectId);
     connect(request.data(), &ProjectDetailsRequest::projectDetailsReply,
             m_dataManager, &DataManager::projectDetailsReceived);
+
+    mClient->send(request);
+}
+
+void Session::downloadPhoto(const QString &fileName, const int workId) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<GetImageRequest>::create(getToken(), QUrl("https://flrchain.milosolutions.com:8000" + fileName), m_dataManager->getPhotosPath(), workId);
+    connect(request.data(), &GetImageRequest::fileDownloadSuccessful,
+            this, &Session::photoDownloaded);
+    connect(request.data(), &GetImageRequest::fileDownloadError,
+            this, &Session::fileDownloadError);
+
+    mClient->send(request);
+}
+
+void Session::sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<SendWorkRequest>::create(filePath, projectId, taskId, getToken());
+    connect(request.data(), &SendWorkRequest::workAdded,
+            this, &Session::workAdded);
 
     mClient->send(request);
 }

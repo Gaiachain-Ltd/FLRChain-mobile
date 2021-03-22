@@ -5,6 +5,7 @@ import com.flrchain.style 1.0
 import QtGraphicalEffects 1.15
 
 import "qrc:/CustomControls" as Custom
+import "qrc:/Popups" as Popups
 
 Item {
     id: workScreen
@@ -13,12 +14,14 @@ Item {
     property int taskId: -1
     property string taskName: ""
     property string projectName: ""
+    property string photoPath: ""
 
     Connections{
         target: dataManager
 
         function onDisplayPhoto(filePath){
             img.source =  "file:///" + filePath
+            photoPath = filePath
             photoVisible = true
         }
 
@@ -37,12 +40,26 @@ Item {
         }
     }
 
+    Connections{
+        target: session
+        function onWorkAdded(taskName, projectName){
+            workSuccessPopup.taskName = taskName
+            workSuccessPopup.projectName = projectName
+            workSuccessPopup.open()
+        }
+    }
+
     Custom.Header {
         id: header
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         title: qsTr("Earn rewards")
+    }
+
+    Popups.WorkSuccessPopup {
+        id: workSuccessPopup
+
     }
 
     Rectangle {
@@ -167,6 +184,7 @@ Item {
 
                             text: qsTr("Upload")
                             onClicked: {
+                                session.sendWorkRequest(photoPath, projectId, taskId)
                             }
                         }
                     }

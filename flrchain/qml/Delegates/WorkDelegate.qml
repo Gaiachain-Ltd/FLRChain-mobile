@@ -2,15 +2,38 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
+import QtGraphicalEffects 1.15
 
 Column {
     spacing: 20
+    property string localPhotoPath: ""
 
     Rectangle {
-        color: Style.mediumLabelColor
+        color: "transparent"
         height: 191
         width: parent.width
         radius: 10
+
+        Image {
+            id: img
+            source: localPhotoPath
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectCrop
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Item {
+                    width: img.width
+                    height: img.height
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: img.width
+                        height: img.height
+                        radius: 10
+                    }
+                }
+            }
+        }
+
         Rectangle{
             anchors.bottom: parent.top
             anchors.bottomMargin: -Style.tinyMargin

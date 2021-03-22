@@ -16,11 +16,6 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
             this, &DataManager::photoError);
 }
 
-QVariantList DataManager::getWorkList() const
-{
-    return m_workList;
-}
-
 QVariantList DataManager::getTransactionsList() const
 {
     return m_transactionsList;
@@ -34,12 +29,6 @@ double DataManager::getWalletBalance() const
 int DataManager::getProjectsCount() const
 {
     return m_projectsCount;
-}
-
-void DataManager::setWorkList(const QVariantList &workList)
-{
-    m_workList = workList;
-    emit workListChanged();
 }
 
 void DataManager::setTransactionsList(const QVariantList &transactionsList)
@@ -71,7 +60,6 @@ void DataManager::cashOutReplyReceived(const bool result)
 
 void DataManager::cleanData()
 {
-    m_workList.clear();
     m_transactionsList.clear();
     m_fileManager->removeCurrentFile();
     m_projectsCount = 0;
@@ -84,14 +72,13 @@ void DataManager::projectsDataReceived(const QVariantList &projects)
     setProjectsCount(projects.count());
 }
 
-void DataManager::workDataReceived(const QVariantList &workList)
-{
-    m_workList.clear();
-    setWorkList(workList);
-}
-
 void DataManager::transactionsDataReceived(const QVariantList &transactionsList)
 {
     m_transactionsList.clear();
     setTransactionsList(transactionsList);
+}
+
+QString DataManager::getPhotosPath()
+{
+    return m_fileManager->photosPath();
 }

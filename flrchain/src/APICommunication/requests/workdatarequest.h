@@ -13,7 +13,7 @@ class WorkDataRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    WorkDataRequest(const QByteArray &token);
+    WorkDataRequest(const QByteArray &token, const int projectId);
     void errorHandler(const QString &error);
 signals:
     void workDataReply(QVariantList workList) const;
