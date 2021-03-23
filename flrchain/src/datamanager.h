@@ -42,7 +42,7 @@ signals:
     void joinRequestSent(const int projectId) const;
     void projectDetailsReceived(Project *project);
     void projectsReceived(const QVariantList &projects);
-    void workReceived(const QVariantList &work);
+    void workReceived(const QVariantList &work, int rewardsBalance);
 
 private:
     QThread *m_workerThread;

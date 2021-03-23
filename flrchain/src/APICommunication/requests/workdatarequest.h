@@ -16,7 +16,7 @@ public:
     WorkDataRequest(const QByteArray &token, const int projectId);
     void errorHandler(const QString &error);
 signals:
-    void workDataReply(QVariantList workList) const;
+    void workDataReply(QVariantList workList, int balance) const;
 protected:
     virtual void parse() override final;
 };

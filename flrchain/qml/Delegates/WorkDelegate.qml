@@ -7,6 +7,7 @@ import QtGraphicalEffects 1.15
 Column {
     spacing: 20
     property string localPhotoPath: ""
+    property var workItem
 
     Rectangle {
         color: "transparent"
@@ -72,15 +73,16 @@ Column {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             height: 40
-            width: 74
+            width: rewardLabel.width + Style.baseMargin
             color: Style.accentColor
             radius: 4
 
             Label{
+                id: rewardLabel
                 anchors.centerIn: parent
                 font.pixelSize: Style.fontBig
                 font.weight: Font.Bold
-                text: "10 USDC"
+                text: qsTr("%1 USDC").arg(workItem.amount)
                 color: Style.bgColor
             }
         }

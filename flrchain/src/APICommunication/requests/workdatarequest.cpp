@@ -25,6 +25,7 @@ void WorkDataRequest::parse()
 
     QJsonArray workArray = response.value(QLatin1String("results")).toArray();
 
+    int rewardsBalance = 0;
     const int arraySize = workArray.count();
 
     for(int i = 0; i < arraySize; ++i) {
@@ -37,10 +38,11 @@ void WorkDataRequest::parse()
         work->setStatus(workObject.value(QLatin1String("status")).toString());
         work->setDate(workObject.value(QLatin1String("date")).toString());
         work->setPhotoPath(workObject.value(QLatin1String("photo")).toString());
-        work->setAmount(workObject.value(QLatin1String("amount")).toDouble());
+        work->setAmount(workObject.value(QLatin1String("task")).toObject().value(QLatin1String("reward")).toInt());
+        rewardsBalance += work->amount();
 
         workList.append(QVariant::fromValue(work));
     }
 
-    emit workDataReply(workList);
+    emit workDataReply(workList, rewardsBalance);
 }

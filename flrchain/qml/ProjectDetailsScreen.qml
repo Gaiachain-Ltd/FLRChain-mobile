@@ -20,6 +20,7 @@ Item {
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
     property var workData
+    property int workBalance: 0
 
     BusyIndicator {
         id: busyIndicator
@@ -67,12 +68,13 @@ Item {
             }
         }
 
-        function onWorkReceived(workList){
+        function onWorkReceived(workList, rewardsBalance){
             if(workList.length === 0){
                 busyIndicator.visible = false
                 return;
             }
             workData = workList
+            workBalance = rewardsBalance
 
             for(var i = 0; i< workList.length; ++i)
             {
@@ -193,7 +195,7 @@ Item {
                     Layout.fillWidth: true
                     buttonVisible: false
                     title: qsTr("Total rewards")
-                    value: 30
+                    value: workBalance
                 }
 
                 Custom.ShadowedRectangle {
@@ -243,6 +245,7 @@ Item {
                                 delegate: Delegates.WorkDelegate {
                                     width: parent.width
                                     localPhotoPath: workData[index].localPath
+                                    workItem: workData[index]
                                 }
                             }
                             Item{
