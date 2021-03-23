@@ -60,8 +60,8 @@ void User::setPassword(const QByteArray& password)
 
 void User::clear()
 {
-    m_email.clear();
-    m_password.clear();
-    m_firstName.clear();
-    m_lastName.clear();
+    setEmail(QString());
+    setPassword(QByteArray());
+    setFirstName(QString());
+    setLastName(QString());
 }

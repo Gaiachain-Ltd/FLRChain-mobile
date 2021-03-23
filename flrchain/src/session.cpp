@@ -20,6 +20,7 @@
 #include "settings.h"
 #include "datamanager.h"
 #include "platformbridge.h"
+#include "pagemanager.h"
 
 
 Q_LOGGING_CATEGORY(session, "core.session")
@@ -335,6 +336,8 @@ void Session::logout()
     m_dataManager->cleanData();
     setRememberMe(0);
     setToken(QByteArray());
+    PageManager::instance()->closeAll();
+    PageManager::instance()->enterLoginScreen();
 }
 
 void Session::loadData()

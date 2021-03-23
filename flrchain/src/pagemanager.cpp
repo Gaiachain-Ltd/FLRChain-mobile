@@ -90,8 +90,7 @@ bool PageManager::enterRegistrationScreen()
 bool PageManager::enterDashboardScreen()
 {
     if(isPageOnTop(Pages::LoginScreen)){
-        m_visiblePages.clear();
-        emit clearStack();
+       closeAll();
     }
 
     enterPage(Pages::Dashboard);
@@ -122,4 +121,10 @@ bool PageManager::enterWalletScreen()
 {
     enterPage(Pages::WalletScreen);
     return true;
+}
+
+void PageManager::closeAll()
+{
+    m_visiblePages.clear();
+    emit clearStack();
 }

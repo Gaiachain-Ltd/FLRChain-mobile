@@ -155,6 +155,8 @@ Drawer {
                 imgHeight: Style.iconSize
                 imgWidth: Style.iconSize
                 onClicked: {
+                    drawer.close()
+                    session.logout()
                 }
             }
         }

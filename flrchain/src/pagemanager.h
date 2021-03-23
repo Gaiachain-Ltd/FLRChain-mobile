@@ -28,6 +28,7 @@ public:
     Q_INVOKABLE bool enterProjectDetailsScreen(const int projectId);
     Q_INVOKABLE bool enterWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
     Q_INVOKABLE bool enterWalletScreen();
+    Q_INVOKABLE void closeAll();
 
 signals:
     void pushPage(Pages::Page page) const;
