@@ -14,6 +14,8 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
             this, &DataManager::displayPhoto);
     connect(m_fileManager, &FileManager::photoError,
             this, &DataManager::photoError);
+    connect(m_fileManager, &FileManager::processingPhoto,
+            this, &DataManager::processingPhoto);
 }
 
 QVariantList DataManager::getTransactionsList() const

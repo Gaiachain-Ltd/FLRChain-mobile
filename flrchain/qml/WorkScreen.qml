@@ -21,13 +21,18 @@ Item {
 
         function onDisplayPhoto(filePath){
             img.source =  "file:///" + filePath
+            busyIndicator.visible = false
             photoPath = filePath
-            photoVisible = true
         }
 
         function onPhotoError(){
+            busyIndicator.visible = false
         }
 
+        function onProcessingPhoto(){
+            busyIndicator.visible = true
+            photoVisible = true
+        }
     }
 
     Connections{
@@ -171,11 +176,18 @@ Item {
                                 height: 40
                                 iconSize: 30
                                 iconSrc: "qrc:/img/icon-delete.svg"
+                                visible: !busyIndicator.visible
                                 onClicked: {
                                     img.source = ""
                                     photoVisible = false
                                     dataManager.removeCurrentWorkPhoto()
                                 }
+                            }
+
+                            BusyIndicator {
+                                id: busyIndicator
+                                anchors.centerIn: img
+                                running: true
                             }
                         }
 

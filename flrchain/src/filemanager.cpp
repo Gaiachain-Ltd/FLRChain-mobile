@@ -25,6 +25,7 @@ FileManager::FileManager(QObject *parent) : QObject(parent)
 
 void FileManager::handleFileData(const QString &filePath)
 {
+    emit processingPhoto();
     QImageReader reader(filePath);
     if(reader.canRead()){
         QImage image(filePath);

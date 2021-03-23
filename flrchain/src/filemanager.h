@@ -22,6 +22,7 @@ public:
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
+    void processingPhoto();
 private:
     QString mPhotosPath;
     QString mCurrentPhotoPath;

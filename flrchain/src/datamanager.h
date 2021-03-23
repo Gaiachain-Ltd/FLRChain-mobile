@@ -43,6 +43,7 @@ signals:
     void projectDetailsReceived(Project *project);
     void projectsReceived(const QVariantList &projects);
     void workReceived(const QVariantList &work, int rewardsBalance);
+    void processingPhoto();
 
 private:
     QThread *m_workerThread;
