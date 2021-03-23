@@ -146,26 +146,11 @@ Item {
                             }
                         }
 
-                        Image {
+                        Custom.RoundedImage {
                             id: img
                             visible: photoVisible
                             Layout.fillWidth: true
                             Layout.preferredHeight: 200
-                            Layout.alignment: Qt.AlignHCenter
-                            fillMode: Image.PreserveAspectCrop
-                            layer.enabled: true
-                            layer.effect: OpacityMask {
-                                maskSource: Item {
-                                    width: img.width
-                                    height: img.height
-                                    Rectangle {
-                                        anchors.centerIn: parent
-                                        width: img.width
-                                        height: img.height
-                                        radius: 10
-                                    }
-                                }
-                            }
 
                             Custom.IconButton {
                                 id: closeButton

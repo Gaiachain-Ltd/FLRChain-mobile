@@ -182,6 +182,7 @@ Item {
             ColumnLayout{
                 id: workColumn
                 Layout.fillWidth: true
+                spacing: Style.baseMargin
                 visible: workList.count !== 0
 
                 Label {
@@ -246,6 +247,7 @@ Item {
                                     width: parent.width
                                     localPhotoPath: workData[index].localPath
                                     workItem: workData[index]
+                                    separatorVisible: index !== workList.count - 1
                                 }
                             }
                             Item{

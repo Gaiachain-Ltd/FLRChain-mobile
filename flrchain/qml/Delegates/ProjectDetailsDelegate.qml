@@ -54,13 +54,15 @@ Item {
                     color: Style.accentColor
                 }
 
-                Row {
+                RowLayout {
                     spacing: 5
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Style.iconSize
                     Image {
                         source: "qrc:/img/icon-calendar.svg"
                         asynchronous: true
-                        width: Style.iconSize
-                        height: width
+                        Layout.preferredWidth: Style.iconSize
+                        Layout.preferredHeight: Style.iconSize
                         fillMode: Image.PreserveAspectFit
                         sourceSize: Qt.size(width, height)
                     }
@@ -80,13 +82,15 @@ Item {
                     color: Style.accentColor
                 }
 
-                Row {
+                RowLayout {
                     spacing: 5
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Style.iconSize
                     Image {
                         source: "qrc:/img/icon-calendar.svg"
                         asynchronous: true
-                        width: Style.iconSize
-                        height: Style.iconSize
+                        Layout.preferredWidth: Style.iconSize
+                        Layout.preferredHeight: Style.iconSize
                         fillMode: Image.PreserveAspectFit
                         sourceSize: Qt.size(width, height)
                     }
@@ -107,13 +111,15 @@ Item {
                     color: Style.accentColor
                 }
 
-                Row {
+                RowLayout {
                     spacing: 5
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Style.iconSize
                     Image {
                         source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
                         asynchronous: true
-                        width: Style.iconSize
-                        height: Style.iconSize
+                        Layout.preferredWidth: Style.iconSize
+                        Layout.preferredHeight: Style.iconSize
                         fillMode: Image.PreserveAspectFit
                         sourceSize: Qt.size(width, height)
                     }

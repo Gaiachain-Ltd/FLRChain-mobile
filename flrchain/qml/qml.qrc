@@ -31,5 +31,6 @@
         <file>Popups/ErrorPopup.qml</file>
         <file>Popups/WorkSuccessPopup.qml</file>
         <file>CustomControls/StatusLabel.qml</file>
+        <file>CustomControls/RoundedImage.qml</file>
     </qresource>
 </RCC>

@@ -46,7 +46,8 @@ Item {
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.margins: Style.baseMargin
+                        anchors.leftMargin: Style.baseMargin
+                        anchors.topMargin: Style.baseMargin
 
                         Label {
                             text: "Earn rewards"
@@ -60,8 +61,8 @@ Item {
                         }
 
                         Custom.IconButton {
-                            Layout.preferredWidth: 26
-                            Layout.preferredHeight: 26
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 40
                             iconSize: 26
                             iconSrc: "qrc:/img/dashboard-arrow-green.svg"
                             onClicked: {
@@ -105,7 +106,8 @@ Item {
                         anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.margins: Style.baseMargin
+                        anchors.leftMargin: Style.baseMargin
+                        anchors.topMargin: Style.baseMargin
 
                         Label {
                             text: "Wallet"
@@ -119,8 +121,8 @@ Item {
                         }
 
                         Custom.IconButton {
-                            Layout.preferredWidth: 26
-                            Layout.preferredHeight: 26
+                            Layout.preferredWidth: 40
+                            Layout.preferredHeight: 40
                             iconSize: 26
                             iconSrc: "qrc:/img/dashboard-arrow-yellow.svg"
                             onClicked: pageManager.enterWalletScreen()
