@@ -24,6 +24,8 @@ public:
     void projectsDataReceived(const QVariantList &projects);
     void transactionsDataReceived(const QVariantList &transactions);
     Q_INVOKABLE QString getPhotosPath();
+    Q_INVOKABLE void cleanPhotosDir();
+    Q_INVOKABLE void removeCurrentWorkPhoto();
 public slots:
     void setProjectsCount(const int count);
     void setTransactionsList(const QVariantList &transactions);

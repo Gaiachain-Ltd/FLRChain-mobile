@@ -38,6 +38,12 @@ Item {
             workScreen.projectName = projectName
             workScreen.taskName = taskName
         }
+
+        function onBeforePopBack(){
+            if(photoVisible){
+                dataManager.removeCurrentWorkPhoto()
+            }
+        }
     }
 
     Connections{
@@ -168,6 +174,7 @@ Item {
                                 onClicked: {
                                     img.source = ""
                                     photoVisible = false
+                                    dataManager.removeCurrentWorkPhoto()
                                 }
                             }
                         }

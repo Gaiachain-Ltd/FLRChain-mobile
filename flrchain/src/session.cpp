@@ -143,6 +143,8 @@ void Session::getWorkData(const int projectId) const
         return;
     }
 
+    m_dataManager->cleanPhotosDir();
+
     auto request = QSharedPointer<WorkDataRequest>::create(getToken(), projectId);
     connect(request.data(), &WorkDataRequest::workDataReply,
             m_dataManager, &DataManager::workReceived);

@@ -38,6 +38,7 @@ signals:
     void setupProjectDetailsScreen(const int projectId);
     void setupWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
     void backTriggered();
+    void beforePopBack();
 private:
     PageManager();
     static PageManager *m_instance;

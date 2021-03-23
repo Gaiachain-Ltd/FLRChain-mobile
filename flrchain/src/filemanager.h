@@ -18,7 +18,7 @@ public:
 
     QString currentPhotoPath() const;
     void setCurrentPhotoPath(const QString &currentPhotoPath);
-
+    void cleanDir();
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();

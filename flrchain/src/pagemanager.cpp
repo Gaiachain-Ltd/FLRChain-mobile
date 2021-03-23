@@ -52,6 +52,7 @@ bool PageManager::isPageOpened(Pages::Page page) const
 
 bool PageManager::back()
 {
+    emit beforePopBack();
     if (m_visiblePages.size() > 0) {
         Pages::Page p = m_visiblePages.back();
 

@@ -42,6 +42,7 @@ void FileManager::handleFileData(const QString &filePath)
             }
         }
     }
+    QFile::remove(filePath);
     emit photoError();
 }
 
@@ -77,4 +78,13 @@ QString FileManager::currentPhotoPath() const
 void FileManager::setCurrentPhotoPath(const QString &currentPhotoPath)
 {
     mCurrentPhotoPath = currentPhotoPath;
+}
+
+void FileManager::cleanDir(){
+    QDir rDir(mPhotosPath);
+    bool removeRecursively = rDir.removeRecursively();
+    qDebug() << ("Removed recursively: ") << removeRecursively;
+    QDir mkDir;
+    bool mkDirResult = mkDir.mkdir(mPhotosPath);
+    qDebug() << ("Re-created dir: ") << mkDirResult;
 }

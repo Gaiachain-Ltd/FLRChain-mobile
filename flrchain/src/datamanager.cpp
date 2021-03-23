@@ -61,7 +61,7 @@ void DataManager::cashOutReplyReceived(const bool result)
 void DataManager::cleanData()
 {
     m_transactionsList.clear();
-    m_fileManager->removeCurrentFile();
+    cleanPhotosDir();
     m_projectsCount = 0;
     m_walletBalance = 0.0;
 }
@@ -81,4 +81,12 @@ void DataManager::transactionsDataReceived(const QVariantList &transactionsList)
 QString DataManager::getPhotosPath()
 {
     return m_fileManager->photosPath();
+}
+
+void DataManager::cleanPhotosDir(){
+    m_fileManager->cleanDir();
+}
+
+void DataManager::removeCurrentWorkPhoto(){
+    m_fileManager->removeCurrentFile();
 }
