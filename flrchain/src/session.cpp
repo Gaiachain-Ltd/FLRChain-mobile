@@ -28,8 +28,6 @@ Q_LOGGING_CATEGORY(session, "core.session")
 Session::Session(QObject *parent) : QObject(parent)
 {
     mCurrentUser = UserPtr::create();
-    connect(this, &Session::clientInitialized,
-            this, &Session::loadData);
 
     connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
             this, &Session::setInternetConnection);
@@ -61,7 +59,6 @@ User* Session::user() const
 void Session::onLoginSuccessful(const QString &token)
 {
     setToken(token.toUtf8());
-    loadData();
     emit loginSuccessful(token);
 }
 
@@ -109,9 +106,9 @@ void Session::registerUser(const QString& email, const QString& password, const 
             this, &Session::registrationSuccessful);
     connect(request.data(), &RegisterRequest::registerError,
             this, &Session::registrationError);
+
     mClient->send(request);
 }
-
 
 void Session::getProjectsData() const
 {
@@ -149,6 +146,7 @@ void Session::getWorkData(const int projectId) const
     auto request = QSharedPointer<WorkDataRequest>::create(getToken(), projectId);
     connect(request.data(), &WorkDataRequest::workDataReply,
             m_dataManager, &DataManager::workReceived);
+
     mClient->send(request);
 }
 
@@ -186,6 +184,8 @@ void Session::joinProject(const int projectId) const
     auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
             m_dataManager, &DataManager::joinRequestSent);
+    connect(request.data(), &JoinProjectRequest::joinProjectError,
+            m_dataManager, &DataManager::joinProjectError);
 
     mClient->send(request);
 }
@@ -243,6 +243,7 @@ void Session::cashOut(const double amount, const QString& address) const
     auto request = QSharedPointer<CashOutRequest>::create(amount, address, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
             m_dataManager, &DataManager::cashOutReplyReceived);
+
     mClient->send(request);
 }
 
@@ -279,9 +280,9 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
 
     auto request = QSharedPointer<GetImageRequest>::create(getToken(), QUrl("https://flrchain.milosolutions.com:8000" + fileName), m_dataManager->getPhotosPath(), workId);
     connect(request.data(), &GetImageRequest::fileDownloadSuccessful,
-            this, &Session::photoDownloaded);
+            m_dataManager, &DataManager::photoDownloaded);
     connect(request.data(), &GetImageRequest::fileDownloadError,
-            this, &Session::fileDownloadError);
+            m_dataManager, &DataManager::fileDownloadError);
 
     mClient->send(request);
 }
@@ -300,7 +301,9 @@ void Session::sendWorkRequest(const QString &filePath, const int projectId, cons
 
     auto request = QSharedPointer<SendWorkRequest>::create(filePath, projectId, taskId, getToken());
     connect(request.data(), &SendWorkRequest::workAdded,
-            this, &Session::workAdded);
+            m_dataManager, &DataManager::workAdded);
+    connect(request.data(), &SendWorkRequest::sendWorkError,
+            m_dataManager, &DataManager::addWorkError);
 
     mClient->send(request);
 }
@@ -338,14 +341,6 @@ void Session::logout()
     setToken(QByteArray());
     PageManager::instance()->closeAll();
     PageManager::instance()->enterLoginScreen();
-}
-
-void Session::loadData()
-{
-    if(hasToken()){
-        getUserInfo();
-        getProjectsData();
-    }
 }
 
 void Session::setInternetConnection(const bool internetConnection)

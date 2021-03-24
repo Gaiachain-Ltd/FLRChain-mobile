@@ -52,7 +52,6 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.topMargin: Style.baseMargin
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
@@ -64,11 +63,12 @@ Item {
             anchors.right: parent.right
             anchors.leftMargin: Style.baseMargin
             anchors.rightMargin: Style.baseMargin
-            height: listView.contentHeight + 60
+            height: listView.contentHeight + 80
 
             spacing: 20
 
             Label {
+                Layout.topMargin: Style.baseMargin
                 text: qsTr("Project list (%1)").arg(listView.count)
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor

@@ -9,13 +9,16 @@ SendWorkRequest::SendWorkRequest(const QString &filePath, const int projectId, c
     setAddress(QUrl(APIUrl + QString("projects/%1/tasks/%2/activities/").arg(projectId).arg(taskId)));
     setPriority(Priority::Normal);
     setType(Type::Post);
+
     addPart(QLatin1String("photo"), QFileInfo(filePath));
+
     connect(this, &SendWorkRequest::replyError, this, &SendWorkRequest::errorHandler);
 }
 
 void SendWorkRequest::errorHandler(const QString &error)
 {
     qDebug() << "Error" << error;
+    emit sendWorkError();
 }
 
 void SendWorkRequest::parse()

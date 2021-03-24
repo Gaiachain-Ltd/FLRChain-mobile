@@ -33,6 +33,12 @@ Item {
             busyIndicator.visible = true
             photoVisible = true
         }
+
+        function onWorkAdded(taskName, projectName){
+            workSuccessPopup.taskName = taskName
+            workSuccessPopup.projectName = projectName
+            workSuccessPopup.open()
+        }
     }
 
     Connections{
@@ -48,15 +54,6 @@ Item {
             if(photoVisible){
                 dataManager.removeCurrentWorkPhoto()
             }
-        }
-    }
-
-    Connections{
-        target: session
-        function onWorkAdded(taskName, projectName){
-            workSuccessPopup.taskName = taskName
-            workSuccessPopup.projectName = projectName
-            workSuccessPopup.open()
         }
     }
 
@@ -188,7 +185,12 @@ Item {
 
                             text: qsTr("Upload")
                             onClicked: {
-                                session.sendWorkRequest(photoPath, projectId, taskId)
+                                if(session.internetConnection){
+                                    session.sendWorkRequest(photoPath, projectId, taskId)
+                                }
+                                else{
+                                    pageManager.enterErrorPopup("No Internet Connection")
+                                }
                             }
                         }
                     }

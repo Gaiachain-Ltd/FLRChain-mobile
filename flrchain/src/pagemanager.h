@@ -29,6 +29,7 @@ public:
     Q_INVOKABLE bool enterWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
     Q_INVOKABLE bool enterWalletScreen();
     Q_INVOKABLE void closeAll();
+    Q_INVOKABLE bool enterErrorPopup(const QString &errorMessage);
 
 signals:
     void pushPage(Pages::Page page) const;
@@ -38,6 +39,7 @@ signals:
     // Page setups
     void setupProjectDetailsScreen(const int projectId);
     void setupWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
+    void setupErrorPopup(const QString &errorMsg);
     void backTriggered();
     void beforePopBack();
 private:

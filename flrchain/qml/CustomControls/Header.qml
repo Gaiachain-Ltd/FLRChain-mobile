@@ -47,7 +47,10 @@ ColumnLayout{
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
                 iconSrc: "qrc:/img/icon-menu.svg"
-                onClicked: menu.open()
+                onClicked: {
+                    menu.open()
+                    session.getUserInfo()
+                }
                 width: 26
                 height: 26
                 iconSize: 26
@@ -65,6 +68,7 @@ ColumnLayout{
     Label {
         text: qsTr("No Internet Connection")
         Layout.alignment: Qt.AlignHCenter
+        Layout.bottomMargin: 5
         color: Style.errorColor
         visible: !session.internetConnection
     }

@@ -40,7 +40,7 @@ public:
     Q_INVOKABLE void sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void logout();
-    void loadData();
+
 public slots:
     void setInternetConnection(const bool internetConnection);
 signals:
@@ -51,9 +51,6 @@ signals:
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
     void clientInitialized() const;
-    void photoDownloaded(const QString &path, const int workId) const;
-    void fileDownloadError(const int workId) const;
-    void workAdded(const QString &taskName, const QString &projectName) const;
     void internetConnectionChanged(bool internetConnection);
 private:
     void onLoginSuccessful(const QString& token);

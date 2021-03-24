@@ -3,6 +3,7 @@ import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 
 import com.flrchain.objects 1.0
+import "qrc:/Popups" as Popups
 
 ApplicationWindow {
     id: mainWindow
@@ -79,5 +80,16 @@ ApplicationWindow {
         {
             stack.clear()
         }
+
+        function onSetupErrorPopup(errorMessage)
+        {
+            errorPopup.errorMessage = errorMessage
+            errorPopup.open()
+        }
+    }
+
+    Popups.ErrorPopup{
+        id: errorPopup
+
     }
 }

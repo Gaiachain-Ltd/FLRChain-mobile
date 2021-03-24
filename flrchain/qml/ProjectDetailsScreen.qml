@@ -63,7 +63,6 @@ Item {
 
         function onJoinRequestSent(projectId){
             if(projectId === itemId){
-                busyIndicator.visible = true
                 session.getProjectDetails(projectId)
             }
         }
@@ -84,7 +83,7 @@ Item {
     }
 
     Connections{
-        target: session
+        target: dataManager
         function onPhotoDownloaded(path, workId){
             for(var i = 0; i< workData.length; ++i)
             {
@@ -151,7 +150,12 @@ Item {
                 Layout.fillWidth: true
                 Layout.preferredHeight: childrenRect.height
                 button.onClicked: {
-                    joinPopup.open()
+                    if(session.internetConnection){
+                        joinPopup.open()
+                    }
+                    else{
+                        pageManager.enterErrorPopup("No Internet Connection")
+                    }
                 }
             }
 

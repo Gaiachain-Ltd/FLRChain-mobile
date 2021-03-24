@@ -7,8 +7,8 @@ import "qrc:/CustomControls" as Custom
 
 Custom.Popup {
     id: popup
-    title: ""
-    property string contentText: ""
+    title: qsTr("Error")
+    property string errorMessage: ""
     iconSrc: "qrc:/img/icon-popup-faile.svg"
 
     ColumnLayout {
@@ -22,15 +22,19 @@ Custom.Popup {
             font.pointSize: Style.fontSmall
             font.weight: Font.DemiBold
             color: Style.darkLabelColor
-            text: contentText
+            text: errorMessage
         }
 
-    }
-    Custom.Button {
-        text: qsTr("OK")
-        anchors.bottom: parent.bottom
-        onClicked: {
-            popup.close()
+        Custom.Button {
+            text: qsTr("OK")
+            Layout.fillWidth: true
+            onClicked: {
+                popup.close()
+            }
+        }
+
+        Item{
+            Layout.fillWidth: true
         }
     }
 }

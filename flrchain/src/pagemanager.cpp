@@ -128,3 +128,9 @@ void PageManager::closeAll()
     m_visiblePages.clear();
     emit clearStack();
 }
+
+bool PageManager::enterErrorPopup(const QString &errorMessage)
+{
+    emit setupErrorPopup(errorMessage);
+    return true;
+}

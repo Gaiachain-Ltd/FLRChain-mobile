@@ -94,7 +94,6 @@ void PlatformBridgePrivate::fileSelectionCallback(JNIEnv *env, jobject, jstring 
     sptr_q_ptr->fileSelected(str);
 }
 
-
 void PlatformBridgePrivate::activityClosedCallback(JNIEnv *env, jobject)
 {
     Q_UNUSED(env)

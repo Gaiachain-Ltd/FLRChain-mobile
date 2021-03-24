@@ -14,6 +14,7 @@ public:
     void errorHandler(const QString& error);
 signals:
     void workAdded(const QString &taskName, const QString &projectName) const;
+    void sendWorkError() const;
 protected:
     virtual void parse() override final;
     virtual void customizeRequest(QNetworkRequest &request) override;

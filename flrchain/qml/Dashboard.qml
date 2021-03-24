@@ -7,6 +7,10 @@ import "qrc:/CustomControls" as Custom
 
 Item {
 
+    Component.onCompleted: {
+        session.getProjectsData()
+    }
+
     Custom.Header {
         id: header
         anchors.top: parent.top
@@ -125,7 +129,9 @@ Item {
                             Layout.preferredHeight: 40
                             iconSize: 26
                             iconSrc: "qrc:/img/dashboard-arrow-yellow.svg"
-                            onClicked: pageManager.enterWalletScreen()
+                            onClicked:{
+                                pageManager.enterWalletScreen()
+                            }
                         }
                     }
 

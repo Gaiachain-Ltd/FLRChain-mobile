@@ -13,6 +13,7 @@ public:
     void errorHandler(const QString &error);
 signals:
     void joinProjectReply(const int projectId) const;
+    void joinProjectError() const;
 protected:
     virtual void parse() override final;
 private:

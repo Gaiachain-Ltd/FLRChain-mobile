@@ -1,5 +1,6 @@
 #include "datamanager.h"
 #include "filemanager.h"
+#include "pagemanager.h"
 #include "project.h"
 #include <QDebug>
 
@@ -18,11 +19,6 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
             this, &DataManager::processingPhoto);
 }
 
-QVariantList DataManager::getTransactionsList() const
-{
-    return m_transactionsList;
-}
-
 double DataManager::getWalletBalance() const
 {
     return m_walletBalance;
@@ -31,12 +27,6 @@ double DataManager::getWalletBalance() const
 int DataManager::getProjectsCount() const
 {
     return m_projectsCount;
-}
-
-void DataManager::setTransactionsList(const QVariantList &transactionsList)
-{
-    m_transactionsList = transactionsList;
-    emit transactionsListChanged();
 }
 
 void DataManager::setWalletBalance(const double walletBalance)
@@ -60,9 +50,18 @@ void DataManager::cashOutReplyReceived(const bool result)
     qDebug() << "Cashout result" << result;
 }
 
+void DataManager::joinProjectError()
+{
+    PageManager::instance()->enterErrorPopup("Couldn't join the project. Try again");
+}
+
+void DataManager::addWorkError()
+{
+    PageManager::instance()->enterErrorPopup("Uploading photo failed. Try again");
+}
+
 void DataManager::cleanData()
 {
-    m_transactionsList.clear();
     cleanPhotosDir();
     m_projectsCount = 0;
     m_walletBalance = 0.0;
@@ -72,12 +71,6 @@ void DataManager::projectsDataReceived(const QVariantList &projects)
 {
     emit projectsReceived(projects);
     setProjectsCount(projects.count());
-}
-
-void DataManager::transactionsDataReceived(const QVariantList &transactionsList)
-{
-    m_transactionsList.clear();
-    setTransactionsList(transactionsList);
 }
 
 QString DataManager::getPhotosPath()
