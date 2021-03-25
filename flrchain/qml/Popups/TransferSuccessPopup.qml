@@ -13,7 +13,7 @@ Custom.Popup {
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
         Layout.rightMargin: Style.baseMargin
-        spacing: 20
+        spacing: Style.baseMargin
 
         Row {
             Layout.alignment: Qt.AlignHCenter

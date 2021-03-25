@@ -113,7 +113,7 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-API_URL = "https://flrchain.milosolutions.com:8000/api/v1/"
+API_URL = "https://flrchain.milosolutions.com:8000"
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
 SSL_PATH = $$PWD/../../openssl/android_openssl-master/latest

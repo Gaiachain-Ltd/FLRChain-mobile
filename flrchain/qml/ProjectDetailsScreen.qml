@@ -128,7 +128,7 @@ Item {
             anchors.right: parent.right
             anchors.leftMargin: Style.baseMargin
             anchors.rightMargin: Style.baseMargin
-            spacing: 20
+            spacing: Style.baseMargin
 
             Label {
                 id: title
@@ -173,7 +173,7 @@ Item {
 
                 Layout.fillWidth: true
                 Layout.preferredHeight: contentHeight
-                spacing: 20
+                spacing: Style.baseMargin
 
                 delegate: Delegates.TaskDelegate {
                     taskItem: tasks[index]
@@ -220,7 +220,7 @@ Item {
                             anchors.right: parent.right
                             anchors.leftMargin: Style.baseMargin
                             anchors.rightMargin: Style.baseMargin
-                            spacing: 20
+                            spacing: Style.baseMargin
 
                             Label{
                                 Layout.topMargin: Style.baseMargin
@@ -245,11 +245,10 @@ Item {
 
                                 Layout.fillWidth: true
                                 Layout.preferredHeight: contentHeight
-                                spacing: 20
+                                spacing: Style.baseMargin
 
                                 delegate: Delegates.WorkDelegate {
                                     width: parent.width
-                                    localPhotoPath: workData[index].localPath
                                     workItem: workData[index]
                                     separatorVisible: index !== workList.count - 1
                                 }

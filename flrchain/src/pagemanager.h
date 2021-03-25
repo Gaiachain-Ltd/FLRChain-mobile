@@ -40,6 +40,7 @@ signals:
     void setupProjectDetailsScreen(const int projectId);
     void setupWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
     void setupErrorPopup(const QString &errorMsg);
+
     void backTriggered();
     void beforePopBack();
 private:

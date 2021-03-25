@@ -53,7 +53,6 @@ void RegisterRequest::errorHandler(const QString &error)
     emit registerError(errorMsg);
 }
 
-
 void RegisterRequest::parse()
 {
     emit registrationSuccessful();

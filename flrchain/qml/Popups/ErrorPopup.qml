@@ -8,14 +8,14 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Error")
-    property string errorMessage: ""
     iconSrc: "qrc:/img/icon-popup-faile.svg"
+    property string errorMessage: ""
 
     ColumnLayout {
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
         Layout.rightMargin: Style.baseMargin
-        spacing: 20
+        spacing: Style.baseMargin
 
         Label {
             Layout.alignment: Qt.AlignHCenter

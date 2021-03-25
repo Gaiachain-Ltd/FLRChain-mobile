@@ -24,7 +24,7 @@ Popup {
     contentItem: ColumnLayout {
         width: parent.width
         height: parent.height
-        spacing: 20
+        spacing: Style.baseMargin
 
         Image {
             source: iconSrc

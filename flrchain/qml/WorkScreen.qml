@@ -1,8 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import com.flrchain.style 1.0
 import QtGraphicalEffects 1.15
+import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Popups" as Popups
@@ -111,7 +111,7 @@ Item {
                         anchors.fill: parent
                         anchors.margins: Style.baseMargin
                         anchors.bottomMargin: Style.bigMargin
-                        spacing: 20
+                        spacing: Style.baseMargin
 
                         Label {
                             text: qsTr("Photo")

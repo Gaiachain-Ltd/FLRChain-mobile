@@ -25,9 +25,12 @@ public:
                                   const QString &lastName, const QString &phone, const QString &village);
     User* user() const;
     bool internetConnection();
+    QByteArray getToken() const;
+    void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void setRememberMe(const bool val);
     Q_INVOKABLE bool getRememberMe() const;
-    QByteArray getToken() const;
+    Q_INVOKABLE void logout();
+
     Q_INVOKABLE void getProjectsData() const;
     Q_INVOKABLE void getWorkData(const int projectId) const;
     Q_INVOKABLE void getUserInfo() const;
@@ -38,8 +41,6 @@ public:
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const;
-    void setDataManager(DataManager *dataManager);
-    Q_INVOKABLE void logout();
 
 public slots:
     void setInternetConnection(const bool internetConnection);
@@ -50,7 +51,6 @@ signals:
     void registrationError(const QString& errors) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
-    void clientInitialized() const;
     void internetConnectionChanged(bool internetConnection);
 private:
     void onLoginSuccessful(const QString& token);

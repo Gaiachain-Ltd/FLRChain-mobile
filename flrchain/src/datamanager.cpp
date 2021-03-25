@@ -1,7 +1,6 @@
 #include "datamanager.h"
 #include "filemanager.h"
 #include "pagemanager.h"
-#include "project.h"
 #include <QDebug>
 
 DataManager::DataManager(QObject *parent) : QObject(parent)

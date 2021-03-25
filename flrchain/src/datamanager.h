@@ -33,8 +33,6 @@ public slots:
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
-    void projectsChanged() const;
-    void workListChanged() const;
     void walletBalanceChanged() const;
     void projectsCountChanged() const;
     void joinRequestSent(const int projectId) const;

@@ -70,7 +70,7 @@ Item {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.margins: Style.baseMargin
-                    spacing: 15
+                    spacing: Style.smallMargin
 
                     Label {
                         Layout.topMargin: Style.baseMargin

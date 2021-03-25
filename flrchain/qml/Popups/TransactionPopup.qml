@@ -14,7 +14,7 @@ Custom.Popup {
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
         Layout.rightMargin: Style.baseMargin
-        spacing: 20
+        spacing: Style.baseMargin
 
         Text {
             text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer is to be made")

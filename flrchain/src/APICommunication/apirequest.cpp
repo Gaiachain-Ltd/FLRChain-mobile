@@ -10,7 +10,7 @@ ApiRequest::ApiRequest(const QString &method)
 void ApiRequest::setMethod(const QString &apiMethodPath)
 {
     mApiMethod = apiMethodPath;
-    setAddress(QUrl(APIUrl + mApiMethod + "/?format=json"));
+    setAddress(QUrl(APIUrl + QLatin1String("/api/v1/") + mApiMethod + "/?format=json"));
 }
 
 void ApiRequest::customizeRequest(QNetworkRequest &request)

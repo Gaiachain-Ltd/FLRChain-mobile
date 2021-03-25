@@ -29,7 +29,7 @@ Item {
                 anchors.right: parent.right
                 anchors.leftMargin: Style.baseMargin
                 anchors.rightMargin: Style.baseMargin
-                spacing: 20
+                spacing: Style.baseMargin
 
                 Label{
                     Layout.topMargin: Style.baseMargin

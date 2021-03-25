@@ -43,7 +43,7 @@ Item {
             anchors.leftMargin: Style.baseMargin
             anchors.rightMargin: Style.baseMargin
 
-            spacing: 20
+            spacing: Style.baseMargin
 
             Label {
                 text: qsTr("Your account")

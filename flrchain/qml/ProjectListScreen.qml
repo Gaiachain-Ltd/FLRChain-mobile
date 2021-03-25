@@ -65,7 +65,7 @@ Item {
             anchors.rightMargin: Style.baseMargin
             height: listView.contentHeight + 80
 
-            spacing: 20
+            spacing: Style.baseMargin
 
             Label {
                 Layout.topMargin: Style.baseMargin
@@ -81,7 +81,7 @@ Item {
 
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                spacing: 20
+                spacing: Style.baseMargin
 
                 delegate: Delegates.ProjectDelegate {
                     projectItem: listView.model[index]

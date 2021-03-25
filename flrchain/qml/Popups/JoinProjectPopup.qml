@@ -16,14 +16,14 @@ Custom.Popup {
         Layout.fillWidth: true
         Layout.leftMargin: Style.baseMargin
         Layout.rightMargin: Style.baseMargin
-        spacing: 20
+        spacing: Style.baseMargin
 
         Label {
             Layout.alignment: Qt.AlignHCenter
             font.pointSize: Style.fontSmall
             font.weight: Font.DemiBold
             color: Style.darkLabelColor
-            text: qsTr("Are you sure you want to join to the project")
+            text: qsTr("Are you sure you want to join the project")
         }
 
         Label {

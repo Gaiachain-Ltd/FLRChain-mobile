@@ -1,6 +1,14 @@
 #include "session.h"
 #include "user.h"
 #include "restapiclient.h"
+#include "settings.h"
+#include "datamanager.h"
+#include "platformbridge.h"
+#include "pagemanager.h"
+#include <QSharedPointer>
+#include <QLoggingCategory>
+#include <QDebug>
+
 #include "requests/registerrequest.h"
 #include "requests/loginrequest.h"
 #include "requests/projectsdatarequest.h"
@@ -13,14 +21,6 @@
 #include "requests/projectdetailsrequest.h"
 #include "requests/getimagerequest.h"
 #include "requests/sendworkrequest.h"
-
-#include <QSharedPointer>
-#include <QLoggingCategory>
-#include <QDebug>
-#include "settings.h"
-#include "datamanager.h"
-#include "platformbridge.h"
-#include "pagemanager.h"
 
 
 Q_LOGGING_CATEGORY(session, "core.session")
@@ -43,7 +43,6 @@ Session::~Session()
 void Session::setClient(RestAPIClient *client)
 {
     mClient = client;
-    emit clientInitialized();
 }
 
 bool Session::hasToken() const
@@ -203,7 +202,7 @@ void Session::getTransactionsData() const
     }
 
     auto request = QSharedPointer<TransactionHistoryRequest>::create(getToken());
-    connect(request.data(), &TransactionHistoryRequest::projectsDataReply,
+    connect(request.data(), &TransactionHistoryRequest::walletDataReply,
             m_dataManager, &DataManager::transactionsDataReceived);
 
     mClient->send(request);
@@ -278,7 +277,7 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
         return;
     }
 
-    auto request = QSharedPointer<GetImageRequest>::create(getToken(), QUrl("https://flrchain.milosolutions.com:8000" + fileName), m_dataManager->getPhotosPath(), workId);
+    auto request = QSharedPointer<GetImageRequest>::create(getToken(), QUrl(APIUrl + fileName), m_dataManager->getPhotosPath(), workId);
     connect(request.data(), &GetImageRequest::fileDownloadSuccessful,
             m_dataManager, &DataManager::photoDownloaded);
     connect(request.data(), &GetImageRequest::fileDownloadError,

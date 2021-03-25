@@ -33,7 +33,7 @@ Item {
                 anchors.right: parent.right
                 anchors.leftMargin: Style.baseMargin
                 anchors.rightMargin: Style.baseMargin
-                spacing: 10
+                spacing: Style.tinyMargin
 
                 Item{
                     Layout.fillWidth: true

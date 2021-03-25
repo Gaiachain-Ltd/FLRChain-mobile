@@ -44,5 +44,5 @@ void TransactionHistoryRequest::parse()
         walletList.append(QVariant::fromValue(transaction));
     }
 
-    emit projectsDataReply(walletList);
+    emit walletDataReply(walletList);
 }

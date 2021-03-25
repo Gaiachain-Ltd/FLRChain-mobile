@@ -5,7 +5,6 @@
 #include <QImageReader>
 #include <QImageWriter>
 #include "platformbridge.h"
-#include <QStringList>
 
 FileManager::FileManager(QObject *parent) : QObject(parent)
 {

@@ -7,8 +7,7 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Column {
-    spacing: 20
-    property string localPhotoPath: ""
+    spacing: Style.baseMargin
     property var workItem
     property bool separatorVisible: true
 
@@ -20,7 +19,7 @@ Column {
 
         Custom.RoundedImage {
             id: img
-            source: localPhotoPath
+            source: workItem.localPath
             anchors.fill: parent
         }
 

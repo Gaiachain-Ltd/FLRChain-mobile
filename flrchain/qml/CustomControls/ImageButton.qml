@@ -26,7 +26,7 @@ Button {
         color: Style.colorTransparent
         Row {
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 15
+            spacing: Style.smallMargin
 
             Image {
                 source: button.iconSrc

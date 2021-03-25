@@ -6,7 +6,7 @@ SendWorkRequest::SendWorkRequest(const QString &filePath, const int projectId, c
  : MMultiPartRequest(QUrl())
 {
     setToken(token);
-    setAddress(QUrl(APIUrl + QString("projects/%1/tasks/%2/activities/").arg(projectId).arg(taskId)));
+    setAddress(QUrl(APIUrl + QString("/api/v1/projects/%1/tasks/%2/activities/").arg(projectId).arg(taskId)));
     setPriority(Priority::Normal);
     setType(Type::Post);
 
