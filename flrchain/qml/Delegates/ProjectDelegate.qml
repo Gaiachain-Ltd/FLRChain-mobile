@@ -119,8 +119,8 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
-                    text: investmentOngoing ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
-                    bgColor: investmentOngoing && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
+                    text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+                    bgColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
                         pageManager.enterProjectDetailsScreen(projectItem.id)
                     }

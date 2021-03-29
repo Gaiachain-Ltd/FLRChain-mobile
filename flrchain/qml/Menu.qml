@@ -162,7 +162,7 @@ Drawer {
                 imgWidth: Style.iconSize
                 onClicked: {
                     drawer.close()
-                    session.logout()
+                    logoutPopup.open()
                 }
             }
         }

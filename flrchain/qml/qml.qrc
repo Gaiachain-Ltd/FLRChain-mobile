@@ -32,5 +32,6 @@
         <file>Popups/WorkSuccessPopup.qml</file>
         <file>CustomControls/StatusLabel.qml</file>
         <file>CustomControls/RoundedImage.qml</file>
+        <file>Popups/ConfirmLogoutPopup.qml</file>
     </qresource>
 </RCC>

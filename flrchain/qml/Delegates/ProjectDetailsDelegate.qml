@@ -172,7 +172,7 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")
-                    visible: investmentOngoing && assignmentStatus === Project.Undefined
+                    visible: !investmentFinished && assignmentStatus === Project.Undefined
                 }
             }
         }

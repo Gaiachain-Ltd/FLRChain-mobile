@@ -92,4 +92,8 @@ ApplicationWindow {
         id: errorPopup
 
     }
+
+    Popups.ConfirmLogoutPopup{
+        id: logoutPopup
+    }
 }
