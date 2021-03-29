@@ -29,10 +29,12 @@ Item {
             radius: 10
 
             ColumnLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Style.baseMargin
-                anchors.rightMargin: Style.baseMargin
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.baseMargin
+                    rightMargin: Style.baseMargin
+                }
                 spacing: Style.tinyMargin
 
                 Item{
@@ -100,7 +102,7 @@ Item {
                     Layout.topMargin: Style.baseMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Description"
+                    text: qsTr("Description")
                     color: Style.mediumLabelColor
                 }
 
@@ -120,7 +122,7 @@ Item {
                     text: investmentOngoing ? undefinedStatus ? qsTr("Join") : joined ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
                     bgColor: investmentOngoing && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
-                         pageManager.enterProjectDetailsScreen(projectItem.id)
+                        pageManager.enterProjectDetailsScreen(projectItem.id)
                     }
                 }
             }

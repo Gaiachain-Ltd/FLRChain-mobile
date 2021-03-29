@@ -33,7 +33,10 @@ Button
         {
             width: control.iconContainerSize
             height: width
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                verticalCenter: parent.verticalCenter
+                horizontalCenter: parent.horizontalCenter
+            }
             Image
             {
                 id: imageIcon

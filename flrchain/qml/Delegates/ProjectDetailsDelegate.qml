@@ -33,24 +33,28 @@ Item {
 
             Custom.StatusLabel{
                 status: assignmentStatus
-                anchors.bottom: parent.top
-                anchors.bottomMargin: -Style.tinyMargin
-                anchors.left: parent.left
-                anchors.leftMargin: Style.baseMargin
+                anchors {
+                    bottom: parent.top
+                    bottomMargin: -Style.tinyMargin
+                    left: parent.left
+                    leftMargin: Style.baseMargin
+                }
             }
 
             ColumnLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Style.baseMargin
-                anchors.rightMargin: Style.baseMargin
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.baseMargin
+                    rightMargin: Style.baseMargin
+                }
                 spacing: Style.tinyMargin
 
                 Label{
                     Layout.topMargin: Style.bigMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Project deadline"
+                    text: qsTr("Project deadline")
                     color: Style.accentColor
                 }
 
@@ -78,7 +82,7 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Investment time"
+                    text: qsTr("Investment time")
                     color: Style.accentColor
                 }
 
@@ -107,7 +111,7 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Project status"
+                    text: qsTr("Project status")
                     color: Style.accentColor
                 }
 
@@ -136,7 +140,7 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Description"
+                    text: qsTr("Description")
                     color: Style.accentColor
                 }
 
@@ -152,7 +156,7 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Photo"
+                    text: qsTr("Photo")
                     color: Style.accentColor
                 }
 

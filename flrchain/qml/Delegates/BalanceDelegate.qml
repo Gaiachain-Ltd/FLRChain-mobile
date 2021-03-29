@@ -9,7 +9,7 @@ Item {
     height: childrenRect.height
     width: parent.width
     property bool buttonVisible: true
-    property string title: "Balance"
+    property string title: qsTr("Balance")
     property real value: 0.0
     property alias btn: cashOutBtn
 
@@ -25,10 +25,12 @@ Item {
             radius: 10
 
             ColumnLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Style.baseMargin
-                anchors.rightMargin: Style.baseMargin
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.baseMargin
+                    rightMargin: Style.baseMargin
+                }
                 spacing: Style.baseMargin
 
                 Label{

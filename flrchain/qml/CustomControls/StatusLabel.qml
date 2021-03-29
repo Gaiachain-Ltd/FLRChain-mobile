@@ -20,7 +20,7 @@ Rectangle{
         anchors.centerIn: parent
         font.pixelSize: Style.fontTiny
         font.weight: Font.DemiBold
-        text: rejected ? "Rejected" : joined ? "Joined" : "Pending request"
+        text: rejected ? qsTr("Rejected") : joined ? qsTr("Joined") : qsTr("Pending request")
         color: Style.bgColor
     }
 }

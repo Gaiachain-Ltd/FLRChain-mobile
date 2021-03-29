@@ -21,8 +21,10 @@ Button {
     }
 
     contentItem: Rectangle {
-        anchors.fill: parent
-        anchors.leftMargin: Style.baseMargin
+        anchors {
+            fill: parent
+            leftMargin: Style.baseMargin
+        }
         color: Style.colorTransparent
         Row {
             anchors.verticalCenter: parent.verticalCenter

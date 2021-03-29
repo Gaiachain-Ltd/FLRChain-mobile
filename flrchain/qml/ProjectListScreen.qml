@@ -40,18 +40,22 @@ Item {
 
     Custom.Header {
         id: header
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         title: qsTr("Earn rewards")
     }
 
     Flickable {
         id: flick
-        anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
+        anchors {
+            top: header.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
@@ -59,10 +63,12 @@ Item {
 
         ColumnLayout {
             id: mainColumn
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
+            anchors {
+                left: parent.left
+                right: parent.right
+                leftMargin: Style.baseMargin
+                rightMargin: Style.baseMargin
+            }
             height: listView.contentHeight + 80
 
             spacing: Style.baseMargin

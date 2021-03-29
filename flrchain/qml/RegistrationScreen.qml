@@ -42,22 +42,25 @@ Item {
         anchors.fill: parent
 
         Flickable {
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            anchors.topMargin: Style.baseMargin
+            anchors {
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                topMargin: Style.baseMargin
+            }
             contentHeight: mainColumn.height
             boundsBehavior: Flickable.StopAtBounds
             clip: true
 
             ColumnLayout {
                 id: mainColumn
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Style.baseMargin
-                anchors.rightMargin: Style.baseMargin
-
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.baseMargin
+                    rightMargin: Style.baseMargin
+                }
                 Image {
                     id: logo
                     source: "qrc:/img/logo-login.svg"
@@ -77,9 +80,11 @@ Item {
                     color: Style.bgColor
                     radius: 7
                     ColumnLayout{
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.margins: Style.baseMargin
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: Style.baseMargin
+                        }
                         spacing: Style.smallMargin
 
                         Label {

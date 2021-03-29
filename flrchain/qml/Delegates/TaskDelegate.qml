@@ -24,17 +24,19 @@ Item {
             radius: 10
 
             ColumnLayout {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: Style.baseMargin
-                anchors.rightMargin: Style.baseMargin
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.baseMargin
+                    rightMargin: Style.baseMargin
+                }
                 spacing: 8
 
                 Label{
                     Layout.topMargin: Style.baseMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Action"
+                    text: qsTr("Action")
                     color: Style.accentColor
                 }
 
@@ -49,7 +51,7 @@ Item {
                     Layout.topMargin: Style.tinyMargin
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: "Rewards per unit"
+                    text: qsTr("Rewards per unit")
                     color: Style.accentColor
                 }
 

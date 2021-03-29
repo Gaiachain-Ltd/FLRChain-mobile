@@ -9,12 +9,13 @@ Item {
 
     RowLayout{
         height: childrenRect.height
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: Style.baseMargin
-        anchors.rightMargin: Style.baseMargin
-
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            right: parent.right
+            leftMargin: Style.baseMargin
+            rightMargin: Style.baseMargin
+        }
         Column{
             Label {
                 text: qsTr("Quas Eos Quisquam")
@@ -41,11 +42,13 @@ Item {
     }
 
     Rectangle{
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: Style.baseMargin
-        anchors.rightMargin: Style.baseMargin
+        anchors {
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+            leftMargin: Style.baseMargin
+            rightMargin: Style.baseMargin
+        }
         height: 1
         color: Style.sectionColor
     }

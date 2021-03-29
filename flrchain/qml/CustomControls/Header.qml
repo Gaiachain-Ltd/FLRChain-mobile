@@ -17,42 +17,49 @@ ColumnLayout{
         Rectangle {
             height: 20
             width: parent.width
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
+            anchors {
+                verticalCenter: parent.verticalCenter
+                left: parent.left
+                right: parent.right
+                rightMargin: 5
+            }
 
             IconButton {
                 id: backButton
-                anchors.left: parent.left
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                }
                 iconSrc: "qrc:/img/icon-back.svg"
-                anchors.verticalCenter: parent.verticalCenter
                 visible: backButtonVisible
                 onClicked: pageManager.back()
-                width: 26
-                height: 26
+                width: 50
+                height: headerContainer.height
                 iconSize: Style.iconSize
             }
 
             Label {
                 text: title
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                anchors {
+                    horizontalCenter: parent.horizontalCenter
+                    verticalCenter: parent.verticalCenter
+                }
                 color: Style.accentColor
             }
 
             IconButton {
                 id: menuButton
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
+                anchors {
+                    right: parent.right
+                    verticalCenter: parent.verticalCenter
+                }
                 iconSrc: "qrc:/img/icon-menu.svg"
                 onClicked: {
                     menu.open()
                     session.getUserInfo()
                 }
-                width: 26
-                height: 26
+                width: 50
+                height: headerContainer.height
                 iconSize: 26
             }
         }

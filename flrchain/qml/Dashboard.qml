@@ -13,32 +13,45 @@ Item {
 
     Custom.Header {
         id: header
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         backButtonVisible: false
         title: qsTr("Dashboard")
     }
 
     Rectangle {
         id: background
-        anchors.top: header.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            top: header.bottom
+            bottom: parent.bottom
+            left: parent.left
+            right: parent.right
+        }
 
         ColumnLayout {
-            anchors.fill: parent
-            anchors.topMargin: Style.bigMargin
-            anchors.bottomMargin: 170
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
+            anchors {
+                fill: parent
+                topMargin: Style.bigMargin
+                bottomMargin: 170
+                leftMargin: Style.baseMargin
+                rightMargin: Style.baseMargin
+            }
             spacing: 40
 
             Custom.ShadowedRectangle {
                 Layout.alignment: Qt.AlignHCenter
                 Layout.preferredHeight: 223
                 Layout.fillWidth: true
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        pageManager.enterProjectListScreen()
+                    }
+                }
 
                 Rectangle{
                     anchors.fill: parent
@@ -47,14 +60,16 @@ Item {
 
                     RowLayout{
                         id: row
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: Style.baseMargin
-                        anchors.topMargin: Style.baseMargin
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            right: parent.right
+                            leftMargin: Style.baseMargin
+                            topMargin: Style.baseMargin
+                        }
 
                         Label {
-                            text: "Earn rewards"
+                            text: qsTr("Earn rewards")
                             font.pixelSize: Style.fontUltra
                             color: Style.accentColor
                         }
@@ -76,9 +91,11 @@ Item {
                     }
 
                     Label {
-                        anchors.top: row.bottom
-                        anchors.left: parent.left
-                        anchors.leftMargin: Style.baseMargin
+                        anchors {
+                            top: row.bottom
+                            left: parent.left
+                            leftMargin: Style.baseMargin
+                        }
                         text: qsTr("%1 projects").arg(dataManager.projectsCount)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
@@ -100,6 +117,13 @@ Item {
                 Layout.preferredHeight: 223
                 Layout.fillWidth: true
 
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        pageManager.enterWalletScreen()
+                    }
+                }
+
                 Rectangle{
                     anchors.fill: parent
                     radius: 10
@@ -107,14 +131,15 @@ Item {
 
                     RowLayout{
                         id: contentRow
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.leftMargin: Style.baseMargin
-                        anchors.topMargin: Style.baseMargin
-
+                        anchors {
+                            top: parent.top
+                            left: parent.left
+                            right: parent.right
+                            leftMargin: Style.baseMargin
+                            topMargin: Style.baseMargin
+                        }
                         Label {
-                            text: "Wallet"
+                            text: qsTr("Wallet")
                             font.pixelSize: Style.fontUltra
                             color: Style.yellowLabelColor
                         }
@@ -136,9 +161,11 @@ Item {
                     }
 
                     Label {
-                        anchors.top: contentRow.bottom
-                        anchors.left: parent.left
-                        anchors.leftMargin: Style.baseMargin
+                        anchors {
+                            top: contentRow.bottom
+                            left: parent.left
+                            leftMargin: Style.baseMargin
+                        }
                         text: qsTr("Balance: %1 USDC").arg(dataManager.walletBalance)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
@@ -150,8 +177,10 @@ Item {
                         width: 190
                         height: 100
                         sourceSize: Qt.size(width, height)
-                        anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors {
+                            bottom: parent.bottom
+                            horizontalCenter: parent.horizontalCenter
+                        }
                     }
                 }
             }

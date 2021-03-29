@@ -27,12 +27,13 @@ Item {
         anchors.fill: parent
 
         ColumnLayout {
-            anchors.fill: parent
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
-            anchors.topMargin: Style.baseMargin
-            anchors.bottomMargin: 16
-
+            anchors {
+                fill: parent
+                leftMargin: Style.baseMargin
+                rightMargin: Style.baseMargin
+                topMargin: Style.baseMargin
+                bottomMargin: 16
+            }
             Item{
                 Layout.fillHeight: true
                 Layout.preferredHeight: 40
@@ -67,9 +68,11 @@ Item {
                 radius: 7
 
                 ColumnLayout{
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.margins: Style.baseMargin
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        margins: Style.baseMargin
+                    }
                     spacing: Style.smallMargin
 
                     Label {

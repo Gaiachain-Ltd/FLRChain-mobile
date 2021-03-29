@@ -59,9 +59,11 @@ Item {
 
     Custom.Header {
         id: header
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors {
+            top: parent.top
+            left: parent.left
+            right: parent.right
+        }
         title: qsTr("Earn rewards")
     }
 
@@ -73,18 +75,20 @@ Item {
     Rectangle {
         id: background
         color: Style.bgColor
-        anchors.top: header.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-
+        anchors {
+            top: header.bottom
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+        }
         ColumnLayout {
-            anchors.fill: parent
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
-            anchors.topMargin: Style.baseMargin
-            anchors.bottomMargin: 16
-
+            anchors {
+                fill: parent
+                leftMargin: Style.baseMargin
+                rightMargin: Style.baseMargin
+                topMargin: Style.baseMargin
+                bottomMargin: 16
+            }
             Label {
                 text: projectName
                 font.pixelSize: Style.fontUltra
@@ -108,9 +112,11 @@ Item {
                     radius: 10
 
                     ColumnLayout{
-                        anchors.fill: parent
-                        anchors.margins: Style.baseMargin
-                        anchors.bottomMargin: Style.bigMargin
+                        anchors {
+                            fill: parent
+                            margins: Style.baseMargin
+                            bottomMargin: Style.bigMargin
+                        }
                         spacing: Style.baseMargin
 
                         Label {
@@ -151,9 +157,11 @@ Item {
 
                             Custom.IconButton {
                                 id: closeButton
-                                anchors.right: parent.right
-                                anchors.top: parent.top
-                                anchors.margins: 5
+                                anchors {
+                                    right: parent.right
+                                    top: parent.top
+                                    margins: 5
+                                }
                                 width: 40
                                 height: 40
                                 iconSize: 30

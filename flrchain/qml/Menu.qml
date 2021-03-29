@@ -33,21 +33,34 @@ Drawer {
 
         ColumnLayout {
             id: column
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.leftMargin: Style.baseMargin
-            anchors.rightMargin: Style.baseMargin
-
+            anchors {
+                left: parent.left
+                right: parent.right
+                leftMargin: Style.baseMargin
+                rightMargin: Style.baseMargin
+            }
             RowLayout{
                 id: row
                 Layout.leftMargin: Style.baseMargin
                 Layout.topMargin: Style.baseMargin
 
-                Label {
-                    id:username
-                    text: session.user.firstName + " " + session.user.lastName
-                    font.pixelSize: Style.fontLarge
-                    color: Style.accentColor
+                Column{
+                    spacing: 5
+                    Label {
+                        id:username
+                        text: session.user.firstName + " " + session.user.lastName
+                        font.pixelSize: Style.fontLarge
+                        color: Style.accentColor
+                    }
+
+                    Label {
+                        id: usermail
+                        Layout.leftMargin: Style.baseMargin
+                        text: session.user.email
+                        font.pixelSize: Style.fontSmall
+                        color: Style.darkLabelColor
+                        font.weight: Font.DemiBold
+                    }
                 }
 
                 Item{
@@ -56,21 +69,14 @@ Drawer {
                 }
 
                 Custom.IconButton {
-                    Layout.preferredWidth: 21
-                    Layout.preferredHeight: 21
+                    Layout.preferredWidth: 50
+                    Layout.preferredHeight: 50
+                    Layout.topMargin: -Style.smallMargin
+                    Layout.rightMargin: -Style.smallMargin
                     iconSize: 21
                     iconSrc: "qrc:/img/icon-close-menu.svg"
                     onClicked: drawer.close()
                 }
-            }
-
-            Label {
-                id: usermail
-                Layout.leftMargin: Style.baseMargin
-                text: session.user.email
-                font.pixelSize: Style.fontSmall
-                color: Style.darkLabelColor
-                font.weight: Font.DemiBold
             }
 
             Rectangle {

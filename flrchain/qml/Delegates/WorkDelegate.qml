@@ -24,10 +24,12 @@ Column {
         }
 
         Rectangle{
-            anchors.bottom: parent.top
-            anchors.bottomMargin: -Style.tinyMargin
-            anchors.left: parent.left
-            anchors.leftMargin: Style.baseMargin
+            anchors {
+                bottom: parent.top
+                bottomMargin: -Style.tinyMargin
+                left: parent.left
+                leftMargin: Style.baseMargin
+            }
             height: 20
             width: row.width + Style.baseMargin
             color: Style.accentColor
@@ -36,8 +38,10 @@ Column {
             RowLayout{
                 id: row
                 spacing: 5
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    horizontalCenter: parent.horizontalCenter
+                }
                 Image {
                     source: "qrc:/img/icon-accepted.svg"
                     asynchronous: true
@@ -51,15 +55,17 @@ Column {
                 Label{
                     font.pixelSize: Style.fontTiny
                     font.weight: Font.DemiBold
-                    text: "Accepted"
+                    text: qsTr("Accepted")
                     color: Style.bgColor
                 }
             }
         }
 
         Rectangle{
-            anchors.bottom: parent.bottom
-            anchors.right: parent.right
+            anchors {
+                bottom: parent.bottom
+                right: parent.right
+            }
             height: 40
             width: rewardLabel.width + Style.baseMargin
             color: Style.accentColor
