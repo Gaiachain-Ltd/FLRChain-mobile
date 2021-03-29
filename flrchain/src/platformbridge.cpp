@@ -1,6 +1,8 @@
 #include "platformbridge.h"
 #include "platformbridgeprivate.h"
 
+PlatformBridge *PlatformBridge::m_instance = Q_NULLPTR;
+
 PlatformBridge::PlatformBridge() :
     QObject(Q_NULLPTR),
     d_ptr(new PlatformBridgePrivate(this))
@@ -9,8 +11,18 @@ PlatformBridge::PlatformBridge() :
 
 PlatformBridge *PlatformBridge::instance()
 {
-    static PlatformBridge instance;
-    return &instance;
+    if (!m_instance) {
+        m_instance = new PlatformBridge();
+    }
+    return m_instance;
+}
+
+void PlatformBridge::dealloc()
+{
+    if (m_instance) {
+        delete m_instance;
+        m_instance = Q_NULLPTR;
+    }
 }
 
 QAbstractNativeEventFilter *PlatformBridge::nativeeventFilter()
@@ -31,4 +43,10 @@ void PlatformBridge::selectFile() const
 void PlatformBridge::checkConnection() const
 {
     d_ptr->checkConnection();
+}
+
+void PlatformBridge::cleanup()
+{
+    d_ptr->deinit();
+    dealloc();
 }

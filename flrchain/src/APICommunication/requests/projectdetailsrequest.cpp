@@ -2,8 +2,8 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include "../project.h"
-#include "../task.h"
+#include "project.h"
+#include "task.h"
 
 ProjectDetailsRequest::ProjectDetailsRequest(const QByteArray &token, const int projectId) : ApiRequest(QString("projects/%1").arg(projectId))
 {

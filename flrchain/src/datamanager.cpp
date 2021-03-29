@@ -16,6 +16,14 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
             this, &DataManager::photoError);
     connect(m_fileManager, &FileManager::processingPhoto,
             this, &DataManager::processingPhoto);
+    connect(m_workerThread, &QThread::finished, m_workerThread, &QThread::deleteLater);
+}
+
+DataManager::~DataManager()
+{
+    m_workerThread->quit();
+    m_workerThread->wait();
+    m_fileManager->deleteLater();
 }
 
 double DataManager::getWalletBalance() const

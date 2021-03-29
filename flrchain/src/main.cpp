@@ -33,6 +33,13 @@ SOFTWARE.
 #include "pages.h"
 #include "pagemanager.h"
 #include "project.h"
+#include "settings.h"
+
+void cleanUp() {
+   PlatformBridge::instance()->cleanup();
+   PageManager::dealloc();
+   Settings::dealloc();
+}
 
 int main(int argc, char *argv[]) {
 
@@ -44,6 +51,7 @@ int main(int argc, char *argv[]) {
     app.setOrganizationDomain("milosolutions.com");
     app.setApplicationName("FLRChain");
 
+    qAddPostRoutine(cleanUp);
     QQmlApplicationEngine engine;
 
     RestAPIClient client;

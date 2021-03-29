@@ -61,7 +61,7 @@ private:
 
     UserPtr mCurrentUser;
     QPointer<RestAPIClient> mClient;
-    DataManager *m_dataManager;
+    QPointer<DataManager> m_dataManager;
     bool m_internetConnection;
 };
 

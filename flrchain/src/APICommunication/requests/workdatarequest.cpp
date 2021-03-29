@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include "../work.h"
+#include "work.h"
 
 WorkDataRequest::WorkDataRequest(const QByteArray &token, const int projectId) : ApiRequest(QString("projects/%1/activities").arg(projectId))
 {

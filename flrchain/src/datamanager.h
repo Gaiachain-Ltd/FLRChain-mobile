@@ -17,6 +17,7 @@ class DataManager : public QObject
 
 public:
     explicit DataManager(QObject *parent = nullptr);
+    ~DataManager();
     int getProjectsCount() const;
     double getWalletBalance() const;
     void cleanData();

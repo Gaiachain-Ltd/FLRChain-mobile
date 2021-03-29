@@ -13,6 +13,7 @@ class PlatformBridge : public QObject
 public:
 
     static PlatformBridge *instance();
+    static void dealloc();
 
     Q_INVOKABLE void capture() const;
     Q_INVOKABLE void selectFile() const;
@@ -20,9 +21,11 @@ public:
 
     QAbstractNativeEventFilter *nativeeventFilter();
 
+    void cleanup();
 private:
     PlatformBridge();
     PlatformBridgePrivate *d_ptr;
+    static PlatformBridge *m_instance;
     Q_DECLARE_PRIVATE(PlatformBridge)
 
 signals:

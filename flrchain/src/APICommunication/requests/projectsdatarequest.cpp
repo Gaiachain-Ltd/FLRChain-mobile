@@ -3,8 +3,8 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include "../project.h"
-#include "../task.h"
+#include "project.h"
+#include "task.h"
 
 ProjectsDataRequest::ProjectsDataRequest(const QByteArray &token) : ApiRequest("projects")
 {

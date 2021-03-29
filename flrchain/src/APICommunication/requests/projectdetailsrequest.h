@@ -5,7 +5,7 @@
 
 #include <QString>
 #include <QObject>
-#include "../project.h"
+#include "project.h"
 
 class ProjectDetailsRequest : public ApiRequest
 {

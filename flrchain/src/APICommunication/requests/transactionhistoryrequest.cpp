@@ -3,7 +3,7 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
-#include "../transaction.h"
+#include "transaction.h"
 
 TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token) : ApiRequest("")
 {

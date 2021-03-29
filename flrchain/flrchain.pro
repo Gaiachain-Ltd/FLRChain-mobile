@@ -15,18 +15,17 @@ TEMPLATE = app
 CONFIG += c++14
 TARGET = template
 
-INCLUDEPATH += src/APICommunication
+INCLUDEPATH += \
+    src/APICommunication \
+    src/Models
 
 HEADERS += \
     src/datamanager.h \
     src/filemanager.h \
     src/pagemanager.h \
     src/pages.h \
-    src/project.h \
     src/session.h \
     src/settings.h \
-    src/task.h \
-    src/transaction.h \
     src/user.h \
     src/userptr.h \
     src/APICommunication/restapiclient.h \
@@ -45,17 +44,17 @@ HEADERS += \
     src/APICommunication/requests/sendworkrequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
-    src/work.h
+    src/Models/transaction.h \
+    src/Models/task.h \
+    src/Models/project.h \
+    src/Models/work.h
 
 SOURCES += src/main.cpp  \
     src/datamanager.cpp \
     src/filemanager.cpp \
     src/pagemanager.cpp \
-    src/project.cpp \
     src/session.cpp \
     src/settings.cpp \
-    src/task.cpp \
-    src/transaction.cpp \
     src/user.cpp \
     src/APICommunication/restapiclient.cpp \
     src/APICommunication/apirequest.cpp \
@@ -73,7 +72,10 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/sendworkrequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
-    src/work.cpp
+    src/Models/transaction.cpp \
+    src/Models/task.cpp \
+    src/Models/project.cpp \
+    src/Models/work.cpp
 
 RESOURCES +=  \
     qml/qml.qrc \
