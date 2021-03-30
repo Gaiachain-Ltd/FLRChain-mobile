@@ -21,7 +21,10 @@ public:
     int getProjectsCount() const;
     double getWalletBalance() const;
     void cleanData();
-    void projectsDataReceived(const QVariantList &projects);
+    void projectsDataReply(const QJsonObject &projects);
+    void projectDetailsReply(const QJsonObject &projectObject);
+    void transactionsDataReply(const QJsonObject &transactions);
+    void workReply(const QJsonObject &work);
     Q_INVOKABLE QString getPhotosPath();
     Q_INVOKABLE void cleanPhotosDir();
     Q_INVOKABLE void removeCurrentWorkPhoto();

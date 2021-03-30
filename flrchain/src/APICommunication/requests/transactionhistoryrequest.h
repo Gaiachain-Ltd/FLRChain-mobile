@@ -14,7 +14,7 @@ public:
     TransactionHistoryRequest(const QByteArray &token);
     void errorHandler(const QString &error);
 signals:
-    void walletDataReply(QVariantList walletList) const;
+    void walletDataReply(const QJsonObject &response) const;
 protected:
     virtual void parse() override final;
 };

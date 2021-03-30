@@ -6,6 +6,7 @@
 #include <QString>
 #include <QObject>
 #include "project.h"
+#include <QJsonObject>
 
 class ProjectDetailsRequest : public ApiRequest
 {
@@ -15,7 +16,7 @@ public:
     ProjectDetailsRequest(const QByteArray &token, const int projectId);
     void errorHandler(const QString& error);
 signals:
-    void projectDetailsReply(Project *project) const;
+    void projectDetailsReply(const QJsonObject &projectObject) const;
 protected:
     virtual void parse() override final;
 };

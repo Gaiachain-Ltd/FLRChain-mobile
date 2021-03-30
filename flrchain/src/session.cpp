@@ -22,7 +22,6 @@
 #include "requests/getimagerequest.h"
 #include "requests/sendworkrequest.h"
 
-
 Q_LOGGING_CATEGORY(session, "core.session")
 
 Session::Session(QObject *parent) : QObject(parent)
@@ -123,7 +122,7 @@ void Session::getProjectsData() const
 
     auto request = QSharedPointer<ProjectsDataRequest>::create(getToken());
     connect(request.data(), &ProjectsDataRequest::projectsDataReply,
-            m_dataManager, &DataManager::projectsDataReceived);
+            m_dataManager, &DataManager::projectsDataReply);
 
     mClient->send(request);
 }
@@ -144,7 +143,7 @@ void Session::getWorkData(const int projectId) const
 
     auto request = QSharedPointer<WorkDataRequest>::create(getToken(), projectId);
     connect(request.data(), &WorkDataRequest::workDataReply,
-            m_dataManager, &DataManager::workReceived);
+            m_dataManager, &DataManager::workReply);
 
     mClient->send(request);
 }
@@ -203,7 +202,7 @@ void Session::getTransactionsData() const
 
     auto request = QSharedPointer<TransactionHistoryRequest>::create(getToken());
     connect(request.data(), &TransactionHistoryRequest::walletDataReply,
-            m_dataManager, &DataManager::transactionsDataReceived);
+            m_dataManager, &DataManager::transactionsDataReply);
 
     mClient->send(request);
 }
@@ -260,7 +259,7 @@ void Session::getProjectDetails(const int projectId) const
 
     auto request = QSharedPointer<ProjectDetailsRequest>::create(getToken(), projectId);
     connect(request.data(), &ProjectDetailsRequest::projectDetailsReply,
-            m_dataManager, &DataManager::projectDetailsReceived);
+            m_dataManager, &DataManager::projectDetailsReply);
 
     mClient->send(request);
 }

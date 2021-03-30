@@ -5,7 +5,7 @@
 
 #include <QString>
 #include <QObject>
-
+#include <QJsonObject>
 class ProjectsDataRequest : public ApiRequest
 {
     Q_OBJECT
@@ -14,7 +14,8 @@ public:
     ProjectsDataRequest(const QByteArray &token);
     void errorHandler(const QString& error);
 signals:
-    void projectsDataReply(QVariantList projectsList) const;
+    void projectsDataReply(const QJsonObject &projectsList) const;
+
 protected:
     virtual void parse() override final;
 };

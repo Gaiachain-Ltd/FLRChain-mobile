@@ -1,5 +1,5 @@
-#ifndef PROJECT_H
-#define PROJECT_H
+#ifndef TRANSACTION_H
+#define TRANSACTION_H
 #include <QObject>
 #include <QVariantList>
 #include <QVariant>

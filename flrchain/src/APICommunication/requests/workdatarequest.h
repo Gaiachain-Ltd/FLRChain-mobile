@@ -7,6 +7,7 @@
 #include <QString>
 #include <QStringList>
 #include <QObject>
+#include <QJsonObject>
 
 class WorkDataRequest : public ApiRequest
 {
@@ -16,7 +17,7 @@ public:
     WorkDataRequest(const QByteArray &token, const int projectId);
     void errorHandler(const QString &error);
 signals:
-    void workDataReply(QVariantList workList, int balance) const;
+    void workDataReply(const QJsonObject &workReply) const;
 protected:
     virtual void parse() override final;
 };

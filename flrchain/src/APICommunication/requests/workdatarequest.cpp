@@ -21,28 +21,6 @@ void WorkDataRequest::errorHandler(const QString &error)
 void WorkDataRequest::parse()
 {
     QJsonObject response(m_replyDocument.object());
-    QVariantList workList;
 
-    QJsonArray workArray = response.value(QLatin1String("results")).toArray();
-
-    int rewardsBalance = 0;
-    const int arraySize = workArray.count();
-
-    for(int i = 0; i < arraySize; ++i) {
-        QJsonObject workObject = workArray.at(i).toObject();
-
-        Work *work = new Work();
-        work->setId(workObject.value(QLatin1String("id")).toInt());
-        work->setProjectId(workObject.value(QLatin1String("projectId")).toInt());
-
-        work->setStatus(workObject.value(QLatin1String("status")).toString());
-        work->setDate(workObject.value(QLatin1String("date")).toString());
-        work->setPhotoPath(workObject.value(QLatin1String("photo")).toString());
-        work->setAmount(workObject.value(QLatin1String("task")).toObject().value(QLatin1String("reward")).toInt());
-        rewardsBalance += work->amount();
-
-        workList.append(QVariant::fromValue(work));
-    }
-
-    emit workDataReply(workList, rewardsBalance);
+    emit workDataReply(response);
 }
