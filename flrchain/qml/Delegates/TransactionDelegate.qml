@@ -6,6 +6,7 @@ import com.flrchain.style 1.0
 Item {
     height: 63
     width: parent.width
+    property bool separatorVisible: true
 
     RowLayout{
         height: childrenRect.height
@@ -18,7 +19,7 @@ Item {
         }
         Column{
             Label {
-                text: qsTr("Quas Eos Quisquam")
+                text: projectName
                 font.pixelSize: Style.fontTiny
                 color: Style.mediumLabelColor
             }
@@ -35,13 +36,14 @@ Item {
         }
 
         Label {
-            text: qsTr("+ 20 USDC")
+            text: "+ " + amount
             font.pixelSize: Style.fontLarge
             color: Style.accentColor
         }
     }
 
     Rectangle{
+        visible: separatorVisible
         anchors {
             bottom: parent.bottom
             left: parent.left

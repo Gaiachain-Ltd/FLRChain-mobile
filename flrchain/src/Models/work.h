@@ -11,7 +11,7 @@ class Work : public QObject
     Q_PROPERTY(QString date READ date WRITE setDate NOTIFY dateChanged)
     Q_PROPERTY(QString photoPath READ photoPath WRITE setPhotoPath NOTIFY photoPathChanged)
     Q_PROPERTY(QString localPath READ localPath WRITE setLocalPath NOTIFY localPathChanged)
-    Q_PROPERTY(int amount READ amount WRITE setAmount NOTIFY amountChanged)
+    Q_PROPERTY(double amount READ amount WRITE setAmount NOTIFY amountChanged)
 
 public:
     Work(QObject *parent = nullptr);
@@ -22,7 +22,7 @@ public:
     QString date() const;
     QString photoPath() const;
     QString localPath() const;
-    int amount() const;
+    double amount() const;
 
 public slots:
     void setId(const int id);
@@ -31,13 +31,13 @@ public slots:
     void setDate(const QString &date);
     void setPhotoPath(const QString &photoPath);
     void setLocalPath(const QString &localPath);
-    void setAmount(const int amount);
+    void setAmount(const double amount);
 signals:
     void photoPathChanged(QString photoPath);
     void localPathChanged(QString localPath);
     void statusChanged(QString status);
     void dateChanged(QString date);
-    void amountChanged(int amount);
+    void amountChanged(double amount);
 
 private:
     int m_id;
@@ -46,7 +46,7 @@ private:
     QString m_date;
     QString m_photoPath;
     QString m_localPath;
-    int m_amount;
+    double m_amount;
 };
 
 #endif // WORK_H

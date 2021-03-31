@@ -221,7 +221,7 @@ void Session::getWalletBalance() const
 
     auto request = QSharedPointer<WalletBalanceRequest>::create(getToken());
     connect(request.data(), &WalletBalanceRequest::walletBalanceReply,
-            m_dataManager, &DataManager::setWalletBalance);
+            m_dataManager, &DataManager::walletBalanceReceived);
 
     mClient->send(request);
 }

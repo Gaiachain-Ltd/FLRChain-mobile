@@ -8,7 +8,7 @@ Work::Work(QObject *parent):
     m_date(QString()),
     m_photoPath(QString()),
     m_localPath(QString()),
-    m_amount(0)
+    m_amount(0.0)
 {
 
 }
@@ -43,7 +43,7 @@ QString Work::localPath() const
     return m_localPath;
 }
 
-int Work::amount() const
+double Work::amount() const
 {
     return m_amount;
 }
@@ -74,7 +74,7 @@ void Work::setLocalPath(const QString &localPath)
     }
 }
 
-void Work::setAmount(const int amount)
+void Work::setAmount(const double amount)
 {
     if (m_amount != amount) {
         m_amount = amount;

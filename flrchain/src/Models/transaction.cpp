@@ -30,6 +30,11 @@ double Transaction::amount() const
     return m_amount;
 }
 
+QString Transaction::creationDate() const
+{
+    return m_creationDate;
+}
+
 void Transaction::setId(const int id)
 {
     if (m_id != id) {
@@ -59,5 +64,13 @@ void Transaction::setAmount(const double amount)
     if (m_amount != amount) {
         m_amount = amount;
         emit amountChanged(amount);
+    }
+}
+
+void Transaction::setCreationDate(const QString &creationDate)
+{
+    if (m_creationDate != creationDate) {
+        m_creationDate = creationDate;
+        emit creationDateChanged(creationDate);
     }
 }

@@ -33,32 +33,6 @@ DataManager::~DataManager()
     m_fileManager->deleteLater();
 }
 
-double DataManager::getWalletBalance() const
-{
-    return m_walletBalance;
-}
-
-int DataManager::getProjectsCount() const
-{
-    return m_projectsCount;
-}
-
-void DataManager::setWalletBalance(const double walletBalance)
-{
-    if (m_walletBalance != walletBalance) {
-        m_walletBalance = walletBalance;
-        emit walletBalanceChanged();
-    }
-}
-
-void DataManager::setProjectsCount(const int projectsCount)
-{
-    if (m_projectsCount != projectsCount) {
-        m_projectsCount = projectsCount;
-        emit projectsCountChanged();
-    }
-}
-
 void DataManager::cashOutReplyReceived(const bool result)
 {
     qDebug() << "Cashout result" << result;
@@ -77,8 +51,6 @@ void DataManager::addWorkError()
 void DataManager::cleanData()
 {
     cleanPhotosDir();
-    m_projectsCount = 0;
-    m_walletBalance = 0.0;
 }
 
 QString DataManager::getPhotosPath()
@@ -126,10 +98,12 @@ void DataManager::projectsDataReply(const QJsonObject &response)
             project->setStatus(projectObject.value(QLatin1String("investment")).toObject()
                                .value(QLatin1String("status")).toInt());
         }
-
-        project->setDeadline(projectObject.value(QLatin1String("end")).toString());
-        project->setInvestmentStart(projectObject.value(QLatin1String("start")).toString());
-        project->setInvestmentEnd(projectObject.value(QLatin1String("end")).toString());
+        QDateTime deadline = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
+        project->setDeadline(deadline.toString(QLatin1String("MMMM dd, yyyy")));
+        QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("start")).toString(), Qt::ISODate);
+        project->setInvestmentStart(start.toString(QLatin1String("MMMM dd, yyyy")));
+        QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("end")).toString(), Qt::ISODate);
+        project->setInvestmentEnd(end.toString(QLatin1String("MMMM dd, yyyy")));
         project->setDescription(projectObject.value(QLatin1String("description")).toString());
         project->setPhoto(projectObject.value(QLatin1String("photo")).toString());
 
@@ -142,7 +116,7 @@ void DataManager::projectsDataReply(const QJsonObject &response)
             task->setProjectId(project->id());
             task->setTaskId(taskObject.value(QLatin1String("id")).toInt());
             task->setAction(taskObject.value(QLatin1String("action")).toString());
-            task->setReward(taskObject.value(QLatin1String("reward")).toDouble());
+            task->setReward(taskObject.value(QLatin1String("reward")).toString().toDouble());
 
             tasksList.append(QVariant::fromValue(task));
         }
@@ -153,7 +127,6 @@ void DataManager::projectsDataReply(const QJsonObject &response)
     }
 
     emit projectsReceived(projectsList);
-    setProjectsCount(projectsList.count());
 }
 
 void DataManager::projectDetailsReply(const QJsonObject &projectObject)
@@ -175,9 +148,12 @@ void DataManager::projectDetailsReply(const QJsonObject &projectObject)
         project->setStatus(projectObject.value(QLatin1String("investment")).toObject()
                            .value(QLatin1String("status")).toInt());
     }
-    project->setDeadline(projectObject.value(QLatin1String("end")).toString());
-    project->setInvestmentStart(projectObject.value(QLatin1String("start")).toString());
-    project->setInvestmentEnd(projectObject.value(QLatin1String("end")).toString());
+    QDateTime deadline = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
+    project->setDeadline(deadline.toString(QLatin1String("MMMM dd, yyyy")));
+    QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("start")).toString(), Qt::ISODate);
+    project->setInvestmentStart(start.toString(QLatin1String("MMMM dd, yyyy")));
+    QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("end")).toString(), Qt::ISODate);
+    project->setInvestmentEnd(end.toString(QLatin1String("MMMM dd, yyyy")));
     project->setDescription(projectObject.value(QLatin1String("description")).toString());
     project->setPhoto(projectObject.value(QLatin1String("photo")).toString());
 
@@ -190,7 +166,7 @@ void DataManager::projectDetailsReply(const QJsonObject &projectObject)
         task->setProjectId(project->id());
         task->setTaskId(taskObject.value(QLatin1String("id")).toInt());
         task->setAction(taskObject.value(QLatin1String("action")).toString());
-        task->setReward(taskObject.value(QLatin1String("reward")).toDouble());
+        task->setReward(taskObject.value(QLatin1String("reward")).toString().toDouble());
 
         tasksList.append(QVariant::fromValue(task));
     }
@@ -215,9 +191,10 @@ void DataManager::transactionsDataReply(const QJsonObject &response)
 
         Transaction *transaction = new Transaction(this);
         transaction->setId(projectObject.value(QLatin1String("id")).toInt());
-        transaction->setTitle(projectObject.value(QLatin1String("title")).toString());
-        transaction->setType(projectObject.value(QLatin1String("type")).toString());
-        transaction->setAmount(projectObject.value(QLatin1String("amount")).toBool());
+        transaction->setTitle(projectObject.value(QLatin1String("project_name")).toString());
+        transaction->setAmount(projectObject.value(QLatin1String("amount")).toString().toDouble());
+        QDateTime date = QDateTime::fromString(projectObject.value(QLatin1String("created")).toString(), Qt::ISODate);
+        transaction->setCreationDate(date.toString(QLatin1String("dd.MM.yyyy")));
 
         walletList.append(QVariant::fromValue(transaction));
     }
@@ -231,7 +208,7 @@ void DataManager::workReply(const QJsonObject &response)
 
     QJsonArray workArray = response.value(QLatin1String("results")).toArray();
 
-    int rewardsBalance = 0;
+    double rewardsBalance = 0;
     const int arraySize = workArray.count();
 
     for(int i = 0; i < arraySize; ++i) {
@@ -244,7 +221,7 @@ void DataManager::workReply(const QJsonObject &response)
         work->setStatus(workObject.value(QLatin1String("status")).toString());
         work->setDate(workObject.value(QLatin1String("date")).toString());
         work->setPhotoPath(workObject.value(QLatin1String("photo")).toString());
-        work->setAmount(workObject.value(QLatin1String("task")).toObject().value(QLatin1String("reward")).toInt());
+        work->setAmount(workObject.value(QLatin1String("task")).toObject().value(QLatin1String("reward")).toString().toDouble());
         rewardsBalance += work->amount();
 
         workList.append(QVariant::fromValue(work));

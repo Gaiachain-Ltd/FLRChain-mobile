@@ -20,7 +20,7 @@ Item {
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
     property var workData
-    property int workBalance: 0
+    property double workBalance: 0.0
 
     BusyIndicator {
         id: busyIndicator
@@ -195,11 +195,36 @@ Item {
                 spacing: Style.baseMargin
                 visible: workList.count !== 0
 
-                Label {
+                RowLayout {
+                    spacing: 5
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: Style.bigMargin
                     Layout.topMargin: Style.baseMargin
-                    text: qsTr("Work history")
-                    font.pixelSize: Style.fontUltra
-                    color: Style.darkLabelColor
+                    Label {
+                        text: qsTr("Work history")
+                        font.pixelSize: Style.fontUltra
+                        color: Style.darkLabelColor
+                    }
+
+                    Item{
+                        Layout.fillWidth: true
+                    }
+
+                    Image {
+                        source: "qrc:/img/icon-accepted-total.svg"
+                        asynchronous: true
+                        Layout.preferredWidth: 20
+                        Layout.preferredHeight: 20
+                        fillMode: Image.PreserveAspectFit
+                        sourceSize: Qt.size(width, height)
+                    }
+
+                    Label{
+                        font.pixelSize: Style.fontBig
+                        font.weight: Font.DemiBold
+                        text: workData.length
+                        color: Style.accentColor
+                    }
                 }
 
                 Delegates.BalanceDelegate {

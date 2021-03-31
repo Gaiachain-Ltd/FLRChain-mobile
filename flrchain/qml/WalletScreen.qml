@@ -8,6 +8,51 @@ import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
 Item {
+    property double walletBalance: 0.0
+
+    BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        running: true
+        visible: false
+    }
+
+    Component.onCompleted: {
+        busyIndicator.visible = true
+        session.getWalletBalance()
+        session.getTransactionsData()
+    }
+
+    Connections{
+        target: dataManager
+        function onTransactionsDataReceived(walletList){
+            busyIndicator.visible = false
+
+            walletModel.clear()
+            for (var i = 0; i < walletList.length; ++i) {
+                walletModel.append({amount: walletList[i].amount, creationDate: walletList[i].creationDate,
+                                   projectName: walletList[i].title})
+            }
+        }
+
+        function onWalletBalanceReceived(balance) {
+            walletBalance = balance
+        }
+    }
+
+    ListModel
+    {
+        id: walletModel
+    }
+
+    Connections{
+        target: pageManager
+        function onBackTriggered(){
+            busyIndicator.visible = true
+            session.getWalletBalance()
+            session.getTransactionsData()
+        }
+    }
 
     Custom.Header {
         id: header
@@ -39,6 +84,7 @@ Item {
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true
+        visible: !busyIndicator.visible
 
         ColumnLayout {
             id: mainColumn
@@ -60,7 +106,7 @@ Item {
                 Layout.fillWidth: true
                 buttonVisible: true
                 title: qsTr("Balance")
-                value: 5.124
+                value: walletBalance
                 btn.onClicked: {
                     transactionPopup.open()
                 }
@@ -86,7 +132,7 @@ Item {
                     radius: 10
                     ListView {
                         id: listView
-                        model: exampleModel
+                        model: walletModel
                         interactive: false
 
                         width: parent.width
@@ -94,40 +140,40 @@ Item {
                         spacing: 0
 
                         delegate: Delegates.TransactionDelegate {
+                            separatorVisible: index !== walletModel.count - 1
                         }
-                        //  section.property: date
-                        section.delegate: RowLayout {
+                        section.property: "creationDate"
+                        section.delegate: ColumnLayout {
                             width: parent.width
-                            height: dateLabel.height
 
-                            Label
-                            {
-                                id: dateLabel
-                                font.pixelSize: Style.fontTiny
-                                color: Style.mediumLabelColor
-                                text: section
+                            Item{
+                                Layout.preferredHeight: Style.baseMargin
+                                Layout.fillWidth: true
                             }
 
-                            Rectangle{
+                            RowLayout {
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: 2
-                                color: Style.sectionColor
-                                Layout.alignment: Qt.AlignVCenter
+                                Layout.leftMargin: Style.baseMargin
+                                Layout.rightMargin: Style.baseMargin
+                                Label
+                                {
+                                    id: dateLabel
+                                    font.pixelSize: Style.fontTiny
+                                    color: Style.placeholderColor
+                                    text: section
+                                }
+
+                                Rectangle{
+                                    Layout.fillWidth: true
+                                    Layout.preferredHeight: 1
+                                    color: Style.placeholderColor
+                                    Layout.alignment: Qt.AlignVCenter
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-    }
-    ListModel {
-        id: exampleModel
-
-        ListElement {
-        }
-        ListElement {
-        }
-        ListElement {
         }
     }
 }

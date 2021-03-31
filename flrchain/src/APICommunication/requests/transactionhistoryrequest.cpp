@@ -5,7 +5,7 @@
 #include <QJsonArray>
 #include "transaction.h"
 
-TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token) : ApiRequest("")
+TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token) : ApiRequest("transactions")
 {
     setPriority(Priority::Normal);
     setType(Type::Get);

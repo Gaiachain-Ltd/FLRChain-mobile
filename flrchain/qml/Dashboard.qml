@@ -6,9 +6,24 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Item {
+    property double walletBalance: 0.0
+    property int projectsCount: 0
 
     Component.onCompleted: {
+        session.getWalletBalance()
         session.getProjectsData()
+    }
+
+    Connections{
+        target: dataManager
+
+        function onWalletBalanceReceived(balance) {
+            walletBalance = balance
+        }
+
+        function onProjectsReceived(projects){
+            projectsCount = projects.length
+        }
     }
 
     Custom.Header {
@@ -96,7 +111,7 @@ Item {
                             left: parent.left
                             leftMargin: Style.baseMargin
                         }
-                        text: qsTr("%1 projects").arg(dataManager.projectsCount)
+                        text: qsTr("%1 projects").arg(projectsCount)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
                         font.weight: Font.DemiBold
@@ -166,7 +181,7 @@ Item {
                             left: parent.left
                             leftMargin: Style.baseMargin
                         }
-                        text: qsTr("Balance: %1 USDC").arg(dataManager.walletBalance)
+                        text: qsTr("Balance: %1 USDC").arg(walletBalance)
                         font.pixelSize: Style.fontSmall
                         color: Style.baseLabelColor
                         font.weight: Font.DemiBold
