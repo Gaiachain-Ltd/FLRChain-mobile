@@ -91,8 +91,8 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
             }
             spacing: Style.baseMargin
 
@@ -129,7 +129,7 @@ Item {
                     width: parent.width
                     height: childrenRect.height
                     color: Style.bgColor
-                    radius: 10
+                    radius: Style.rectangleRadius
                     ListView {
                         id: listView
                         model: walletModel
@@ -165,7 +165,7 @@ Item {
 
                                 Rectangle{
                                     Layout.fillWidth: true
-                                    Layout.preferredHeight: 1
+                                    Layout.preferredHeight: Style.borderWidth
                                     color: Style.placeholderColor
                                     Layout.alignment: Qt.AlignVCenter
                                 }

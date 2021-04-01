@@ -10,9 +10,9 @@ Rectangle{
     property bool pending: status === Project.Pending
 
     height: 21
-    width: label.width + Style.smallMargin
+    width: label.width + Style.baseMargin
     color: rejected ? Style.errorColor : joined ? Style.accentColor : Style.yellowLabelColor
-    radius: 4
+    radius: Style.labelRadius
     visible: status !== Project.Undefined
 
     Label{

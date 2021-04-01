@@ -12,11 +12,11 @@ Button {
     property int imgWidth: 24
 
     implicitWidth: parent.width
-    implicitHeight: 42
+    implicitHeight: Style.buttonHeight
 
     background: Rectangle {
         anchors.fill: parent
-        radius: 10
+        radius: Style.baseRadius
         color: bgColor
     }
 

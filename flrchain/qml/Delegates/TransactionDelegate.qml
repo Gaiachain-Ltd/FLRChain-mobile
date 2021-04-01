@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
 Item {
-    height: 63
+    height: Style.walletDelegateHeight
     width: parent.width
     property bool separatorVisible: true
 
@@ -51,7 +51,7 @@ Item {
             leftMargin: Style.baseMargin
             rightMargin: Style.baseMargin
         }
-        height: 1
+        height: Style.borderWidth
         color: Style.sectionColor
     }
 }

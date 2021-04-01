@@ -58,27 +58,27 @@ Item {
                 anchors {
                     left: parent.left
                     right: parent.right
-                    leftMargin: Style.baseMargin
-                    rightMargin: Style.baseMargin
+                    leftMargin: Style.smallMargin
+                    rightMargin: Style.smallMargin
                 }
                 Image {
                     id: logo
                     source: "qrc:/img/logo-login.svg"
-                    Layout.topMargin: 30
-                    Layout.preferredWidth: 120
-                    Layout.preferredHeight: 42
+                    Layout.topMargin: Style.bigMargin
+                    Layout.preferredWidth: Style.logoWidth
+                    Layout.preferredHeight: Style.logoHeight
                     Layout.alignment: Qt.AlignHCenter
-                    sourceSize: Qt.size(120,42)
+                    sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
                 }
 
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.topMargin: Style.bigMargin
-                    Layout.bottomMargin: 16
+                    Layout.bottomMargin: Style.smallMargin
                     Layout.preferredHeight: childrenRect.height
 
                     color: Style.bgColor
-                    radius: 7
+                    radius: Style.baseRadius
                     ColumnLayout{
                         anchors {
                             left: parent.left
@@ -99,13 +99,12 @@ Item {
                             font.pixelSize: Style.fontTiny
                             font.weight: Font.DemiBold
                             color: Style.baseLabelColor
-                            Layout.topMargin: -5
+                            Layout.topMargin: -Style.tinyMargin
                         }
 
                         Rectangle {
                             color: Style.grayBgColor
-                            height: 2
-                            Layout.topMargin: Style.tinyMargin
+                            height: Style.separatorHeight
                             Layout.fillWidth: true
                             Layout.leftMargin: -Style.baseMargin
                             Layout.rightMargin: -Style.baseMargin
@@ -204,9 +203,8 @@ Item {
                             placeholderText: qsTr("Repeat password")
                         }
 
-                        TextArea {
+                        Label {
                             id: errorLabel
-                            readOnly: true
                             font.pixelSize: Style.fontTiny
                             font.weight: Font.DemiBold
                             color: Style.errorColor
@@ -236,7 +234,7 @@ Item {
                         Label {
                             text: qsTr("By creating this account, you agree with our")
                             font.pixelSize: Style.fontTiny
-                            color: "#606060"
+                            color: Style.grayLabelColor
                             Layout.alignment: Qt.AlignHCenter
                         }
 

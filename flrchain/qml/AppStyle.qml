@@ -20,6 +20,7 @@ property color yellowDelegateColor: "#FFFCE2"
 property color yellowLabelColor: "#FFC423"
 property color errorColor: "#FE2121"
 property color sectionColor: "#EDEEF2"
+property color grayLabelColor: "#606060"
 
 //font
 property int fontMicro: 10
@@ -29,13 +30,43 @@ property int fontMedium: 15
 property int fontBig: 17
 property int fontLarge: 20
 property int fontUltra: 22
+property int fontMax: 29
 
 //margins
+property int microMargin: 5
 property int tinyMargin: 10
-property int smallMargin: 15
+property int smallMargin: 16
 property int baseMargin: 20
 property int bigMargin: 30
+property int ultraMargin: 40
 
-//icon
+//icons
 property int iconSize: 18
+property int iconBig: 26
+
+//buttons
+property int buttonHeight: 42
+property int iconButtonHeight: 40
+property int menuButtonHeight: 58
+property int checkboxHeight: 16
+
+//inputs
+property int textInputHeight: 36
+property int bigInputHeight: 56
+
+//delegates
+property int dashboardDelegateHeight: 223
+property int walletDelegateHeight: 63
+
+//radius
+property int baseRadius: 7
+property int rectangleRadius: 10
+property int labelRadius: 4
+
+//images
+property int logoWidth: 120
+property int logoHeight: 42
+
+property int borderWidth: 1
+property int separatorHeight: 2
 }

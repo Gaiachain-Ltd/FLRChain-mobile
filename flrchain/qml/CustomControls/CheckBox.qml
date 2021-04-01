@@ -7,11 +7,11 @@ CheckBox {
 
     indicator: Rectangle {
         id: contentRec
-        implicitWidth: 16
-        implicitHeight: 16
+        implicitWidth: Style.checkboxHeight
+        implicitHeight: Style.checkboxHeight
         radius: 3
         border.color: Style.accentColor
-        border.width: 1
+        border.width: Style.borderWidth
 
         Rectangle {
             visible: checkBox.checked
@@ -22,10 +22,10 @@ CheckBox {
 
             Image{
                 source: "qrc:/img/checkbox-check.svg"
-                height: 16
-                width: 16
+                height: Style.checkboxHeight
+                width: Style.checkboxHeight
                 anchors.centerIn: parent
-                sourceSize: Qt.size(16,16)
+                sourceSize: Qt.size(Style.checkboxHeight, Style.checkboxHeight)
             }
         }
     }
@@ -37,7 +37,8 @@ CheckBox {
         verticalAlignment: Qt.AlignVCenter
         leftPadding: contentRec.width + spacing
         font.pixelSize: Style.fontTiny
+        font.weight: Font.DemiBold
     }
 
-    spacing: 5
+    spacing: Style.microMargin
 }

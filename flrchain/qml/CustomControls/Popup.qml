@@ -18,7 +18,7 @@ Popup {
 
     background: Rectangle {
         color: Style.bgColor
-        radius: 10
+        radius: Style.rectangleRadius
     }
 
     contentItem: ColumnLayout {

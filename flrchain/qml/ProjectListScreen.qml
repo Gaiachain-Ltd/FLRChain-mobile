@@ -66,8 +66,8 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
             }
             height: listView.contentHeight + 80
 

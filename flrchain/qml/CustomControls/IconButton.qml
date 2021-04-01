@@ -11,8 +11,8 @@ Button
     property int iconSize: 15
     property int iconContainerSize: iconSize
 
-    width: 15
-    height: 15
+    implicitWidth: Style.iconButtonHeight
+    implicitHeight: Style.iconButtonHeight
 
     background: Rectangle
     {

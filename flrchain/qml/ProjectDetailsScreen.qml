@@ -126,13 +126,14 @@ Item {
         }
         contentHeight: mainColumn.height
         visible: !busyIndicator.visible
+
         ColumnLayout {
             id: mainColumn
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
             }
             spacing: Style.baseMargin
 
@@ -196,7 +197,7 @@ Item {
                 visible: workList.count !== 0
 
                 RowLayout {
-                    spacing: 5
+                    spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.bigMargin
                     Layout.topMargin: Style.baseMargin
@@ -244,7 +245,7 @@ Item {
                         width: parent.width
                         height: childrenRect.height
                         color: Style.bgColor
-                        radius: 10
+                        radius: Style.rectangleRadius
 
                         ColumnLayout {
                             anchors {
@@ -265,7 +266,7 @@ Item {
 
                             Rectangle {
                                 color: Style.sectionColor
-                                Layout.preferredHeight: 1
+                                Layout.preferredHeight: Style.borderWidth
                                 Layout.fillWidth: true
                                 Layout.leftMargin: -Style.baseMargin
                                 Layout.rightMargin: -Style.baseMargin

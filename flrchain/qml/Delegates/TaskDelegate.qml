@@ -21,7 +21,7 @@ Item {
             width: parent.width
             height: childrenRect.height
             color: Style.bgColor
-            radius: 10
+            radius: Style.rectangleRadius
 
             ColumnLayout {
                 anchors {
@@ -30,7 +30,7 @@ Item {
                     leftMargin: Style.baseMargin
                     rightMargin: Style.baseMargin
                 }
-                spacing: 8
+                spacing: Style.tinyMargin
 
                 Label{
                     Layout.topMargin: Style.baseMargin

@@ -22,7 +22,7 @@ Item {
             width: parent.width
             height: childrenRect.height
             color: Style.bgColor
-            radius: 10
+            radius: Style.rectangleRadius
 
             ColumnLayout {
                 anchors {
@@ -43,7 +43,7 @@ Item {
 
                 Rectangle {
                     color: Style.sectionColor
-                    Layout.preferredHeight: 1
+                    Layout.preferredHeight: Style.borderWidth
                     Layout.fillWidth: true
                     Layout.leftMargin: -Style.baseMargin
                     Layout.rightMargin: -Style.baseMargin
@@ -51,7 +51,7 @@ Item {
 
                 Label {
                     id: valueLabel
-                    font.pixelSize: 29
+                    font.pixelSize: Style.fontMax
                     font.weight: Font.DemiBold
                     text: value + " USDC"
                     color: Style.mediumLabelColor

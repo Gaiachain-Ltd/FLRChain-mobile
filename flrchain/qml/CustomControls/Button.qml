@@ -7,12 +7,12 @@ Button {
 
     property string bgColor: Style.accentColor
 
-    implicitHeight: 42
+    implicitHeight: Style.buttonHeight
     implicitWidth: parent.width
 
     background: Rectangle {
         anchors.fill: parent
-        radius: 10
+        radius: Style.baseRadius
         color: bgColor
     }
 

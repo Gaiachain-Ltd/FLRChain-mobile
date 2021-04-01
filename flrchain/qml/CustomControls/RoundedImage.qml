@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtGraphicalEffects 1.15
+import com.flrchain.style 1.0
 
 Image {
     id: img
@@ -13,7 +14,7 @@ Image {
                 anchors.centerIn: parent
                 width: img.width
                 height: img.height
-                radius: 10
+                radius: Style.rectangleRadius
             }
         }
     }

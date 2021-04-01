@@ -10,10 +10,11 @@
 #include <QJsonArray>
 
 
-DataManager::DataManager(QObject *parent) : QObject(parent)
+DataManager::DataManager(QObject *parent) :
+    QObject(parent),
+    m_workerThread(new QThread()),
+    m_fileManager(new FileManager())
 {
-    m_fileManager = new FileManager;
-    m_workerThread = new QThread();
     m_fileManager->moveToThread(m_workerThread);
     m_workerThread->start();
 

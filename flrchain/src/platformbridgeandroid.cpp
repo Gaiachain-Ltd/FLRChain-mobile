@@ -18,7 +18,7 @@ void PlatformBridgePrivate::init()
     sptr_q_ptr = q_ptr;
 }
 
-void PlatformBridgePrivate::deinit()
+void PlatformBridgePrivate::uninit()
 {
     sptr_q_ptr = Q_NULLPTR;
 }

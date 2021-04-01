@@ -81,13 +81,14 @@ Item {
             right: parent.right
             bottom: parent.bottom
         }
+
         ColumnLayout {
             anchors {
                 fill: parent
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
                 topMargin: Style.baseMargin
-                bottomMargin: 16
+                bottomMargin: Style.smallMargin
             }
             Label {
                 text: projectName
@@ -109,7 +110,7 @@ Item {
                 Rectangle{
                     anchors.fill: parent
                     color: Style.bgColor
-                    radius: 10
+                    radius: Style.rectangleRadius
 
                     ColumnLayout{
                         anchors {
@@ -160,10 +161,8 @@ Item {
                                 anchors {
                                     right: parent.right
                                     top: parent.top
-                                    margins: 5
+                                    margins: Style.microMargin
                                 }
-                                width: 40
-                                height: 40
                                 iconSize: 30
                                 iconSrc: "qrc:/img/icon-delete.svg"
                                 visible: !busyIndicator.visible

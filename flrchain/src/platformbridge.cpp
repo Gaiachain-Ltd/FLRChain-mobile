@@ -47,6 +47,6 @@ void PlatformBridge::checkConnection() const
 
 void PlatformBridge::cleanup()
 {
-    d_ptr->deinit();
+    d_ptr->uninit();
     dealloc();
 }

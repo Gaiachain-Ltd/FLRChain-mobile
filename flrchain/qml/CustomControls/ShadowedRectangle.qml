@@ -3,7 +3,7 @@ import QtGraphicalEffects 1.15
 import com.flrchain.style 1.0
 
 Rectangle {
-    radius: 10
+    radius: Style.rectangleRadius
     color: Style.colorTransparent
 
     RectangularGlow {
@@ -11,6 +11,6 @@ Rectangle {
         glowRadius: 16
         color: "#000000"
         opacity: 0.1
-        cornerRadius: 10
+        cornerRadius: Style.rectangleRadius
     }
 }

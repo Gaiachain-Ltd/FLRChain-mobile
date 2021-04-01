@@ -29,7 +29,7 @@ Item {
             width: parent.width
             height: childrenRect.height
             color: Style.bgColor
-            radius: 10
+            radius: Style.rectangleRadius
 
             Custom.StatusLabel{
                 status: assignmentStatus
@@ -59,7 +59,7 @@ Item {
                 }
 
                 RowLayout {
-                    spacing: 5
+                    spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.iconSize
                     Image {
@@ -87,7 +87,7 @@ Item {
                 }
 
                 RowLayout {
-                    spacing: 5
+                    spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.iconSize
                     Image {
@@ -116,7 +116,7 @@ Item {
                 }
 
                 RowLayout {
-                    spacing: 5
+                    spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.iconSize
                     Image {

@@ -26,7 +26,7 @@ Item {
             width: parent.width
             height: childrenRect.height
             color: Style.bgColor
-            radius: 10
+            radius: Style.rectangleRadius
 
             ColumnLayout {
                 anchors {
@@ -39,7 +39,7 @@ Item {
 
                 Item{
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 10
+                    Layout.preferredHeight: Style.tinyMargin
                 }
 
                 Custom.StatusLabel{
@@ -54,7 +54,7 @@ Item {
                 }
 
                 RowLayout {
-                    spacing: 5
+                    spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.iconSize
 
@@ -77,7 +77,7 @@ Item {
                     Image {
                         Layout.preferredWidth: Style.iconSize
                         Layout.preferredHeight: Style.iconSize
-                        Layout.leftMargin: 5
+                        Layout.leftMargin: Style.microMargin
                         source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
                         asynchronous: true
 

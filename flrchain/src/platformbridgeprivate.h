@@ -18,7 +18,7 @@ class PlatformBridgePrivate : public QObject, public QAbstractNativeEventFilter
     PlatformBridgePrivate(PlatformBridge *parent = Q_NULLPTR);
 
     void init();
-    void deinit();
+    void uninit();
 
     void capture();
     void selectFile();

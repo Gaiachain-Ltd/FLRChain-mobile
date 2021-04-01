@@ -26,7 +26,6 @@ HEADERS += \
     src/pages.h \
     src/session.h \
     src/settings.h \
-    src/user.h \
     src/userptr.h \
     src/APICommunication/restapiclient.h \
     src/APICommunication/apirequest.h \
@@ -47,6 +46,7 @@ HEADERS += \
     src/Models/transaction.h \
     src/Models/task.h \
     src/Models/project.h \
+    src/Models/user.h \
     src/Models/work.h
 
 SOURCES += src/main.cpp  \
@@ -55,7 +55,6 @@ SOURCES += src/main.cpp  \
     src/pagemanager.cpp \
     src/session.cpp \
     src/settings.cpp \
-    src/user.cpp \
     src/APICommunication/restapiclient.cpp \
     src/APICommunication/apirequest.cpp \
     src/APICommunication/requests/loginrequest.cpp \
@@ -75,6 +74,7 @@ SOURCES += src/main.cpp  \
     src/Models/transaction.cpp \
     src/Models/task.cpp \
     src/Models/project.cpp \
+    src/Models/user.cpp \
     src/Models/work.cpp
 
 RESOURCES +=  \

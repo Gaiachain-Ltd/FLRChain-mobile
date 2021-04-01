@@ -10,13 +10,13 @@ Drawer {
     width: parent.width
     edge: Qt.TopEdge
     interactive: false
-    property real buttonHeight: 58
+    property real buttonHeight: Style.menuButtonHeight
 
     background: Rectangle{
         width: parent.width
         height: contentItem.height
         color: Style.bgColor
-        radius: 10
+        radius: Style.rectangleRadius
 
         Rectangle {
             color: Style.bgColor
@@ -29,7 +29,7 @@ Drawer {
     contentItem: Rectangle {
         width: parent.width
         height: column.height
-        radius: 10
+        radius: Style.rectangleRadius
 
         ColumnLayout {
             id: column
@@ -45,7 +45,7 @@ Drawer {
                 Layout.topMargin: Style.baseMargin
 
                 Column{
-                    spacing: 5
+                    spacing: Style.microMargin
                     Label {
                         id:username
                         text: session.user.firstName + " " + session.user.lastName
@@ -65,12 +65,10 @@ Drawer {
 
                 Item{
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 26
+                    Layout.preferredHeight: Style.iconBig
                 }
 
                 Custom.IconButton {
-                    Layout.preferredWidth: 50
-                    Layout.preferredHeight: 50
                     Layout.topMargin: -Style.smallMargin
                     Layout.rightMargin: -Style.smallMargin
                     iconSize: 21
@@ -81,7 +79,7 @@ Drawer {
 
             Rectangle {
                 color: Style.sectionColor
-                Layout.preferredHeight: 2
+                Layout.preferredHeight: Style.separatorHeight
                 Layout.fillWidth: true
                 Layout.leftMargin: -Style.baseMargin
                 Layout.rightMargin: -Style.baseMargin
@@ -105,7 +103,7 @@ Drawer {
 
             Rectangle {
                 color: Style.sectionColor
-                Layout.preferredHeight: 1
+                Layout.preferredHeight: Style.borderWidth
                 Layout.fillWidth: true
             }
 
@@ -126,7 +124,7 @@ Drawer {
 
             Rectangle {
                 color: Style.sectionColor
-                Layout.preferredHeight: 1
+                Layout.preferredHeight: Style.borderWidth
                 Layout.fillWidth: true
             }
 
@@ -147,7 +145,7 @@ Drawer {
 
             Rectangle {
                 color: Style.sectionColor
-                Layout.preferredHeight: 1
+                Layout.preferredHeight: Style.borderWidth
                 Layout.fillWidth: true
             }
 

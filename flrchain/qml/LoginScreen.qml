@@ -29,25 +29,25 @@ Item {
         ColumnLayout {
             anchors {
                 fill: parent
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
                 topMargin: Style.baseMargin
-                bottomMargin: 16
+                bottomMargin: Style.smallMargin
             }
             Item{
                 Layout.fillHeight: true
-                Layout.preferredHeight: 40
-                Layout.maximumHeight: 40
+                Layout.preferredHeight: Style.ultraMargin
+                Layout.maximumHeight: Style.ultraMargin
                 Layout.fillWidth: true
             }
 
             Image {
                 id: logo
                 source: "qrc:/img/logo-login.svg"
-                Layout.preferredWidth: 120
-                Layout.preferredHeight: 42
+                Layout.preferredWidth: Style.logoWidth
+                Layout.preferredHeight: Style.logoHeight
                 Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(120,42)
+                sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
             }
 
             Image {
@@ -65,7 +65,7 @@ Item {
                 Layout.preferredHeight: childrenRect.height
 
                 color: Style.bgColor
-                radius: 7
+                radius: Style.baseRadius
 
                 ColumnLayout{
                     anchors {
@@ -84,7 +84,7 @@ Item {
 
                     Label {
                         Layout.topMargin: -Style.tinyMargin
-                        text: qsTr("Welcome back")
+                        text: qsTr("Welcome Back!")
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
                         color: Style.baseLabelColor
@@ -95,7 +95,7 @@ Item {
                         Layout.leftMargin: -Style.baseMargin
                         Layout.rightMargin: -Style.baseMargin
                         color: Style.grayBgColor
-                        height: 2
+                        height: Style.separatorHeight
                     }
 
                     Label {
@@ -150,6 +150,7 @@ Item {
                         Layout.topMargin: -Style.smallMargin
                         Layout.fillWidth: true
                         font.pixelSize: Style.fontTiny
+                        font.weight: Font.DemiBold
                         color: Style.errorColor
                     }
 
@@ -165,7 +166,7 @@ Item {
 
                     Custom.Button {
                         id: registerButton
-                        text: qsTr("Need an account?")
+                        text: qsTr("Register")
                         bgColor: Style.buttonSecColor
 
                         onClicked: {

@@ -51,14 +51,14 @@ Item {
                 fill: parent
                 topMargin: Style.bigMargin
                 bottomMargin: 170
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
             }
-            spacing: 40
+            spacing: Style.ultraMargin
 
             Custom.ShadowedRectangle {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 223
+                Layout.preferredHeight: Style.dashboardDelegateHeight
                 Layout.fillWidth: true
 
                 MouseArea{
@@ -70,7 +70,7 @@ Item {
 
                 Rectangle{
                     anchors.fill: parent
-                    radius: 10
+                    radius: Style.rectangleRadius
                     color: Style.bgColor
 
                     RowLayout{
@@ -91,13 +91,11 @@ Item {
 
                         Item{
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 26
+                            Layout.preferredHeight: Style.iconBig
                         }
 
                         Custom.IconButton {
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 40
-                            iconSize: 26
+                            iconSize: Style.iconBig
                             iconSrc: "qrc:/img/dashboard-arrow-green.svg"
                             onClicked: {
                                 pageManager.enterProjectListScreen()
@@ -129,7 +127,7 @@ Item {
 
             Custom.ShadowedRectangle {
                 Layout.alignment: Qt.AlignHCenter
-                Layout.preferredHeight: 223
+                Layout.preferredHeight: Style.dashboardDelegateHeight
                 Layout.fillWidth: true
 
                 MouseArea{
@@ -141,7 +139,7 @@ Item {
 
                 Rectangle{
                     anchors.fill: parent
-                    radius: 10
+                    radius: Style.rectangleRadius
                     color: Style.yellowDelegateColor
 
                     RowLayout{
@@ -161,13 +159,11 @@ Item {
 
                         Item{
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 26
+                            Layout.preferredHeight: Style.iconBig
                         }
 
                         Custom.IconButton {
-                            Layout.preferredWidth: 40
-                            Layout.preferredHeight: 40
-                            iconSize: 26
+                            iconSize: Style.iconBig
                             iconSrc: "qrc:/img/dashboard-arrow-yellow.svg"
                             onClicked:{
                                 pageManager.enterWalletScreen()

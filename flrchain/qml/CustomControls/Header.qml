@@ -21,7 +21,7 @@ ColumnLayout{
                 verticalCenter: parent.verticalCenter
                 left: parent.left
                 right: parent.right
-                rightMargin: 5
+                rightMargin: Style.microMargin
             }
 
             IconButton {
@@ -33,8 +33,8 @@ ColumnLayout{
                 iconSrc: "qrc:/img/icon-back.svg"
                 visible: backButtonVisible
                 onClicked: pageManager.back()
-                width: 50
                 height: headerContainer.height
+                width: height
                 iconSize: Style.iconSize
             }
 
@@ -58,15 +58,15 @@ ColumnLayout{
                     menu.open()
                     session.getUserInfo()
                 }
-                width: 50
                 height: headerContainer.height
-                iconSize: 26
+                width: height
+                iconSize: Style.iconBig
             }
         }
 
         Rectangle{
             anchors.bottom: headerContainer.bottom
-            height: 2
+            height: Style.separatorHeight
             width: parent.width
             color: Style.grayBgColor
         }
@@ -75,7 +75,7 @@ ColumnLayout{
     Label {
         text: qsTr("No Internet Connection")
         Layout.alignment: Qt.AlignHCenter
-        Layout.bottomMargin: 5
+        Layout.bottomMargin: Style.microMargin
         color: Style.errorColor
         visible: !session.internetConnection
     }

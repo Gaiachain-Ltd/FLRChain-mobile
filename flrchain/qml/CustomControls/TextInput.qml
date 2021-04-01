@@ -6,12 +6,12 @@ TextField
 {
     id: textInput
     implicitWidth: parent.width
-    implicitHeight: 36
+    implicitHeight: Style.textInputHeight
 
     background: Rectangle {
-        radius: 10
+        radius: Style.baseRadius
         implicitWidth: parent.width
-        implicitHeight: 100
+        implicitHeight: parent.height
         color: Style.inputBgColor
     }
 

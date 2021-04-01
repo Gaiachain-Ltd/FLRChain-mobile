@@ -15,7 +15,7 @@ Column {
         color: "transparent"
         height: 191
         width: parent.width
-        radius: 10
+        radius: Style.rectangleRadius
 
         Custom.RoundedImage {
             id: img
@@ -33,11 +33,11 @@ Column {
             height: 20
             width: row.width + Style.baseMargin
             color: Style.accentColor
-            radius: 4
+            radius: Style.labelRadius
 
             RowLayout{
                 id: row
-                spacing: 5
+                spacing: Style.microMargin
                 anchors {
                     verticalCenter: parent.verticalCenter
                     horizontalCenter: parent.horizontalCenter
@@ -66,10 +66,10 @@ Column {
                 bottom: parent.bottom
                 right: parent.right
             }
-            height: 40
+            height: Style.iconButtonHeight
             width: rewardLabel.width + Style.baseMargin
             color: Style.accentColor
-            radius: 4
+            radius: Style.labelRadius
 
             Label{
                 id: rewardLabel
@@ -83,7 +83,7 @@ Column {
     }
 
     RowLayout {
-        spacing: 5
+        spacing: Style.microMargin
         Layout.fillWidth: true
         Layout.preferredHeight: Style.iconSize
         Image {
@@ -104,7 +104,7 @@ Column {
     }
 
     Rectangle{
-        height: 1
+        height: Style.borderWidth
         width: parent.width
         color: Style.sectionColor
         visible: separatorVisible
