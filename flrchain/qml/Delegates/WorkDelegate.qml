@@ -12,7 +12,7 @@ Column {
 
     Rectangle {
         color: "transparent"
-        height: 191
+        height: Style.workImgHeight
         width: parent.width
         radius: Style.rectangleRadius
 
@@ -29,7 +29,7 @@ Column {
                 left: parent.left
                 leftMargin: Style.baseMargin
             }
-            height: 20
+            height: Style.statusLabelHeight
             width: row.width + Style.baseMargin
             color: Style.accentColor
             radius: Style.labelRadius

@@ -9,7 +9,7 @@ CheckBox {
         id: contentRec
         implicitWidth: Style.checkboxHeight
         implicitHeight: Style.checkboxHeight
-        radius: 3
+        radius: Style.checkBoxRadius
         border.color: Style.accentColor
         border.width: Style.borderWidth
 
@@ -17,7 +17,7 @@ CheckBox {
             visible: checkBox.checked
             color: Style.accentColor
             border.color: Style.accentColor
-            radius: 3
+            radius: Style.checkBoxRadius
             anchors.fill: parent
 
             Image{

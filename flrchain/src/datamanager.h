@@ -44,9 +44,11 @@ signals:
     void joinRequestSent(const int projectId) const;
     void projectDetailsReceived(Project *project);
     void projectsReceived(const  QList<Project*> &projects);
-    void workReceived(const QList<Work*> &work, double rewardsBalance);
+    void noProjectsData();
+    void workReceived(const QList<Work*> &work, const double rewardsBalance);
     void processingPhoto();
     void transactionsDataReceived(const QList<Transaction*> &transactions);
+    void noTransactionsData();
     void photoDownloaded(const QString &path, const int workId) const;
     void fileDownloadError(const int workId) const;
     void workAdded(const QString &taskName, const QString &projectName) const;

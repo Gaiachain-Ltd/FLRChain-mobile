@@ -8,7 +8,7 @@ Button
 
     property int radius: 0
     property string iconSrc: ""
-    property int iconSize: 15
+    property int iconSize: Style.iconSize
     property int iconContainerSize: iconSize
 
     implicitWidth: Style.iconButtonHeight

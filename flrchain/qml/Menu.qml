@@ -71,7 +71,7 @@ Drawer {
                 Custom.IconButton {
                     Layout.topMargin: -Style.smallMargin
                     Layout.rightMargin: -Style.smallMargin
-                    iconSize: 21
+                    iconSize: Style.iconMedium
                     iconSrc: "qrc:/img/icon-close-menu.svg"
                     onClicked: drawer.close()
                 }

@@ -34,8 +34,7 @@ public:
     enum InvestmentStatus {
         InvestmentUnknown = -1,
         InvestmentFinished = 0,
-        InvestmentOngoing = 1,
-        InvestmentSuspended = 2
+        InvestmentOngoing = 1
     }; // enum InvestmentStatus
 
     Q_ENUM(InvestmentStatus)

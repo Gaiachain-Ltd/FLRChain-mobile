@@ -3,7 +3,6 @@ import QtQuick.Controls 2.15
 import com.flrchain.style 1.0
 import QtQuick.Layouts 1.15
 
-
 ColumnLayout{
 
     property bool backButtonVisible: true
@@ -11,11 +10,11 @@ ColumnLayout{
 
     Rectangle{
         id: headerContainer
-        height: 60
+        height: Style.headerHeight
         width: parent.width
 
         Rectangle {
-            height: 20
+            height: parent.height
             width: parent.width
             anchors {
                 verticalCenter: parent.verticalCenter
@@ -28,6 +27,7 @@ ColumnLayout{
                 id: backButton
                 anchors {
                     left: parent.left
+                    leftMargin: -Style.tinyMargin
                     verticalCenter: parent.verticalCenter
                 }
                 iconSrc: "qrc:/img/icon-back.svg"
@@ -35,7 +35,6 @@ ColumnLayout{
                 onClicked: pageManager.back()
                 height: headerContainer.height
                 width: height
-                iconSize: Style.iconSize
             }
 
             Label {
@@ -51,6 +50,7 @@ ColumnLayout{
                 id: menuButton
                 anchors {
                     right: parent.right
+                    rightMargin: -Style.microMargin
                     verticalCenter: parent.verticalCenter
                 }
                 iconSrc: "qrc:/img/icon-menu.svg"

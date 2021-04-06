@@ -24,10 +24,10 @@
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
-Session::Session(QObject *parent) : QObject(parent)
+Session::Session(QObject *parent) :
+    QObject(parent),
+    mCurrentUser(UserPtr::create())
 {
-    mCurrentUser = UserPtr::create();
-
     connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
             this, &Session::setInternetConnection);
 

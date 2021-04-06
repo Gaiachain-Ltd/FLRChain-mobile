@@ -131,7 +131,7 @@ Item {
                     Label {
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Suspended")
+                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
                         color: Style.mediumLabelColor
                     }
                 }
@@ -163,7 +163,7 @@ Item {
                 Image {
                     source: ""
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 139
+                    Layout.preferredHeight: Style.projectImgHeight
                 }
 
                 Custom.Button{

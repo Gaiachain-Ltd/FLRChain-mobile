@@ -26,6 +26,15 @@ Item {
         }
     }
 
+    Connections{
+        target: pageManager
+
+        function onBackTriggered(){
+            session.getWalletBalance()
+            session.getProjectsData()
+        }
+    }
+
     Custom.Header {
         id: header
         anchors {

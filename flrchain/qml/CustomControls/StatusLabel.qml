@@ -9,7 +9,7 @@ Rectangle{
     property bool rejected: status === Project.Rejected
     property bool pending: status === Project.Pending
 
-    height: 21
+    height: Style.statusLabelHeight
     width: label.width + Style.baseMargin
     color: rejected ? Style.errorColor : joined ? Style.accentColor : Style.yellowLabelColor
     radius: Style.labelRadius

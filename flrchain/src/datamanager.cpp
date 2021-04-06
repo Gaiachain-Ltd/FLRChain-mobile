@@ -112,6 +112,7 @@ void DataManager::projectsDataReply(const QJsonObject &response)
     const int arraySize = projectsArray.count();
     if(arraySize == 0) {
         qDebug("No resources available");
+        emit noProjectsData();
         return;
     }
 
@@ -204,6 +205,7 @@ void DataManager::transactionsDataReply(const QJsonObject &response)
     const int arraySize = walletArray.count();
     if(arraySize == 0) {
         qDebug("No resources available");
+        emit noTransactionsData();
         return;
     }
 
@@ -219,7 +221,6 @@ void DataManager::transactionsDataReply(const QJsonObject &response)
 
         m_transactions.append(transaction);
     }
-
     emit transactionsDataReceived(m_transactions);
 }
 
@@ -229,7 +230,7 @@ void DataManager::workReply(const QJsonObject &response)
 
     QJsonArray workArray = response.value(QLatin1String("results")).toArray();
 
-    double rewardsBalance = 0;
+    double rewardsBalance = 0.0;
     const int arraySize = workArray.count();
 
     for(int i = 0; i < arraySize; ++i) {

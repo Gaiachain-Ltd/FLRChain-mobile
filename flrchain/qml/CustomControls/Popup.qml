@@ -8,7 +8,7 @@ Popup {
 
     anchors.centerIn: parent
     bottomMargin: 0
-    implicitWidth: parent.width - 32
+    implicitWidth: parent.width - (2 * Style.smallMargin)
     modal: true
     dim: true
     focus: true
@@ -29,10 +29,10 @@ Popup {
         Image {
             source: iconSrc
             Layout.topMargin: Style.bigMargin
-            Layout.preferredWidth: 72
-            Layout.preferredHeight: 72
+            Layout.preferredWidth: Style.popupImgHeight
+            Layout.preferredHeight: Style.popupImgHeight
             Layout.alignment: Qt.AlignHCenter
-            sourceSize: Qt.size(72,72)
+            sourceSize: Qt.size(Style.popupImgHeight, Style.popupImgHeight)
         }
 
         Label {

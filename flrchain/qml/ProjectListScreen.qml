@@ -28,6 +28,10 @@ Item {
 
             busyIndicator.visible = false
         }
+
+        function onNoProjectsData() {
+            busyIndicator.visible = false
+        }
     }
 
     ListModel

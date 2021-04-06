@@ -86,7 +86,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Suspended")
+                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
                         color: investmentOngoing ? Style.accentColor : investmentFinished ? Style.errorColor : Style.yellowLabelColor
                     }
 

@@ -154,7 +154,7 @@ Item {
                             id: img
                             visible: photoVisible
                             Layout.fillWidth: true
-                            Layout.preferredHeight: 200
+                            Layout.preferredHeight: Style.workImgHeight
 
                             Custom.IconButton {
                                 id: closeButton
@@ -163,7 +163,7 @@ Item {
                                     top: parent.top
                                     margins: Style.microMargin
                                 }
-                                iconSize: 30
+                                iconSize: Style.iconUltra
                                 iconSrc: "qrc:/img/icon-delete.svg"
                                 visible: !busyIndicator.visible
                                 onClicked: {
@@ -187,7 +187,7 @@ Item {
 
                         Custom.Button{
                             Layout.alignment: Qt.AlignHCenter
-                            enabled: photoVisible
+                            enabled: photoVisible && !busyIndicator.visible
                             opacity: enabled ? 1 : 0.5
 
                             text: qsTr("Upload")

@@ -231,8 +231,8 @@ Item {
                     Image {
                         source: "qrc:/img/icon-accepted-total.svg"
                         asynchronous: true
-                        Layout.preferredWidth: 20
-                        Layout.preferredHeight: 20
+                        Layout.preferredWidth: Style.iconMedium
+                        Layout.preferredHeight: Style.iconMedium
                         fillMode: Image.PreserveAspectFit
                         sourceSize: Qt.size(width, height)
                     }
@@ -265,6 +265,7 @@ Item {
                         radius: Style.rectangleRadius
 
                         ColumnLayout {
+                            id: workContainer
                             anchors {
                                 left: parent.left
                                 right: parent.right
@@ -299,7 +300,7 @@ Item {
                                 spacing: Style.baseMargin
 
                                 delegate: Delegates.WorkDelegate {
-                                    width: parent.width
+                                    width: workContainer.width
                                     separatorVisible: index !== workList.count - 1
                                 }
                             }

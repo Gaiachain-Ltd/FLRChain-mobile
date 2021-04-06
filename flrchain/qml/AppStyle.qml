@@ -42,7 +42,9 @@ property int ultraMargin: 40
 
 //icons
 property int iconSize: 18
+property int iconMedium: 21
 property int iconBig: 26
+property int iconUltra: 32
 
 //buttons
 property int buttonHeight: 42
@@ -57,15 +59,21 @@ property int bigInputHeight: 56
 //delegates
 property int dashboardDelegateHeight: 223
 property int walletDelegateHeight: 63
+property int headerHeight: 60
+property int statusLabelHeight: 21
 
 //radius
 property int baseRadius: 7
 property int rectangleRadius: 10
 property int labelRadius: 4
+property int checkBoxRadius: 3
 
 //images
 property int logoWidth: 120
 property int logoHeight: 42
+property int popupImgHeight: 72
+property int projectImgHeight: 139
+property int workImgHeight: 191
 
 property int borderWidth: 1
 property int separatorHeight: 2

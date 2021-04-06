@@ -8,8 +8,8 @@ Button {
     property string bgColor: Style.accentColor
     property string iconSrc: ""
     property string textColor: Style.darkLabelColor
-    property int imgHeight: 24
-    property int imgWidth: 24
+    property int imgHeight: Style.iconMedium
+    property int imgWidth: Style.iconMedium
 
     implicitWidth: parent.width
     implicitHeight: Style.buttonHeight

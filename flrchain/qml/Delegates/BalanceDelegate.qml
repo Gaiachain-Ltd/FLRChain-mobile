@@ -53,7 +53,7 @@ Item {
                     id: valueLabel
                     font.pixelSize: Style.fontMax
                     font.weight: Font.DemiBold
-                    text: value + " USDC"
+                    text: qsTr("%1 USDC").arg(value)
                     color: Style.mediumLabelColor
                 }
 

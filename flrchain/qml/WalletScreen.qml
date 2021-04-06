@@ -38,6 +38,10 @@ Item {
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
         }
+
+        function onNoTransactionsData() {
+            busyIndicator.visible = false
+        }
     }
 
     ListModel
@@ -123,6 +127,7 @@ Item {
                 Layout.preferredHeight: childrenRect.height
                 Layout.bottomMargin: Style.baseMargin
                 Layout.topMargin: Style.tinyMargin
+                visible: walletModel.count > 0
 
                 Rectangle{
                     id: contentRect
