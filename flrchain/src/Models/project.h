@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QVariantList>
 #include <QVariant>
+#include "task.h"
 
 class Project : public QObject
 {
@@ -15,7 +16,7 @@ class Project : public QObject
     Q_PROPERTY(QString investmentStart READ investmentStart WRITE setInvestmentStart NOTIFY investmentStartChanged)
     Q_PROPERTY(QString investmentEnd READ investmentEnd WRITE setInvestmentEnd NOTIFY investmentEndChanged)
     Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged)
-    Q_PROPERTY(QVariantList tasks READ tasks WRITE setTasks NOTIFY tasksChanged)
+    Q_PROPERTY(QList<Task *> tasks READ tasks WRITE setTasks NOTIFY tasksChanged)
     Q_PROPERTY(int assignmentStatus READ assignmentStatus WRITE setAssignmentStatus NOTIFY assignmentStatusChanged)
 
 public:
@@ -47,7 +48,7 @@ public:
     QString investmentStart() const;
     QString investmentEnd() const;
     QString photo() const;
-    QVariantList tasks() const;
+    QList<Task *> tasks() const;
     int assignmentStatus() const;
 
 public slots:
@@ -59,7 +60,7 @@ public slots:
     void setInvestmentStart(const QString &investmentStart);
     void setInvestmentEnd(const QString &investmentEnd);
     void setPhoto(const QString &photo);
-    void setTasks(const QVariantList &tasks);
+    void setTasks(const QList<Task *> &tasks);
     void setAssignmentStatus(const int status);
 
 signals:
@@ -71,7 +72,7 @@ signals:
     void investmentStartChanged(QString investmentStart);
     void investmentEndChanged(QString investmentEnd);
     void photoChanged(QString photo);
-    void tasksChanged(QVariantList tasks);
+    void tasksChanged(QList<Task *> tasks);
     void assignmentStatusChanged(int status);
 
 private:
@@ -83,7 +84,7 @@ private:
     QString m_investmentStart;
     QString m_investmentEnd;
     QString m_photo;
-    QVariantList m_tasks;
+    QList<Task *> m_tasks;
     int m_assignmentStatus;
 };
 

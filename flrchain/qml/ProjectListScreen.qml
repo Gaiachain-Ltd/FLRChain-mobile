@@ -8,7 +8,6 @@ import "qrc:/Delegates" as Delegates
 
 Item {
     id: projectsScreen
-    property var modelData
 
     BusyIndicator {
         id: busyIndicator
@@ -20,9 +19,20 @@ Item {
     Connections{
         target: dataManager
         function onProjectsReceived(projects){
-            modelData = projects
+            projectsModel.clear()
+            for(var i = 0; i < projects.length; ++i) {
+                projectsModel.append({projectId: projects[i].id, name: projects[i].name,
+                                         description: projects[i].description, status: projects[i].status,
+                                         deadline: projects[i].deadline, assignmentStatus: projects[i].assignmentStatus})
+            }
+
             busyIndicator.visible = false
         }
+    }
+
+    ListModel
+    {
+        id: projectsModel
     }
 
     Component.onCompleted: {
@@ -82,7 +92,7 @@ Item {
 
             ListView {
                 id: listView
-                model: modelData
+                model: projectsModel
                 interactive: false
 
                 Layout.fillWidth: true
@@ -90,8 +100,7 @@ Item {
                 spacing: Style.baseMargin
 
                 delegate: Delegates.ProjectDelegate {
-                    projectItem: listView.model[index]
-                    projectIndex: index
+                    width: mainColumn.width
                 }
             }
         }

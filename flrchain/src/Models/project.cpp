@@ -10,7 +10,7 @@ Project::Project(QObject *parent):
     m_investmentStart(QString()),
     m_investmentEnd(QString()),
     m_photo(QString()),
-    m_tasks(QVariantList()),
+    m_tasks(QList<Task *>()),
     m_assignmentStatus()
 {
 
@@ -56,7 +56,7 @@ QString Project::photo() const
     return m_photo;
 }
 
-QVariantList Project::tasks() const
+QList<Task *> Project::tasks() const
 {
     return m_tasks;
 }
@@ -130,7 +130,7 @@ void Project::setPhoto(const QString &photo)
     }
 }
 
-void Project::setTasks(const QVariantList &tasks)
+void Project::setTasks(const QList<Task *> &tasks)
 {
     if (m_tasks != tasks) {
         m_tasks = tasks;

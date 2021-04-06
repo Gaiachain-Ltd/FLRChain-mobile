@@ -6,7 +6,6 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Item {
-    property var taskItem
     property string projectName: ""
     property bool buttonVisible: false
 
@@ -43,7 +42,7 @@ Item {
                 Label{
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: taskItem.action
+                    text: actionName
                     color: Style.mediumLabelColor
                 }
 
@@ -58,7 +57,7 @@ Item {
                 Label{
                     font.pixelSize: Style.fontSmall
                     font.weight: Font.DemiBold
-                    text: qsTr("%1 USDC").arg(taskItem.reward)
+                    text: qsTr("%1 USDC").arg(reward)
                     color: Style.mediumLabelColor
                 }
 
@@ -68,7 +67,7 @@ Item {
                     text: qsTr("Earn reward")
                     visible: buttonVisible
                     onClicked: {
-                        pageManager.enterWorkScreen(taskItem.projectId, taskItem.taskId, projectName, taskItem.action)
+                        pageManager.enterWorkScreen(projectId, taskId, projectName, actionName)
                     }
                 }
 

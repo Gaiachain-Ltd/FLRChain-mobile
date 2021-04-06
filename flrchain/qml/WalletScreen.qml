@@ -141,6 +141,7 @@ Item {
 
                         delegate: Delegates.TransactionDelegate {
                             separatorVisible: index !== walletModel.count - 1
+                            width: contentRect.width
                         }
                         section.property: "creationDate"
                         section.delegate: ColumnLayout {

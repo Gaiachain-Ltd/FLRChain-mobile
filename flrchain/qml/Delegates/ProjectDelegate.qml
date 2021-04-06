@@ -10,12 +10,10 @@ Item {
     height: childrenRect.height
     width: parent.width
 
-    property var projectItem
-    property int projectIndex
-    property bool joined: projectItem.assignmentStatus === Project.Joined
-    property bool undefinedStatus: projectItem.assignmentStatus === Project.Undefined
-    property bool investmentOngoing: projectItem.status === Project.InvestmentOngoing
-    property bool investmentFinished: projectItem.status === Project.InvestmentFinished
+    property bool joined: assignmentStatus === Project.Joined
+    property bool undefinedStatus: assignmentStatus === Project.Undefined
+    property bool investmentOngoing: status === Project.InvestmentOngoing
+    property bool investmentFinished: status === Project.InvestmentFinished
 
     Custom.ShadowedRectangle {
         width: parent.width
@@ -43,13 +41,13 @@ Item {
                 }
 
                 Custom.StatusLabel{
-                    status: projectItem.assignmentStatus
+                    status: assignmentStatus
                 }
 
                 Label{
                     font.pixelSize: Style.fontUltra
                     font.weight: Font.DemiBold
-                    text: projectItem.name
+                    text: name
                     color: Style.darkLabelColor
                 }
 
@@ -70,7 +68,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: projectItem.deadline
+                        text: deadline
                         color: Style.mediumLabelColor
                     }
 
@@ -107,7 +105,7 @@ Item {
                 }
 
                 Text {
-                    text: projectItem.description
+                    text: description
                     Layout.fillWidth: true
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                     color: Style.mediumLabelColor
@@ -122,7 +120,7 @@ Item {
                     text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
                     bgColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
-                        pageManager.enterProjectDetailsScreen(projectItem.id)
+                        pageManager.enterProjectDetailsScreen(projectId)
                     }
                 }
             }

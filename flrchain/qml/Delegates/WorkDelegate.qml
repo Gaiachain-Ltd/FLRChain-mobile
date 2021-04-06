@@ -8,7 +8,6 @@ import "qrc:/CustomControls" as Custom
 
 Column {
     spacing: Style.baseMargin
-    property var workItem
     property bool separatorVisible: true
 
     Rectangle {
@@ -19,7 +18,7 @@ Column {
 
         Custom.RoundedImage {
             id: img
-            source: workItem.localPath
+            source: localPath
             anchors.fill: parent
         }
 
@@ -76,7 +75,7 @@ Column {
                 anchors.centerIn: parent
                 font.pixelSize: Style.fontBig
                 font.weight: Font.Bold
-                text: qsTr("%1 USDC").arg(workItem.amount)
+                text: qsTr("%1 USDC").arg(amount)
                 color: Style.bgColor
             }
         }
@@ -98,7 +97,7 @@ Column {
         Label{
             font.pixelSize: Style.fontTiny
             font.weight: Font.DemiBold
-            text: "August 24, 2020"
+            text: date
             color: Style.mediumLabelColor
         }
     }

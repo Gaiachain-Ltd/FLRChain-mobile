@@ -59,6 +59,12 @@ Item {
             projectEndDate = project.investmentEnd
             projectStatus = project.status
             projectAssignmentStatus = project.assignmentStatus
+
+            tasksModel.clear()
+            for(var i = 0; i < tasks.length; ++i) {
+                tasksModel.append({projectId: tasks[i].projectId, actionName: tasks[i].action,
+                                      reward: tasks[i].reward, taskId: tasks[i].taskId})
+            }
         }
 
         function onJoinRequestSent(projectId){
@@ -72,25 +78,37 @@ Item {
                 busyIndicator.visible = false
                 return;
             }
-            workData = workList
             workBalance = rewardsBalance
 
-            for(var i = 0; i< workList.length; ++i)
-            {
+            workModel.clear()
+            for(var i = 0; i < workList.length; ++i) {
                 session.downloadPhoto(workList[i].photoPath, workList[i].id)
+
+                workModel.append({id: workList[i].id, projectId: workList[i].projectId,
+                                     status: workList[i].status, date: workList[i].date,
+                                     localPath: workList[i].localPath, amount: workList[i].amount})
             }
         }
+    }
+
+    ListModel
+    {
+        id: tasksModel
+    }
+
+    ListModel
+    {
+        id: workModel
     }
 
     Connections{
         target: dataManager
         function onPhotoDownloaded(path, workId){
-            for(var i = 0; i< workData.length; ++i)
+            for(var i = 0; i< workModel.count; ++i)
             {
-                if(workData[i].id === workId){
-                    workData[i].localPath = "file:///" + path
-
-                    if(i === workData.length - 1){
+                if(workModel.get(i).id === workId){
+                    workModel.setProperty(i, "localPath", "file:///" + path)
+                    if(i === workModel.count - 1){
                         busyIndicator.visible = false
                     }
                     return;
@@ -99,7 +117,7 @@ Item {
         }
 
         function onFileDownloadError(workId){
-            if(workData[workData.length - 1].id === workId){
+            if(workModel.get(workModel.count - 1).id === workId){
                 busyIndicator.visible = false
             }
         }
@@ -175,7 +193,7 @@ Item {
 
             ListView {
                 id: tasksList
-                model: tasks
+                model: tasksModel
                 interactive: false
 
                 Layout.fillWidth: true
@@ -183,9 +201,8 @@ Item {
                 spacing: Style.baseMargin
 
                 delegate: Delegates.TaskDelegate {
-                    taskItem: tasks[index]
                     projectName: detailsScreen.projectName
-                    width: parent.width
+                    width: mainColumn.width
                     buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === Project.InvestmentOngoing
                 }
             }
@@ -223,7 +240,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontBig
                         font.weight: Font.DemiBold
-                        text: workData.length
+                        text: workModel.count
                         color: Style.accentColor
                     }
                 }
@@ -274,7 +291,7 @@ Item {
 
                             ListView {
                                 id: workList
-                                model: workData
+                                model: workModel
                                 interactive: false
 
                                 Layout.fillWidth: true
@@ -283,7 +300,6 @@ Item {
 
                                 delegate: Delegates.WorkDelegate {
                                     width: parent.width
-                                    workItem: workData[index]
                                     separatorVisible: index !== workList.count - 1
                                 }
                             }
