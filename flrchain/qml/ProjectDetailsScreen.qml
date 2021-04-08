@@ -37,13 +37,11 @@ Item {
         target: pageManager
         function onSetupProjectDetailsScreen(projectId){
             session.getProjectDetails(projectId)
-            session.getWorkData(projectId)
         }
 
         function onBackTriggered(){
             busyIndicator.visible = true
             session.getProjectDetails(itemId)
-            session.getWorkData(itemId)
         }
     }
 
@@ -52,7 +50,6 @@ Item {
         function onProjectDetailsReceived(project){
             itemId = project.id
             projectName = project.name
-            tasks = project.tasks
             projectDeadline = project.deadline
             projectDescription = project.description
             projectStartDate = project.investmentStart
@@ -60,11 +57,7 @@ Item {
             projectStatus = project.status
             projectAssignmentStatus = project.assignmentStatus
 
-            tasksModel.clear()
-            for(var i = 0; i < tasks.length; ++i) {
-                tasksModel.append({projectId: tasks[i].projectId, actionName: tasks[i].action,
-                                      reward: tasks[i].reward, taskId: tasks[i].taskId})
-            }
+            session.getWorkData(itemId)
         }
 
         function onJoinRequestSent(projectId){
@@ -72,54 +65,21 @@ Item {
                 session.getProjectDetails(projectId)
             }
         }
+    }
 
-        function onWorkReceived(workList, rewardsBalance){
-            if(workList.length === 0){
+    Connections{
+        target: workModel
+
+        function onWorkReceived(rewardsBalance){
+            if(workModel.rowCount() === 0){
                 busyIndicator.visible = false
                 return;
             }
             workBalance = rewardsBalance
-
-            workModel.clear()
-            for(var i = 0; i < workList.length; ++i) {
-                session.downloadPhoto(workList[i].photoPath, workList[i].id)
-
-                workModel.append({id: workList[i].id, projectId: workList[i].projectId,
-                                     status: workList[i].status, date: workList[i].date,
-                                     localPath: workList[i].localPath, amount: workList[i].amount})
-            }
-        }
-    }
-
-    ListModel
-    {
-        id: tasksModel
-    }
-
-    ListModel
-    {
-        id: workModel
-    }
-
-    Connections{
-        target: dataManager
-        function onPhotoDownloaded(path, workId){
-            for(var i = 0; i< workModel.count; ++i)
-            {
-                if(workModel.get(i).id === workId){
-                    workModel.setProperty(i, "localPath", "file:///" + path)
-                    if(i === workModel.count - 1){
-                        busyIndicator.visible = false
-                    }
-                    return;
-                }
-            }
         }
 
-        function onFileDownloadError(workId){
-            if(workModel.get(workModel.count - 1).id === workId){
-                busyIndicator.visible = false
-            }
+        function onWorkUpdated(){
+            busyIndicator.visible = false;
         }
     }
 
@@ -157,7 +117,7 @@ Item {
 
             Label {
                 id: title
-                Layout.topMargin: Style.baseMargin
+                Layout.topMargin: Style.bigMargin
                 text: projectName
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
@@ -185,7 +145,7 @@ Item {
             }
 
             Label {
-                Layout.topMargin: Style.baseMargin
+                Layout.topMargin: Style.tinyMargin
                 text: qsTr("Tasks (%1)").arg(tasksList.count)
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
@@ -217,7 +177,7 @@ Item {
                     spacing: Style.microMargin
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.bigMargin
-                    Layout.topMargin: Style.baseMargin
+                    Layout.topMargin: Style.tinyMargin
                     Label {
                         text: qsTr("Work history")
                         font.pixelSize: Style.fontUltra
@@ -226,6 +186,7 @@ Item {
 
                     Item{
                         Layout.fillWidth: true
+                        Layout.preferredHeight: Style.tinyMargin
                     }
 
                     Image {
@@ -240,7 +201,7 @@ Item {
                     Label{
                         font.pixelSize: Style.fontBig
                         font.weight: Font.DemiBold
-                        text: workModel.count
+                        text: workList.count
                         color: Style.accentColor
                     }
                 }
@@ -254,13 +215,14 @@ Item {
 
                 Custom.ShadowedRectangle {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: childrenRect.height
+                    Layout.preferredHeight: workContainer.height
+
                     Layout.topMargin: Style.tinyMargin
 
                     Rectangle{
                         id: contentRect
                         width: parent.width
-                        height: childrenRect.height
+                        height: workContainer.height
                         color: Style.bgColor
                         radius: Style.rectangleRadius
 
@@ -307,7 +269,7 @@ Item {
                             Item{
                                 Layout.fillWidth: true
                             }
-                        }
+                       }
                     }
                 }
             }

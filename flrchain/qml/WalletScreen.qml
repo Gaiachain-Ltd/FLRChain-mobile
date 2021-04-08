@@ -25,28 +25,17 @@ Item {
 
     Connections{
         target: dataManager
-        function onTransactionsDataReceived(walletList){
-            busyIndicator.visible = false
-
-            walletModel.clear()
-            for (var i = 0; i < walletList.length; ++i) {
-                walletModel.append({amount: walletList[i].amount, creationDate: walletList[i].creationDate,
-                                   projectName: walletList[i].title})
-            }
-        }
 
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
         }
-
-        function onNoTransactionsData() {
-            busyIndicator.visible = false
-        }
     }
 
-    ListModel
-    {
-        id: walletModel
+    Connections {
+        target: transactionsModel
+        function onTransactionsReceived(){
+            busyIndicator.visible = false
+        }
     }
 
     Connections{
@@ -83,7 +72,6 @@ Item {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            topMargin: Style.baseMargin
         }
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
@@ -101,12 +89,14 @@ Item {
             spacing: Style.baseMargin
 
             Label {
+                Layout.topMargin: Style.baseMargin
                 text: qsTr("Your account")
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
             }
 
             Delegates.BalanceDelegate {
+                Layout.topMargin: Style.tinyMargin
                 Layout.fillWidth: true
                 buttonVisible: true
                 title: qsTr("Balance")
@@ -117,6 +107,7 @@ Item {
             }
 
             Label {
+                Layout.topMargin: Style.smallMargin
                 text: qsTr("Transaction history")
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
@@ -124,28 +115,29 @@ Item {
 
             Custom.ShadowedRectangle {
                 Layout.fillWidth: true
-                Layout.preferredHeight: childrenRect.height
+                Layout.preferredHeight: listView.contentHeight
                 Layout.bottomMargin: Style.baseMargin
-                Layout.topMargin: Style.tinyMargin
-                visible: walletModel.count > 0
+                Layout.topMargin: Style.microMargin
+                visible: listView.count > 0
 
                 Rectangle{
                     id: contentRect
                     width: parent.width
-                    height: childrenRect.height
+                    height: listView.contentHeight
                     color: Style.bgColor
                     radius: Style.rectangleRadius
                     ListView {
                         id: listView
-                        model: walletModel
+                        model: transactionsModel
                         interactive: false
 
                         width: parent.width
                         height: contentHeight
+
                         spacing: 0
 
                         delegate: Delegates.TransactionDelegate {
-                            separatorVisible: index !== walletModel.count - 1
+                            separatorVisible: index !== listView.count - 1
                             width: contentRect.width
                         }
                         section.property: "creationDate"

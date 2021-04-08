@@ -20,9 +20,13 @@ Item {
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
         }
+    }
 
-        function onProjectsReceived(projects){
-            projectsCount = projects.length
+    Connections{
+        target: projectsModel
+
+        function onProjectsReceived(){
+            projectsCount = projectsModel.rowCount()
         }
     }
 

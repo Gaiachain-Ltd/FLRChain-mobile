@@ -43,6 +43,10 @@ HEADERS += \
     src/APICommunication/requests/sendworkrequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
+    src/Models/projectsmodel.h \
+    src/Models/tasksmodel.h \
+    src/Models/transactionsmodel.h \
+    src/Models/workmodel.h \
     src/Models/transaction.h \
     src/Models/task.h \
     src/Models/project.h \
@@ -71,6 +75,10 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/sendworkrequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
+    src/Models/projectsmodel.cpp \
+    src/Models/tasksmodel.cpp \
+    src/Models/transactionsmodel.cpp \
+    src/Models/workmodel.cpp \
     src/Models/transaction.cpp \
     src/Models/task.cpp \
     src/Models/project.cpp \

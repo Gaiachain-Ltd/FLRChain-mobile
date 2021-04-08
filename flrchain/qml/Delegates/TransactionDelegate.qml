@@ -19,7 +19,7 @@ Item {
         }
         Column{
             Label {
-                text: projectName
+                text: title
                 font.pixelSize: Style.fontTiny
                 color: Style.mediumLabelColor
             }

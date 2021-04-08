@@ -64,6 +64,10 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
     engine.rootContext()->setContextProperty("pageManager", QVariant::fromValue(PageManager::instance()));
+    engine.rootContext()->setContextProperty("projectsModel", dataManager.projectsModel());
+    engine.rootContext()->setContextProperty("transactionsModel", dataManager.transactionsModel());
+    engine.rootContext()->setContextProperty("workModel", dataManager.workModel());
+    engine.rootContext()->setContextProperty("tasksModel", dataManager.tasksModel());
 
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");

@@ -17,26 +17,11 @@ Item {
     }
 
     Connections{
-        target: dataManager
-        function onProjectsReceived(projects){
-            projectsModel.clear()
-            for(var i = 0; i < projects.length; ++i) {
-                projectsModel.append({projectId: projects[i].id, name: projects[i].name,
-                                         description: projects[i].description, status: projects[i].status,
-                                         deadline: projects[i].deadline, assignmentStatus: projects[i].assignmentStatus})
-            }
+        target: projectsModel
 
+        function onProjectsReceived(){
             busyIndicator.visible = false
         }
-
-        function onNoProjectsData() {
-            busyIndicator.visible = false
-        }
-    }
-
-    ListModel
-    {
-        id: projectsModel
     }
 
     Component.onCompleted: {
@@ -83,12 +68,12 @@ Item {
                 leftMargin: Style.smallMargin
                 rightMargin: Style.smallMargin
             }
-            height: listView.contentHeight + 80
 
             spacing: Style.baseMargin
 
             Label {
-                Layout.topMargin: Style.baseMargin
+                Layout.topMargin: Style.bigMargin
+                Layout.bottomMargin: Style.tinyMargin
                 text: qsTr("Project list (%1)").arg(listView.count)
                 font.pixelSize: Style.fontUltra
                 color: Style.darkLabelColor
@@ -99,8 +84,10 @@ Item {
                 model: projectsModel
                 interactive: false
 
+                Layout.bottomMargin: Style.smallMargin
                 Layout.fillWidth: true
-                Layout.fillHeight: true
+                Layout.preferredHeight: contentHeight
+
                 spacing: Style.baseMargin
 
                 delegate: Delegates.ProjectDelegate {

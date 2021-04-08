@@ -87,7 +87,7 @@ Item {
                 fill: parent
                 leftMargin: Style.smallMargin
                 rightMargin: Style.smallMargin
-                topMargin: Style.baseMargin
+                topMargin: Style.bigMargin
                 bottomMargin: Style.smallMargin
             }
             Label {

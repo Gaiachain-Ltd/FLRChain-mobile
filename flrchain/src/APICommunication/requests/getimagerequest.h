@@ -13,8 +13,7 @@ public:
     void errorHandler(const QString& error);
 
 signals:
-    void fileDownloadError(const int workId) const;
-    void fileDownloadSuccessful(const QString &path, const int workId) const;
+    void fileDownloadResult(const int workId, const QString &path) const;
 
 protected:
     void parse() override;

@@ -16,12 +16,12 @@ GetImageRequest::GetImageRequest(const QByteArray &token, const QUrl& url, const
 void GetImageRequest::errorHandler(const QString &error)
 {
     qDebug() << "Error" << error;
-    emit fileDownloadError(m_workId);
+    emit fileDownloadResult(m_workId, QString());
 }
 
 void GetImageRequest::parse()
 {
-    emit fileDownloadSuccessful(m_cachePath + "/" + QFileInfo(m_url.path()).fileName(), m_workId);
+    emit fileDownloadResult(m_workId, m_cachePath + "/" + QFileInfo(m_url.path()).fileName());
 }
 
 void GetImageRequest::readReplyData(const QString &requestName, const QString &status)
@@ -30,7 +30,7 @@ void GetImageRequest::readReplyData(const QString &requestName, const QString &s
     if (file.open(QFile::WriteOnly) == false) {
         qDebug() << "Could not open file for writing" << file.fileName()
                  << requestName << status;
-        emit fileDownloadError(m_workId);
+        emit fileDownloadResult(m_workId, QString());
         return;
     }
 

@@ -18,7 +18,7 @@ Column {
 
         Custom.RoundedImage {
             id: img
-            source: localPath
+            source: localPath !== "" ? "file:///" + localPath : localPath
             anchors.fill: parent
         }
 

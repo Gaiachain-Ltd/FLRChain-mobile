@@ -30,7 +30,6 @@ Session::Session(QObject *parent) :
 {
     connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
             this, &Session::setInternetConnection);
-
     PlatformBridge::instance()->checkConnection();
 }
 
@@ -277,10 +276,8 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
     }
 
     auto request = QSharedPointer<GetImageRequest>::create(getToken(), QUrl(APIUrl + fileName), m_dataManager->getPhotosPath(), workId);
-    connect(request.data(), &GetImageRequest::fileDownloadSuccessful,
-            m_dataManager, &DataManager::photoDownloaded);
-    connect(request.data(), &GetImageRequest::fileDownloadError,
-            m_dataManager, &DataManager::fileDownloadError);
+    connect(request.data(), &GetImageRequest::fileDownloadResult,
+            m_dataManager, &DataManager::photoDownloadResult);
 
     mClient->send(request);
 }
@@ -329,6 +326,9 @@ QByteArray Session::getToken() const
 void Session::setDataManager(DataManager *dataManager)
 {
     m_dataManager = dataManager;
+
+    connect(m_dataManager, &DataManager::downloadRequest,
+            this, &Session::downloadPhoto);
 }
 
 void Session::logout()
