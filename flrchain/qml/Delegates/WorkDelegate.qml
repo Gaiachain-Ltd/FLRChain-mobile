@@ -30,33 +30,31 @@ Column {
                 leftMargin: Style.baseMargin
             }
             height: Style.statusLabelHeight
-            width: row.width + Style.baseMargin
+            width: childrenRect.width + Style.baseMargin
             color: Style.accentColor
             radius: Style.labelRadius
 
-            RowLayout{
-                id: row
-                spacing: Style.microMargin
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    horizontalCenter: parent.horizontalCenter
-                }
-                Image {
-                    source: "qrc:/img/icon-accepted.svg"
-                    asynchronous: true
-                    width: 13
-                    height: 10
-                    fillMode: Image.PreserveAspectFit
-                    sourceSize: Qt.size(width, height)
-                    Layout.alignment: Qt.AlignVCenter
-                }
+            Image {
+                id: iconAccepted
+                anchors.left: parent.left
+                anchors.leftMargin: Style.tinyMargin
+                anchors.verticalCenter: parent.verticalCenter
+                source: "qrc:/img/icon-accepted.svg"
+                asynchronous: true
+                width: 13
+                height: 10
+                fillMode: Image.PreserveAspectFit
+                sourceSize: Qt.size(width, height)
+            }
 
-                Label{
-                    font.pixelSize: Style.fontTiny
-                    font.weight: Font.DemiBold
-                    text: qsTr("Accepted")
-                    color: Style.bgColor
-                }
+            Label{
+                anchors.left: iconAccepted.right
+                anchors.leftMargin: Style.tinyMargin
+                anchors.verticalCenter: parent.verticalCenter
+                font.pixelSize: Style.fontTiny
+                font.weight: Font.DemiBold
+                text: qsTr("Accepted")
+                color: Style.bgColor
             }
         }
 
@@ -83,8 +81,8 @@ Column {
 
     RowLayout {
         spacing: Style.microMargin
-        Layout.fillWidth: true
-        Layout.preferredHeight: Style.iconSize
+        width: parent.width
+        height: Style.iconSize
         Image {
             source: "qrc:/img/icon-calendar.svg"
             asynchronous: true
@@ -99,6 +97,10 @@ Column {
             font.weight: Font.DemiBold
             text: date
             color: Style.mediumLabelColor
+        }
+
+        Item{
+            Layout.fillWidth: true
         }
     }
 
