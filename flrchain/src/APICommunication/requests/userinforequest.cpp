@@ -22,6 +22,7 @@ void UserInfoRequest::parse()
     const QString firstName(object.value(QLatin1String("first_name")).toString());
     const QString lastName(object.value(QLatin1String("last_name")).toString());
     const QString email(object.value(QLatin1String("email")).toString());
+    bool optedIn = object.value(QLatin1String("opted_in")).toBool();
 
-    emit userInfoReply(firstName, lastName, email);
+    emit userInfoReply(firstName, lastName, email, optedIn);
 }

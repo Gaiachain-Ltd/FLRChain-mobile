@@ -16,6 +16,7 @@ Item {
     property string projectDescription: ""
     property string projectStartDate: ""
     property string projectEndDate: ""
+    property bool projectInvestmentConfirmed: false
     property int projectStatus: Project.InvestmentUnknown
     property int projectAssignmentStatus: Project.Undefined
     property var tasks
@@ -56,7 +57,7 @@ Item {
             projectEndDate = project.investmentEnd
             projectStatus = project.status
             projectAssignmentStatus = project.assignmentStatus
-
+            projectInvestmentConfirmed = project.confirmed
             session.getWorkData(itemId)
         }
 
@@ -162,6 +163,7 @@ Item {
 
                 delegate: Delegates.TaskDelegate {
                     projectName: detailsScreen.projectName
+                    projectInvestmentConfirmed: detailsScreen.projectInvestmentConfirmed
                     width: mainColumn.width
                     buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === Project.InvestmentOngoing
                 }

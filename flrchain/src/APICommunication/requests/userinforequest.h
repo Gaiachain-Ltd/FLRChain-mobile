@@ -16,7 +16,7 @@ public:
 signals:
     void userInfoReply(const QString &firstName,
                         const QString &lastName,
-                        const QString &email) const;
+                        const QString &email, bool optedIn) const;
 protected:
     virtual void parse() override final;
 };

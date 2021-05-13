@@ -66,6 +66,11 @@ int Project::assignmentStatus() const
     return m_assignmentStatus;
 }
 
+bool Project::confirmed() const
+{
+    return m_confirmed;
+}
+
 void Project::setId(const int id)
 {
     if (m_id != id) {
@@ -144,4 +149,13 @@ void Project::setAssignmentStatus(const int status)
         m_assignmentStatus = status;
         emit assignmentStatusChanged(status);
     }
+}
+
+void Project::setConfirmed(bool confirmed)
+{
+    if (m_confirmed == confirmed)
+        return;
+
+    m_confirmed = confirmed;
+    emit confirmedChanged(m_confirmed);
 }

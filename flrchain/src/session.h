@@ -56,7 +56,7 @@ private:
     void onLoginSuccessful(const QString& token);
     void onUserInfo(const QString& firstName,
                     const QString& lastName,
-                    const QString& email);
+                    const QString& email, bool optedIn);
     void setToken(const QByteArray &token);
 
     UserPtr mCurrentUser;

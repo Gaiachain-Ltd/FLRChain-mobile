@@ -118,10 +118,12 @@ void DataManager::projectDetailsReply(const QJsonObject &projectObject)
 
     if(projectObject.value(QLatin1String("investment")).isNull()){
         m_detailedProject->setStatus(-1);
+        m_detailedProject->setConfirmed(false);
     }
     else {
-        m_detailedProject->setStatus(projectObject.value(QLatin1String("investment")).toObject()
-                                     .value(QLatin1String("status")).toInt());
+        const QJsonObject &investment = projectObject.value(QLatin1String("investment")).toObject();
+        m_detailedProject->setStatus(investment.value(QLatin1String("status")).toInt());
+        m_detailedProject->setConfirmed(investment.value(QLatin1String("confirmed")).toBool());
     }
     QDateTime deadline = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
     m_detailedProject->setDeadline(deadline.toString(QLatin1String("MMMM dd, yyyy")));

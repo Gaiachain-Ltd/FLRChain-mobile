@@ -60,7 +60,7 @@ void Session::onLoginSuccessful(const QString &token)
 }
 
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
-                         const QString &email)
+                         const QString &email, bool optedIn)
 {
     if (!firstName.isEmpty()) {
         user()->setFirstName(firstName);
@@ -71,6 +71,7 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     if (!email.isEmpty()) {
         user()->setEmail(email);
     }
+    user()->setOptedIn(optedIn);
 }
 
 void Session::login(const QString &email, const QString &password)

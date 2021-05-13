@@ -18,6 +18,7 @@ class Project : public QObject
     Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged)
     Q_PROPERTY(QList<Task *> tasks READ tasks WRITE setTasks NOTIFY tasksChanged)
     Q_PROPERTY(int assignmentStatus READ assignmentStatus WRITE setAssignmentStatus NOTIFY assignmentStatusChanged)
+    Q_PROPERTY(bool confirmed READ confirmed WRITE setConfirmed NOTIFY confirmedChanged)
 
 public:
     Project(QObject *parent = nullptr);
@@ -49,6 +50,7 @@ public:
     QString photo() const;
     QList<Task *> tasks() const;
     int assignmentStatus() const;
+    bool confirmed() const;
 
 public slots:
     void setId(const int id);
@@ -61,6 +63,7 @@ public slots:
     void setPhoto(const QString &photo);
     void setTasks(const QList<Task *> &tasks);
     void setAssignmentStatus(const int status);
+    void setConfirmed(bool confirmed);
 
 signals:
     void idChanged(int id);
@@ -73,6 +76,7 @@ signals:
     void photoChanged(QString photo);
     void tasksChanged(QList<Task *> tasks);
     void assignmentStatusChanged(int status);
+    void confirmedChanged(bool confirmed);
 
 private:
     int m_id;
@@ -85,6 +89,7 @@ private:
     QString m_photo;
     QList<Task *> m_tasks;
     int m_assignmentStatus;
+    bool m_confirmed;
 };
 
 #endif // PROJECT_H

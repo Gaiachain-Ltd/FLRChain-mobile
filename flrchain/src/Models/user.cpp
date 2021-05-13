@@ -26,6 +26,11 @@ QByteArray User::password() const
     return m_password;
 }
 
+bool User::optedIn() const
+{
+    return m_optedIn;
+}
+
 void User::setEmail(const QString& email)
 {
     if (m_email != email) {
@@ -50,6 +55,15 @@ void User::setLastName(const QString& name)
     }
 }
 
+void User::setOptedIn(bool optedIn)
+{
+    if (m_optedIn == optedIn)
+        return;
+
+    m_optedIn = optedIn;
+    emit optedInChanged();
+}
+
 void User::setPassword(const QByteArray& password)
 {
     if (m_password != password) {
@@ -64,4 +78,5 @@ void User::clear()
     setPassword(QByteArray());
     setFirstName(QString());
     setLastName(QString());
+    setOptedIn(false);
 }

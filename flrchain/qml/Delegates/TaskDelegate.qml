@@ -7,6 +7,7 @@ import "qrc:/CustomControls" as Custom
 
 Item {
     property string projectName: ""
+    property bool projectInvestmentConfirmed: false
     property bool buttonVisible: false
 
     height: childrenRect.height
@@ -67,6 +68,14 @@ Item {
                     text: qsTr("Earn reward")
                     visible: buttonVisible
                     onClicked: {
+                        if (!session.user.optedIn) {
+                            pageManager.enterErrorPopup(qsTr("Your account is not active yet. Try again later."));
+                            return;
+                        }
+                        if (!projectInvestmentConfirmed) {
+                            pageManager.enterErrorPopup(qsTr("Investment has not been confirmed yet."));
+                            return;
+                        }
                         pageManager.enterWorkScreen(projectId, taskId, projectName, actionName)
                     }
                 }

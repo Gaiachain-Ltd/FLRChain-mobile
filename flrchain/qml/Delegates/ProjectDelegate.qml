@@ -120,6 +120,10 @@ Item {
                     text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
                     bgColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
+                        if (!session.user.optedIn) {
+                            //Refresh user info:
+                            session.getUserInfo();
+                        }
                         pageManager.enterProjectDetailsScreen(projectId)
                     }
                 }
