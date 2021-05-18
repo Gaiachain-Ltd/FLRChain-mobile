@@ -16,7 +16,8 @@ public:
         Title,
         Type,
         Amount,
-        CreationDate
+        CreationDate,
+        Status,
     };
 
     explicit TransactionsModel(QObject *parent = nullptr);

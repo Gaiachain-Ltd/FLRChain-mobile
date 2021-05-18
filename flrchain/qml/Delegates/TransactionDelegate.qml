@@ -8,6 +8,28 @@ Item {
     width: parent.width
     property bool separatorVisible: true
 
+    function statusName() {
+        switch(status) {
+        case 0:
+            return qsTr("Rejected")
+        case 1:
+            return qsTr("Confirmed")
+        case 2:
+            return qsTr("Pending")
+        }
+    }
+
+    function statusColor() {
+        switch(status) {
+        case 0:
+            return Style.errorColor;
+        case 1:
+            return Style.accentColor;
+        case 2:
+            return Style.yellowDelegateColor;
+        }
+    }
+
     RowLayout{
         height: childrenRect.height
         anchors {
@@ -28,6 +50,12 @@ Item {
                 text: qsTr("Reward")
                 font.pixelSize: Style.fontTiny
                 color: Style.darkLabelColor
+            }
+
+            Label {
+                text: statusName()
+                font.pixelSize: Style.fontTiny
+                color: statusColor()
             }
         }
 
