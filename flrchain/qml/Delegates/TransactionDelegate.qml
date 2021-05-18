@@ -26,7 +26,7 @@ Item {
         case 1:
             return Style.accentColor;
         case 2:
-            return Style.yellowDelegateColor;
+            return Style.yellowLabelColor;
         }
     }
 
