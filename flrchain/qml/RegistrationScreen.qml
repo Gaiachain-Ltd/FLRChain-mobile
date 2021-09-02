@@ -51,7 +51,6 @@ Item {
             }
             contentHeight: mainColumn.height
             boundsBehavior: Flickable.StopAtBounds
-            clip: true
 
             ColumnLayout {
                 id: mainColumn

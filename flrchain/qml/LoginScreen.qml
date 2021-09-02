@@ -26,160 +26,174 @@ Item {
         color: Style.shadowedBgColor
         anchors.fill: parent
 
-        ColumnLayout {
+        Flickable {
             anchors {
-                fill: parent
-                leftMargin: Style.smallMargin
-                rightMargin: Style.smallMargin
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
                 topMargin: Style.baseMargin
-                bottomMargin: Style.smallMargin
             }
-            Item{
-                Layout.fillHeight: true
-                Layout.preferredHeight: Style.ultraMargin
-                Layout.maximumHeight: Style.ultraMargin
-                Layout.fillWidth: true
-            }
+            contentHeight: mainColumn.height
+            boundsBehavior: Flickable.StopAtBounds
 
-            Image {
-                id: logo
-                source: "qrc:/img/logo-login.svg"
-                Layout.preferredWidth: Style.logoWidth
-                Layout.preferredHeight: Style.logoHeight
-                Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
-            }
+            ColumnLayout {
+                id: mainColumn
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.smallMargin
+                    rightMargin: Style.smallMargin
+                    topMargin: Style.baseMargin
+                    bottomMargin: Style.smallMargin
+                }
+                Item{
+                    Layout.fillHeight: true
+                    Layout.preferredHeight: Style.ultraMargin
+                    Layout.maximumHeight: Style.ultraMargin
+                    Layout.fillWidth: true
+                }
 
-            Image {
-                id: logoImg
-                source: "qrc:/img/trees-login.svg"
-                Layout.preferredWidth: 298
-                Layout.preferredHeight: 140
-                Layout.topMargin: Style.baseMargin
-                Layout.alignment: Qt.AlignHCenter
-                sourceSize: Qt.size(298, 140)
-            }
+                Image {
+                    id: logo
+                    source: "qrc:/img/logo-login.svg"
+                    Layout.preferredWidth: Style.logoWidth
+                    Layout.preferredHeight: Style.logoHeight
+                    Layout.alignment: Qt.AlignHCenter
+                    sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
+                }
 
-            Rectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: childrenRect.height
+                Image {
+                    id: logoImg
+                    source: "qrc:/img/trees-login.svg"
+                    Layout.preferredWidth: 298
+                    Layout.preferredHeight: 140
+                    Layout.topMargin: Style.baseMargin
+                    Layout.alignment: Qt.AlignHCenter
+                    sourceSize: Qt.size(298, 140)
+                }
 
-                color: Style.bgColor
-                radius: Style.baseRadius
+                Rectangle {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: childrenRect.height
 
-                ColumnLayout{
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        margins: Style.baseMargin
-                    }
-                    spacing: Style.smallMargin
+                    color: Style.bgColor
+                    radius: Style.baseRadius
 
-                    Label {
-                        Layout.topMargin: Style.baseMargin
-                        text: qsTr("Login")
-                        font.pixelSize: Style.fontLarge
-                        color: Style.accentColor
-                    }
+                    ColumnLayout{
+                        anchors {
+                            left: parent.left
+                            right: parent.right
+                            margins: Style.baseMargin
+                        }
+                        spacing: Style.smallMargin
 
-                    Label {
-                        Layout.topMargin: -Style.tinyMargin
-                        text: qsTr("Welcome Back!")
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        color: Style.baseLabelColor
-                    }
+                        Label {
+                            Layout.topMargin: Style.baseMargin
+                            text: qsTr("Login")
+                            font.pixelSize: Style.fontLarge
+                            color: Style.accentColor
+                        }
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        Layout.leftMargin: -Style.baseMargin
-                        Layout.rightMargin: -Style.baseMargin
-                        color: Style.grayBgColor
-                        height: Style.separatorHeight
-                    }
+                        Label {
+                            Layout.topMargin: -Style.tinyMargin
+                            text: qsTr("Welcome Back!")
+                            font.pixelSize: Style.fontTiny
+                            font.weight: Font.DemiBold
+                            color: Style.baseLabelColor
+                        }
 
-                    Label {
-                        text: qsTr("Email")
-                        font.pixelSize: Style.fontMicro
-                        color: Style.mediumLabelColor
-                    }
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.leftMargin: -Style.baseMargin
+                            Layout.rightMargin: -Style.baseMargin
+                            color: Style.grayBgColor
+                            height: Style.separatorHeight
+                        }
 
-                    Custom.TextInput {
-                        id: userEmail
-                        Layout.topMargin: -Style.tinyMargin
-                        placeholderText: qsTr("Please enter your email...")
-                        color: errorMode ? Style.errorColor : Style.darkLabelColor
-                        onTextChanged: {
-                            if(errorMode) {
-                                errorMode = false
-                                errorLabel.text = ""
+                        Label {
+                            text: qsTr("Email")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
+                        }
+
+                        Custom.TextInput {
+                            id: userEmail
+                            Layout.topMargin: -Style.tinyMargin
+                            placeholderText: qsTr("Please enter your email...")
+                            color: errorMode ? Style.errorColor : Style.darkLabelColor
+                            onTextChanged: {
+                                if(errorMode) {
+                                    errorMode = false
+                                    errorLabel.text = ""
+                                }
                             }
                         }
-                    }
 
-                    Label {
-                        text: qsTr("Password")
-                        font.pixelSize: Style.fontMicro
-                        color: Style.mediumLabelColor
-                    }
+                        Label {
+                            text: qsTr("Password")
+                            font.pixelSize: Style.fontMicro
+                            color: Style.mediumLabelColor
+                        }
 
-                    Custom.TextInput {
-                        id: password
-                        Layout.topMargin: -Style.tinyMargin
-                        placeholderText: qsTr("Please enter your password...")
-                        echoMode: TextInput.Password
-                        color: errorMode ? Style.errorColor : Style.darkLabelColor
-                        onTextChanged: {
-                            if(errorMode){
-                                errorMode = false
-                                errorLabel.text = ""
+                        Custom.TextInput {
+                            id: password
+                            Layout.topMargin: -Style.tinyMargin
+                            placeholderText: qsTr("Please enter your password...")
+                            echoMode: TextInput.Password
+                            color: errorMode ? Style.errorColor : Style.darkLabelColor
+                            onTextChanged: {
+                                if(errorMode){
+                                    errorMode = false
+                                    errorLabel.text = ""
+                                }
                             }
                         }
-                    }
 
-                    Custom.CheckBox {
-                        checked: session.getRememberMe()
-                        text: qsTr("Remember me")
-                        onCheckedChanged: {
-                            session.setRememberMe(checked)
+                        Custom.CheckBox {
+                            checked: session.getRememberMe()
+                            text: qsTr("Remember me")
+                            onCheckedChanged: {
+                                session.setRememberMe(checked)
+                            }
                         }
-                    }
 
-                    Label {
-                        id: errorLabel
-                        Layout.topMargin: -Style.smallMargin
-                        Layout.fillWidth: true
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        color: Style.errorColor
-                    }
-
-                    Custom.Button {
-                        id: signInButton
-                        enabled: userEmail.text.length && password.text.length
-                        text: qsTr("Log In")
-
-                        onClicked: {
-                            session.login(userEmail.text, password.text)
+                        Label {
+                            id: errorLabel
+                            Layout.topMargin: -Style.smallMargin
+                            Layout.fillWidth: true
+                            font.pixelSize: Style.fontTiny
+                            font.weight: Font.DemiBold
+                            color: Style.errorColor
                         }
-                    }
 
-                    Custom.Button {
-                        id: registerButton
-                        text: qsTr("Register")
-                        bgColor: Style.buttonSecColor
+                        Custom.Button {
+                            id: signInButton
+                            enabled: userEmail.text.length && password.text.length
+                            text: qsTr("Log In")
 
-                        onClicked: {
-                            pageManager.enterRegistrationScreen()
+                            onClicked: {
+                                session.login(userEmail.text, password.text)
+                            }
                         }
-                    }
 
-                    Label {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.bottomMargin: Style.baseMargin
-                        text: qsTr("Forgot password?")
-                        font.pixelSize: Style.fontTiny
-                        color: Style.accentColor
+                        Custom.Button {
+                            id: registerButton
+                            text: qsTr("Register")
+                            bgColor: Style.buttonSecColor
+
+                            onClicked: {
+                                pageManager.enterRegistrationScreen()
+                            }
+                        }
+
+                        Label {
+                            Layout.alignment: Qt.AlignHCenter
+                            Layout.bottomMargin: Style.baseMargin
+                            text: qsTr("Forgot password?")
+                            font.pixelSize: Style.fontTiny
+                            color: Style.accentColor
+                        }
                     }
                 }
             }

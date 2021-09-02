@@ -75,52 +75,64 @@ Item {
     Rectangle {
         id: background
         color: Style.bgColor
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
 
-        ColumnLayout {
+        Flickable {
             anchors {
-                fill: parent
-                leftMargin: Style.smallMargin
-                rightMargin: Style.smallMargin
-                topMargin: Style.bigMargin
-                bottomMargin: Style.smallMargin
+                top: parent.top
+                left: parent.left
+                right: parent.right
+                bottom: parent.bottom
+                topMargin: Style.baseMargin
             }
-            Label {
-                text: projectName
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
-            }
+            contentHeight: mainColumn.height
+            boundsBehavior: Flickable.StopAtBounds
 
-            Label {
-                text: taskName
-                font.pixelSize: Style.fontBig
-                color: Style.darkLabelColor
-            }
+            ColumnLayout {
+                id: mainColumn
+                anchors {
+                    left: parent.left
+                    right: parent.right
+                    leftMargin: Style.smallMargin
+                    rightMargin: Style.smallMargin
+                    topMargin: Style.bigMargin
+                    bottomMargin: Style.smallMargin
+                }
+                Label {
+                    text: projectName
+                    font.pixelSize: Style.fontUltra
+                    color: Style.darkLabelColor
+                }
 
-            Custom.ShadowedRectangle {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                Layout.topMargin: Style.bigMargin
+                Label {
+                    text: taskName
+                    font.pixelSize: Style.fontBig
+                    color: Style.darkLabelColor
+                }
 
-                Rectangle{
-                    anchors.fill: parent
-                    color: Style.bgColor
-                    radius: Style.rectangleRadius
+                Custom.ShadowedRectangle {
+                    Layout.preferredHeight: childrenRect.height
+                    Layout.fillWidth: true
+                    Layout.topMargin: Style.bigMargin
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Style.bgColor
+                        radius: Style.rectangleRadius
+                    }
 
                     ColumnLayout{
+                        id: col
                         anchors {
-                            fill: parent
+                            left: parent.left
+                            right: parent.right
                             margins: Style.baseMargin
                             bottomMargin: Style.bigMargin
                         }
                         spacing: Style.baseMargin
 
                         Label {
+                            Layout.topMargin: Style.baseMargin
                             text: qsTr("Photo")
                             font.pixelSize: Style.fontTiny
                             color: Style.darkLabelColor
@@ -187,6 +199,7 @@ Item {
 
                         Custom.Button{
                             Layout.alignment: Qt.AlignHCenter
+                            Layout.bottomMargin: Style.bigMargin
                             enabled: photoVisible && !busyIndicator.visible
                             opacity: enabled ? 1 : 0.5
 
