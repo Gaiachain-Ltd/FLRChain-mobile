@@ -1,3 +1,7 @@
 [submodule "mrestapi"]
 	path = mrestapi
 	url = https://github.com/milosolutions/mrestapi.git
+[submodule "android_openssl"]
+	path = android_openssl
+	url = https://github.com/KDAB/android_openssl.git
+	branch = 1.1.1k_1.0.2u

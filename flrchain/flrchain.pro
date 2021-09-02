@@ -126,7 +126,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 API_URL = "https://flrchain.milosolutions.com:8000"
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
-SSL_PATH = $$PWD/../../openssl/android_openssl-master/latest
+SSL_PATH = $$PWD/../android_openssl/latest
 
 contains(ANDROID_ABIS, "armeabi-v7a") {
     ANDROID_EXTRA_LIBS += $$SSL_PATH/arm/libcrypto_1_1.so $$SSL_PATH/arm/libssl_1_1.so
