@@ -18,7 +18,7 @@ LoginRequest::LoginRequest(const QString &email, const QString &password)
     if (!email.isEmpty() && !password.isEmpty()) {
 
         QJsonObject object;
-        object.insert(QLatin1String("username"), QJsonValue(email));
+        object.insert(QLatin1String("username"), QJsonValue(email.toLower()));
         object.insert(QLatin1String("password"), QJsonValue(password));
 
         m_requestDocument.setObject(object);

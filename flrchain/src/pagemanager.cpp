@@ -129,8 +129,14 @@ void PageManager::closeAll()
     emit clearStack();
 }
 
-bool PageManager::enterErrorPopup(const QString &errorMessage)
+bool PageManager::enterErrorPopup(const QString &errorMessage) const
 {
     emit setupErrorPopup(errorMessage);
+    return true;
+}
+
+bool PageManager::enterSuccessPopup(const QString &message) const
+{
+    emit setupSuccessPopup(message);
     return true;
 }

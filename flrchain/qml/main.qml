@@ -83,8 +83,14 @@ ApplicationWindow {
 
         function onSetupErrorPopup(errorMessage)
         {
-            errorPopup.errorMessage = errorMessage
-            errorPopup.open()
+            errorPopup.errorMessage = errorMessage;
+            errorPopup.open();
+        }
+
+        function onSetupSuccessPopup(message)
+        {
+            successPopup.message = message;
+            successPopup.open();
         }
     }
 
@@ -95,5 +101,9 @@ ApplicationWindow {
 
     Popups.ConfirmLogoutPopup{
         id: logoutPopup
+    }
+
+    Popups.SuccessPopup {
+        id: successPopup
     }
 }

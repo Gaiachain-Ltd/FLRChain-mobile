@@ -9,6 +9,7 @@ TextField
     implicitHeight: Style.textInputHeight
 
     background: Rectangle {
+        id: bg
         radius: Style.baseRadius
         implicitWidth: parent.width
         implicitHeight: parent.height

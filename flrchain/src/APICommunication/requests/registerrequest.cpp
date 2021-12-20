@@ -18,7 +18,7 @@ RegisterRequest::RegisterRequest(const QString &email, const QString &password, 
     if (!email.isEmpty() && !password.isEmpty()) {
 
         QJsonObject object;
-        object.insert(QLatin1String("email"), QJsonValue(email));
+        object.insert(QLatin1String("email"), QJsonValue(email.toLower()));
         object.insert(QLatin1String("password"), QJsonValue(password));
         object.insert(QLatin1String("first_name"), QJsonValue(firstName));
         object.insert(QLatin1String("last_name"), QJsonValue(lastName));

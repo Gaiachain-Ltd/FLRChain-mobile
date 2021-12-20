@@ -14,7 +14,7 @@ public:
     {
         TransactionId = Qt::UserRole + 1,
         Title,
-        Type,
+        Action,
         Amount,
         CreationDate,
         Status,

@@ -9,7 +9,7 @@ class Transaction : public QObject
     Q_OBJECT
     Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
-    Q_PROPERTY(QString type READ type WRITE setType NOTIFY typeChanged)
+    Q_PROPERTY(int action READ action WRITE setAction NOTIFY actionChanged)
     Q_PROPERTY(double amount READ amount WRITE setAmount NOTIFY amountChanged)
     Q_PROPERTY(QString creationDate READ creationDate WRITE setCreationDate NOTIFY creationDateChanged)
     Q_PROPERTY(int status READ status WRITE setStatus NOTIFY statusChanged)
@@ -19,7 +19,7 @@ public:
 
     int id() const;
     QString title() const;
-    QString type() const;
+    int action() const;
     double amount() const;
     QString creationDate() const;
     int status() const;
@@ -27,7 +27,7 @@ public:
 public slots:
     void setId(const int id);
     void setTitle(const QString &title);
-    void setType(const QString &type);
+    void setAction(const int action);
     void setAmount(const double amount);
     void setCreationDate(const QString &creationDate);
     void setStatus(int status);
@@ -35,7 +35,7 @@ public slots:
 signals:
     void idChanged(int id);
     void titleChanged(QString title);
-    void typeChanged(QString type);
+    void actionChanged(int action);
     void amountChanged(double amount);
     void creationDateChanged(QString creationDate);
     void statusChanged(int status);
@@ -43,7 +43,7 @@ signals:
 private:
     int m_id;
     QString m_title;
-    QString m_type;
+    int m_action;
     double m_amount;
     QString m_creationDate;
     int m_status;

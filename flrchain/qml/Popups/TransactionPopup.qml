@@ -17,7 +17,7 @@ Custom.Popup {
         spacing: Style.baseMargin
 
         Text {
-            text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer is to be made")
+            text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer has to be made")
             Layout.fillWidth: true
             Layout.preferredHeight: 62
             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -45,6 +45,7 @@ Custom.Popup {
                 color: Style.darkLabelColor
                 horizontalAlignment: Qt.AlignHCenter
                 leftPadding: 0
+                validator: RegExpValidator{ regExp: /^[0-9]+([.][0-9]{1,2})?$/ }
             }
 
             Rectangle{
@@ -64,21 +65,28 @@ Custom.Popup {
             font.pointSize: Style.fontTiny
             font.weight: Font.DemiBold
             color: Style.mediumLabelColor
-            text: qsTr("Receiver email")
+            text: qsTr("Receiver phone")
         }
 
         Custom.TextInput {
+            id: phoneInput
             Layout.topMargin: -Style.tinyMargin
             Layout.fillWidth: true
-            placeholderText: qsTr("+00 111 222 111")
+            placeholderText: qsTr("Phone number...")
             color: Style.darkLabelColor
+            text: session.user.phone
         }
 
         Custom.Button {
             text: qsTr("Cash out")
             Layout.fillWidth: true
+            enabled: phoneInput.displayText.length > 0 && amountInput.displayText.length > 0
+            opacity: enabled ? 1.0 : 0.5
 
             onClicked: {
+                console.log(amountInput.text, phoneInput.text);
+                session.cashOut(amountInput.text, phoneInput.text);
+                popup.close();
             }
         }
 

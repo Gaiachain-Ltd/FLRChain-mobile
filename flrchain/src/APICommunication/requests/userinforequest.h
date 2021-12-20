@@ -15,8 +15,10 @@ public:
     void errorHandler(const QString &error);
 signals:
     void userInfoReply(const QString &firstName,
-                        const QString &lastName,
-                        const QString &email, bool optedIn) const;
+                       const QString &lastName,
+                       const QString &email,
+                       const QString &phone,
+                       bool optedIn) const;
 protected:
     virtual void parse() override final;
 };

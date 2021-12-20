@@ -61,10 +61,6 @@ Item {
         id: transactionPopup
     }
 
-    Popups.TransferSuccessPopup{
-        id: transferSuccess
-    }
-
     Flickable {
         id: flick
         anchors {

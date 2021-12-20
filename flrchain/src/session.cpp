@@ -60,7 +60,7 @@ void Session::onLoginSuccessful(const QString &token)
 }
 
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
-                         const QString &email, bool optedIn)
+                         const QString &email, const QString &phone, bool optedIn)
 {
     if (!firstName.isEmpty()) {
         user()->setFirstName(firstName);
@@ -70,6 +70,9 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     }
     if (!email.isEmpty()) {
         user()->setEmail(email);
+    }
+    if (!phone.isEmpty()) {
+        user()->setPhone(phone);
     }
     user()->setOptedIn(optedIn);
 }
@@ -226,7 +229,7 @@ void Session::getWalletBalance() const
     mClient->send(request);
 }
 
-void Session::cashOut(const double amount, const QString& address) const
+void Session::cashOut(const QString& amount, const QString& phone) const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -238,7 +241,7 @@ void Session::cashOut(const double amount, const QString& address) const
         return;
     }
 
-    auto request = QSharedPointer<CashOutRequest>::create(amount, address, getToken());
+    auto request = QSharedPointer<CashOutRequest>::create(amount, phone, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
             m_dataManager, &DataManager::cashOutReplyReceived);
 
