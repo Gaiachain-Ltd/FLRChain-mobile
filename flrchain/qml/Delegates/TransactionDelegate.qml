@@ -30,6 +30,33 @@ Item {
         }
     }
 
+    function signType() {
+        switch(action) {
+        case 9:
+            return "-";
+        default:
+            return "+";
+        }
+    }
+
+    function actionType() {
+        switch(action) {
+        case 9:
+            return qsTr("Cash out");
+        default:
+            return qsTr("Reward");
+        }
+    }
+
+    function amountColor() {
+        switch(action) {
+        case 9:
+            return Style.errorColor;
+        default:
+            return Style.accentColor;
+        }
+    }
+
     RowLayout{
         height: childrenRect.height
         anchors {
@@ -47,7 +74,7 @@ Item {
             }
 
             Label {
-                text: qsTr("Reward")
+                text: actionType()
                 font.pixelSize: Style.fontTiny
                 color: Style.darkLabelColor
             }
@@ -64,9 +91,9 @@ Item {
         }
 
         Label {
-            text: "+ " + amount
+            text: signType() + amount
             font.pixelSize: Style.fontLarge
-            color: Style.accentColor
+            color: amountColor()
         }
     }
 

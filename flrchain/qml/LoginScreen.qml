@@ -17,6 +17,7 @@ Item {
         }
 
         function onLoginSuccessful(token){
+            session.getUserInfo();
             pageManager.enterDashboardScreen();
         }
     }
@@ -121,6 +122,7 @@ Item {
                             id: userEmail
                             Layout.topMargin: -Style.tinyMargin
                             placeholderText: qsTr("Please enter your email...")
+                            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
                             color: errorMode ? Style.errorColor : Style.darkLabelColor
                             onTextChanged: {
                                 if(errorMode) {

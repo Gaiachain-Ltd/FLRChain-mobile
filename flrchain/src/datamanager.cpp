@@ -50,7 +50,11 @@ DataManager::~DataManager()
 
 void DataManager::cashOutReplyReceived(const bool result)
 {
-    qDebug() << "Cashout result" << result;
+    if (result) {
+      PageManager::instance()->enterSuccessPopup("Cashed out successfully.");
+    } else {
+      PageManager::instance()->enterErrorPopup("Cash out request failed.");
+    }
 }
 
 void DataManager::joinProjectError()

@@ -37,7 +37,7 @@ public:
     Q_INVOKABLE void joinProject(const int projectId) const;
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
-    Q_INVOKABLE void cashOut(const double amount, const QString &address) const;
+    Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const;
@@ -54,9 +54,11 @@ signals:
     void internetConnectionChanged(bool internetConnection);
 private:
     void onLoginSuccessful(const QString& token);
-    void onUserInfo(const QString& firstName,
-                    const QString& lastName,
-                    const QString& email, bool optedIn);
+    void onUserInfo(const QString &firstName,
+                    const QString &lastName,
+                    const QString &email,
+                    const QString &phone,
+                    bool optedIn);
     void setToken(const QByteArray &token);
 
     UserPtr mCurrentUser;

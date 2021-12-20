@@ -10,7 +10,7 @@ TransactionsModel::TransactionsModel(QObject *parent) :
 {
     m_customNames[TransactionId] = "transactionId";
     m_customNames[Title] = "title";
-    m_customNames[Type] = "type";
+    m_customNames[Action] = "action";
     m_customNames[Amount] = "amount";
     m_customNames[CreationDate] = "creationDate";
     m_customNames[Status] = "status";
@@ -41,8 +41,8 @@ QVariant TransactionsModel::data(const QModelIndex &index, int role) const
         return item->id();
     case Title:
         return item->title();
-    case Type:
-        return item->type();
+    case Action:
+        return item->action();
     case Amount:
         return item->amount();
     case CreationDate:
@@ -73,8 +73,8 @@ bool TransactionsModel::setData(const QModelIndex &index, const QVariant &value,
     case Title:
         item->setTitle(value.toString());
         break;
-    case Type:
-        item->setType(value.toString());
+    case Action:
+        item->setAction(value.toInt());
         break;
     case Amount:
         item->setAmount(value.toDouble());
@@ -111,6 +111,7 @@ void TransactionsModel::parseJsonObject(const QJsonObject &response)
         QDateTime date = QDateTime::fromString(projectObject.value(QLatin1String("created")).toString(), Qt::ISODate);
         transaction->setCreationDate(date.toString(QLatin1String("dd.MM.yyyy")));
         transaction->setStatus(projectObject.value(QLatin1String("status")).toInt());
+        transaction->setAction(projectObject.value(QLatin1String("action")).toInt());
 
         m_items.append(transaction);
     }

@@ -80,3 +80,16 @@ void User::clear()
     setLastName(QString());
     setOptedIn(false);
 }
+
+const QString &User::phone() const
+{
+    return m_phone;
+}
+
+void User::setPhone(const QString &newPhone)
+{
+    if (m_phone == newPhone)
+        return;
+    m_phone = newPhone;
+    emit phoneChanged();
+}

@@ -2,17 +2,17 @@
 #include <QJsonObject>
 #include <QJsonValue>
 
-CashOutRequest::CashOutRequest(const double amount, const QString &address, const QByteArray &token)
-    : ApiRequest("")
+CashOutRequest::CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token)
+    : ApiRequest("payments/mtn/payout")
 {
     connect(this, &CashOutRequest::replyError,
             this, &CashOutRequest::errorHandler);
 
-    if (!address.isEmpty() && amount != 0) {
+    if (!phone.isEmpty() && amount != 0) {
 
         QJsonObject object;
         object.insert(QLatin1String("amount"), QJsonValue(amount));
-        object.insert(QLatin1String("address"), QJsonValue(address));
+        object.insert(QLatin1String("phone"), QJsonValue(phone));
 
         m_requestDocument.setObject(object);
         setPriority(Priority::High);
@@ -31,5 +31,11 @@ void CashOutRequest::errorHandler(const QString &error)
 
 void CashOutRequest::parse()
 {
-    emit transferReply(true);
+    QJsonObject projectObject(m_replyDocument.object());
+
+    if (projectObject.value("success").toBool()) {
+        emit transferReply(true);
+    } else {
+        emit transferReply(false);
+    }
 }

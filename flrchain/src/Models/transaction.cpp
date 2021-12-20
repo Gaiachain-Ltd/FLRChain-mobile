@@ -4,7 +4,7 @@ Transaction::Transaction(QObject *parent) :
     QObject(parent),
     m_id(),
     m_title(QString()),
-    m_type(QString()),
+    m_action(0),
     m_amount(0),
     m_status(2)
 {
@@ -21,9 +21,9 @@ QString Transaction::title() const
     return m_title;
 }
 
-QString Transaction::type() const
+int Transaction::action() const
 {
-    return m_type;
+    return m_action;
 }
 
 double Transaction::amount() const
@@ -57,11 +57,11 @@ void Transaction::setTitle(const QString &title)
     }
 }
 
-void Transaction::setType(const QString &type)
+void Transaction::setAction(const int action)
 {
-    if (m_type != type) {
-        m_type = type;
-        emit typeChanged(type);
+    if (m_action != action) {
+        m_action = action;
+        emit actionChanged(action);
     }
 }
 

@@ -27,7 +27,7 @@
         <file>WalletScreen.qml</file>
         <file>Delegates/TransactionDelegate.qml</file>
         <file>Popups/TransactionPopup.qml</file>
-        <file>Popups/TransferSuccessPopup.qml</file>
+        <file>Popups/SuccessPopup.qml</file>
         <file>Popups/ErrorPopup.qml</file>
         <file>Popups/WorkSuccessPopup.qml</file>
         <file>CustomControls/StatusLabel.qml</file>
