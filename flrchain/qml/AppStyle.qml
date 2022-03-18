@@ -112,31 +112,41 @@ QtObject {
     readonly property color textInputInvalidFontColor: errorColor
     readonly property color textInputPlaceholderFontColor: "#C0C7D4"
 
+    // Pane
+    readonly property int panePadding: 20
+    readonly property color paneBackgroundColor: "#FFFFFF"
+    readonly property int paneBackgroundRadius: 7
+    readonly property int paneShadowHorizontalOffset: 5
+    readonly property int paneShadowVerticalOffset: 15
+    readonly property int paneShadowRadius: 30
+    readonly property color paneShadowColor: "#29000000"
 
-    // Login page
+    // FormPane (used on login and register pages)
+    readonly property int formPaneVerticalSpacing: 20
+    readonly property font formPaneTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color formPaneTitleFontColor: "#414D55"
+    readonly property font formPaneSubtitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color formPaneSubtitleFontColor: "#778699"
+    readonly property color formPaneSeparatorColor: "#FAFAFD"
+
+    // Login and Register pages
     readonly property color loginPageBackgroundColor: "#FAFAFD"
     readonly property int loginPageSideMargin: 16
-    readonly property int loginPageTopMargin: 40
+    readonly property int loginPageTopMargin: 50
     readonly property int loginPageSpacing: 32
     readonly property size loginPageLogoSize: Qt.size(160, 60)
     readonly property size loginPageIconSize: Qt.size(96, 96)
     readonly property int loginPanelPadding: 20
-    readonly property color loginPanelBackgroundColor: "#FFFFFF"
-    readonly property int loginPanelBackgroundRadius: 7
-    readonly property int loginPanelShadowHorizontalOffset: 5
-    readonly property int loginPanelShadowVerticalOffset: 15
-    readonly property int loginPanelShadowRadius: 30
-    readonly property color loginPanelShadowColor: "#29000000"
-    readonly property font loginPanelTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
-    readonly property color loginPanelTitleFontColor: "#414D55"
-    readonly property font loginPanelSubtitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
-    readonly property color loginPanelSubtitleFontColor: "#778699"
     readonly property font loginPanelInputTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 10})
     readonly property color loginPanelInputTitleFontColor: "#72809D"
     readonly property font loginPanelErrorMessageFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
     readonly property color loginPanelErrorMessageFontColor: errorColor
     readonly property font loginPanelForgotPasswordFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
     readonly property color loginPanelForgotPasswordColor: "#06BCC1"
+    readonly property int registrationPageTopBottomMargin: 20
+    readonly property font registrationTermsFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color registrationTermsFontInfoColor: "#606060"
+    readonly property color registrationTermsFontLinkColor: "#06BCC1"
 
     // Header
     readonly property int headerHeight: 60

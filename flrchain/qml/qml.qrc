@@ -36,5 +36,7 @@
         <file>Delegates/DashboardDelegate.qml</file>
         <file>CustomControls/InternetConnectionIssueBanner.qml</file>
         <file>CustomControls/SecondaryButton.qml</file>
+        <file>CustomControls/FormPane.qml</file>
+        <file>CustomControls/Pane.qml</file>
     </qresource>
 </RCC>

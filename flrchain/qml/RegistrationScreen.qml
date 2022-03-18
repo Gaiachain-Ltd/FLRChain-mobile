@@ -1,249 +1,259 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
 
-Item {
+Page {
 
     property bool errorMode: false
 
-    Connections{
+    Connections {
         target: session
-        function onRegistrationError(error){
+
+        function onRegistrationError(error) {
             errorMode = true
             errorLabel.text = error
         }
 
         function onRegistrationSuccessful(){
-            pageManager.enterLoginScreen();
+            pageManager.enterLoginScreen()
         }
     }
 
-    function validateData(){
-        if(!name.text.length || !surname.text.length || !userEmail.text.length
-                || !password.text.length  || !repeatPassword.text.length) {
+    function validateData() {
+        if(!nameInput.text.length || !lastNameInput.text.length ||
+           !userEmailInput.text.length || !passwordInput.text.length  ||
+           !repeatPassword.text.length)
+        {
             errorLabel.text = qsTr("Please fill out all fields")
             return
         }
-        else if(password.text !== repeatPassword.text) {
+
+        if(passwordInput.text !== repeatPassword.text) {
             errorLabel.text = qsTr("Passwords are not equal")
             return
         }
 
-        session.registerUser(userEmail.text, password.text, name.text,
-                             surname.text, phone.text, villageName.text)
+        session.registerUser(userEmailInput.text, passwordInput.text, nameInput.text,
+                             lastNameInput.text, phoneInput.text, villageNameInput.text)
     }
 
-    Rectangle {
-        id: background
+    background: Rectangle {
         color: Style.shadowedBgColor
-        anchors.fill: parent
+    }
 
-        Flickable {
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                topMargin: Style.baseMargin
+    Flickable {
+        anchors {
+            fill: parent
+            leftMargin: Style.loginPageSideMargin
+            rightMargin: Style.loginPageSideMargin
+        }
+        contentHeight: mainColumn.height
+        boundsBehavior: Flickable.StopAtBounds
+
+        ColumnLayout {
+            id: mainColumn
+            width: parent.width
+            spacing: Style.loginPageSpacing
+
+            Image {
+                Layout.topMargin: Style.registrationPageTopBottomMargin
+                Layout.alignment: Qt.AlignHCenter
+                sourceSize: Style.loginPageLogoSize
+                source: "qrc:/img/logo-login.svg"
             }
-            contentHeight: mainColumn.height
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: mainColumn
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.smallMargin
-                    rightMargin: Style.smallMargin
-                }
-                Image {
-                    id: logo
-                    source: "qrc:/img/logo-login.svg"
-                    Layout.topMargin: Style.bigMargin
-                    Layout.preferredWidth: Style.logoWidth
-                    Layout.preferredHeight: Style.logoHeight
-                    Layout.alignment: Qt.AlignHCenter
-                    sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
-                }
+            Custom.FormPane {
+                Layout.fillWidth: true
+                Layout.bottomMargin: Style.registrationPageTopBottomMargin
+                title: qsTr("Register")
+                subtitle: qsTr("Fill the form, make sure it is correct")
 
-                Rectangle {
+                Column {
                     Layout.fillWidth: true
-                    Layout.topMargin: Style.bigMargin
-                    Layout.bottomMargin: Style.smallMargin
-                    Layout.preferredHeight: childrenRect.height
+                    spacing: 5
 
-                    color: Style.bgColor
-                    radius: Style.baseRadius
-                    ColumnLayout{
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: Style.baseMargin
-                        }
-                        spacing: Style.smallMargin
+                    Label {
+                        id: nameInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("First name")
+                    }
 
-                        Label {
-                            Layout.topMargin: Style.baseMargin
-                            text: qsTr("Register")
-                            font.pixelSize: Style.fontLarge
-                            color: Style.accentColor
-                        }
+                    Custom.TextInput {
+                        id: nameInput
+                        placeholderText: nameInputTitle.text
+                    }
+                }
 
-                        Label {
-                            text: qsTr("Fill the form, make sure it is correct")
-                            font.pixelSize: Style.fontTiny
-                            font.weight: Font.DemiBold
-                            color: Style.baseLabelColor
-                            Layout.topMargin: -Style.tinyMargin
-                        }
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
 
-                        Rectangle {
-                            color: Style.grayBgColor
-                            height: Style.separatorHeight
-                            Layout.fillWidth: true
-                            Layout.leftMargin: -Style.baseMargin
-                            Layout.rightMargin: -Style.baseMargin
-                        }
+                    Label {
+                        id: lastNameInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Last name")
+                    }
 
-                        Label {
-                            text: qsTr("First name")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                    Custom.TextInput {
+                        id: lastNameInput
+                        placeholderText: lastNameInputTitle.text
+                    }
+                }
 
-                        Custom.TextInput {
-                            id: name
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("First name")
-                        }
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
 
-                        Label {
-                            text: qsTr("Last name")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                    Label {
+                        id: userEmailInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Email")
+                    }
 
-                        Custom.TextInput {
-                            id: surname
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Last name")
-                        }
+                    Custom.TextInput {
+                        id: userEmailInput
+                        placeholderText: userEmailInputTitle.text
+                        isValid: !errorMode
 
-                        Label {
-                            text: qsTr("Email")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
-
-                        Custom.TextInput {
-                            id: userEmail
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Email")
-                            color: errorMode ? Style.errorColor : Style.darkLabelColor
-                            onTextChanged: {
-                                if(errorMode){
-                                    errorMode = false
-                                    errorLabel.text = ""
-                                }
+                        onTextEdited: {
+                            if(errorMode){
+                                errorMode = false
+                                errorLabel.text = ""
                             }
                         }
+                    }
 
-                        Label {
-                            text: qsTr("Phone")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                }
 
-                        Custom.TextInput {
-                            id: phone
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Phone")
-                        }
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
 
-                        Label {
-                            text: qsTr("Village name")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                    Label {
+                        id: phoneInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Phone")
+                    }
 
-                        Custom.TextInput {
-                            id: villageName
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Village name")
-                        }
+                    Custom.TextInput {
+                        id: phoneInput
+                        placeholderText: phoneInputTitle.text
+                    }
+                }
 
-                        Label {
-                            text: qsTr("Password")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
 
-                        Custom.TextInput {
-                            id: password
-                            Layout.topMargin: -Style.tinyMargin
-                            echoMode: TextInput.Password
-                            placeholderText: qsTr("Password")
-                        }
+                    Label {
+                        id: villageNameInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Village name")
+                    }
 
-                        Label {
-                            text: qsTr("Re-password")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
+                    Custom.TextInput {
+                        id: villageNameInput
+                        placeholderText: villageNameInputTitle.text
+                    }
+                }
 
-                        Custom.TextInput {
-                            id: repeatPassword
-                            Layout.topMargin: -Style.tinyMargin
-                            echoMode: TextInput.Password
-                            placeholderText: qsTr("Repeat password")
-                        }
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
 
-                        Label {
-                            id: errorLabel
-                            font.pixelSize: Style.fontTiny
-                            font.weight: Font.DemiBold
-                            color: Style.errorColor
-                            Layout.fillWidth: true
-                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                        }
+                    Label {
+                        id: passwordInputTitle
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Password")
+                    }
 
-                        Custom.PrimaryButton {
-                            id: registerButton
-                            text: qsTr("Register")
+                    Custom.TextInput {
+                        id: passwordInput
+                        echoMode: TextInput.Password
+                        placeholderText: passwordInputTitle.text
+                    }
+                }
+
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
+
+                    Label {
+                        id: repeatPasswordInput
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Repeat password")
+                    }
+
+                    Custom.TextInput {
+                        id: repeatPassword
+                        echoMode: TextInput.Password
+                        placeholderText: repeatPasswordInput.text
+                    }
+                }
+
+                Label {
+                    id: errorLabel
+                    Layout.fillWidth: true
+                    font: Style.loginPanelErrorMessageFont
+                    color: Style.loginPanelErrorMessageFontColor
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                }
+
+                Custom.PrimaryButton {
+                    id: registerButton
+                    Layout.fillWidth: true
+                    text: qsTr("Register")
+
+                    onClicked: {
+                        validateData()
+                    }
+                }
+
+                Custom.SecondaryButton {
+                    id: loginButton
+                    Layout.fillWidth: true
+                    text: qsTr("Log in")
+
+                    onClicked: {
+                        pageManager.enterLoginScreen()
+                    }
+                }
+
+                Column {
+                    Layout.fillWidth: true
+                    Layout.bottomMargin: Style.registrationPageTopBottomMargin
+
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font: Style.registrationTermsFont
+                        color: Style.registrationTermsFontInfoColor
+                        text: qsTr("By creating this account, you agree with our")
+                    }
+
+                    Label {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        font: Style.registrationTermsFont
+                        color: Style.registrationTermsFontLinkColor
+                        text: qsTr("Terms & Conditions")
+
+                        MouseArea {
+                            anchors.fill: parent
 
                             onClicked: {
-                                validateData()
+                                // TODO
+                                console.warn("TODO: not implemented!")
                             }
-                        }
-
-                        Custom.SecondaryButton {
-                            id: loginButton
-                            text: qsTr("Log in")
-                            backgroundColor: Style.buttonSecColor
-
-                            onClicked: {
-                                pageManager.enterLoginScreen()
-                            }
-                        }
-
-                        Label {
-                            text: qsTr("By creating this account, you agree with our")
-                            font.pixelSize: Style.fontTiny
-                            color: Style.grayLabelColor
-                            Layout.alignment: Qt.AlignHCenter
-                        }
-
-                        Label {
-                            text: qsTr("Terms & Conditions")
-                            font.pixelSize: Style.fontTiny
-                            color: Style.accentColor
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.topMargin: -Style.tinyMargin
-                            Layout.bottomMargin: Style.baseMargin
                         }
                     }
                 }
