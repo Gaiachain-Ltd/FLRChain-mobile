@@ -33,5 +33,7 @@
         <file>CustomControls/StatusLabel.qml</file>
         <file>CustomControls/RoundedImage.qml</file>
         <file>Popups/ConfirmLogoutPopup.qml</file>
+        <file>Delegates/DashboardDelegate.qml</file>
+        <file>CustomControls/InternetConnectionIssueBanner.qml</file>
     </qresource>
 </RCC>

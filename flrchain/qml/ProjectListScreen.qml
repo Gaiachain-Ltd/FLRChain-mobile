@@ -6,7 +6,7 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
-Item {
+Page {
     id: projectsScreen
 
     BusyIndicator {
@@ -16,7 +16,12 @@ Item {
         visible: false
     }
 
-    Connections{
+    Component.onCompleted: {
+        busyIndicator.visible = true
+        session.getProjectsData()
+    }
+
+    Connections {
         target: projectsModel
 
         function onProjectsReceived(){
@@ -24,12 +29,7 @@ Item {
         }
     }
 
-    Component.onCompleted: {
-        busyIndicator.visible = true
-        session.getProjectsData()
-    }
-
-    Connections{
+    Connections {
         target: pageManager
         function onBackTriggered(){
             busyIndicator.visible = true
@@ -37,24 +37,17 @@ Item {
         }
     }
 
-    Custom.Header {
+    background: null
+
+    header: Custom.Header {
         id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+        height: Style.headerHeight
         title: qsTr("Earn rewards")
     }
 
     Flickable {
         id: flick
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true

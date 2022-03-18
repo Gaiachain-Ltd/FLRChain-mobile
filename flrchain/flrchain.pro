@@ -86,8 +86,9 @@ SOURCES += src/main.cpp  \
     src/Models/work.cpp
 
 RESOURCES +=  \
+    fonts/fonts.qrc \
     qml/qml.qrc \
-    resources/resources.qrc
+    images/images.qrc
 
 OTHER_FILES += \
     ../template.doxyfile \

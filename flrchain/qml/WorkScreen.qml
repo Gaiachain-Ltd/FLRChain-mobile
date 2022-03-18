@@ -7,7 +7,7 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 import "qrc:/Popups" as Popups
 
-Item {
+Page {
     id: workScreen
     property bool photoVisible: false
     property int projectId: -1
@@ -16,7 +16,7 @@ Item {
     property string projectName: ""
     property string photoPath: ""
 
-    Connections{
+    Connections {
         target: dataManager
 
         function onDisplayPhoto(filePath){
@@ -41,7 +41,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: pageManager
         function onSetupWorkScreen(projectId, taskId, projectName, taskName){
             workScreen.projectId = projectId
@@ -57,160 +57,149 @@ Item {
         }
     }
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+    Popups.WorkSuccessPopup {
+        id: workSuccessPopup
+    }
+
+    background: Rectangle {
+        color: Style.bgColor
+    }
+
+    header: Custom.Header {
+        height: Style.headerHeight
         title: qsTr("Earn rewards")
     }
 
-    Popups.WorkSuccessPopup {
-        id: workSuccessPopup
+    Flickable {
+        anchors {
+            anchors.fill: parent
+            topMargin: Style.baseMargin
+        }
+        contentHeight: mainColumn.height
+        boundsBehavior: Flickable.StopAtBounds
 
-    }
-
-    Rectangle {
-        id: background
-        color: Style.bgColor
-        anchors.fill: parent
-
-        Flickable {
+        ColumnLayout {
+            id: mainColumn
             anchors {
-                top: parent.top
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
-                topMargin: Style.baseMargin
+                leftMargin: Style.smallMargin
+                rightMargin: Style.smallMargin
+                topMargin: Style.bigMargin
+                bottomMargin: Style.smallMargin
             }
-            contentHeight: mainColumn.height
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: mainColumn
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.smallMargin
-                    rightMargin: Style.smallMargin
-                    topMargin: Style.bigMargin
-                    bottomMargin: Style.smallMargin
+            Label {
+                text: projectName
+                font.pixelSize: Style.fontUltra
+                color: Style.darkLabelColor
+            }
+
+            Label {
+                text: taskName
+                font.pixelSize: Style.fontBig
+                color: Style.darkLabelColor
+            }
+
+            Custom.ShadowedRectangle {
+                Layout.preferredHeight: childrenRect.height
+                Layout.fillWidth: true
+                Layout.topMargin: Style.bigMargin
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: Style.bgColor
+                    radius: Style.rectangleRadius
                 }
-                Label {
-                    text: projectName
-                    font.pixelSize: Style.fontUltra
-                    color: Style.darkLabelColor
-                }
 
-                Label {
-                    text: taskName
-                    font.pixelSize: Style.fontBig
-                    color: Style.darkLabelColor
-                }
+                ColumnLayout{
+                    id: col
+                    anchors {
+                        left: parent.left
+                        right: parent.right
+                        margins: Style.baseMargin
+                        bottomMargin: Style.bigMargin
+                    }
+                    spacing: Style.baseMargin
 
-                Custom.ShadowedRectangle {
-                    Layout.preferredHeight: childrenRect.height
-                    Layout.fillWidth: true
-                    Layout.topMargin: Style.bigMargin
-
-                    Rectangle {
-                        anchors.fill: parent
-                        color: Style.bgColor
-                        radius: Style.rectangleRadius
+                    Label {
+                        Layout.topMargin: Style.baseMargin
+                        text: qsTr("Photo")
+                        font.pixelSize: Style.fontTiny
+                        color: Style.darkLabelColor
+                        font.weight: Font.DemiBold
                     }
 
-                    ColumnLayout{
-                        id: col
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: Style.baseMargin
-                            bottomMargin: Style.bigMargin
+                    Custom.ImageButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        bgColor: Style.inputBgColor
+                        text: qsTr("Upload from gallery...")
+                        visible: !photoVisible
+                        iconSrc: "qrc:/img/icon-upload.svg"
+
+                        onClicked: {
+                            platform.selectFile();
                         }
-                        spacing: Style.baseMargin
+                    }
 
-                        Label {
-                            Layout.topMargin: Style.baseMargin
-                            text: qsTr("Photo")
-                            font.pixelSize: Style.fontTiny
-                            color: Style.darkLabelColor
-                            font.weight: Font.DemiBold
+                    Custom.ImageButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        bgColor: Style.inputBgColor
+                        visible: !photoVisible
+                        text: qsTr("Take photo...")
+                        iconSrc: "qrc:/img/icon-camera.svg"
+                        onClicked: {
+                            platform.capture()
                         }
+                    }
 
-                        Custom.ImageButton{
-                            Layout.alignment: Qt.AlignHCenter
-                            bgColor: Style.inputBgColor
-                            text: qsTr("Upload from gallery...")
-                            visible: !photoVisible
-                            iconSrc: "qrc:/img/icon-upload.svg"
+                    Custom.RoundedImage {
+                        id: img
+                        visible: photoVisible
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: Style.workImgHeight
 
+                        Custom.IconButton {
+                            id: closeButton
+                            anchors {
+                                right: parent.right
+                                top: parent.top
+                                margins: Style.microMargin
+                            }
+                            iconSize: Qt.size(Style.iconUltra, Style.iconUltra)
+                            iconSrc: "qrc:/img/icon-delete.svg"
+                            visible: !busyIndicator.visible
                             onClicked: {
-                                platform.selectFile();
+                                img.source = ""
+                                photoVisible = false
+                                dataManager.removeCurrentWorkPhoto()
                             }
                         }
 
-                        Custom.ImageButton{
-                            Layout.alignment: Qt.AlignHCenter
-                            bgColor: Style.inputBgColor
-                            visible: !photoVisible
-                            text: qsTr("Take photo...")
-                            iconSrc: "qrc:/img/icon-camera.svg"
-                            onClicked: {
-                                platform.capture()
-                            }
+                        BusyIndicator {
+                            id: busyIndicator
+                            anchors.centerIn: img
+                            running: true
                         }
+                    }
 
-                        Custom.RoundedImage {
-                            id: img
-                            visible: photoVisible
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: Style.workImgHeight
+                    Item {
+                        Layout.fillHeight: true
+                        Layout.fillWidth: true
+                    }
 
-                            Custom.IconButton {
-                                id: closeButton
-                                anchors {
-                                    right: parent.right
-                                    top: parent.top
-                                    margins: Style.microMargin
-                                }
-                                iconSize: Style.iconUltra
-                                iconSrc: "qrc:/img/icon-delete.svg"
-                                visible: !busyIndicator.visible
-                                onClicked: {
-                                    img.source = ""
-                                    photoVisible = false
-                                    dataManager.removeCurrentWorkPhoto()
-                                }
-                            }
+                    Custom.Button {
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.bottomMargin: Style.bigMargin
+                        enabled: photoVisible && !busyIndicator.visible
+                        opacity: enabled ? 1 : 0.5
 
-                            BusyIndicator {
-                                id: busyIndicator
-                                anchors.centerIn: img
-                                running: true
-                            }
-                        }
-
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                        }
-
-                        Custom.Button{
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.bottomMargin: Style.bigMargin
-                            enabled: photoVisible && !busyIndicator.visible
-                            opacity: enabled ? 1 : 0.5
-
-                            text: qsTr("Upload")
-                            onClicked: {
-                                if(session.internetConnection){
-                                    session.sendWorkRequest(photoPath, projectId, taskId)
-                                }
-                                else{
-                                    pageManager.enterErrorPopup("No Internet Connection")
-                                }
+                        text: qsTr("Upload")
+                        onClicked: {
+                            if(session.internetConnection){
+                                session.sendWorkRequest(photoPath, projectId, taskId)
+                            } else {
+                                pageManager.enterErrorPopup("No Internet Connection")
                             }
                         }
                     }

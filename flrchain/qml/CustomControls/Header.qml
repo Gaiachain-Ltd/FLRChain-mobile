@@ -1,82 +1,88 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import com.flrchain.style 1.0
 import QtQuick.Layouts 1.15
 
-ColumnLayout{
+import com.flrchain.style 1.0
 
+import "qrc:/CustomControls" as Custom
+
+Pane {
+    id: root
+    padding: 0
+
+    required property string title
     property bool backButtonVisible: true
-    property string title: ""
 
-    Rectangle{
-        id: headerContainer
-        height: Style.headerHeight
-        width: parent.width
-
-        Rectangle {
-            height: parent.height
-            width: parent.width
-            anchors {
-                verticalCenter: parent.verticalCenter
-                left: parent.left
-                right: parent.right
-                rightMargin: Style.microMargin
-            }
-
-            IconButton {
-                id: backButton
-                anchors {
-                    left: parent.left
-                    leftMargin: -Style.tinyMargin
-                    verticalCenter: parent.verticalCenter
-                }
-                iconSrc: "qrc:/img/icon-back.svg"
-                visible: backButtonVisible
-                onClicked: pageManager.back()
-                height: headerContainer.height
-                width: height
-            }
-
-            Label {
-                text: title
-                anchors {
-                    horizontalCenter: parent.horizontalCenter
-                    verticalCenter: parent.verticalCenter
-                }
-                color: Style.accentColor
-            }
-
-            IconButton {
-                id: menuButton
-                anchors {
-                    right: parent.right
-                    rightMargin: -Style.microMargin
-                    verticalCenter: parent.verticalCenter
-                }
-                iconSrc: "qrc:/img/icon-menu.svg"
-                onClicked: {
-                    menu.open()
-                    session.getUserInfo()
-                }
-                height: headerContainer.height
-                width: height
-                iconSize: Style.iconBig
-            }
+    Custom.InternetConnectionIssueBanner {
+        anchors {
+            left: parent.left
+            right: parent.right
+            bottom: parent.bottom
+            bottomMargin: session.internetConnection ? 0 : -height
         }
 
-        Rectangle{
-            anchors.bottom: headerContainer.bottom
-            height: Style.separatorHeight
-            width: parent.width
-            color: Style.grayBgColor
+        visible: anchors.bottomMargin < 0
+
+        Behavior on anchors.bottomMargin {
+            NumberAnimation {
+                duration: 500
+            }
         }
     }
 
-    Label {
-        text: qsTr("No Internet Connection")
-        Layout.alignment: Qt.AlignHCenter
-        Layout.bottomMargin: Style.microMargin
-        color: Style.errorColor
-        visible: !session.internetConnection
+    Rectangle {
+        id: headerContainer
+        width: parent.width
+        height: Style.headerHeight
+        color: Style.headerBackgroundColor
+
+        IconButton {
+            id: backButton
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                left: parent.left
+            }
+            width: Style.backButtonClickAreaWidth
+            iconSize: Style.backButtonIconSize
+            iconSrc: "qrc:/img/icon-back.svg"
+            visible: backButtonVisible
+
+            onClicked: {
+                pageManager.back()
+            }
+        }
+
+        Label {
+            id: titleLabel
+            anchors.centerIn: parent
+            font: Style.headerTitleFont
+            color: Style.headerTitleFontColor
+            text: title
+        }
+
+        IconButton {
+            id: menuButton
+            anchors {
+                top: parent.top
+                bottom: parent.bottom
+                right: parent.right
+            }
+            width: Style.menuButtonClickAreaWidth
+            iconSize: Style.menuButtonIconSize
+            iconSrc: "qrc:/img/icon-menu.svg"
+
+            onClicked: {
+                menu.open()
+                session.getUserInfo()
+            }
+        }
+
+        Rectangle {
+            anchors.bottom: parent.bottom
+            width: parent.width
+            height: Style.separatorHeight
+            color: Style.grayBgColor
+        }
     }
 }

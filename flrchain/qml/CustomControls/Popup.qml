@@ -1,9 +1,9 @@
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
-Popup {
+Controls.Popup {
     id: popup
 
     anchors.centerIn: parent
@@ -35,7 +35,7 @@ Popup {
             sourceSize: Qt.size(Style.popupImgHeight, Style.popupImgHeight)
         }
 
-        Label {
+        Controls.Label {
             Layout.alignment: Qt.AlignHCenter
             font.pointSize: Style.fontUltra
             color: Style.darkLabelColor
