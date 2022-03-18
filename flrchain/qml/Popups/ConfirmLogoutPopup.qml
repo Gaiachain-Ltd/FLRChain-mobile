@@ -24,7 +24,7 @@ Custom.Popup {
             text: qsTr("Are you sure you want to log out?")
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Log out")
             Layout.fillWidth: true
 
@@ -34,11 +34,11 @@ Custom.Popup {
             }
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Cancel")
             Layout.bottomMargin: Style.tinyMargin
             Layout.fillWidth: true
-            bgColor: Style.buttonSecColor
+            backgroundColor: Style.buttonSecColor
 
             onClicked: {
                 popup.close()

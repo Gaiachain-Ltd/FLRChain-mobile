@@ -62,7 +62,7 @@ Item {
                     color: Style.mediumLabelColor
                 }
 
-                Custom.Button{
+                Custom.PrimaryButton {
                     Layout.topMargin: Style.tinyMargin
                     Layout.fillWidth: true
                     text: qsTr("Earn reward")

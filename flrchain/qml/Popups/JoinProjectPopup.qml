@@ -34,7 +34,7 @@ Custom.Popup {
             text: projectName
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Send request")
             Layout.fillWidth: true
 
@@ -44,11 +44,11 @@ Custom.Popup {
             }
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Cancel")
             Layout.bottomMargin: Style.tinyMargin
             Layout.fillWidth: true
-            bgColor: Style.buttonSecColor
+            backgroundColor: Style.buttonSecColor
 
             onClicked: {
                 popup.close()

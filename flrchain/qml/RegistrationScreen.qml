@@ -211,7 +211,7 @@ Item {
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
 
-                        Custom.Button {
+                        Custom.PrimaryButton {
                             id: registerButton
                             text: qsTr("Register")
 
@@ -220,10 +220,10 @@ Item {
                             }
                         }
 
-                        Custom.Button {
+                        Custom.SecondaryButton {
                             id: loginButton
                             text: qsTr("Log in")
-                            bgColor: Style.buttonSecColor
+                            backgroundColor: Style.buttonSecColor
 
                             onClicked: {
                                 pageManager.enterLoginScreen()

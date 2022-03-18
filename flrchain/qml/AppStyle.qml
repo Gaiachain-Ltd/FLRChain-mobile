@@ -5,11 +5,7 @@ import QtQuick 2.15
 QtObject {
 
     readonly property string appFontFamily: "Open Sans"
-    readonly property font defaultFont: Qt.font({
-        family: appFontFamily,
-        styleName: "Regular",
-        pixelSize: 14
-    })
+    readonly property font defaultFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 14})
 
     // Colors
     readonly property color accentColor: "#23BC3D"
@@ -83,14 +79,69 @@ QtObject {
     readonly property int borderWidth: 1
     readonly property int separatorHeight: 2
 
+    // Button
+    readonly property font buttonFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 16})
+    readonly property size defaultButtonSize: Qt.size(288, 42)
+    readonly property int defaultButtonRadius: 7
+    readonly property int defaultButtonBorderWidth: 1
+    readonly property color primaryButtonBackgroundColor: "#06BCC1"
+    readonly property color primaryButtonBorderColor: primaryButtonBackgroundColor
+    readonly property color primaryButtonFontColor: "#FFFFFF"
+    readonly property color secondaryButtonBackgroundColor: "#FFFFFF"
+    readonly property color secondaryButtonBorderColor: "#06BCC1"
+    readonly property color secondaryButtonFontColor: secondaryButtonBorderColor
+
+    // CheckBox
+    readonly property size checkboxSize: Qt.size(20, 20)
+    readonly property size checkboxTickSize: Qt.size(11, 9)
+    readonly property int checkboxSpacing: 7
+    readonly property int checkboxBorderWidth: 1
+    readonly property int checkboxBorderRadius: 3
+    readonly property color checkboxBorderColor: "#DCE0E7"
+    readonly property font checkboxLabelFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 10})
+    readonly property color checkBoxLabelFontColor: "#253F50"
+
+    // TextInput
+    readonly property size defaultTextInputSize: Qt.size(288, 36)
+    readonly property int textInputRadius: 7
+    readonly property color textInputValidBackgroundColor: "#F7F9FB"
+    readonly property color textInputInvalidBackgroundColor: "#FBF7F7"
+    readonly property int textInputPadding: 16
+    readonly property font textInputFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color textInputValidFontColor: "#253F50"
+    readonly property color textInputInvalidFontColor: errorColor
+    readonly property color textInputPlaceholderFontColor: "#C0C7D4"
+
+
+    // Login page
+    readonly property color loginPageBackgroundColor: "#FAFAFD"
+    readonly property int loginPageSideMargin: 16
+    readonly property int loginPageTopMargin: 40
+    readonly property int loginPageSpacing: 32
+    readonly property size loginPageLogoSize: Qt.size(160, 60)
+    readonly property size loginPageIconSize: Qt.size(96, 96)
+    readonly property int loginPanelPadding: 20
+    readonly property color loginPanelBackgroundColor: "#FFFFFF"
+    readonly property int loginPanelBackgroundRadius: 7
+    readonly property int loginPanelShadowHorizontalOffset: 5
+    readonly property int loginPanelShadowVerticalOffset: 15
+    readonly property int loginPanelShadowRadius: 30
+    readonly property color loginPanelShadowColor: "#29000000"
+    readonly property font loginPanelTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color loginPanelTitleFontColor: "#414D55"
+    readonly property font loginPanelSubtitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color loginPanelSubtitleFontColor: "#778699"
+    readonly property font loginPanelInputTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 10})
+    readonly property color loginPanelInputTitleFontColor: "#72809D"
+    readonly property font loginPanelErrorMessageFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color loginPanelErrorMessageFontColor: errorColor
+    readonly property font loginPanelForgotPasswordFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color loginPanelForgotPasswordColor: "#06BCC1"
+
     // Header
     readonly property int headerHeight: 60
     readonly property color headerBackgroundColor: bgColor
-    readonly property font headerTitleFont: Qt.font({
-        family: appFontFamily,
-        styleName: "SemiBold",
-        pixelSize: 20
-    })
+    readonly property font headerTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
     readonly property color headerTitleFontColor: "#414D55"
     readonly property int backButtonClickAreaWidth: 40
     readonly property size backButtonIconSize: Qt.size(10, 18)
@@ -100,17 +151,11 @@ QtObject {
     // Internet connection issue banner
     readonly property int internetConnectionIssueBannerHeight: 40
     readonly property color internetConnectionIssueBannerColor: headerBackgroundColor
-    readonly property font internetConnectionIssueBannerFont: Qt.font({
-        family: appFontFamily,
-        styleName: "Bold",
-        pixelSize: 14
-    })
+    readonly property font internetConnectionIssueBannerFont: Qt.font({family: appFontFamily, styleName: "Bold", pixelSize: 14})
     readonly property color internetConnectionIssueLabelColor: errorColor
     readonly property size internetConnectionIssueIconSize: Qt.size(14, 14)
 
-
-
-    // Dashboard
+    // Dashboard page
     readonly property int dashboardListTopMargin: 30
     readonly property int dashboardListSideMargin: 16
     readonly property int dashboardListDelegateSpacing: 20
@@ -124,17 +169,9 @@ QtObject {
     readonly property int dashboardDelegateBackgroundRadius: 10
     readonly property int dashboardDelegateBackgroundBorderWidth: 2
     readonly property color dashboardDelegateBackgroundBorderColor: dashboardDelegateBackgroundColor
-    readonly property font dashboardDelegatePrimaryLabelFont: Qt.font({
-        family: appFontFamily,
-        styleName: "SemiBold",
-        pixelSize: 20
-    })
+    readonly property font dashboardDelegatePrimaryLabelFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
     readonly property color dashboardDelegatePrimaryLabelFontColor: "#414D55"
-    readonly property font dashboardDelegateSecondaryLabelFont: Qt.font({
-        family: appFontFamily,
-        styleName: "Regular",
-        pixelSize: 14
-    })
+    readonly property font dashboardDelegateSecondaryLabelFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 14})
     readonly property color dashboardDelegateSecondaryLabelFontColor: "#778699"
     readonly property size dashboardDelegateIconSize: Qt.size(96, 96)
     readonly property int dashboardDelegateShadowHorizontalOffset: 5

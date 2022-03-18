@@ -70,7 +70,7 @@ Custom.Popup {
             text: qsTr("has been successfully added")
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Back to project")
             Layout.fillWidth: true
 

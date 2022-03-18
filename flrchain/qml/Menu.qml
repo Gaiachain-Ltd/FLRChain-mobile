@@ -56,7 +56,7 @@ Drawer {
                     Label {
                         id: usermail
                         Layout.leftMargin: Style.baseMargin
-                        text: session.user.email
+                        text: session && session.user ? session.user.email : null
                         font.pixelSize: Style.fontSmall
                         color: Style.darkLabelColor
                         font.weight: Font.DemiBold

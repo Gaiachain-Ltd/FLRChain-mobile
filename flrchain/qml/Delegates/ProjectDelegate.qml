@@ -113,12 +113,12 @@ Item {
                     elide: Text.ElideRight
                 }
 
-                Custom.Button{
+                Custom.PrimaryButton {
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
-                    bgColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
+                    backgroundColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
                     onClicked:{
                         if (!session.user.optedIn) {
                             //Refresh user info:

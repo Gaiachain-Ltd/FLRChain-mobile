@@ -188,7 +188,7 @@ Page {
                         Layout.fillWidth: true
                     }
 
-                    Custom.Button {
+                    Custom.PrimaryButton {
                         Layout.alignment: Qt.AlignHCenter
                         Layout.bottomMargin: Style.bigMargin
                         enabled: photoVisible && !busyIndicator.visible

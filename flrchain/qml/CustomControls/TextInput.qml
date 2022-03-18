@@ -1,28 +1,29 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+
 import com.flrchain.style 1.0
 
-TextField
-{
+TextField {
     id: textInput
-    implicitWidth: parent.width
-    implicitHeight: Style.textInputHeight
+    implicitWidth: Style.defaultTextInputSize.width
+    implicitHeight: Style.defaultTextInputSize.height
+
+    property bool isValid: true
 
     background: Rectangle {
-        id: bg
         radius: Style.baseRadius
-        implicitWidth: parent.width
-        implicitHeight: parent.height
-        color: Style.inputBgColor
+        color: textInput.isValid ? Style.textInputValidBackgroundColor
+                                 : Style.textInputInvalidBackgroundColor
     }
 
     verticalAlignment: Qt.AlignVCenter
     horizontalAlignment: Qt.AlignLeft
-
-    color: Style.darkLabelColor
-    font.weight: Font.DemiBold
-    font.pixelSize: Style.fontTiny
+    leftPadding: Style.textInputPadding
+    rightPadding: Style.textInputPadding
+    font: Style.textInputFont
+    color: isValid ? Style.textInputValidFontColor
+                   : Style.textInputInvalidFontColor
     placeholderText: textInput.placeholderText
-    placeholderTextColor: Style.placeholderColor
-    leftPadding: Style.baseMargin
+    placeholderTextColor: isValid ? Style.textInputPlaceholderFontColor
+                                  : Style.textInputInvalidFontColor
 }

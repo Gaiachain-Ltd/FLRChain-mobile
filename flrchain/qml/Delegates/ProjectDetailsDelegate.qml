@@ -166,7 +166,7 @@ Item {
                     Layout.preferredHeight: Style.projectImgHeight
                 }
 
-                Custom.Button{
+                Custom.PrimaryButton {
                     id: btn
                     Layout.topMargin: Style.tinyMargin
                     Layout.bottomMargin: Style.baseMargin

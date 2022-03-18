@@ -8,7 +8,7 @@
         <file>CustomControls/TextInput.qml</file>
         <file>CustomControls/IconButton.qml</file>
         <file>CustomControls/Header.qml</file>
-        <file>CustomControls/Button.qml</file>
+        <file>CustomControls/PrimaryButton.qml</file>
         <file>CustomControls/CheckBox.qml</file>
         <file>CustomControls/ImageButton.qml</file>
         <file>Dashboard.qml</file>
@@ -35,5 +35,6 @@
         <file>Popups/ConfirmLogoutPopup.qml</file>
         <file>Delegates/DashboardDelegate.qml</file>
         <file>CustomControls/InternetConnectionIssueBanner.qml</file>
+        <file>CustomControls/SecondaryButton.qml</file>
     </qresource>
 </RCC>

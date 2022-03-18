@@ -57,7 +57,7 @@ Item {
                     color: Style.mediumLabelColor
                 }
 
-                Custom.Button {
+                Custom.PrimaryButton {
                     id: cashOutBtn
                     Layout.fillWidth: true
                     text: qsTr("Cash out")

@@ -77,7 +77,7 @@ Custom.Popup {
             text: session.user.phone
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Cash out")
             Layout.fillWidth: true
             enabled: phoneInput.displayText.length > 0 && amountInput.displayText.length > 0
@@ -90,11 +90,11 @@ Custom.Popup {
             }
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("Cancel")
             Layout.bottomMargin: Style.tinyMargin
             Layout.fillWidth: true
-            bgColor: Style.buttonSecColor
+            backgroundColor: Style.buttonSecColor
 
             onClicked: {
                 popup.close()

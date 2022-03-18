@@ -1,44 +1,38 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
+
 import com.flrchain.style 1.0
 
 Controls.CheckBox {
     id: checkBox
+    padding: 0
+    spacing: Style.checkboxSpacing
+
+    background: null
 
     indicator: Rectangle {
-        id: contentRec
-        implicitWidth: Style.checkboxHeight
-        implicitHeight: Style.checkboxHeight
-        radius: Style.checkBoxRadius
-        border.color: Style.accentColor
-        border.width: Style.borderWidth
+        implicitWidth: Style.checkboxSize.width
+        implicitHeight: Style.checkboxSize.height
+        radius: Style.checkboxBorderRadius
+        border {
+            width: Style.checkboxBorderWidth
+            color: Style.checkboxBorderColor
+        }
 
-        Rectangle {
+        Image {
+            anchors.centerIn: parent
+            sourceSize: Style.checkboxTickSize
+            source: "qrc:/img/checkbox-check.svg"
             visible: checkBox.checked
-            color: Style.accentColor
-            border.color: Style.accentColor
-            radius: Style.checkBoxRadius
-            anchors.fill: parent
-
-            Image {
-                source: "qrc:/img/checkbox-check.svg"
-                height: Style.checkboxHeight
-                width: Style.checkboxHeight
-                anchors.centerIn: parent
-                sourceSize: Qt.size(Style.checkboxHeight, Style.checkboxHeight)
-            }
         }
     }
 
-    contentItem: Text {
-        anchors.verticalCenter: contentRec.verticalCenter
-        text: checkBox.text
-        color: Style.baseLabelColor
+    contentItem: Controls.Label {
+        anchors.verticalCenter: indicator.verticalCenter
         verticalAlignment: Qt.AlignVCenter
-        leftPadding: contentRec.width + spacing
-        font.pixelSize: Style.fontTiny
-        font.weight: Font.DemiBold
+        leftPadding: indicator.width + spacing
+        font: Style.checkboxLabelFont
+        color: Style.checkBoxLabelFontColor
+        text: checkBox.text
     }
-
-    spacing: Style.microMargin
 }

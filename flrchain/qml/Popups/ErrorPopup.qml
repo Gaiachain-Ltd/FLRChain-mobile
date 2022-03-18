@@ -25,7 +25,7 @@ Custom.Popup {
             text: errorMessage
         }
 
-        Custom.Button {
+        Custom.PrimaryButton {
             text: qsTr("OK")
             Layout.fillWidth: true
             onClicked: {
