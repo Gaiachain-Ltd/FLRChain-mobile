@@ -71,7 +71,7 @@ Drawer {
                 Custom.IconButton {
                     Layout.topMargin: -Style.smallMargin
                     Layout.rightMargin: -Style.smallMargin
-                    iconSize: Style.iconMedium
+                    iconSize: Qt.size(Style.iconMedium, Style.iconMedium)
                     iconSrc: "qrc:/img/icon-close-menu.svg"
                     onClicked: drawer.close()
                 }

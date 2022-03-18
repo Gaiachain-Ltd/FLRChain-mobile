@@ -1,11 +1,15 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
+import "qrc:/Delegates" as Delegates
 
-Item {
+Page {
+    id: root
+
     property double walletBalance: 0.0
     property int projectsCount: 0
 
@@ -14,7 +18,7 @@ Item {
         session.getProjectsData()
     }
 
-    Connections{
+    Connections {
         target: dataManager
 
         function onWalletBalanceReceived(balance) {
@@ -22,7 +26,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: projectsModel
 
         function onProjectsReceived(){
@@ -30,7 +34,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: pageManager
 
         function onBackTriggered(){
@@ -39,187 +43,66 @@ Item {
         }
     }
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+    background: null
+
+    header: Custom.Header {
+        height: Style.headerHeight
         backButtonVisible: false
         title: qsTr("Dashboard")
     }
 
-    Rectangle {
-        id: background
+    Flickable {
         anchors {
-            top: header.bottom
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
+            fill: parent
+            topMargin: Style.dashboardListTopMargin
         }
+        contentHeight: mainColumn.height
+        boundsBehavior: Flickable.StopAtBounds
 
-        Flickable {
+        ColumnLayout {
+            id: mainColumn
             anchors {
-                top: parent.top
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
-                topMargin: Style.baseMargin
+                leftMargin: Style.dashboardListSideMargin
+                rightMargin: Style.dashboardListSideMargin
             }
-            contentHeight: mainColumn.height
-            boundsBehavior: Flickable.StopAtBounds
+            spacing: Style.dashboardListDelegateSpacing
 
-            ColumnLayout {
-                id: mainColumn
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    topMargin: Style.bigMargin
-                    bottomMargin: 170
-                    leftMargin: Style.smallMargin
-                    rightMargin: Style.smallMargin
+            Delegates.DashboardDelegate {
+                Layout.fillWidth: true
+
+                primaryLabelText: qsTr("Earn rewards")
+                secondaryLabelText: String("%1 ").arg(projectsCount) + qsTr("projects")
+                iconSource: "qrc:/img/dashboard-earn-rewards.svg"
+
+                onClicked: {
+                    pageManager.enterProjectListScreen()
                 }
-                spacing: Style.ultraMargin
+            }
 
-                Custom.ShadowedRectangle {
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredHeight: Style.dashboardDelegateHeight
-                    Layout.fillWidth: true
+            Delegates.DashboardDelegate {
+                Layout.fillWidth: true
 
-                    MouseArea{
-                        anchors.fill: parent
-                        onClicked: {
-                            pageManager.enterProjectListScreen()
-                        }
-                    }
+                primaryLabelText: qsTr("My wallet")
+                secondaryLabelText: qsTr("Balance") + String(": %1 USDC").arg(walletBalance)
+                iconSource: "qrc:/img/dashboard-wallet.svg"
 
-                    Rectangle{
-                        anchors.fill: parent
-                        radius: Style.rectangleRadius
-                        color: Style.bgColor
-
-                        RowLayout{
-                            id: row
-                            anchors {
-                                top: parent.top
-                                left: parent.left
-                                right: parent.right
-                                leftMargin: Style.baseMargin
-                                topMargin: Style.baseMargin
-                            }
-
-                            Label {
-                                text: qsTr("Earn rewards")
-                                font.pixelSize: Style.fontUltra
-                                color: Style.accentColor
-                            }
-
-                            Item{
-                                Layout.fillWidth: true
-                                Layout.preferredHeight: Style.iconBig
-                            }
-
-                            Custom.IconButton {
-                                iconSize: Style.iconBig
-                                iconSrc: "qrc:/img/dashboard-arrow-green.svg"
-                                onClicked: {
-                                    pageManager.enterProjectListScreen()
-                                }
-                            }
-                        }
-
-                        Label {
-                            anchors {
-                                top: row.bottom
-                                left: parent.left
-                                leftMargin: Style.baseMargin
-                            }
-                            text: qsTr("%1 projects").arg(projectsCount)
-                            font.pixelSize: Style.fontSmall
-                            color: Style.baseLabelColor
-                            font.weight: Font.DemiBold
-                        }
-
-                        Image {
-                            source: "qrc:/img/dashboard-earn-rewards.svg"
-                            width: parent.width
-                            height: 90
-                            anchors.bottom: parent.bottom
-                            sourceSize: Qt.size(width, height)
-                        }
-                    }
+                onClicked: {
+                    pageManager.enterWalletScreen()
                 }
+            }
 
-                Custom.ShadowedRectangle {
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredHeight: Style.dashboardDelegateHeight
-                    Layout.fillWidth: true
+            Delegates.DashboardDelegate {
+                Layout.fillWidth: true
 
-                    MouseArea{
-                        anchors.fill: parent
-                        onClicked: {
-                            pageManager.enterWalletScreen()
-                        }
-                    }
+                primaryLabelText: qsTr("My profile")
+                secondaryLabelText: "John Doe" // TODO
+                iconSource: "qrc:/img/dashboard-my-profile.svg"
 
-                    Rectangle{
-                        anchors.fill: parent
-                        radius: Style.rectangleRadius
-                        color: Style.yellowDelegateColor
-
-                        RowLayout{
-                            id: contentRow
-                            anchors {
-                                top: parent.top
-                                left: parent.left
-                                right: parent.right
-                                leftMargin: Style.baseMargin
-                                topMargin: Style.baseMargin
-                            }
-                            Label {
-                                text: qsTr("Wallet")
-                                font.pixelSize: Style.fontUltra
-                                color: Style.yellowLabelColor
-                            }
-
-                            Item{
-                                Layout.fillWidth: true
-                                Layout.preferredHeight: Style.iconBig
-                            }
-
-                            Custom.IconButton {
-                                iconSize: Style.iconBig
-                                iconSrc: "qrc:/img/dashboard-arrow-yellow.svg"
-                                onClicked:{
-                                    pageManager.enterWalletScreen()
-                                }
-                            }
-                        }
-
-                        Label {
-                            anchors {
-                                top: contentRow.bottom
-                                left: parent.left
-                                leftMargin: Style.baseMargin
-                            }
-                            text: qsTr("Balance: %1 USDC").arg(walletBalance)
-                            font.pixelSize: Style.fontSmall
-                            color: Style.baseLabelColor
-                            font.weight: Font.DemiBold
-                        }
-
-                        Image {
-                            source: "qrc:/img/dashboard-wallet.svg"
-                            width: 190
-                            height: 100
-                            sourceSize: Qt.size(width, height)
-                            anchors {
-                                bottom: parent.bottom
-                                horizontalCenter: parent.horizontalCenter
-                            }
-                        }
-                    }
+                onClicked: {
+                    // TODO
+                    console.warn("TODO: not implemented")
                 }
             }
         }

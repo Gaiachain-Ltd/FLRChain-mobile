@@ -7,7 +7,7 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Item {
+Page {
     property double walletBalance: 0.0
 
     BusyIndicator {
@@ -23,7 +23,7 @@ Item {
         session.getTransactionsData()
     }
 
-    Connections{
+    Connections {
         target: dataManager
 
         function onWalletBalanceReceived(balance) {
@@ -38,7 +38,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: pageManager
         function onBackTriggered(){
             busyIndicator.visible = true
@@ -47,28 +47,20 @@ Item {
         }
     }
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+    background: null
+
+    header: Custom.Header {
+        height: Style.headerHeight
         title: qsTr("Wallet")
     }
 
-    Popups.TransactionPopup{
+    Popups.TransactionPopup {
         id: transactionPopup
     }
 
     Flickable {
         id: flick
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
         clip: true

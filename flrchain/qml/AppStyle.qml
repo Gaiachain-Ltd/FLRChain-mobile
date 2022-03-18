@@ -4,77 +4,141 @@ import QtQuick 2.15
 
 QtObject {
 
-//colors
-property color accentColor: "#23BC3D"
-property color bgColor: "#FFFFFF"
-property color shadowedBgColor: "#FAFAFD"
-property color baseLabelColor: "#778699"
-property color grayBgColor: "#E2E9F0"
-property color colorTransparent: "#00ffffff"
-property color darkLabelColor: "#253F50"
-property color inputBgColor: "#F7F9FB"
-property color placeholderColor: "#C0C7D4"
-property color mediumLabelColor: "#72809D"
-property color buttonSecColor: "#06BCC1"
-property color yellowDelegateColor: "#FFFCE2"
-property color yellowLabelColor: "#FFC423"
-property color errorColor: "#FE2121"
-property color sectionColor: "#EDEEF2"
-property color grayLabelColor: "#606060"
+    readonly property string appFontFamily: "Open Sans"
+    readonly property font defaultFont: Qt.font({
+        family: appFontFamily,
+        styleName: "Regular",
+        pixelSize: 14
+    })
 
-//font
-property int fontMicro: 10
-property int fontTiny: 12
-property int fontSmall: 14
-property int fontMedium: 15
-property int fontBig: 17
-property int fontLarge: 20
-property int fontUltra: 22
-property int fontMax: 29
+    // Colors
+    readonly property color accentColor: "#23BC3D"
+    readonly property color bgColor: "#FFFFFF"
+    readonly property color shadowedBgColor: "#FAFAFD"
+    readonly property color baseLabelColor: "#778699"
+    readonly property color grayBgColor: "#E2E9F0"
+    readonly property color colorTransparent: "#00ffffff"
+    readonly property color darkLabelColor: "#253F50"
+    readonly property color inputBgColor: "#F7F9FB"
+    readonly property color placeholderColor: "#C0C7D4"
+    readonly property color mediumLabelColor: "#72809D"
+    readonly property color buttonSecColor: "#06BCC1"
+    readonly property color yellowDelegateColor: "#FFFCE2"
+    readonly property color yellowLabelColor: "#FFC423"
+    readonly property color errorColor: "#FE2121"
+    readonly property color sectionColor: "#EDEEF2"
+    readonly property color grayLabelColor: "#606060"
 
-//margins
-property int microMargin: 5
-property int tinyMargin: 10
-property int smallMargin: 16
-property int baseMargin: 20
-property int bigMargin: 30
-property int ultraMargin: 40
+    // Fonts
+    readonly property int fontMicro: 10
+    readonly property int fontTiny: 12
+    readonly property int fontSmall: 14
+    readonly property int fontMedium: 15
+    readonly property int fontBig: 17
+    readonly property int fontLarge: 20
+    readonly property int fontUltra: 22
+    readonly property int fontMax: 29
 
-//icons
-property int iconSize: 18
-property int iconMedium: 21
-property int iconBig: 26
-property int iconUltra: 32
+    // Margins
+    readonly property int microMargin: 5
+    readonly property int tinyMargin: 10
+    readonly property int smallMargin: 16
+    readonly property int baseMargin: 20
+    readonly property int bigMargin: 30
+    readonly property int ultraMargin: 40
 
-//buttons
-property int buttonHeight: 42
-property int iconButtonHeight: 40
-property int menuButtonHeight: 58
-property int checkboxHeight: 16
+    // Icons
+    readonly property int iconSize: 18
+    readonly property int iconMedium: 21
+    readonly property int iconBig: 26
+    readonly property int iconUltra: 32
 
-//inputs
-property int textInputHeight: 36
-property int bigInputHeight: 56
+    // Buttons
+    readonly property int buttonHeight: 42
+    readonly property int iconButtonHeight: 40
+    readonly property int menuButtonHeight: 58
+    readonly property int checkboxHeight: 16
 
-//delegates
-property int dashboardDelegateHeight: 223
-property int walletDelegateHeight: 63
-property int headerHeight: 60
-property int statusLabelHeight: 21
+    // Inputs
+    readonly property int textInputHeight: 36
+    readonly property int bigInputHeight: 56
 
-//radius
-property int baseRadius: 7
-property int rectangleRadius: 10
-property int labelRadius: 4
-property int checkBoxRadius: 3
+    // Delegates
+    readonly property int walletDelegateHeight: 63
+    readonly property int statusLabelHeight: 21
 
-//images
-property int logoWidth: 120
-property int logoHeight: 42
-property int popupImgHeight: 72
-property int projectImgHeight: 139
-property int workImgHeight: 191
+    // Radius
+    readonly property int baseRadius: 7
+    readonly property int rectangleRadius: 10
+    readonly property int labelRadius: 4
+    readonly property int checkBoxRadius: 3
 
-property int borderWidth: 1
-property int separatorHeight: 2
+    // Images
+    readonly property int logoWidth: 120
+    readonly property int logoHeight: 42
+    readonly property int popupImgHeight: 72
+    readonly property int projectImgHeight: 139
+    readonly property int workImgHeight: 191
+
+    readonly property int borderWidth: 1
+    readonly property int separatorHeight: 2
+
+    // Header
+    readonly property int headerHeight: 60
+    readonly property color headerBackgroundColor: bgColor
+    readonly property font headerTitleFont: Qt.font({
+        family: appFontFamily,
+        styleName: "SemiBold",
+        pixelSize: 20
+    })
+    readonly property color headerTitleFontColor: "#414D55"
+    readonly property int backButtonClickAreaWidth: 40
+    readonly property size backButtonIconSize: Qt.size(10, 18)
+    readonly property int menuButtonClickAreaWidth: 60
+    readonly property size menuButtonIconSize: Qt.size(27, 15)
+
+    // Internet connection issue banner
+    readonly property int internetConnectionIssueBannerHeight: 40
+    readonly property color internetConnectionIssueBannerColor: headerBackgroundColor
+    readonly property font internetConnectionIssueBannerFont: Qt.font({
+        family: appFontFamily,
+        styleName: "Bold",
+        pixelSize: 14
+    })
+    readonly property color internetConnectionIssueLabelColor: errorColor
+    readonly property size internetConnectionIssueIconSize: Qt.size(14, 14)
+
+
+
+    // Dashboard
+    readonly property int dashboardListTopMargin: 30
+    readonly property int dashboardListSideMargin: 16
+    readonly property int dashboardListDelegateSpacing: 20
+    readonly property int dashboardDelegateWidth: 328
+    readonly property int dashboardDelegateHeight: 170
+    readonly property int dashboardDelegateLeftMargin: 30
+    readonly property int dashboardDelegateRightMargin: 40
+    readonly property color dashboardDelegateBackgroundColor: "#FFFFFF"
+    readonly property color dashboardDelegateBackgroundGradientStartColor: dashboardDelegateBackgroundColor
+    readonly property color dashboardDelegateBackgroundGradientEndColor: "#EDF0F6"
+    readonly property int dashboardDelegateBackgroundRadius: 10
+    readonly property int dashboardDelegateBackgroundBorderWidth: 2
+    readonly property color dashboardDelegateBackgroundBorderColor: dashboardDelegateBackgroundColor
+    readonly property font dashboardDelegatePrimaryLabelFont: Qt.font({
+        family: appFontFamily,
+        styleName: "SemiBold",
+        pixelSize: 20
+    })
+    readonly property color dashboardDelegatePrimaryLabelFontColor: "#414D55"
+    readonly property font dashboardDelegateSecondaryLabelFont: Qt.font({
+        family: appFontFamily,
+        styleName: "Regular",
+        pixelSize: 14
+    })
+    readonly property color dashboardDelegateSecondaryLabelFontColor: "#778699"
+    readonly property size dashboardDelegateIconSize: Qt.size(96, 96)
+    readonly property int dashboardDelegateShadowHorizontalOffset: 5
+    readonly property int dashboardDelegateShadowVerticalOffset: 15
+    readonly property int dashboardDelegateShadowRadius: 30
+    readonly property color dashboardDelegateShadowColor: "#29000000"
 }

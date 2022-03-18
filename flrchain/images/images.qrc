@@ -32,5 +32,6 @@
         <file>dashboard-arrow-green.svg</file>
         <file>checkbox-check.svg</file>
         <file>checkbox.svg</file>
+        <file>dashboard-my-profile.svg</file>
     </qresource>
 </RCC>

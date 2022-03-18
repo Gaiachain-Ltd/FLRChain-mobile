@@ -8,7 +8,7 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Item {
+Page {
     id: detailsScreen
     property int itemId: -1
     property string projectName: ""
@@ -34,7 +34,7 @@ Item {
         busyIndicator.visible = true
     }
 
-    Connections{
+    Connections {
         target: pageManager
         function onSetupProjectDetailsScreen(projectId){
             session.getProjectDetails(projectId)
@@ -46,7 +46,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: dataManager
         function onProjectDetailsReceived(project){
             itemId = project.id
@@ -68,7 +68,7 @@ Item {
         }
     }
 
-    Connections{
+    Connections {
         target: workModel
 
         function onWorkReceived(rewardsBalance){
@@ -84,25 +84,17 @@ Item {
         }
     }
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+    background: null
+
+    header: Custom.Header {
+        height: Style.headerHeight
         title: qsTr("Project Details")
     }
 
     Flickable {
         boundsBehavior: Flickable.StopAtBounds
         clip: true
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        anchors.fill: parent
         contentHeight: mainColumn.height
         visible: !busyIndicator.visible
 
