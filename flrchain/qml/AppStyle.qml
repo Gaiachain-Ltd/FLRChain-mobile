@@ -77,7 +77,7 @@ QtObject {
     readonly property int workImgHeight: 191
 
     readonly property int borderWidth: 1
-    readonly property int separatorHeight: 2
+    readonly property int separatorHeight: 1
 
     // Button
     readonly property font buttonFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 16})
@@ -90,6 +90,14 @@ QtObject {
     readonly property color secondaryButtonBackgroundColor: "#FFFFFF"
     readonly property color secondaryButtonBorderColor: "#06BCC1"
     readonly property color secondaryButtonFontColor: secondaryButtonBorderColor
+
+    // TabButton
+    readonly property int defaultTabButtonHeight: 42
+    readonly property color tabButtonBackgroundInactiveColor: "#EDEEF2"
+    readonly property color tabButtonBackgroundActiveColor: "#06BCC1"
+    readonly property font tabButtonFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 16})
+    readonly property color tabButtonLabelInactiveColor: "#414D55"
+    readonly property color tabButtonLabelActiveColor: "#FFFFFF"
 
     // CheckBox
     readonly property size checkboxSize: Qt.size(20, 20)
@@ -151,6 +159,7 @@ QtObject {
     // Header
     readonly property int headerHeight: 60
     readonly property color headerBackgroundColor: bgColor
+    readonly property color headerSeparatorColor: "#EDEEF2"
     readonly property font headerTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
     readonly property color headerTitleFontColor: "#414D55"
     readonly property int backButtonClickAreaWidth: 40
@@ -203,4 +212,26 @@ QtObject {
     readonly property int dashboardDelegateShadowVerticalOffset: 15
     readonly property int dashboardDelegateShadowRadius: 30
     readonly property color dashboardDelegateShadowColor: "#29000000"
+
+    // Project list (aka earn rewards) page
+    readonly property int projectListSideMargins: 16
+    readonly property font projectListTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color projectListTitleFontColor: "#414D55"
+    readonly property int projectListDelegatePadding: 20
+    readonly property int projectListDelegateSpacing: 20
+    readonly property font projectListDelegateNameFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color projectListDelegateNameFontColor: "#414D55"
+    readonly property size projectListDelegateIconSize: Qt.size(18, 18)
+    readonly property font projectListDelegateDateFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property font projectListDelegateDescriptionTitleFont: Qt.font({family: appFontFamily, styleName: "Bold", pixelSize: 14})
+    readonly property font projectListDelegateDescriptionFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color projectListDelegateFontColor: "#72809D"
+    readonly property int projectListDelegateDescriptionSpacing: 10
+    readonly property font assignmentStatusLabelFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 10})
+    readonly property color assignmentStatusLabelFontColor: "#FFFFFF"
+    readonly property int assignmentStatusLabelRadius: 2
+    readonly property int assignmentStatusLabelTopBottomPadding: 2
+    readonly property int assignmentStatusLabelLeftRightPadding: 4
+    readonly property size investmentStatusIndicatorSize: Qt.size(10, 10)
+    readonly property int investmentStatusIndicatorRadius: 2
 }

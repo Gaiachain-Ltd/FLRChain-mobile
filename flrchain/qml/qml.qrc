@@ -38,5 +38,8 @@
         <file>CustomControls/SecondaryButton.qml</file>
         <file>CustomControls/FormPane.qml</file>
         <file>CustomControls/Pane.qml</file>
+        <file>ProjectListPage/ProjectList.qml</file>
+        <file>ProjectListPage/TaskList.qml</file>
+        <file>CustomControls/TabButton.qml</file>
     </qresource>
 </RCC>

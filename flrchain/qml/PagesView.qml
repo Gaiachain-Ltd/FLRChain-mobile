@@ -1,6 +1,5 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-
 import com.flrchain.objects 1.0
 
 StackView {
@@ -12,7 +11,7 @@ StackView {
     popExit: Transition {}
 
     Component.onCompleted: {
-        if(session.hasToken() && session.getRememberMe()){
+        if (session.hasToken() && session.getRememberMe()) {
             pageManager.enterDashboardScreen()
         } else {
             pageManager.enterLoginScreen()
@@ -26,25 +25,25 @@ StackView {
             switch (page) {
             case Pages.LoginScreen:
                 stack.push("qrc:/LoginScreen.qml")
-                break;
+                break
             case Pages.RegistrationScreen:
                 stack.push("qrc:/RegistrationScreen.qml")
-                break;
+                break
             case Pages.Dashboard:
                 stack.push("qrc:/Dashboard.qml")
-                break;
+                break
             case Pages.ProjectListScreen:
                 stack.push("qrc:/ProjectListScreen.qml")
-                break;
+                break
             case Pages.ProjectDetailsScreen:
                 stack.push("qrc:/ProjectDetailsScreen.qml")
-                break;
+                break
             case Pages.WorkScreen:
                 stack.push("qrc:/WorkScreen.qml")
-                break;
+                break
             case Pages.WalletScreen:
                 stack.push("qrc:/WalletScreen.qml")
-                break;
+                break
             }
         }
 
@@ -61,13 +60,13 @@ StackView {
         }
 
         function onSetupErrorPopup(errorMessage) {
-            errorPopup.errorMessage = errorMessage;
-            errorPopup.open();
+            errorPopup.errorMessage = errorMessage
+            errorPopup.open()
         }
 
         function onSetupSuccessPopup(message) {
-            successPopup.message = message;
-            successPopup.open();
+            successPopup.message = message
+            successPopup.open()
         }
     }
 }

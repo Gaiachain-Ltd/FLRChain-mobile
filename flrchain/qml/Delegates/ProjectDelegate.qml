@@ -6,127 +6,120 @@ import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 
-Item {
-    height: childrenRect.height
-    width: parent.width
+Custom.Pane {
+    id: root
+    padding: Style.projectListDelegatePadding
 
-    property bool joined: assignmentStatus === Project.Joined
-    property bool undefinedStatus: assignmentStatus === Project.Undefined
-    property bool investmentOngoing: status === Project.InvestmentOngoing
-    property bool investmentFinished: status === Project.InvestmentFinished
+    readonly property bool joined: assignmentStatus === Project.Joined
+    readonly property bool undefinedStatus: assignmentStatus === Project.Undefined
+    readonly property bool investmentOngoing: status === Project.InvestmentOngoing
+    readonly property bool investmentFinished: status === Project.InvestmentFinished
 
-    Custom.ShadowedRectangle {
-        width: parent.width
-        height: childrenRect.height
+    readonly property color investmentStatusColor: investmentOngoing ? Style.accentColor
+                                                                     : investmentFinished ? Style.errorColor
+                                                                                          : Style.yellowLabelColor
 
-        Rectangle{
-            id: contentRect
-            width: parent.width
-            height: childrenRect.height
-            color: Style.bgColor
-            radius: Style.rectangleRadius
+    ColumnLayout {
+        width: root.availableWidth
+        spacing: Style.projectListDelegateSpacing
 
-            ColumnLayout {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.baseMargin
-                    rightMargin: Style.baseMargin
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+
+            Label {
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                font: Style.projectListDelegateNameFont
+                color: Style.projectListDelegateNameFontColor
+                text: model.name
+            }
+
+            Item { Layout.fillWidth: true }
+
+            Custom.StatusLabel {
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                status: model.assignmentStatus
+            }
+        }
+
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.iconSize
+            spacing: Style.microMargin
+
+            Image {
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                Layout.preferredWidth: Style.projectListDelegateIconSize.width
+                Layout.preferredHeight: Style.projectListDelegateIconSize.height
+                sourceSize: Style.projectListDelegateIconSize
+                asynchronous: true
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:/img/icon-calendar.svg"
+            }
+
+            Label {
+                id: projectDeadlineLabel
+                Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+                font: Style.projectListDelegateDateFont
+                color: Style.projectListDelegateFontColor
+                text: String("%1: %2").arg(qsTr("Closes")).arg(model.deadline)
+            }
+
+            Item { Layout.fillWidth: true }
+
+            Label {
+                id: investmentStatusLabel
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                font: Style.projectListDelegateDateFont
+                color: investmentStatusColor
+                text: investmentOngoing ? qsTr("Ongoing")
+                                        : investmentFinished ? qsTr("Finished")
+                                                             : qsTr("Pending")
+            }
+
+            Rectangle {
+                id: investmentStatusIndicator
+                Layout.preferredWidth: Style.investmentStatusIndicatorSize.width
+                Layout.preferredHeight: Style.investmentStatusIndicatorSize.height
+                radius: Style.investmentStatusIndicatorRadius
+                color: investmentStatusColor
+            }
+        }
+
+        Column {
+            Layout.fillWidth: true
+            spacing: Style.projectListDelegateDescriptionSpacing
+
+            Label {
+                Layout.topMargin: Style.baseMargin
+                font: Style.projectListDelegateDescriptionTitleFont
+                color: Style.projectListDelegateFontColor
+                text: qsTr("Description")
+            }
+
+            Label {
+                id: descriptionLabel
+                Layout.fillWidth: true
+                font: Style.projectListDelegateDescriptionFont
+                color: Style.mediumLabelColor
+                maximumLineCount: 3
+                elide: Text.ElideRight
+                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                text: model.description
+            }
+        }
+
+        Custom.PrimaryButton {
+            Layout.fillWidth: true
+            backgroundColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
+            text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+
+            onClicked: {
+                if (!session.user.optedIn) {
+                    //Refresh user info:
+                    session.getUserInfo()
                 }
-                spacing: Style.tinyMargin
-
-                Item{
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.tinyMargin
-                }
-
-                Custom.StatusLabel{
-                    status: assignmentStatus
-                }
-
-                Label{
-                    font.pixelSize: Style.fontUltra
-                    font.weight: Font.DemiBold
-                    text: name
-                    color: Style.darkLabelColor
-                }
-
-                RowLayout {
-                    spacing: Style.microMargin
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.iconSize
-
-                    Image {
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        source: "qrc:/img/icon-calendar.svg"
-                        asynchronous: true
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: deadline
-                        color: Style.mediumLabelColor
-                    }
-
-                    Image {
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        Layout.leftMargin: Style.microMargin
-                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
-                        asynchronous: true
-
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
-                        color: investmentOngoing ? Style.accentColor : investmentFinished ? Style.errorColor : Style.yellowLabelColor
-                    }
-
-                    Item{
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: Style.iconSize
-                    }
-                }
-
-                Label{
-                    Layout.topMargin: Style.baseMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Description")
-                    color: Style.mediumLabelColor
-                }
-
-                Text {
-                    text: description
-                    Layout.fillWidth: true
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Style.mediumLabelColor
-                    maximumLineCount: 3
-                    elide: Text.ElideRight
-                }
-
-                Custom.PrimaryButton {
-                    Layout.topMargin: Style.tinyMargin
-                    Layout.bottomMargin: Style.baseMargin
-                    Layout.fillWidth: true
-                    text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
-                    backgroundColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
-                    onClicked:{
-                        if (!session.user.optedIn) {
-                            //Refresh user info:
-                            session.getUserInfo();
-                        }
-                        pageManager.enterProjectDetailsScreen(projectId)
-                    }
-                }
+                pageManager.enterProjectDetailsScreen(projectId)
             }
         }
     }

@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
-import "qrc:/Delegates" as Delegates
+import "qrc:/ProjectListPage" as ProjectListPage
 
 Page {
     id: projectsScreen
@@ -24,14 +24,15 @@ Page {
     Connections {
         target: projectsModel
 
-        function onProjectsReceived(){
+        function onProjectsReceived() {
             busyIndicator.visible = false
         }
     }
 
     Connections {
         target: pageManager
-        function onBackTriggered(){
+
+        function onBackTriggered() {
             busyIndicator.visible = true
             session.getProjectsData()
         }
@@ -45,47 +46,32 @@ Page {
         title: qsTr("Earn rewards")
     }
 
-    Flickable {
-        id: flick
+    ColumnLayout {
         anchors.fill: parent
-        contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
         visible: !busyIndicator.visible
 
-        ColumnLayout {
-            id: mainColumn
-            anchors {
-                left: parent.left
-                right: parent.right
-                leftMargin: Style.smallMargin
-                rightMargin: Style.smallMargin
+        TabBar {
+            id: tabBar
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.defaultTabButtonHeight
+            spacing: 0
+
+            Custom.TabButton { text: qsTr("My tasks") }
+            Custom.TabButton { text: qsTr("Projects") }
+        }
+
+        StackLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            currentIndex: tabBar.currentIndex
+
+            ProjectListPage.TaskList {
+                Layout.leftMargin: Style.projectListSideMargins
+                Layout.rightMargin: Style.projectListSideMargins
             }
-
-            spacing: Style.baseMargin
-
-            Label {
-                Layout.topMargin: Style.bigMargin
-                Layout.bottomMargin: Style.tinyMargin
-                text: qsTr("Project list (%1)").arg(listView.count)
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
-            }
-
-            ListView {
-                id: listView
-                model: projectsModel
-                interactive: false
-
-                Layout.bottomMargin: Style.smallMargin
-                Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
-
-                spacing: Style.baseMargin
-
-                delegate: Delegates.ProjectDelegate {
-                    width: mainColumn.width
-                }
+            ProjectListPage.ProjectList {
+                Layout.leftMargin: Style.projectListSideMargins
+                Layout.rightMargin: Style.projectListSideMargins
             }
         }
     }

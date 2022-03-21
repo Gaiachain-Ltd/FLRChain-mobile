@@ -3,24 +3,33 @@ import QtQuick.Controls 2.15
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 
-Rectangle{
-    property int status: Project.Undefined
-    property bool joined: status === Project.Joined
-    property bool rejected: status === Project.Rejected
-    property bool pending: status === Project.Pending
+Pane {
+    id: root
 
-    height: Style.statusLabelHeight
-    width: label.width + Style.baseMargin
-    color: rejected ? Style.errorColor : joined ? Style.accentColor : Style.yellowLabelColor
-    radius: Style.labelRadius
+    property int status: Project.Undefined
+    readonly property bool joined: status === Project.Joined
+    readonly property bool rejected: status === Project.Rejected
+    readonly property bool pending: status === Project.Pending
+
+    topPadding: Style.assignmentStatusLabelTopBottomPadding
+    bottomPadding: Style.assignmentStatusLabelTopBottomPadding
+    leftPadding: Style.assignmentStatusLabelLeftRightPadding
+    rightPadding: Style.assignmentStatusLabelLeftRightPadding
     visible: status !== Project.Undefined
 
-    Label{
-        id: label
+    background: Rectangle {
+        radius: Style.assignmentStatusLabelRadius
+        color: root.rejected ? Style.errorColor
+                             : root.joined ? Style.accentColor
+                                           : Style.yellowLabelColor
+    }
+
+    Label {
         anchors.centerIn: parent
-        font.pixelSize: Style.fontTiny
-        font.weight: Font.DemiBold
-        text: rejected ? qsTr("Rejected") : joined ? qsTr("Joined") : qsTr("Pending request")
-        color: Style.bgColor
+        font: Style.assignmentStatusLabelFont
+        color: Style.assignmentStatusLabelFontColor
+        text: rejected ? qsTr("REJECTED")
+                       : joined ? qsTr("JOINED")
+                                : qsTr("PENDING")
     }
 }
