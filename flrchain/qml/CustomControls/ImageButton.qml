@@ -5,48 +5,46 @@ import com.flrchain.style 1.0
 Button {
     id: button
 
-    property string bgColor: Style.accentColor
-    property string iconSrc: ""
+    property string backgroundColor: Style.accentColor
     property string textColor: Style.darkLabelColor
-    property int imgHeight: Style.iconMedium
-    property int imgWidth: Style.iconMedium
+    property string iconSource: ""
+    property size iconSize: Qt.size(Style.iconMedium, Style.iconMedium)
 
-    implicitWidth: parent.width
+    implicitWidth: Style.buttonHeight
     implicitHeight: Style.buttonHeight
+    font.family: Style.appFontFamily
 
     background: Rectangle {
-        anchors.fill: parent
         radius: Style.baseRadius
-        color: bgColor
+        color: backgroundColor
     }
 
-    contentItem: Rectangle {
+    contentItem: Item {
         anchors {
             fill: parent
             leftMargin: Style.baseMargin
         }
-        color: Style.colorTransparent
+
         Row {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Style.smallMargin
 
             Image {
-                source: button.iconSrc
-                asynchronous: true
-                width: imgWidth
-                height: imgHeight
-                fillMode: Image.PreserveAspectFit
+                width: button.iconSize.width
+                height: button.iconSize.height
                 sourceSize: Qt.size(width, height)
+                source: button.iconSource
+                fillMode: Image.PreserveAspectFit
+                asynchronous: true
             }
 
-            Text {
-                text: button.text
-                font.pixelSize: Style.fontMedium
-                color: textColor
-                font.weight: Font.DemiBold
+            Label {
+                anchors.verticalCenter: parent.verticalCenter
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                anchors.verticalCenter: parent.verticalCenter
+                font: button.font
+                color: button.textColor
+                text: button.text
             }
         }
     }

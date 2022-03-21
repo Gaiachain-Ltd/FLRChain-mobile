@@ -10,158 +10,167 @@ Drawer {
     width: parent.width
     edge: Qt.TopEdge
     interactive: false
-    property real buttonHeight: Style.menuButtonHeight
+    leftPadding: Style.menuPadding
+    rightPadding: Style.menuPadding
+    topPadding: Style.menuPadding
+    bottomPadding: 0
 
-    background: Rectangle{
-        width: parent.width
-        height: contentItem.height
-        color: Style.bgColor
-        radius: Style.rectangleRadius
-
-        Rectangle {
-            color: Style.bgColor
-            anchors.top: parent.top
-            width: parent.width
-            height: 8
-        }
+    background: Custom.ShadowedRectangle {
+        color: Style.paneBackgroundColor
+        radius: Style.paneBackgroundRadius
+        shadowHorizontalOffset: Style.paneShadowHorizontalOffset
+        shadowVerticalOffset: Style.paneShadowVerticalOffset
+        shadowRadius: Style.paneShadowRadius
+        shadowColor: Style.paneShadowColor
     }
 
-    contentItem: Rectangle {
-        width: parent.width
-        height: column.height
-        radius: Style.rectangleRadius
+    ColumnLayout {
+        width: drawer.availableWidth
 
-        ColumnLayout {
-            id: column
-            anchors {
-                left: parent.left
-                right: parent.right
-                leftMargin: Style.baseMargin
-                rightMargin: Style.baseMargin
-            }
-            RowLayout{
-                id: row
-                Layout.leftMargin: Style.baseMargin
-                Layout.topMargin: Style.baseMargin
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            Layout.leftMargin: Style.menuPadding
 
-                Column{
+            Item {
+                Layout.preferredWidth: childrenRect.width
+                Layout.preferredHeight: childrenRect.height
+
+                Column {
+                    id: column
                     spacing: Style.microMargin
+
                     Label {
-                        id:username
-                        text: session.user.firstName + " " + session.user.lastName
-                        font.pixelSize: Style.fontLarge
-                        color: Style.accentColor
+                        id: username
+                        font: Style.menuUserNameFont
+                        color: Style.menuUserNameFontColor
+                        text: session && session.user ? session.user.firstName + " " + session.user.lastName : ""
                     }
 
                     Label {
                         id: usermail
-                        Layout.leftMargin: Style.baseMargin
-                        text: session && session.user ? session.user.email : null
-                        font.pixelSize: Style.fontSmall
-                        color: Style.darkLabelColor
-                        font.weight: Font.DemiBold
+                        font: Style.menuUserEmailFont
+                        color: Style.menuUserEmailFontColor
+                        text: session && session.user ? session.user.email : ""
                     }
                 }
 
-                Item{
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.iconBig
-                }
-
-                Custom.IconButton {
-                    Layout.topMargin: -Style.smallMargin
-                    Layout.rightMargin: -Style.smallMargin
-                    iconSize: Qt.size(Style.iconMedium, Style.iconMedium)
-                    iconSrc: "qrc:/img/icon-close-menu.svg"
-                    onClicked: drawer.close()
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        // TODO: open my profile page
+                        console.warn("TODO: not implemented!")
+                    }
                 }
             }
 
-            Rectangle {
-                color: Style.sectionColor
-                Layout.preferredHeight: Style.separatorHeight
-                Layout.fillWidth: true
-                Layout.leftMargin: -Style.baseMargin
-                Layout.rightMargin: -Style.baseMargin
-                Layout.topMargin: Style.baseMargin
-            }
-
-            Custom.ImageButton{
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: buttonHeight
-                bgColor: Style.colorTransparent
-                textColor: Style.baseLabelColor
-                text: qsTr("Home")
-                iconSrc: "qrc:/img/icon-menu-home.svg"
-                imgHeight: Style.iconSize
-                imgWidth: Style.iconSize
-                onClicked: {
-                    drawer.close()
-                    pageManager.enterDashboardScreen()
-                }
-            }
-
-            Rectangle {
-                color: Style.sectionColor
-                Layout.preferredHeight: Style.borderWidth
+            Item {
                 Layout.fillWidth: true
             }
 
-            Custom.ImageButton{
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: buttonHeight
-                bgColor: Style.colorTransparent
-                textColor: Style.baseLabelColor
-                text: qsTr("Earn rewards")
-                iconSrc: "qrc:/img/icon-menu-earn-rewards.svg"
-                imgHeight: Style.iconSize
-                imgWidth: Style.iconSize
+            Custom.IconButton {
+                Layout.preferredWidth: Style.menuButtonClickAreaWidth
+                Layout.preferredHeight: Style.menuButtonClickAreaWidth
+                Layout.alignment: Qt.AlignTop | Qt.AlignRight
+                Layout.topMargin: -Style.menuPadding
+                Layout.rightMargin: -Style.menuPadding
+                iconSize: Style.menuCloseIconSize
+                iconSrc: "qrc:/img/icon-close-menu.svg"
+
                 onClicked: {
                     drawer.close()
-                    pageManager.enterProjectListScreen()
                 }
             }
+        }
 
-            Rectangle {
-                color: Style.sectionColor
-                Layout.preferredHeight: Style.borderWidth
-                Layout.fillWidth: true
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.separatorHeight
+            Layout.leftMargin: -Style.menuPadding
+            Layout.rightMargin: -Style.menuPadding
+            Layout.topMargin: Style.menuPadding
+            color: Style.menuSeparatorColor
+        }
+
+        Custom.ImageButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuItemHeight
+            background: null
+            iconSize: Style.menuItemIconSize
+            iconSource: "qrc:/img/icon-menu-home.svg"
+            font: Style.menuItemLabelFont
+            textColor: Style.menuItemLabelFontColor
+            text: qsTr("Home")
+
+            onClicked: {
+                drawer.close()
+                pageManager.enterDashboardScreen()
             }
+        }
 
-            Custom.ImageButton{
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: buttonHeight
-                bgColor: Style.colorTransparent
-                textColor: Style.baseLabelColor
-                text: qsTr("Wallet")
-                iconSrc: "qrc:/img/icon-menu-wallet.svg"
-                imgHeight: Style.iconSize
-                imgWidth: Style.iconSize
-                onClicked: {
-                    drawer.close()
-                    pageManager.enterWalletScreen()
-                }
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuSeparatorHeight
+            color: Style.sectionColor
+        }
+
+        Custom.ImageButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuItemHeight
+            background: null
+            iconSize: Style.menuItemIconSize
+            iconSource: "qrc:/img/icon-menu-earn-rewards.svg"
+            font: Style.menuItemLabelFont
+            textColor: Style.menuItemLabelFontColor
+            text: qsTr("Earn rewards")
+
+            onClicked: {
+                drawer.close()
+                pageManager.enterProjectListScreen()
             }
+        }
 
-            Rectangle {
-                color: Style.sectionColor
-                Layout.preferredHeight: Style.borderWidth
-                Layout.fillWidth: true
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuSeparatorHeight
+            color: Style.sectionColor
+        }
+
+        Custom.ImageButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuItemHeight
+            background: null
+            iconSize: Style.menuItemIconSize
+            iconSource: "qrc:/img/icon-menu-wallet.svg"
+            font: Style.menuItemLabelFont
+            textColor: Style.menuItemLabelFontColor
+            text: qsTr("Wallet")
+
+            onClicked: {
+                drawer.close()
+                pageManager.enterWalletScreen()
             }
+        }
 
-            Custom.ImageButton{
-                Layout.preferredWidth: parent.width
-                Layout.preferredHeight: buttonHeight
-                bgColor: Style.colorTransparent
-                textColor: Style.errorColor
-                text: qsTr("Log out")
-                iconSrc: "qrc:/img/icon-menu-logout.svg"
-                imgHeight: Style.iconSize
-                imgWidth: Style.iconSize
-                onClicked: {
-                    drawer.close()
-                    logoutPopup.open()
-                }
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuSeparatorHeight
+            color: Style.sectionColor
+        }
+
+        Custom.ImageButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: Style.menuItemHeight
+            background: null
+            iconSize: Style.menuItemIconSize
+            iconSource: "qrc:/img/icon-menu-logout.svg"
+            font: Style.menuItemLabelFont
+            textColor: Style.menuItemLogoutLabelFontColor
+            text: qsTr("Log out")
+
+            onClicked: {
+                drawer.close()
+                logoutPopup.open()
             }
         }
     }

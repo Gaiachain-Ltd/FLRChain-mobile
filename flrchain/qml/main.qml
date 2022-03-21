@@ -19,6 +19,10 @@ ApplicationWindow {
         pageManager.back()
     }
 
+    Component.onCompleted: {
+        session.getUserInfo()
+    }
+
     Menu { id: menu }
 
     Popups.ErrorPopup { id: errorPopup }

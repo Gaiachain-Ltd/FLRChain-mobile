@@ -165,6 +165,21 @@ QtObject {
     readonly property color internetConnectionIssueLabelColor: errorColor
     readonly property size internetConnectionIssueIconSize: Qt.size(14, 14)
 
+    // Menu
+    readonly property int menuPadding: 20
+    readonly property int menuItemHeight: 58
+    readonly property size menuItemIconSize: Qt.size(18, 18)
+    readonly property size menuCloseIconSize: Qt.size(20, 20)
+    readonly property int menuSeparatorHeight: 1
+    readonly property color menuSeparatorColor: "#EDEEF2"
+    readonly property font menuUserNameFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 20})
+    readonly property color menuUserNameFontColor: "#06BCC1"
+    readonly property font menuUserEmailFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color menuUserEmailFontColor: "#606C83"
+    readonly property font menuItemLabelFont: Qt.font({family: appFontFamily, styleName: "#72809D", pixelSize: 14})
+    readonly property color menuItemLabelFontColor: "#72809D"
+    readonly property color menuItemLogoutLabelFontColor: "#FE2121"
+
     // Dashboard page
     readonly property int dashboardListTopMargin: 30
     readonly property int dashboardListSideMargin: 16

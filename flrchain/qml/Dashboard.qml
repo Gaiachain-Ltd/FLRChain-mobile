@@ -97,12 +97,12 @@ Page {
                 Layout.fillWidth: true
 
                 primaryLabelText: qsTr("My profile")
-                secondaryLabelText: "John Doe" // TODO
+                secondaryLabelText: session && session.user ? session.user.firstName + " " + session.user.lastName : ""
                 iconSource: "qrc:/img/dashboard-my-profile.svg"
 
                 onClicked: {
-                    // TODO
-                    console.warn("TODO: not implemented")
+                    // TODO: open my profile page
+                    console.warn("TODO: not implemented!")
                 }
             }
         }

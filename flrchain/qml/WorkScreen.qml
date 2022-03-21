@@ -132,10 +132,10 @@ Page {
 
                     Custom.ImageButton {
                         Layout.alignment: Qt.AlignHCenter
-                        bgColor: Style.inputBgColor
+                        backgroundColor: Style.inputBgColor
                         text: qsTr("Upload from gallery...")
                         visible: !photoVisible
-                        iconSrc: "qrc:/img/icon-upload.svg"
+                        iconSource: "qrc:/img/icon-upload.svg"
 
                         onClicked: {
                             platform.selectFile();
@@ -144,10 +144,10 @@ Page {
 
                     Custom.ImageButton {
                         Layout.alignment: Qt.AlignHCenter
-                        bgColor: Style.inputBgColor
+                        backgroundColor: Style.inputBgColor
                         visible: !photoVisible
                         text: qsTr("Take photo...")
-                        iconSrc: "qrc:/img/icon-camera.svg"
+                        iconSource: "qrc:/img/icon-camera.svg"
                         onClicked: {
                             platform.capture()
                         }
