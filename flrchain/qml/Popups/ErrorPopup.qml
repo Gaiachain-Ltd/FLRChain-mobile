@@ -8,33 +8,27 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Error")
-    iconSrc: "qrc:/img/icon-popup-faile.svg"
+    iconSource: "qrc:/img/icon-popup-faile.svg"
+
     property string errorMessage: ""
 
-    ColumnLayout {
+    Label {
         Layout.fillWidth: true
-        Layout.leftMargin: Style.baseMargin
-        Layout.rightMargin: Style.baseMargin
-        spacing: Style.baseMargin
+        horizontalAlignment: Label.AlignHCenter
+        font: Style.popupTextFont
+        color: Style.popupTextFontColor
+        wrapMode: Label.WordWrap
+        text: popup.errorMessage
+    }
 
-        Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
-            font.weight: Font.DemiBold
-            color: Style.darkLabelColor
-            text: errorMessage
-        }
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        backgroundColor: Style.popupErrorColor
+        borderColor: Style.popupErrorColor
+        text: qsTr("OK")
 
-        Custom.PrimaryButton {
-            text: qsTr("OK")
-            Layout.fillWidth: true
-            onClicked: {
-                popup.close()
-            }
-        }
-
-        Item{
-            Layout.fillWidth: true
+        onClicked: {
+            popup.close()
         }
     }
 }

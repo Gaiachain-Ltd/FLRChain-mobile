@@ -72,7 +72,7 @@ Page {
 
     Flickable {
         anchors {
-            anchors.fill: parent
+            fill: parent
             topMargin: Style.baseMargin
         }
         contentHeight: mainColumn.height

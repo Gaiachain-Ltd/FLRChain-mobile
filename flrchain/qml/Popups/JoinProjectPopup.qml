@@ -8,51 +8,50 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Send request")
+    iconSource: "qrc:/img/icon-confirmation.svg"
+
     property string projectName: ""
     property int projectId: -1
-    iconSrc: "qrc:/img/icon-confirmation.svg"
 
     ColumnLayout {
         Layout.fillWidth: true
-        Layout.leftMargin: Style.baseMargin
-        Layout.rightMargin: Style.baseMargin
-        spacing: Style.baseMargin
+        Layout.fillHeight: false
+        spacing: 0
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
-            font.weight: Font.DemiBold
-            color: Style.darkLabelColor
+            Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
+            font: Style.popupTextFont
+            color: Style.popupTextFontColor
+            wrapMode: Label.WordWrap
             text: qsTr("Are you sure you want to join the project")
         }
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: -Style.smallMargin
-            font.pointSize: Style.fontSmall
+            font: Style.popupHighlightedTextFont
             color: Style.accentColor
-            text: projectName
+            text: popup.projectName
         }
+    }
 
-        Custom.PrimaryButton {
-            text: qsTr("Send request")
-            Layout.fillWidth: true
+    Custom.SecondaryButton {
+        Layout.fillWidth: true
+        text: qsTr("Cancel")
 
-            onClicked: {
-                session.joinProject(projectId)
-                popup.close()
-            }
+        onClicked: {
+            popup.close()
         }
+    }
 
-        Custom.PrimaryButton {
-            text: qsTr("Cancel")
-            Layout.bottomMargin: Style.tinyMargin
-            Layout.fillWidth: true
-            backgroundColor: Style.buttonSecColor
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        text: qsTr("Send request")
 
-            onClicked: {
-                popup.close()
-            }
+        onClicked: {
+            popup.close()
+            session.joinProject(popup.projectId)
         }
     }
 }

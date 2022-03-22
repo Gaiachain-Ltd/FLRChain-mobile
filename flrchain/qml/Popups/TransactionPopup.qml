@@ -8,97 +8,89 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Transaction")
-    iconSrc: "qrc:/img/icon-transaction.svg"
+    iconSource: "qrc:/img/icon-transaction.svg"
 
-    ColumnLayout {
+    Label {
         Layout.fillWidth: true
-        Layout.leftMargin: Style.baseMargin
-        Layout.rightMargin: Style.baseMargin
-        spacing: Style.baseMargin
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        color: Style.darkLabelColor
+        text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer has to be made")
+    }
 
-        Text {
-            text: qsTr("Enter the amount you want to transfer and the phone number to which the transfer has to be made")
-            Layout.fillWidth: true
-            Layout.preferredHeight: 62
-            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-            color: Style.darkLabelColor
-            horizontalAlignment: Text.AlignHCenter
-        }
+    Label {
+        font.pointSize: Style.fontTiny
+        font.weight: Font.DemiBold
+        color: Style.mediumLabelColor
+        text: qsTr("Amount")
+    }
 
-        Label {
-            font.pointSize: Style.fontTiny
-            font.weight: Font.DemiBold
-            color: Style.mediumLabelColor
-            text: qsTr("Amount")
-        }
-
-        RowLayout{
-            Layout.topMargin: -Style.tinyMargin
-            Layout.fillWidth: true
-            Layout.preferredHeight: Style.bigInputHeight
-            Custom.TextInput {
-                id: amountInput
-                Layout.preferredHeight: Style.bigInputHeight
-                Layout.preferredWidth: 173
-                placeholderText: qsTr("0")
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
-                horizontalAlignment: Qt.AlignHCenter
-                leftPadding: 0
-                validator: RegExpValidator{ regExp: /^[0-9]+([.][0-9]{1,2})?$/ }
-            }
-
-            Rectangle{
-                Layout.fillWidth: true
-                Layout.preferredHeight: Style.bigInputHeight
-                Label {
-                    anchors.centerIn: parent
-                    font.pointSize: Style.fontUltra
-                    font.weight: Font.DemiBold
-                    color: Style.darkLabelColor
-                    text: qsTr("USDC")
-                }
-            }
-        }
-
-        Label {
-            font.pointSize: Style.fontTiny
-            font.weight: Font.DemiBold
-            color: Style.mediumLabelColor
-            text: qsTr("Receiver phone")
-        }
+    RowLayout {
+        Layout.topMargin: -Style.tinyMargin
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.bigInputHeight
 
         Custom.TextInput {
-            id: phoneInput
-            Layout.topMargin: -Style.tinyMargin
-            Layout.fillWidth: true
-            placeholderText: qsTr("Phone number...")
+            id: amountInput
+            Layout.preferredHeight: Style.bigInputHeight
+            Layout.preferredWidth: 173
+            placeholderText: qsTr("0")
+            font.pixelSize: Style.fontUltra
             color: Style.darkLabelColor
-            text: session.user.phone
+            horizontalAlignment: Qt.AlignHCenter
+            leftPadding: 0
+            validator: RegExpValidator{ regExp: /^[0-9]+([.][0-9]{1,2})?$/ }
         }
 
-        Custom.PrimaryButton {
-            text: qsTr("Cash out")
+        Item {
             Layout.fillWidth: true
-            enabled: phoneInput.displayText.length > 0 && amountInput.displayText.length > 0
-            opacity: enabled ? 1.0 : 0.5
+            Layout.preferredHeight: Style.bigInputHeight
 
-            onClicked: {
-                console.log(amountInput.text, phoneInput.text);
-                session.cashOut(amountInput.text, phoneInput.text);
-                popup.close();
+            Label {
+                anchors.centerIn: parent
+                font.pointSize: Style.fontUltra
+                font.weight: Font.DemiBold
+                color: Style.darkLabelColor
+                text: qsTr("USDC")
             }
         }
+    }
 
-        Custom.PrimaryButton {
-            text: qsTr("Cancel")
-            Layout.bottomMargin: Style.tinyMargin
-            Layout.fillWidth: true
-            backgroundColor: Style.buttonSecColor
+    Label {
+        font.pointSize: Style.fontTiny
+        font.weight: Font.DemiBold
+        color: Style.mediumLabelColor
+        text: qsTr("Receiver phone")
+    }
 
-            onClicked: {
-                popup.close()
-            }
+    Custom.TextInput {
+        id: phoneInput
+        Layout.topMargin: -Style.tinyMargin
+        Layout.fillWidth: true
+        placeholderText: qsTr("Phone number...")
+        color: Style.darkLabelColor
+        text: session.user.phone
+    }
+
+    Custom.SecondaryButton {
+        Layout.fillWidth: true
+        Layout.bottomMargin: Style.tinyMargin
+        text: qsTr("Cancel")
+
+        onClicked: {
+            popup.close()
+        }
+    }
+
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        enabled: phoneInput.displayText.length > 0 && amountInput.displayText.length > 0
+        opacity: enabled ? 1.0 : 0.5
+        text: qsTr("Cash out")
+
+        onClicked: {
+            session.cashOut(amountInput.text, phoneInput.text)
+            popup.close()
         }
     }
 }

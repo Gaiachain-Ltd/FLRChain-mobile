@@ -25,8 +25,8 @@ ApplicationWindow {
 
     Menu { id: menu }
 
-    Popups.ErrorPopup { id: errorPopup }
     Popups.ConfirmLogoutPopup { id: logoutPopup }
+    Popups.ErrorPopup { id: errorPopup }
     Popups.SuccessPopup { id: successPopup }
 
     PagesView {

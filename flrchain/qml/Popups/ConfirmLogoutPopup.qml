@@ -8,41 +8,31 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Confirm Logout")
-    iconSrc: "qrc:/img/icon-confirmation.svg"
+    iconSource: "qrc:/img/icon-confirmation.svg"
 
-    ColumnLayout {
+    Label {
+        Layout.alignment: Qt.AlignHCenter
+        font: Style.popupTextFont
+        color: Style.popupTextFontColor
+        text: qsTr("Are you sure you want to log out?")
+    }
+
+    Custom.SecondaryButton {
         Layout.fillWidth: true
-        Layout.leftMargin: Style.baseMargin
-        Layout.rightMargin: Style.baseMargin
-        spacing: Style.baseMargin
+        text: qsTr("Cancel")
 
-        Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
-            font.weight: Font.DemiBold
-            color: Style.darkLabelColor
-            text: qsTr("Are you sure you want to log out?")
+        onClicked: {
+            popup.close()
         }
+    }
 
-        Custom.PrimaryButton {
-            text: qsTr("Log out")
-            Layout.fillWidth: true
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        text: qsTr("Log out")
 
-            onClicked: {
-                popup.close()
-                session.logout()
-            }
-        }
-
-        Custom.PrimaryButton {
-            text: qsTr("Cancel")
-            Layout.bottomMargin: Style.tinyMargin
-            Layout.fillWidth: true
-            backgroundColor: Style.buttonSecColor
-
-            onClicked: {
-                popup.close()
-            }
+        onClicked: {
+            popup.close()
+            session.logout()
         }
     }
 }

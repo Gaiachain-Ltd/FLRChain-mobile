@@ -7,39 +7,41 @@ Controls.Popup {
     id: popup
 
     anchors.centerIn: parent
-    bottomMargin: 0
-    implicitWidth: parent.width - (2 * Style.smallMargin)
+    implicitWidth: parent.width - 2 * Style.popupSideMargins
+    topPadding: Style.popupTopBottomPadding
+    bottomPadding: Style.popupTopBottomPadding
+    leftPadding: Style.popupLeftRightPadding
+    rightPadding: Style.popupLeftRightPadding
     modal: true
     dim: true
     focus: true
 
     property string title: ""
-    property string iconSrc: ""
+    property string iconSource: ""
 
-    background: Rectangle {
-        color: Style.bgColor
-        radius: Style.rectangleRadius
+    background: ShadowedRectangle {
+        color: Style.popupBackgroundColor
     }
 
     contentItem: ColumnLayout {
-        width: parent.width
-        height: parent.height
-        spacing: Style.baseMargin
+        width: parent.availableWidth
+        height: parent.availableHeight
+        spacing: Style.popupSpacing
 
         Image {
-            source: iconSrc
-            Layout.topMargin: Style.bigMargin
-            Layout.preferredWidth: Style.popupImgHeight
-            Layout.preferredHeight: Style.popupImgHeight
+            Layout.preferredWidth: Style.popupIconSize.width
+            Layout.preferredHeight: Style.popupIconSize.height
             Layout.alignment: Qt.AlignHCenter
-            sourceSize: Qt.size(Style.popupImgHeight, Style.popupImgHeight)
+            sourceSize: Style.popupIconSize
+            source: popup.iconSource
         }
 
         Controls.Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontUltra
-            color: Style.darkLabelColor
-            text: title
+            Layout.fillWidth: true
+            horizontalAlignment: Controls.Label.AlignHCenter
+            font: Style.popupTitleFont
+            color: Style.popupTitleFontColor
+            text: popup.title
         }
     }
 }

@@ -8,7 +8,7 @@ QtObject {
     readonly property font defaultFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 14})
 
     // Colors
-    readonly property color accentColor: "#23BC3D"
+    readonly property color accentColor: "#06BCC1"
     readonly property color bgColor: "#FFFFFF"
     readonly property color shadowedBgColor: "#FAFAFD"
     readonly property color baseLabelColor: "#778699"
@@ -136,6 +136,21 @@ QtObject {
     readonly property font formPaneSubtitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
     readonly property color formPaneSubtitleFontColor: "#778699"
     readonly property color formPaneSeparatorColor: "#FAFAFD"
+
+    // Popup
+    readonly property int popupSideMargins: 16
+    readonly property int popupLeftRightPadding: 20
+    readonly property int popupTopBottomPadding: 30
+    readonly property int popupSpacing: 20
+    readonly property color popupBackgroundColor: "#FFFFFF"
+    readonly property size popupIconSize: Qt.size(72, 72)
+    readonly property font popupTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 22})
+    readonly property color popupTitleFontColor: "#253F50"
+    readonly property font popupTextFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 14})
+    readonly property color popupTextFontColor: popupTitleFontColor
+    readonly property color popupSuccessColor: "#23BC3D"
+    readonly property color popupErrorColor: "#FE2121"
+    readonly property font popupHighlightedTextFont: Qt.font({family: appFontFamily, styleName: "Bold", pixelSize: 14})
 
     // Login and Register pages
     readonly property color loginPageBackgroundColor: "#FAFAFD"

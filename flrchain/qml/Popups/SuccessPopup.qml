@@ -8,34 +8,27 @@ import "qrc:/CustomControls" as Custom
 Custom.Popup {
     id: popup
     title: qsTr("Success")
-    iconSrc: "qrc:/img/icon-success.svg"
+    iconSource: "qrc:/img/icon-success.svg"
+
     property string message: ""
 
-    ColumnLayout {
+    Label {
         Layout.fillWidth: true
-        Layout.leftMargin: Style.baseMargin
-        Layout.rightMargin: Style.baseMargin
-        spacing: Style.baseMargin
+        horizontalAlignment: Label.AlignHCenter
+        font: Style.popupTextFont
+        color: Style.popupTextFontColor
+        wrapMode: Label.WordWrap
+        text: popup.message
+    }
 
-        Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
-            font.weight: Font.DemiBold
-            color: Style.darkLabelColor
-            text: message
-            wrapMode: "WordWrap"
-        }
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        backgroundColor: Style.popupSuccessColor
+        borderColor: Style.popupSuccessColor
+        text: qsTr("OK")
 
-        Custom.PrimaryButton {
-            text: qsTr("OK")
-            Layout.fillWidth: true
-            onClicked: {
-                popup.close()
-            }
-        }
-
-        Item{
-            Layout.fillWidth: true
+        onClicked: {
+            popup.close()
         }
     }
 }
