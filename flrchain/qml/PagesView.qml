@@ -44,6 +44,12 @@ StackView {
             case Pages.WalletScreen:
                 stack.push("qrc:/WalletScreen.qml")
                 break
+            case Pages.CashOutScreen:
+                stack.push("qrc:/CashOutPage.qml")
+                break
+            case Pages.ReceiveMoneyScreen:
+                stack.push("qrc:/ReceiveMoneyPage.qml")
+                break
             }
         }
 

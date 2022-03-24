@@ -33,5 +33,10 @@
         <file>checkbox-check.svg</file>
         <file>checkbox.svg</file>
         <file>dashboard-my-profile.svg</file>
+        <file>icon-facilitator.svg</file>
+        <file>icon-mobile-money.svg</file>
+        <file>icon-receive.svg</file>
+        <file>icon-arrow-down.svg</file>
+        <file>qr-example.svg</file>
     </qresource>
 </RCC>

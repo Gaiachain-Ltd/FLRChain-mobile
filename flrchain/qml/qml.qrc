@@ -26,7 +26,6 @@
         <file>Delegates/BalanceDelegate.qml</file>
         <file>WalletScreen.qml</file>
         <file>Delegates/TransactionDelegate.qml</file>
-        <file>Popups/TransactionPopup.qml</file>
         <file>Popups/SuccessPopup.qml</file>
         <file>Popups/ErrorPopup.qml</file>
         <file>Popups/WorkSuccessPopup.qml</file>
@@ -41,5 +40,9 @@
         <file>ProjectListPage/ProjectList.qml</file>
         <file>ProjectListPage/TaskList.qml</file>
         <file>CustomControls/TabButton.qml</file>
+        <file>Delegates/TransactionSectionDelegate.qml</file>
+        <file>CashOutPage.qml</file>
+        <file>CustomControls/ComboBox.qml</file>
+        <file>ReceiveMoneyPage.qml</file>
     </qresource>
 </RCC>

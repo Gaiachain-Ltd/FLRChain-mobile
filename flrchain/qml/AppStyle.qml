@@ -21,6 +21,7 @@ QtObject {
     readonly property color buttonSecColor: "#06BCC1"
     readonly property color yellowDelegateColor: "#FFFCE2"
     readonly property color yellowLabelColor: "#FFC423"
+    readonly property color successColor: "#23BC3D"
     readonly property color errorColor: "#FE2121"
     readonly property color sectionColor: "#EDEEF2"
     readonly property color grayLabelColor: "#606060"
@@ -109,13 +110,23 @@ QtObject {
     readonly property font checkboxLabelFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 10})
     readonly property color checkBoxLabelFontColor: "#253F50"
 
+    // ComboBox
+    readonly property color comboBoxBackgroundColor: "#F7F9FB"
+    readonly property int comboBoxBackgroundRadius: 7
+    readonly property int comboBoxPadding: 10
+    readonly property int comboBoxItemHeight: 60
+    readonly property int comboBoxItemSpacing: 2
+    readonly property font comboBoxFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color comboBoxCurrentTextFontColor: "#253F50"
+    readonly property color comboBoxDelegateTextFontColor: "#72809D"
+
     // TextInput
     readonly property size defaultTextInputSize: Qt.size(288, 36)
     readonly property int textInputRadius: 7
     readonly property color textInputValidBackgroundColor: "#F7F9FB"
     readonly property color textInputInvalidBackgroundColor: "#FBF7F7"
     readonly property int textInputPadding: 16
-    readonly property font textInputFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property font textInputFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
     readonly property color textInputValidFontColor: "#253F50"
     readonly property color textInputInvalidFontColor: errorColor
     readonly property color textInputPlaceholderFontColor: "#C0C7D4"
@@ -249,4 +260,48 @@ QtObject {
     readonly property int assignmentStatusLabelLeftRightPadding: 4
     readonly property size investmentStatusIndicatorSize: Qt.size(10, 10)
     readonly property int investmentStatusIndicatorRadius: 2
+
+    // Wallet page
+    readonly property int walletPagePadding: 16
+    readonly property int walletPageSectionSpacing: 24
+    readonly property int walletPageTitleSpacing: 12
+    readonly property int walletPagePanePadding: 20
+    readonly property font walletPageSectionTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color walletPageSectionTitleFontColor: "#414D55"
+    readonly property font balanceDelegateTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 16})
+    readonly property color balanceDelegateTitleFontColor: "#72809D"
+    readonly property font balanceDelegateAmountFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 24})
+    readonly property color balanceDelegateAmountFontColor: "#253F50"
+    readonly property font balanceDelegateCurrencyFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 24})
+    readonly property color balanceDelegateCurrencyFontColor: "#253F50"
+    readonly property font transactionSectionFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color transactionSectionFontColor: "#72809D"
+    readonly property int transactionSectionSeparatorHeight: 1
+    readonly property color transactionSectionSeparatorColor: "#C0C7D4"
+    readonly property color transactionIncomingColor: successColor
+    readonly property color transactionOutgoingColor: errorColor
+    readonly property font transactionProjectFont: Qt.font({family: appFontFamily, styleName: "Regular", pixelSize: 12})
+    readonly property color transactionProjectFontColor: "#72809D"
+    readonly property font transactionTypeFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color transactionTypeFontColor: "#253F50"
+    readonly property font transactionAmountFont: balanceDelegateAmountFont
+    readonly property font transactionCurrencyFont: balanceDelegateCurrencyFont
+
+    // Cash out page
+    readonly property int cashOutPageMargins: 16
+    readonly property int cashOutPageSpacing: 20
+    readonly property int cashOutInputTitleSpacing: 5
+    readonly property int cashOutInputHeight: 60
+    readonly property font cashOutInfoFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color cashOutInfoFontColor: "#72809D"
+    readonly property font cashOutInputTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color cashOutInputTitleFontColor: "#72809D"
+    readonly property font cashOutAmountInputFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 24})
+    readonly property color cashOutAmountInputFontColor: "#253F50"
+
+    // Receive money page
+    readonly property int receiveMoneyPagePadding: 16
+    readonly property font receiveMoneyInfoFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color receiveMoneyInfoFontColor: "#72809D"
+    readonly property size receiveMoneyQrCodeSize: Qt.size(200, 200)
 }

@@ -23,9 +23,6 @@ Controls.Pane {
 
     ColumnLayout {
         id: contentColumn
-        anchors {
-            left: parent.left
-            right: parent.right
-        }
+        anchors.fill: parent
     }
 }

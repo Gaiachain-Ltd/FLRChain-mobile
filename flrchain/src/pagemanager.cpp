@@ -123,6 +123,20 @@ bool PageManager::enterWalletScreen()
     return true;
 }
 
+bool PageManager::enterCashOutScreen(const Pages::CashOutPageMode cashOutMode)
+{
+    enterPage(Pages::CashOutScreen);
+    emit setupCashOutScreen(cashOutMode);
+    return true;
+}
+
+bool PageManager::enterReceiveMoneyPage(const QUrl &qrCodeUrl)
+{
+    enterPage(Pages::ReceiveMoneyScreen);
+    emit setupReceiveMoneyScreen(qrCodeUrl);
+    return true;
+}
+
 void PageManager::closeAll()
 {
     m_visiblePages.clear();

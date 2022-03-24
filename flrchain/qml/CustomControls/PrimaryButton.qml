@@ -14,6 +14,9 @@ Controls.Button {
     property int borderWidth: Style.defaultButtonBorderWidth
     property color labelColor: Style.primaryButtonFontColor
 
+    font: Style.buttonFont
+    palette.buttonText: labelColor
+
     background: Rectangle {
         radius: button.backgroundRadius
         color: button.backgroundColor
@@ -21,13 +24,5 @@ Controls.Button {
             width: button.borderWidth
             color: button.borderColor
         }
-    }
-
-    contentItem: Controls.Label {
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-        font: Style.buttonFont
-        color: button.labelColor
-        text: button.text
     }
 }

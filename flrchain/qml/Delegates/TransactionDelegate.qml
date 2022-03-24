@@ -3,35 +3,17 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
-Item {
-    height: Style.walletDelegateHeight
-    width: parent.width
-    property bool separatorVisible: true
+ColumnLayout {
+    id: root
+    spacing: 0
 
-    function statusName() {
-        switch(status) {
-        case 0:
-            return qsTr("Rejected")
-        case 1:
-            return qsTr("Confirmed")
-        case 2:
-            return qsTr("Pending")
-        }
-    }
-
-    function statusColor() {
-        switch(status) {
-        case 0:
-            return Style.errorColor;
-        case 1:
-            return Style.accentColor;
-        case 2:
-            return Style.yellowLabelColor;
-        }
-    }
+    property string transactionProjectName
+    property int transactionType
+    property real transactionAmount
+    property bool separatorVisible
 
     function signType() {
-        switch(action) {
+        switch(transactionType) {
         case 9:
             return "-";
         default:
@@ -39,74 +21,54 @@ Item {
         }
     }
 
-    function actionType() {
-        switch(action) {
-        case 9:
-            return qsTr("Cash out");
-        default:
-            return qsTr("Reward");
-        }
-    }
+    RowLayout {
+        Layout.fillWidth: true
 
-    function amountColor() {
-        switch(action) {
-        case 9:
-            return Style.errorColor;
-        default:
-            return Style.accentColor;
-        }
-    }
-
-    RowLayout{
-        height: childrenRect.height
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-            leftMargin: Style.baseMargin
-            rightMargin: Style.baseMargin
-        }
-        Column{
+        Column {
             Label {
-                text: title
-                font.pixelSize: Style.fontTiny
-                color: Style.mediumLabelColor
+                id: projectNameLabel
+                font: Style.transactionProjectFont
+                color: Style.transactionProjectFontColor
+                text: root.transactionProjectName
+                visible: text.length > 0
             }
 
             Label {
-                text: actionType()
-                font.pixelSize: Style.fontTiny
-                color: Style.darkLabelColor
-            }
-
-            Label {
-                text: statusName()
-                font.pixelSize: Style.fontTiny
-                color: statusColor()
+                id: transactionTypeLabel
+                font: Style.transactionTypeFont
+                color: Style.transactionTypeFontColor
+                text: root.transactionType == 9 ? qsTr("Cash out") : qsTr("Reward")
             }
         }
 
-        Item{
+        Item {
             Layout.fillWidth: true
         }
 
-        Label {
-            text: signType() + amount
-            font.pixelSize: Style.fontLarge
-            color: amountColor()
+        Row {
+            spacing: 5
+
+            Label {
+                id: amountLabel
+                font: Style.transactionAmountFont
+                color: root.transactionType == 9 ? Style.transactionOutgoingColor : Style.transactionIncomingColor
+                text: signType() + root.transactionAmount
+            }
+
+            Label {
+                font: Style.transactionCurrencyFont
+                color: amountLabel.color
+                text: "USDC"
+            }
         }
     }
 
-    Rectangle{
-        visible: separatorVisible
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-            leftMargin: Style.baseMargin
-            rightMargin: Style.baseMargin
-        }
-        height: Style.borderWidth
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.borderWidth
+        Layout.topMargin: 20
+        Layout.bottomMargin: 20
         color: Style.sectionColor
+        visible: root.separatorVisible
     }
 }
