@@ -2,7 +2,7 @@
 
 #include <QJsonObject>
 
-WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token) : ApiRequest("accounts")
+WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token) : ApiRequest("accounts/balance")
 {
     setPriority(Priority::Normal);
     setType(Type::Get);
@@ -12,7 +12,7 @@ WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token) : ApiRequest
 
 void WalletBalanceRequest::errorHandler(const QString &error)
 {
-    qDebug() << "Error" << error;
+    qCritical() << "Error" << error;
 }
 
 void WalletBalanceRequest::parse()

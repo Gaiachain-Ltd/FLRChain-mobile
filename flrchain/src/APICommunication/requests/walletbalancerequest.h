@@ -13,8 +13,10 @@ class WalletBalanceRequest : public ApiRequest
 public:
     WalletBalanceRequest(const QByteArray &token);
     void errorHandler(const QString &error);
+
 signals:
     void walletBalanceReply(const double balance) const;
+
 protected:
     virtual void parse() override final;
 };
