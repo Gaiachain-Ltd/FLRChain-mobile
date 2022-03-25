@@ -113,34 +113,27 @@ void DataManager::projectDetailsReply(const QJsonObject &projectObject)
 {
     m_detailedProject->setId(projectObject.value(QLatin1String("id")).toInt());
     m_detailedProject->setName(projectObject.value(QLatin1String("title")).toString());
-    if(projectObject.value(QLatin1String("assignment_status")).isNull()){
-        m_detailedProject->setAssignmentStatus(-1);
-    }
-    else {
-        m_detailedProject->setAssignmentStatus(projectObject.value(QLatin1String("assignment_status")).toInt());
-    }
+    m_detailedProject->setDescription(projectObject.value(QLatin1String("description")).toString());
+    m_detailedProject->setPhoto(projectObject.value(QLatin1String("image")).toString());
+    m_detailedProject->setStatus(static_cast<Project::ProjectStatus>(projectObject.value(QLatin1String("status")).toInt()));
 
-    if(projectObject.value(QLatin1String("investment")).isNull()){
-        m_detailedProject->setStatus(-1);
-        m_detailedProject->setConfirmed(false);
-    }
-    else {
-        const QJsonObject &investment = projectObject.value(QLatin1String("investment")).toObject();
-        m_detailedProject->setStatus(investment.value(QLatin1String("status")).toInt());
-        m_detailedProject->setConfirmed(investment.value(QLatin1String("confirmed")).toBool());
-    }
     QDateTime deadline = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
     m_detailedProject->setDeadline(deadline.toString(QLatin1String("MMMM dd, yyyy")));
-    QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("start")).toString(), Qt::ISODate);
+    QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("start")).toString(), Qt::ISODate);
     m_detailedProject->setInvestmentStart(start.toString(QLatin1String("MMMM dd, yyyy")));
-    QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("end")).toString(), Qt::ISODate);
+    QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
     m_detailedProject->setInvestmentEnd(end.toString(QLatin1String("MMMM dd, yyyy")));
-    m_detailedProject->setDescription(projectObject.value(QLatin1String("description")).toString());
-    m_detailedProject->setPhoto(projectObject.value(QLatin1String("photo")).toString());
+
+    if(projectObject.value(QLatin1String("assignment_status")).isNull()){
+        m_detailedProject->setAssignmentStatus(Project::AssignmentStatus::New);
+    } else {
+        m_detailedProject->setAssignmentStatus(static_cast<Project::AssignmentStatus>(projectObject.value(QLatin1String("assignment_status")).toInt()));
+    }
 
     m_tasksModel->parseJsonObject(projectObject);
 }
 
-void DataManager::projectTasksReceived(){
+void DataManager::projectTasksReceived()
+{
     emit projectDetailsReceived(m_detailedProject);
 }

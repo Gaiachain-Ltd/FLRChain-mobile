@@ -17,8 +17,8 @@ Page {
     property string projectStartDate: ""
     property string projectEndDate: ""
     property bool projectInvestmentConfirmed: false
-    property int projectStatus: Project.InvestmentUnknown
-    property int projectAssignmentStatus: Project.Undefined
+    property int projectStatus: Project.ProjectStatus.Undefined
+    property int projectAssignmentStatus: Project.AssignmentStatus.Undefined
     property var tasks
     property var workData
     property double workBalance: 0.0
@@ -157,7 +157,8 @@ Page {
                     projectName: detailsScreen.projectName
                     projectInvestmentConfirmed: detailsScreen.projectInvestmentConfirmed
                     width: mainColumn.width
-                    buttonVisible: projectAssignmentStatus === Project.Joined && projectStatus === Project.InvestmentOngoing
+                    buttonVisible: projectAssignmentStatus === Project.AssignmentStatus.Accepted &&
+                                   projectStatus === Project.ProjectStatus.Active
                 }
             }
 

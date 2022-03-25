@@ -261,6 +261,17 @@ QtObject {
     readonly property size investmentStatusIndicatorSize: Qt.size(10, 10)
     readonly property int investmentStatusIndicatorRadius: 2
 
+    // Project status label
+    readonly property color projectFundraisingColor: "#FFB623"
+    readonly property color projectActiveColor: "#00B854"
+    readonly property color projectClosedColor: "#06BCC1"
+
+    // Project assignment status label
+    readonly property color assignmentNewColor: "#71809C"
+    readonly property color assignmentWaitingColor: "#FF9123"
+    readonly property color assignmentAcceptedColor: "#00B854"
+    readonly property color assignmentRejectedColor: "#FE2121"
+
     // Wallet page
     readonly property int walletPagePadding: 16
     readonly property int walletPageSectionSpacing: 24

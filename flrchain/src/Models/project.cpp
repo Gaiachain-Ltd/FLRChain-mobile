@@ -5,13 +5,13 @@ Project::Project(QObject *parent):
     m_id(),
     m_name(QString()),
     m_description(QString()),
-    m_status(),
+    m_status(ProjectStatus::Undefined),
     m_deadline(QString()),
     m_investmentStart(QString()),
     m_investmentEnd(QString()),
     m_photo(QString()),
     m_tasks(QList<Task *>()),
-    m_assignmentStatus()
+    m_assignmentStatus(AssignmentStatus::Undefined)
 {
 
 }
@@ -31,7 +31,7 @@ QString Project::description() const
     return m_description;
 }
 
-int Project::status() const
+Project::ProjectStatus Project::status() const
 {
     return m_status;
 }
@@ -61,7 +61,7 @@ QList<Task *> Project::tasks() const
     return m_tasks;
 }
 
-int Project::assignmentStatus() const
+Project::AssignmentStatus Project::assignmentStatus() const
 {
     return m_assignmentStatus;
 }
@@ -95,7 +95,7 @@ void Project::setDescription(const QString &description)
     }
 }
 
-void Project::setStatus(const int status)
+void Project::setStatus(const ProjectStatus status)
 {
     if (m_status != status) {
         m_status = status;
@@ -143,7 +143,7 @@ void Project::setTasks(const QList<Task *> &tasks)
     }
 }
 
-void Project::setAssignmentStatus(const int status)
+void Project::setAssignmentStatus(const AssignmentStatus status)
 {
     if (m_assignmentStatus != status) {
         m_assignmentStatus = status;

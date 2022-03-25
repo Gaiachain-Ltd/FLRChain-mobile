@@ -10,14 +10,12 @@ Custom.Pane {
     id: root
     padding: Style.projectListDelegatePadding
 
-    readonly property bool joined: assignmentStatus === Project.Joined
-    readonly property bool undefinedStatus: assignmentStatus === Project.Undefined
-    readonly property bool investmentOngoing: status === Project.InvestmentOngoing
-    readonly property bool investmentFinished: status === Project.InvestmentFinished
+    readonly property bool accepted: model.assignmentStatus === Project.AssignmentStatus.Accepted
+    readonly property bool undefinedStatus: model.assignmentStatus === Project.AssignmentStatus.Undefined
 
-    readonly property color investmentStatusColor: investmentOngoing ? Style.accentColor
-                                                                     : investmentFinished ? Style.errorColor
-                                                                                          : Style.yellowLabelColor
+    readonly property bool investmentFundraising: model.status === Project.ProjectStatus.Fundraising
+    readonly property bool investmentActive: model.status === Project.ProjectStatus.Active
+    readonly property bool investmentClosed: model.status === Project.ProjectStatus.Closed
 
     ColumnLayout {
         width: root.availableWidth
@@ -71,10 +69,23 @@ Custom.Pane {
                 id: investmentStatusLabel
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 font: Style.projectListDelegateDateFont
-                color: investmentStatusColor
-                text: investmentOngoing ? qsTr("Ongoing")
-                                        : investmentFinished ? qsTr("Finished")
-                                                             : qsTr("Pending")
+                color: "#414D55"
+                text:
+                {
+                    switch (model.status) {
+                    case Project.ProjectStatus.Fundraising:
+                        return qsTr("Fundraising")
+
+                    case Project.ProjectStatus.Active:
+                        return qsTr("Active")
+
+                    case Project.ProjectStatus.Closed:
+                        return qsTr("Closed")
+                    }
+
+                    console.warn("Could not set proper text for project status label:", model.status)
+                    return ""
+                }
             }
 
             Rectangle {
@@ -82,7 +93,22 @@ Custom.Pane {
                 Layout.preferredWidth: Style.investmentStatusIndicatorSize.width
                 Layout.preferredHeight: Style.investmentStatusIndicatorSize.height
                 radius: Style.investmentStatusIndicatorRadius
-                color: investmentStatusColor
+                color:
+                {
+                    switch (model.status) {
+                    case Project.ProjectStatus.Fundraising:
+                        return Style.projectFundraisingColor
+
+                    case Project.ProjectStatus.Active:
+                        return Style.projectActiveColor
+
+                    case Project.ProjectStatus.Closed:
+                        return Style.projectClosedColor
+                    }
+
+                    console.warn("Could not set proper color for project status label:", model.status)
+                    return "#FFFFFF"
+                }
             }
         }
 
@@ -111,8 +137,8 @@ Custom.Pane {
 
         Custom.PrimaryButton {
             Layout.fillWidth: true
-            backgroundColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
-            text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+            backgroundColor: !investmentClosed && (accepted || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
+            text: !investmentClosed ? undefinedStatus ? qsTr("Join") : accepted && investmentActive ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
 
             onClicked: {
                 if (!session.user.optedIn) {

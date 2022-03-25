@@ -15,10 +15,10 @@ Item {
     property string description: ""
     property string startDate: ""
     property string endDate: ""
-    property int status: Project.InvestmentUnknown
-    property int assignmentStatus: Project.Undefined
-    property bool investmentOngoing: status === Project.InvestmentOngoing
-    property bool investmentFinished: status === Project.InvestmentFinished
+    property int status: Project.ProjectStatus.Undefined
+    property int assignmentStatus: Project.AssignmentStatus.Undefined
+    readonly property bool investmentActive: status === Project.ProjectStatus.Active
+    readonly property bool investmentClosed: status === Project.ProjectStatus.Closed
 
     Custom.ShadowedRectangle {
         height: contentRect.height
@@ -120,7 +120,7 @@ Item {
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.iconSize
                     Image {
-                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
+                        source: investmentActive ? "qrc:/img/icon-ongoing.svg" : investmentClosed ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
                         asynchronous: true
                         Layout.preferredWidth: Style.iconSize
                         Layout.preferredHeight: Style.iconSize
@@ -131,7 +131,7 @@ Item {
                     Label {
                         font.pixelSize: Style.fontTiny
                         font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
+                        text: investmentActive ? qsTr("Active") : investmentClosed ? qsTr("Closed") : qsTr("Fundraising")
                         color: Style.mediumLabelColor
                     }
                 }
@@ -172,7 +172,7 @@ Item {
                     Layout.bottomMargin: Style.baseMargin
                     Layout.fillWidth: true
                     text: qsTr("Join")
-                    visible: !investmentFinished && assignmentStatus === Project.Undefined
+                    visible: !investmentClosed && assignmentStatus === Project.AssignmentStatus.New
                 }
             }
         }

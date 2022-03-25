@@ -32,14 +32,14 @@ QHash<int, QByteArray> ProjectsModel::roleNames() const
 
 QVariant ProjectsModel::data(const QModelIndex &index, int role) const
 {
-    if(role < Qt::UserRole && index.row() > m_items.count())
+    if (role < Qt::UserRole && index.row() > m_items.count())
          return QVariant();
 
     const int row = index.row();
 
     Project *item = m_items.at(row);
 
-    switch(role) {
+    switch (role) {
     case ProjectId:
         return item->id();
     case Name:
@@ -47,7 +47,7 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
     case Description:
         return item->description();
     case Status:
-        return item->status();
+        return static_cast<int>(item->status());
     case Deadline:
         return item->deadline();
     case InvestmentStart:
@@ -57,7 +57,7 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
     case InvestmentEnd:
         return item->investmentEnd();
     case AssignmentStatus:
-        return item->assignmentStatus();
+        return static_cast<int>(item->assignmentStatus());
     default:
         Q_UNREACHABLE();
         break;
@@ -68,14 +68,14 @@ QVariant ProjectsModel::data(const QModelIndex &index, int role) const
 
 bool ProjectsModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
-    if(role < Qt::UserRole && index.row() > m_items.count())
+    if (role < Qt::UserRole && index.row() > m_items.count())
          return false;
 
     const int row = index.row();
 
     Project *item = m_items.at(row);
 
-    switch(role) {
+    switch (role) {
     case ProjectId:
         item->setId(value.toInt());
         break;
@@ -86,7 +86,7 @@ bool ProjectsModel::setData(const QModelIndex &index, const QVariant &value, int
         item->setDescription(value.toString());
         break;
     case Status:
-        item->setStatus(value.toInt());
+        item->setStatus(static_cast<Project::ProjectStatus>(value.toInt()));
         break;
     case Deadline:
         item->setDeadline(value.toString());
@@ -101,7 +101,7 @@ bool ProjectsModel::setData(const QModelIndex &index, const QVariant &value, int
         item->setInvestmentEnd(value.toString());
         break;
     case AssignmentStatus:
-        item->setAssignmentStatus(value.toInt());
+        item->setAssignmentStatus(static_cast<Project::AssignmentStatus>(value.toInt()));
         break;
     default:
         return false;
@@ -119,34 +119,27 @@ void ProjectsModel::parseJsonObject(const QJsonObject &response)
 
     const int arraySize = projectsArray.count();
 
-    for(int i = 0; i < arraySize; ++i) {
+    for (int i = 0; i < arraySize; ++i) {
         QJsonObject projectObject = projectsArray.at(i).toObject();
 
         Project *project = new Project();
         project->setId(projectObject.value(QLatin1String("id")).toInt());
         project->setName(projectObject.value(QLatin1String("title")).toString());
-        if(projectObject.value(QLatin1String("assignment_status")).isNull()){
-            project->setAssignmentStatus(-1);
-        }
-        else {
-            project->setAssignmentStatus(projectObject.value(QLatin1String("assignment_status")).toInt());
-        }
-
-        if(projectObject.value(QLatin1String("investment")).isNull()){
-            project->setStatus(-1);
-        }
-        else {
-            project->setStatus(projectObject.value(QLatin1String("investment")).toObject()
-                               .value(QLatin1String("status")).toInt());
-        }
-        QDateTime deadline = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
-        project->setDeadline(deadline.toString(QLatin1String("MMMM dd, yyyy")));
-        QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("start")).toString(), Qt::ISODate);
-        project->setInvestmentStart(start.toString(QLatin1String("MMMM dd, yyyy")));
-        QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("investment")).toObject().value(QLatin1String("end")).toString(), Qt::ISODate);
-        project->setInvestmentEnd(end.toString(QLatin1String("MMMM dd, yyyy")));
         project->setDescription(projectObject.value(QLatin1String("description")).toString());
-        project->setPhoto(projectObject.value(QLatin1String("photo")).toString());
+        project->setPhoto(projectObject.value(QLatin1String("image")).toString());
+        project->setStatus(static_cast<Project::ProjectStatus>(projectObject.value(QLatin1String("status")).toInt()));
+
+        const QDateTime start = QDateTime::fromString(projectObject.value(QLatin1String("start")).toString(), Qt::ISODate);
+        project->setInvestmentStart(start.toString(QLatin1String("MMMM dd, yyyy")));
+        const QDateTime end = QDateTime::fromString(projectObject.value(QLatin1String("end")).toString(), Qt::ISODate);
+        project->setInvestmentEnd(end.toString(QLatin1String("MMMM dd, yyyy")));
+        project->setDeadline(end.toString(QLatin1String("MMMM dd, yyyy")));
+
+        if (projectObject.value(QLatin1String("assignment_status")).isNull()){
+            project->setAssignmentStatus(Project::AssignmentStatus::New);
+        } else {
+            project->setAssignmentStatus(static_cast<Project::AssignmentStatus>(projectObject.value(QLatin1String("assignment_status")).toInt()));
+        }
 
         m_items.append(project);
     }
