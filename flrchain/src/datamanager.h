@@ -6,10 +6,9 @@
 #include <QVariantList>
 #include <QVariant>
 #include "project.h"
-#include "projectsmodel.h"
+#include "projectmodel.h"
 #include "transactionsmodel.h"
 #include "workmodel.h"
-#include "tasksmodel.h"
 
 class FileManager;
 
@@ -20,22 +19,22 @@ class DataManager : public QObject
 public:
     explicit DataManager(QObject *parent = nullptr);
     ~DataManager();
+
     void cleanData();
     void projectDetailsReply(const QJsonObject &projectObject);
     Q_INVOKABLE QString getPhotosPath();
     Q_INVOKABLE void cleanPhotosDir();
     Q_INVOKABLE void removeCurrentWorkPhoto();
 
-    ProjectsModel *projectsModel() const;
+    ProjectModel *projectsModel() const;
     TransactionsModel *transactionsModel() const;
     WorkModel *workModel() const;
-    TasksModel *tasksModel() const;
 
 public slots:
     void cashOutReplyReceived(const bool result);
     void joinProjectError();
     void addWorkError();
-    void projectTasksReceived();
+
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
@@ -53,12 +52,10 @@ signals:
 private:
     QThread *m_workerThread;
     FileManager *m_fileManager;
-    Project *m_detailedProject;
 
-    ProjectsModel *m_projectsModel;
+    ProjectModel *m_projectsModel;
     TransactionsModel *m_transactionsModel;
     WorkModel *m_workModel;
-    TasksModel *m_tasksModel;
 };
 
 #endif // DATAMANAGER_H

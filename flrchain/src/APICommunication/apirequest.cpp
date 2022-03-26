@@ -17,7 +17,7 @@ void ApiRequest::customizeRequest(QNetworkRequest &request)
 {
     Q_ASSERT_X(!isTokenRequired() || !m_token.isEmpty(),
                objectName().toLatin1(),
-               "This request require token and it's not provided!");
+               "This request requires token and it's not provided!");
 
     if (!m_token.isEmpty()) {
         request.setRawHeader(QByteArray("Authorization"),

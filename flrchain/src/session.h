@@ -4,7 +4,7 @@
 #include <QByteArray>
 #include <QObject>
 #include <QPointer>
-#include "userptr.h"
+#include "typedefs.h"
 #include "datamanager.h"
 
 class RestAPIClient;

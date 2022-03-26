@@ -146,7 +146,7 @@ Page {
 
             ListView {
                 id: tasksList
-                model: tasksModel
+//                model: tasksModel
                 interactive: false
 
                 Layout.fillWidth: true

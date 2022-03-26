@@ -16,17 +16,25 @@ CONFIG += c++14
 TARGET = template
 
 INCLUDEPATH += \
+    src \
     src/APICommunication \
     src/Models
 
 HEADERS += \
+    src/Models/action.h \
+    src/Models/actionmodel.h \
+    src/Models/datatag.h \
+    src/Models/datatagmodel.h \
+    src/Models/milestone.h \
+    src/Models/milestonemodel.h \
+    src/Models/projectmodel.h \
+    src/Models/taskmodel.h \
     src/datamanager.h \
     src/filemanager.h \
     src/pagemanager.h \
     src/pages.h \
     src/session.h \
     src/settings.h \
-    src/userptr.h \
     src/APICommunication/restapiclient.h \
     src/APICommunication/apirequest.h \
     src/APICommunication/requests/loginrequest.h \
@@ -43,17 +51,24 @@ HEADERS += \
     src/APICommunication/requests/sendworkrequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
-    src/Models/projectsmodel.h \
-    src/Models/tasksmodel.h \
     src/Models/transactionsmodel.h \
     src/Models/workmodel.h \
     src/Models/transaction.h \
     src/Models/task.h \
     src/Models/project.h \
     src/Models/user.h \
-    src/Models/work.h
+    src/Models/work.h \
+    src/typedefs.h
 
 SOURCES += src/main.cpp  \
+    src/Models/action.cpp \
+    src/Models/actionmodel.cpp \
+    src/Models/datatag.cpp \
+    src/Models/datatagmodel.cpp \
+    src/Models/milestone.cpp \
+    src/Models/milestonemodel.cpp \
+    src/Models/projectmodel.cpp \
+    src/Models/taskmodel.cpp \
     src/datamanager.cpp \
     src/filemanager.cpp \
     src/pagemanager.cpp \
@@ -75,8 +90,6 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/sendworkrequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
-    src/Models/projectsmodel.cpp \
-    src/Models/tasksmodel.cpp \
     src/Models/transactionsmodel.cpp \
     src/Models/workmodel.cpp \
     src/Models/transaction.cpp \

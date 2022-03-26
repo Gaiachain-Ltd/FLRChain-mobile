@@ -10,12 +10,12 @@ Custom.Pane {
     id: root
     padding: Style.projectListDelegatePadding
 
-    readonly property bool accepted: model.assignmentStatus === Project.AssignmentStatus.Accepted
-    readonly property bool undefinedStatus: model.assignmentStatus === Project.AssignmentStatus.Undefined
+    readonly property bool accepted: projectAssignmentStatus === Project.AssignmentStatus.Accepted
+    readonly property bool undefinedStatus: projectAssignmentStatus === Project.AssignmentStatus.Undefined
 
-    readonly property bool investmentFundraising: model.status === Project.ProjectStatus.Fundraising
-    readonly property bool investmentActive: model.status === Project.ProjectStatus.Active
-    readonly property bool investmentClosed: model.status === Project.ProjectStatus.Closed
+    readonly property bool investmentFundraising: projectStatus === Project.ProjectStatus.Fundraising
+    readonly property bool investmentActive: projectStatus === Project.ProjectStatus.Active
+    readonly property bool investmentClosed: projectStatus === Project.ProjectStatus.Closed
 
     ColumnLayout {
         width: root.availableWidth
@@ -29,14 +29,14 @@ Custom.Pane {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 font: Style.projectListDelegateNameFont
                 color: Style.projectListDelegateNameFontColor
-                text: model.name
+                text: projectName
             }
 
             Item { Layout.fillWidth: true }
 
             Custom.StatusLabel {
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                status: model.assignmentStatus
+                status: projectAssignmentStatus
             }
         }
 
@@ -60,7 +60,7 @@ Custom.Pane {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 font: Style.projectListDelegateDateFont
                 color: Style.projectListDelegateFontColor
-                text: String("%1: %2").arg(qsTr("Closes")).arg(model.deadline)
+                text: String("%1: %2").arg(qsTr("Closes")).arg(projectEndDate)
             }
 
             Item { Layout.fillWidth: true }
@@ -72,7 +72,7 @@ Custom.Pane {
                 color: "#414D55"
                 text:
                 {
-                    switch (model.status) {
+                    switch (projectStatus) {
                     case Project.ProjectStatus.Fundraising:
                         return qsTr("Fundraising")
 
@@ -83,7 +83,7 @@ Custom.Pane {
                         return qsTr("Closed")
                     }
 
-                    console.warn("Could not set proper text for project status label:", model.status)
+                    console.warn("Could not set proper text for project status label:", projectStatus)
                     return ""
                 }
             }
@@ -95,7 +95,7 @@ Custom.Pane {
                 radius: Style.investmentStatusIndicatorRadius
                 color:
                 {
-                    switch (model.status) {
+                    switch (projectStatus) {
                     case Project.ProjectStatus.Fundraising:
                         return Style.projectFundraisingColor
 
@@ -106,7 +106,7 @@ Custom.Pane {
                         return Style.projectClosedColor
                     }
 
-                    console.warn("Could not set proper color for project status label:", model.status)
+                    console.warn("Could not set proper color for project status label:", projectStatus)
                     return "#FFFFFF"
                 }
             }
@@ -131,7 +131,7 @@ Custom.Pane {
                 maximumLineCount: 3
                 elide: Text.ElideRight
                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                text: model.description
+                text: projectDescription
             }
         }
 

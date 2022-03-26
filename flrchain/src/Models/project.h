@@ -2,30 +2,28 @@
 #define PROJECT_H
 
 #include <QObject>
-#include <QVariantList>
-#include <QVariant>
-#include "task.h"
+#include <QUrl>
+#include <QDate>
+
+#include "typedefs.h"
+#include "actionmodel.h"
 
 class Project : public QObject
 {
     Q_OBJECT
     Q_CLASSINFO("RegisterEnumClassesUnscoped", "false")
 
-    Q_PROPERTY(int id READ id WRITE setId NOTIFY idChanged)
-    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(int id READ id CONSTANT)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged) // API field: title
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
+    Q_PROPERTY(QUrl photo READ photo WRITE setPhoto NOTIFY photoChanged) // API field: image
     Q_PROPERTY(ProjectStatus status READ status WRITE setStatus NOTIFY statusChanged)
-    Q_PROPERTY(QString deadline READ deadline WRITE setDeadline NOTIFY deadlineChanged)
-    Q_PROPERTY(QString investmentStart READ investmentStart WRITE setInvestmentStart NOTIFY investmentStartChanged)
-    Q_PROPERTY(QString investmentEnd READ investmentEnd WRITE setInvestmentEnd NOTIFY investmentEndChanged)
-    Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged)
-    Q_PROPERTY(QList<Task *> tasks READ tasks WRITE setTasks NOTIFY tasksChanged)
+    Q_PROPERTY(QDate startDate READ startDate WRITE setStartDate NOTIFY startDateChanged) // API field: start
+    Q_PROPERTY(QDate endDate READ endDate WRITE setEndDate NOTIFY endDateChanged) // API field: end
     Q_PROPERTY(AssignmentStatus assignmentStatus READ assignmentStatus WRITE setAssignmentStatus NOTIFY assignmentStatusChanged)
-    Q_PROPERTY(bool confirmed READ confirmed WRITE setConfirmed NOTIFY confirmedChanged)
+    Q_PROPERTY(ActionModel* actions READ actions CONSTANT)
 
 public:
-    Project(QObject *parent = nullptr);
-
     enum class AssignmentStatus : int {
         Undefined = -2,
         New = -1,
@@ -43,56 +41,60 @@ public:
     };
     Q_ENUM(ProjectStatus)
 
+    explicit Project(const int id,
+                     const QString &name,
+                     const QString &description,
+                     const QUrl &photo,
+                     const ProjectStatus status,
+                     const QDate &startDate,
+                     const QDate &endDate,
+                     const AssignmentStatus assignmentStatus,
+                     const ActionList &actions,
+                     QObject *parent = nullptr);
+
     int id() const;
     QString name() const;
-    QString description() const;
-    ProjectStatus status() const;
-    QString deadline() const;
-    QString investmentStart() const;
-    QString investmentEnd() const;
-    QString photo() const;
-    QList<Task *> tasks() const;
-    AssignmentStatus assignmentStatus() const;
-    bool confirmed() const;
-
-public slots:
-    void setId(const int id);
     void setName(const QString &name);
+    QString description() const;
     void setDescription(const QString &description);
+    QUrl photo() const;
+    void setPhoto(const QUrl &photo);
+    ProjectStatus status() const;
     void setStatus(const ProjectStatus status);
-    void setDeadline(const QString &deadline);
-    void setInvestmentStart(const QString &investmentStart);
-    void setInvestmentEnd(const QString &investmentEnd);
-    void setPhoto(const QString &photo);
-    void setTasks(const QList<Task *> &tasks);
+    QDate startDate() const;
+    void setStartDate(const QDate &startDate);
+    QDate endDate() const;
+    void setEndDate(const QDate &endDate);
+    AssignmentStatus assignmentStatus() const;
     void setAssignmentStatus(const AssignmentStatus status);
-    void setConfirmed(bool confirmed);
+    ActionModel* actions() const;
+    void reloadActions(const ActionList &actions);
+
+    static ProjectPtr createFromJson(const QJsonObject& projectObject);
 
 signals:
-    void idChanged(int id);
-    void nameChanged(QString name);
-    void descriptionChanged(QString description);
-    void statusChanged(ProjectStatus status);
-    void deadlineChanged(QString deadline);
-    void investmentStartChanged(QString investmentStart);
-    void investmentEndChanged(QString investmentEnd);
-    void photoChanged(QString photo);
-    void tasksChanged(QList<Task *> tasks);
-    void assignmentStatusChanged(AssignmentStatus status);
-    void confirmedChanged(bool confirmed);
+    void nameChanged(const QString &name);
+    void descriptionChanged(const QString &description);
+    void photoChanged(const QUrl &photo);
+    void statusChanged(const ProjectStatus status);
+    void startDateChanged(const QDate &startDate);
+    void endDateChanged(const QDate &endDate);
+    void assignmentStatusChanged(const AssignmentStatus status);
 
 private:
     int m_id;
     QString m_name;
     QString m_description;
+    QUrl m_photo;
     ProjectStatus m_status;
-    QString m_deadline;
-    QString m_investmentStart;
-    QString m_investmentEnd;
-    QString m_photo;
-    QList<Task *> m_tasks;
+    QDate m_startDate;
+    QDate m_endDate;
     AssignmentStatus m_assignmentStatus;
-    bool m_confirmed;
+    QScopedPointer<ActionModel> m_actions;
 };
+
+Q_DECLARE_METATYPE(Project*)
+Q_DECLARE_METATYPE(ProjectPtr)
+Q_DECLARE_METATYPE(ProjectList)
 
 #endif // PROJECT_H
