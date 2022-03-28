@@ -71,6 +71,7 @@ public:
     void reloadActions(const ActionList &actions);
 
     static ProjectPtr createFromJson(const QJsonObject& projectObject);
+    static ProjectPtr emptyProject();
 
 signals:
     void nameChanged(const QString &name);

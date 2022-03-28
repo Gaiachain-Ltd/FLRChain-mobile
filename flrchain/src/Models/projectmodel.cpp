@@ -165,3 +165,16 @@ void ProjectModel::clear()
     m_projects.clear();
     endResetModel();
 }
+
+ProjectPtr ProjectModel::projectWithId(const int id) const
+{
+    auto it = std::find_if(m_projects.constBegin(), m_projects.constEnd(), [&](const ProjectPtr &project){
+        return project->id() == id;
+    });
+
+    if (it != m_projects.constEnd()) {
+        return *it;
+    }
+
+    return Project::emptyProject();
+}

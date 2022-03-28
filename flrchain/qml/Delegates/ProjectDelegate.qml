@@ -60,7 +60,7 @@ Custom.Pane {
                 Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                 font: Style.projectListDelegateDateFont
                 color: Style.projectListDelegateFontColor
-                text: String("%1: %2").arg(qsTr("Closes")).arg(projectEndDate)
+                text: String("%1: %2").arg(qsTr("Closes")).arg(projectEndDate.toLocaleString(Qt.locale(), "MMMM dd, yyyy"))
             }
 
             Item { Layout.fillWidth: true }
@@ -73,14 +73,14 @@ Custom.Pane {
                 text:
                 {
                     switch (projectStatus) {
-                    case Project.ProjectStatus.Fundraising:
-                        return qsTr("Fundraising")
+                        case Project.ProjectStatus.Fundraising:
+                            return qsTr("Fundraising")
 
-                    case Project.ProjectStatus.Active:
-                        return qsTr("Active")
+                        case Project.ProjectStatus.Active:
+                            return qsTr("Active")
 
-                    case Project.ProjectStatus.Closed:
-                        return qsTr("Closed")
+                        case Project.ProjectStatus.Closed:
+                            return qsTr("Closed")
                     }
 
                     console.warn("Could not set proper text for project status label:", projectStatus)
@@ -96,14 +96,14 @@ Custom.Pane {
                 color:
                 {
                     switch (projectStatus) {
-                    case Project.ProjectStatus.Fundraising:
-                        return Style.projectFundraisingColor
+                        case Project.ProjectStatus.Fundraising:
+                            return Style.projectFundraisingColor
 
-                    case Project.ProjectStatus.Active:
-                        return Style.projectActiveColor
+                        case Project.ProjectStatus.Active:
+                            return Style.projectActiveColor
 
-                    case Project.ProjectStatus.Closed:
-                        return Style.projectClosedColor
+                        case Project.ProjectStatus.Closed:
+                            return Style.projectClosedColor
                     }
 
                     console.warn("Could not set proper color for project status label:", projectStatus)
@@ -145,6 +145,7 @@ Custom.Pane {
                     //Refresh user info:
                     session.getUserInfo()
                 }
+
                 pageManager.enterProjectDetailsScreen(projectId)
             }
         }

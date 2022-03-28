@@ -31,6 +31,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) override;
     void clear();
 
+    ProjectPtr projectWithId(const int id) const;
+
 public slots:
     void reloadFromJson(const QJsonObject &response);
 

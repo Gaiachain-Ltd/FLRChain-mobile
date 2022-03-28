@@ -2,8 +2,9 @@
 #define PAGEMANAGER_H
 
 #include <QObject>
-#include "pages.h"
 #include <QVector>
+
+#include "pages.h"
 
 class PageManager : public QObject
 {

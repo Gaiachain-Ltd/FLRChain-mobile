@@ -5,6 +5,7 @@
 #include <QThread>
 #include <QVariantList>
 #include <QVariant>
+
 #include "project.h"
 #include "projectmodel.h"
 #include "transactionsmodel.h"
@@ -16,17 +17,22 @@ class DataManager : public QObject
 {
     Q_OBJECT
 
+    Q_PROPERTY(Project* detailedProject READ detailedProject NOTIFY detailedProjectChanged)
+
 public:
     explicit DataManager(QObject *parent = nullptr);
     ~DataManager();
 
     void cleanData();
     void projectDetailsReply(const QJsonObject &projectObject);
+
     Q_INVOKABLE QString getPhotosPath();
     Q_INVOKABLE void cleanPhotosDir();
     Q_INVOKABLE void removeCurrentWorkPhoto();
+    Q_INVOKABLE void loadProjectDetails(const int projectId);
 
     ProjectModel *projectsModel() const;
+    Project *detailedProject() const;
     TransactionsModel *transactionsModel() const;
     WorkModel *workModel() const;
 
@@ -48,14 +54,15 @@ signals:
     void transactionsDataReply(const QJsonObject &transactions);
     void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
+    void detailedProjectChanged();
 
 private:
+    QSharedPointer<ProjectModel> m_projectsModel;
+    ProjectPtr m_detailedProject;
+    QScopedPointer<TransactionsModel, QScopedPointerDeleteLater> m_transactionsModel;
+    QScopedPointer<WorkModel, QScopedPointerDeleteLater> m_workModel;
     QThread *m_workerThread;
-    FileManager *m_fileManager;
-
-    ProjectModel *m_projectsModel;
-    TransactionsModel *m_transactionsModel;
-    WorkModel *m_workModel;
+    QScopedPointer<FileManager, QScopedPointerDeleteLater> m_fileManager;
 };
 
 #endif // DATAMANAGER_H

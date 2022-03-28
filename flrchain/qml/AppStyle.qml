@@ -261,6 +261,19 @@ QtObject {
     readonly property size investmentStatusIndicatorSize: Qt.size(10, 10)
     readonly property int investmentStatusIndicatorRadius: 2
 
+    // Project details page
+    readonly property int projectDetailsSideMargins: 16
+    readonly property int projectDetailsTopBottomMargin: 20
+    readonly property int projectDetailsContentSpacing: 20
+    readonly property font projectDetailsTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 20})
+    readonly property color projectDetailsTitleFontColor: "#414D55"
+    readonly property int projectDetailsPanePadding: 20
+    readonly property int projectDetailsSectionSpacing: 10
+    readonly property font projectDetailsPaneSectionTitleFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 14})
+    readonly property color projectDetailsPaneSectionTitleFontColor: "#06BCC1"
+    readonly property font projectDetailsPaneContentFont: Qt.font({family: appFontFamily, styleName: "SemiBold", pixelSize: 12})
+    readonly property color projectDetailsPaneContentFontColor: "#606C83"
+
     // Project status label
     readonly property color projectFundraisingColor: "#FFB623"
     readonly property color projectActiveColor: "#00B854"
