@@ -18,8 +18,8 @@ QHash<int, QByteArray> TaskModel::roleNames() const
         { TaskRewardRole, QByteArrayLiteral("taskReward") },
         { TaskBatchRole, QByteArrayLiteral("taskBatch") },
         { TaskFinishedRole, QByteArrayLiteral("taskFinished") },
+        { TaskFavouriteRole, QByteArrayLiteral("taskFavourite") },
         { TaskDataTypeTagRole, QByteArrayLiteral("taskDataTypeTag") },
-        { TaskProjectIdRole, QByteArrayLiteral("taskProjectId") },
         { TaskDataTagsRole, QByteArrayLiteral("taskDataTags") }
     };
 
@@ -58,11 +58,11 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
         case TaskFinishedRole:
             return task->finished();
 
+        case TaskFavouriteRole:
+            return task->favourite();
+
         case TaskDataTypeTagRole:
             return task->dataTypeTag();
-
-        case TaskProjectIdRole:
-            return task->projectId();
 
         case TaskDataTagsRole:
             return QVariant::fromValue(task->dataTags());
@@ -105,13 +105,17 @@ bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int rol
             modified = true;
             break;
 
+        case TaskFavouriteRole:
+            task->setFavourite(value.toBool());
+            modified = true;
+            break;
+
         case TaskDataTypeTagRole:
             task->setDataTypeTag(value.toString());
             modified = true;
             break;
 
         case TaskIdRole:
-        case TaskProjectIdRole:
         case TaskDataTagsRole:
             qWarning() << "Trying to use role that is not editable:" << role;
             break;

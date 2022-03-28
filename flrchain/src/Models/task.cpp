@@ -10,8 +10,9 @@ Task::Task(const int id,
            const qreal reward,
            const qreal batch,
            const bool finished,
+           const bool favourite,
            const QString &dataTypeTag,
-           const int projectId, const DataTagList &dataTags,
+           const DataTagList &dataTags,
            QObject *parent)
     : QObject(parent)
     , m_id(id)
@@ -19,8 +20,8 @@ Task::Task(const int id,
     , m_reward(reward)
     , m_batch(batch)
     , m_finished(finished)
+    , m_favourite(favourite)
     , m_dataTypeTag(dataTypeTag)
-    , m_projectId(projectId)
     , m_dataTags(new DataTagModel)
 {
     reloadDataTags(dataTags);
@@ -83,6 +84,19 @@ void Task::setFinished(const bool finished)
     }
 }
 
+bool Task::favourite() const
+{
+    return m_favourite;
+}
+
+void Task::setFavourite(const bool favourite)
+{
+    if (favourite != m_favourite) {
+        m_favourite = favourite;
+        emit favouriteChanged(favourite);
+    }
+}
+
 QString Task::dataTypeTag() const
 {
     return m_dataTypeTag;
@@ -94,11 +108,6 @@ void Task::setDataTypeTag(const QString &dataTypeTag)
         m_dataTypeTag = dataTypeTag;
         emit dataTypeTagChanged(dataTypeTag);
     }
-}
-
-int Task::projectId() const
-{
-    return m_projectId;
 }
 
 DataTagModel* Task::dataTags() const
@@ -136,7 +145,7 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
                            taskReward,
                            taskBatch,
                            taskFinished,
+                           false,
                            taskDataTypeTag,
-                           0, // TODO
                            taskDataTags);
 }

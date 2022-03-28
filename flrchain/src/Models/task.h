@@ -16,8 +16,8 @@ class Task : public QObject
     Q_PROPERTY(qreal reward READ reward WRITE setReward NOTIFY rewardChanged)
     Q_PROPERTY(qreal batch READ batch WRITE setBatch NOTIFY batchChanged)
     Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
+    Q_PROPERTY(bool favourite READ favourite WRITE setFavourite NOTIFY favouriteChanged)
     Q_PROPERTY(QString dataTypeTag READ dataTypeTag WRITE setDataTypeTag NOTIFY dataTypeTagChanged)
-    Q_PROPERTY(int projectId READ projectId CONSTANT)
     Q_PROPERTY(DataTagModel* dataTags READ dataTags CONSTANT)
 
 public:
@@ -26,8 +26,8 @@ public:
                   const qreal reward,
                   const qreal batch,
                   const bool finished,
+                  const bool favourite,
                   const QString &dataTypeTag,
-                  const int projectId,
                   const DataTagList &dataTags,
                   QObject *parent = nullptr);
 
@@ -40,9 +40,10 @@ public:
     void setBatch(const qreal batch);
     bool finished() const;
     void setFinished(const bool finished);
+    bool favourite() const;
+    void setFavourite(const bool favourite);
     QString dataTypeTag() const;
     void setDataTypeTag(const QString &dataTypeTag);
-    int projectId() const;
     DataTagModel* dataTags() const;
     void reloadDataTags(const DataTagList &dataTags);
 
@@ -53,6 +54,7 @@ signals:
     void rewardChanged(const qreal reward);
     void batchChanged(const qreal batch);
     void finishedChanged(const bool finished);
+    void favouriteChanged(const bool favourite);
     void dataTypeTagChanged(const QString &dataTypeTag);
 
 private:
@@ -61,8 +63,8 @@ private:
     qreal m_reward;
     qreal m_batch;
     bool m_finished;
+    bool m_favourite;
     QString m_dataTypeTag;
-    int m_projectId;
     QScopedPointer<DataTagModel> m_dataTags;
 };
 

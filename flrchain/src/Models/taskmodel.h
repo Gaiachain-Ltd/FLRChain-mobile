@@ -17,6 +17,7 @@ public:
         TaskRewardRole,
         TaskBatchRole,
         TaskFinishedRole,
+        TaskFavouriteRole,
         TaskDataTypeTagRole,
         TaskProjectIdRole,
         TaskDataTagsRole
