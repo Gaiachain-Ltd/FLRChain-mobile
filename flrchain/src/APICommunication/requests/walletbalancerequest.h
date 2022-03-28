@@ -3,22 +3,18 @@
 
 #include "apirequest.h"
 
-#include <QString>
-#include <QObject>
-
 class WalletBalanceRequest : public ApiRequest
 {
     Q_OBJECT
 
 public:
     WalletBalanceRequest(const QByteArray &token);
-    void errorHandler(const QString &error);
 
 signals:
     void walletBalanceReply(const double balance) const;
 
-protected:
-    virtual void parse() override final;
+private:
+    void parse() final;
 };
 
 #endif // WALLETBALANCEREQUEST_H

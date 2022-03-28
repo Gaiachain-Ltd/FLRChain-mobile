@@ -1,46 +1,34 @@
 #include "sendworkrequest.h"
-#include <QJsonObject>
-#include <QJsonValue>
 
-SendWorkRequest::SendWorkRequest(const QString &filePath, const int projectId, const int taskId, const QByteArray &token)
- : MMultiPartRequest(QUrl())
+#include <QJsonObject>
+
+SendWorkRequest::SendWorkRequest(const QString &filePath,
+                                 const int projectId,
+                                 const int taskId,
+                                 const QByteArray &token)
+    : ApiMultiPartRequest(QLatin1String("projects/%1/tasks/%2/activities").arg(QString::number(projectId),
+                                                                               QString::number(taskId)))
 {
-    setToken(token);
-    setAddress(QUrl(APIUrl + QString("/api/v1/projects/%1/tasks/%2/activities/").arg(projectId).arg(taskId)));
-    setPriority(Priority::Normal);
     setType(Type::Post);
+    setToken(token);
 
     addPart(QLatin1String("photo"), QFileInfo(filePath));
-
-    connect(this, &SendWorkRequest::replyError, this, &SendWorkRequest::errorHandler);
-}
-
-void SendWorkRequest::errorHandler(const QString &error)
-{
-    qDebug() << "Error" << error;
-    emit sendWorkError();
 }
 
 void SendWorkRequest::parse()
 {
     const QJsonObject object(m_replyDocument.object());
     const QJsonObject task(object.value(QLatin1String("task")).toObject());
-
     const QString taskName(task.value(QLatin1String("action")).toString());
     const QJsonObject project(object.value(QLatin1String("project")).toObject());
     const QString projectName(project.value(QLatin1String("title")).toString());
 
-   emit workAdded(taskName, projectName);
+    emit workAdded(taskName, projectName);
 }
 
-void SendWorkRequest::customizeRequest(QNetworkRequest &request)
+void SendWorkRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
 {
-    Q_ASSERT_X(!isTokenRequired() || !m_token.isEmpty(),
-               objectName().toLatin1(),
-               "This request require token and it's not provided!");
+    qCritical() << "HTTP response" << errorCode << errorMessage;
 
-    if (!m_token.isEmpty()) {
-        request.setRawHeader(QByteArray("Authorization"),
-                             QStringLiteral("%1 %2").arg("Token", m_token).toLatin1());
-    }
+    emit sendWorkError();
 }

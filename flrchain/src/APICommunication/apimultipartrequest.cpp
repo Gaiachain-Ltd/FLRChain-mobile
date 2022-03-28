@@ -1,15 +1,15 @@
-#include "apirequest.h"
+#include "apimultipartrequest.h"
 
-ApiRequest::ApiRequest(const QString &apiEndpoint)
-    : MRestRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
+ApiMultiPartRequest::ApiMultiPartRequest(const QString &apiEndpoint)
+    : MMultiPartRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
 {
     setPriority(Priority::Normal);
 
     connect(this, &MRestRequest::replyError,
-            this, &ApiRequest::handleError);
+            this, &ApiMultiPartRequest::handleError);
 }
 
-void ApiRequest::customizeRequest(QNetworkRequest &request)
+void ApiMultiPartRequest::customizeRequest(QNetworkRequest &request)
 {
     Q_ASSERT_X(!isTokenRequired() || !m_token.isEmpty(),
                objectName().toLatin1(),
@@ -21,8 +21,8 @@ void ApiRequest::customizeRequest(QNetworkRequest &request)
     }
 }
 
-void ApiRequest::handleError(const QString &errorMessage,
-                             const QNetworkReply::NetworkError errorCode)
+void ApiMultiPartRequest::handleError(const QString &errorMessage,
+                                      const QNetworkReply::NetworkError errorCode)
 {
     qCritical() << "HTTP response" << errorCode << errorMessage;
 }

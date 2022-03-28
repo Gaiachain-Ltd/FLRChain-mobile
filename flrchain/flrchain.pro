@@ -21,6 +21,7 @@ INCLUDEPATH += \
     src/Models
 
 HEADERS += \
+    src/APICommunication/apimultipartrequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
     src/Models/datatag.h \
@@ -61,6 +62,7 @@ HEADERS += \
     src/types.h
 
 SOURCES += src/main.cpp  \
+    src/APICommunication/apimultipartrequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \
     src/Models/datatag.cpp \

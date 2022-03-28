@@ -1,23 +1,23 @@
 #ifndef SENDWORKREQUEST_H
 #define SENDWORKREQUEST_H
 
-#include "mmultipartrequest.h"
-#include <QObject>
+#include "apimultipartrequest.h"
 
-
-class SendWorkRequest : public MMultiPartRequest
+class SendWorkRequest : public ApiMultiPartRequest
 {
     Q_OBJECT
 
 public:
     SendWorkRequest(const QString &filePath, const int projectId, const int taskId, const QByteArray &token);
-    void errorHandler(const QString& error);
+
 signals:
     void workAdded(const QString &taskName, const QString &projectName) const;
     void sendWorkError() const;
-protected:
-    virtual void parse() override final;
-    virtual void customizeRequest(QNetworkRequest &request) override;
+
+private:
+    void parse() final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
 };
 
 #endif // SENDWORKREQUEST_H
