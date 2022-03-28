@@ -5,7 +5,7 @@
 #include <QUrl>
 #include <QDate>
 
-#include "typedefs.h"
+#include "types.h"
 #include "actionmodel.h"
 
 class Project : public QObject

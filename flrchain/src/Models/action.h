@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QScopedPointer>
 
-#include "typedefs.h"
+#include "types.h"
 #include "milestonemodel.h"
 
 class Action : public QObject

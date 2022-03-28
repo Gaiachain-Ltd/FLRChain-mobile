@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 
-#include "typedefs.h"
+#include "types.h"
 
 class MilestoneModel : public QAbstractListModel
 {

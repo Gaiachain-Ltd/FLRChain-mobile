@@ -58,7 +58,7 @@ HEADERS += \
     src/Models/project.h \
     src/Models/user.h \
     src/Models/work.h \
-    src/typedefs.h
+    src/types.h
 
 SOURCES += src/main.cpp  \
     src/Models/action.cpp \

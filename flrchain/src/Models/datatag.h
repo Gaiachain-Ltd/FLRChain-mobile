@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "typedefs.h"
+#include "types.h"
 
 class DataTag : public QObject
 {

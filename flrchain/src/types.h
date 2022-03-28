@@ -1,0 +1,24 @@
+#ifndef TYPES_H
+#define TYPES_H
+
+#include <QSharedPointer>
+
+#define DECLARE_SHARED_POINTER(TYPE) \
+    class TYPE; \
+    using TYPE##Ptr = QSharedPointer<TYPE>;
+
+#define DECLARE_SHARED_POINTER_WITH_LIST(TYPE) \
+    class TYPE; \
+    using TYPE##Ptr = QSharedPointer<TYPE>; \
+    using TYPE##List = QList<TYPE##Ptr>;
+
+DECLARE_SHARED_POINTER(ProjectModel)
+
+DECLARE_SHARED_POINTER_WITH_LIST(User)
+DECLARE_SHARED_POINTER_WITH_LIST(Project)
+DECLARE_SHARED_POINTER_WITH_LIST(Action)
+DECLARE_SHARED_POINTER_WITH_LIST(Milestone)
+DECLARE_SHARED_POINTER_WITH_LIST(Task)
+DECLARE_SHARED_POINTER_WITH_LIST(DataTag)
+
+#endif // TYPES_H
