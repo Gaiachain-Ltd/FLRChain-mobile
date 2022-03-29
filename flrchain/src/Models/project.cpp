@@ -8,7 +8,7 @@
 Project::Project(const int id,
                  const QString &name,
                  const QString &description,
-                 const QUrl &photo,
+                 const QString &photo,
                  const ProjectStatus status,
                  const QDate &startDate,
                  const QDate &endDate,
@@ -60,12 +60,12 @@ void Project::setDescription(const QString &description)
     }
 }
 
-QUrl Project::photo() const
+QString Project::photo() const
 {
     return m_photo;
 }
 
-void Project::setPhoto(const QUrl &photo)
+void Project::setPhoto(const QString &photo)
 {
     if (m_photo != photo) {
         m_photo = photo;
@@ -140,7 +140,7 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
     const int projectId = projectObject.value(u"id").toInt();
     const QString projectName = projectObject.value(u"title").toString();
     const QString projectDescription = projectObject.value(u"description").toString();
-    const QUrl projectPhoto = projectObject.value(u"image").toString();
+    const QString projectPhoto = projectObject.value(u"image").toString();
     const Project::ProjectStatus projectStatus =
             static_cast<Project::ProjectStatus>(projectObject.value(u"status").toInt());
     const QDate projectStartDate = QDate::fromString(projectObject.value(u"start").toString(), QStringLiteral("yyyy-MM-dd"));
@@ -175,6 +175,6 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
 
 ProjectPtr Project::emptyProject()
 {
-    return ProjectPtr::create(-1, QString(), QString(), QUrl(), Project::ProjectStatus::Undefined,
+    return ProjectPtr::create(-1, QString(), QString(), QString(), Project::ProjectStatus::Undefined,
                               QDate(), QDate(), Project::AssignmentStatus::Undefined, ActionList());
 }

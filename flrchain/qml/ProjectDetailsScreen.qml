@@ -16,21 +16,23 @@ Page {
     readonly property string projectName: project ? project.name : "N/A"
     readonly property string projectDescription: project ? project.description : "N/A"
     readonly property string projectPhoto: project ? project.photo : null
-    readonly property date projectStartDate: project ? project.startDate : null
-    readonly property date projectEndDate: project ? project.endDate : null
+    readonly property date projectStartDate: project ? project.startDate : new Date
+    readonly property date projectEndDate: project ? project.endDate : new Date
     readonly property int projectStatus: project ? project.status : Project.ProjectStatus.Undefined
     readonly property int projectAssignmentStatus: project ? project.assignmentStatus : Project.AssignmentStatus.Undefined
     readonly property var projectActions: project ? project.actions : []
+
+    readonly property bool projectIsActive: projectStatus === Project.ProjectStatus.Active
+    readonly property bool userHasJoined: projectAssignmentStatus === Project.AssignmentStatus.Accepted
 
     property bool projectInvestmentConfirmed: false
     property var tasks
     property var workData
     property double workBalance: 0.0
 
-    BusyIndicator {
+    Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: true
         visible: false
     }
 
@@ -145,25 +147,24 @@ Page {
                 font: Style.projectDetailsTitleFont
                 color: Style.projectDetailsTitleFontColor
                 wrapMode: Label.WordWrap
-                text: qsTr("Tasks (%1)").arg(tasksList.count)
+                text: qsTr("Tasks")
             }
 
             ListView {
-                id: tasksList
+                id: projectActionsList
                 Layout.fillWidth: true
                 Layout.preferredHeight: contentHeight
                 Layout.bottomMargin: Style.projectDetailsTopBottomMargin
-                spacing: Style.baseMargin
+                spacing: 20
                 interactive: false
                 model: projectActions
 
-//                delegate: Delegates.TaskDelegate {
-//                    projectName: root.projectName
-//                    projectInvestmentConfirmed: root.projectInvestmentConfirmed
-//                    width: mainColumn.width
-//                    buttonVisible: projectAssignmentStatus === Project.AssignmentStatus.Accepted &&
-//                                   projectStatus === Project.ProjectStatus.Active
-//                }
+                delegate: Delegates.ProjectActionListDelegate {
+                    width: ListView.view.width
+                    actionName: model.actionName
+                    actionNumber: model.index + 1
+                    actionMilestones: model.actionMilestones
+                }
             }
         }
     }

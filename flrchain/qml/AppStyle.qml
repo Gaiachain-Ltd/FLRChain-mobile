@@ -285,6 +285,9 @@ QtObject {
     readonly property color assignmentAcceptedColor: "#00B854"
     readonly property color assignmentRejectedColor: "#FE2121"
 
+    // Project task delegate
+    readonly property size projectTaskFavouriteButtonSize: Qt.size(24, 22)
+
     // Wallet page
     readonly property int walletPagePadding: 16
     readonly property int walletPageSectionSpacing: 24

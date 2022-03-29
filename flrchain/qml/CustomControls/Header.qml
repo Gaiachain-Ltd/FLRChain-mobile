@@ -45,7 +45,7 @@ Pane {
             }
             width: Style.backButtonClickAreaWidth
             iconSize: Style.backButtonIconSize
-            iconSrc: "qrc:/img/icon-back.svg"
+            iconSource: "qrc:/img/icon-back.svg"
             visible: backButtonVisible
 
             onClicked: {
@@ -70,7 +70,7 @@ Pane {
             }
             width: Style.menuButtonClickAreaWidth
             iconSize: Style.menuButtonIconSize
-            iconSrc: "qrc:/img/icon-menu.svg"
+            iconSource: "qrc:/img/icon-menu.svg"
 
             onClicked: {
                 menu.open()

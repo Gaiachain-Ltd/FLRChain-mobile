@@ -75,7 +75,7 @@ Drawer {
                 Layout.topMargin: -Style.menuPadding
                 Layout.rightMargin: -Style.menuPadding
                 iconSize: Style.menuCloseIconSize
-                iconSrc: "qrc:/img/icon-close-menu.svg"
+                iconSource: "qrc:/img/icon-close-menu.svg"
 
                 onClicked: {
                     drawer.close()

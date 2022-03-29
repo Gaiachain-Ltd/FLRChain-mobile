@@ -353,7 +353,12 @@ void Session::setInternetConnection(const bool internetConnection)
     }
 }
 
-bool Session::internetConnection()
+bool Session::internetConnection() const
 {
     return m_internetConnection;
+}
+
+QString Session::apiUrl() const
+{
+    return APIUrl;
 }

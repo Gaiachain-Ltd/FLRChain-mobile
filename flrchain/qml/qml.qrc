@@ -37,12 +37,17 @@
         <file>CustomControls/SecondaryButton.qml</file>
         <file>CustomControls/FormPane.qml</file>
         <file>CustomControls/Pane.qml</file>
-        <file>ProjectListPage/ProjectList.qml</file>
-        <file>ProjectListPage/TaskList.qml</file>
+        <file>Project/ProjectList.qml</file>
+        <file>Project/TaskList.qml</file>
         <file>CustomControls/TabButton.qml</file>
         <file>Delegates/TransactionSectionDelegate.qml</file>
         <file>CashOutPage.qml</file>
         <file>CustomControls/ComboBox.qml</file>
         <file>ReceiveMoneyPage.qml</file>
+        <file>Project/ProjectTasksList.qml</file>
+        <file>Delegates/ProjectTaskListDelegate.qml</file>
+        <file>Delegates/ProjectActionListDelegate.qml</file>
+        <file>Delegates/ProjectMilestoneListDelegate.qml</file>
+        <file>CustomControls/BusyIndicator.qml</file>
     </qresource>
 </RCC>

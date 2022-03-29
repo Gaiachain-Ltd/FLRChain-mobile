@@ -13,10 +13,9 @@ Page {
 
     property double walletBalance: 0.0
 
-    BusyIndicator {
+    Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: true
         visible: false
     }
 

@@ -2,7 +2,6 @@
 #define PROJECT_H
 
 #include <QObject>
-#include <QUrl>
 #include <QDate>
 
 #include "types.h"
@@ -16,7 +15,7 @@ class Project : public QObject
     Q_PROPERTY(int id READ id CONSTANT)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged) // API field: title
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
-    Q_PROPERTY(QUrl photo READ photo WRITE setPhoto NOTIFY photoChanged) // API field: image
+    Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged) // API field: image
     Q_PROPERTY(ProjectStatus status READ status WRITE setStatus NOTIFY statusChanged)
     Q_PROPERTY(QDate startDate READ startDate WRITE setStartDate NOTIFY startDateChanged) // API field: start
     Q_PROPERTY(QDate endDate READ endDate WRITE setEndDate NOTIFY endDateChanged) // API field: end
@@ -44,7 +43,7 @@ public:
     explicit Project(const int id,
                      const QString &name,
                      const QString &description,
-                     const QUrl &photo,
+                     const QString &photo,
                      const ProjectStatus status,
                      const QDate &startDate,
                      const QDate &endDate,
@@ -57,8 +56,8 @@ public:
     void setName(const QString &name);
     QString description() const;
     void setDescription(const QString &description);
-    QUrl photo() const;
-    void setPhoto(const QUrl &photo);
+    QString photo() const;
+    void setPhoto(const QString &photo);
     ProjectStatus status() const;
     void setStatus(const ProjectStatus status);
     QDate startDate() const;
@@ -76,7 +75,7 @@ public:
 signals:
     void nameChanged(const QString &name);
     void descriptionChanged(const QString &description);
-    void photoChanged(const QUrl &photo);
+    void photoChanged(const QString &photo);
     void statusChanged(const ProjectStatus status);
     void startDateChanged(const QDate &startDate);
     void endDateChanged(const QDate &endDate);
@@ -86,7 +85,7 @@ private:
     int m_id;
     QString m_name;
     QString m_description;
-    QUrl m_photo;
+    QString m_photo;
     ProjectStatus m_status;
     QDate m_startDate;
     QDate m_endDate;

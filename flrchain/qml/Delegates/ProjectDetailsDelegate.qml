@@ -15,9 +15,9 @@ Pane {
 
     property alias button: joinButton
 
-    property date deadline: null
+    property date deadline: new Date
     property string description: ""
-    property url photo: ""
+    property string photo: ""
     property int status: Project.ProjectStatus.Undefined
     property int assignmentStatus: Project.AssignmentStatus.Undefined
 
@@ -44,8 +44,7 @@ Pane {
     }
 
     ColumnLayout {
-        width: availableWidth
-        height: availableHeight
+        width: root.availableWidth
         spacing: Style.projectDetailsContentSpacing
 
         ColumnLayout {
@@ -172,16 +171,17 @@ Pane {
                 Layout.fillWidth: true
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
-                wrapMode: Text.WordWrap
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
                 text: description
             }
         }
 
         ColumnLayout {
+            id: photoLayout
             Layout.fillWidth: true
             Layout.fillHeight: false
             spacing: Style.projectDetailsSectionSpacing
-            visible: projectImage.status == Image.Ready
+            visible: photo.length > 0
 
             Label {
                 Layout.fillWidth: true
@@ -191,18 +191,40 @@ Pane {
                 text: qsTr("Photo")
             }
 
-            Image {
-                id: projectImage
+            StackLayout {
                 Layout.fillWidth: true
-                fillMode: Image.PreserveAspectFit
-                source: photo
+                Layout.fillHeight: false
+                currentIndex: projectImage.status == Image.Ready ? 1 : 0
+
+                Rectangle {
+                    implicitWidth: photoLayout.width
+                    implicitHeight: 0.65*implicitWidth
+                    radius: 7
+                    color: "#05000000"
+                    border {
+                        width: 2
+                        color: Style.transactionSectionSeparatorColor
+                    }
+
+                    Custom.BusyIndicator {
+                        anchors.centerIn: parent
+                    }
+                }
+
+                Image {
+                    id: projectImage
+                    sourceSize.width: photoLayout.width
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    source: photoLayout.visible ? session.apiUrl + photo : ""
+                }
             }
         }
 
         Custom.PrimaryButton {
             id: joinButton
             Layout.fillWidth: true
-            text: qsTr("Join")
+            text: qsTr("Ask to join")
             visible: !investmentClosed && assignmentStatus === Project.AssignmentStatus.New
         }
     }

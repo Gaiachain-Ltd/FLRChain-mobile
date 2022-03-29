@@ -14,6 +14,7 @@ class Session : public QObject
     Q_OBJECT
     Q_PROPERTY(User* user READ user NOTIFY userChanged)
     Q_PROPERTY(bool internetConnection WRITE setInternetConnection READ internetConnection NOTIFY internetConnectionChanged)
+    Q_PROPERTY(QString apiUrl READ apiUrl CONSTANT)
 
 public:
     explicit Session(QObject *parent = nullptr);
@@ -24,7 +25,8 @@ public:
     Q_INVOKABLE void registerUser(const QString& email, const QString& password, const QString &firstName,
                                   const QString &lastName, const QString &phone, const QString &village);
     User* user() const;
-    bool internetConnection();
+    bool internetConnection() const;
+    QString apiUrl() const;
     QByteArray getToken() const;
     void setDataManager(DataManager *dataManager);
     Q_INVOKABLE void setRememberMe(const bool val);

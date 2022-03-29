@@ -167,7 +167,7 @@ Page {
                                 margins: Style.microMargin
                             }
                             iconSize: Qt.size(Style.iconUltra, Style.iconUltra)
-                            iconSrc: "qrc:/img/icon-delete.svg"
+                            iconSource: "qrc:/img/icon-delete.svg"
                             visible: !busyIndicator.visible
                             onClicked: {
                                 img.source = ""
@@ -176,10 +176,9 @@ Page {
                             }
                         }
 
-                        BusyIndicator {
+                        Custom.BusyIndicator {
                             id: busyIndicator
                             anchors.centerIn: img
-                            running: true
                         }
                     }
 
