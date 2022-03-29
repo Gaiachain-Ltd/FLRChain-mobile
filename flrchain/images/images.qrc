@@ -38,5 +38,7 @@
         <file>icon-receive.svg</file>
         <file>icon-arrow-down.svg</file>
         <file>qr-example.svg</file>
+        <file>icon-add-fav.svg</file>
+        <file>icon-remove-fav.svg</file>
     </qresource>
 </RCC>

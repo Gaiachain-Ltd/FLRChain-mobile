@@ -4,15 +4,14 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
-import "qrc:/ProjectListPage" as ProjectListPage
+import "qrc:/Project" as ProjectPage
 
 Page {
     id: projectsScreen
 
-    BusyIndicator {
+    Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: true
         visible: false
     }
 
@@ -65,11 +64,11 @@ Page {
             Layout.fillHeight: true
             currentIndex: tabBar.currentIndex
 
-            ProjectListPage.TaskList {
+            ProjectPage.TaskList {
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }
-            ProjectListPage.ProjectList {
+            ProjectPage.ProjectList {
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }

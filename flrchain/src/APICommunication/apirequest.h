@@ -3,8 +3,6 @@
 
 #include "mrestrequest.h"
 
-#include <QUrl>
-#include <QString>
 #include <QObject>
 
 class ApiRequest : public MRestRequest
@@ -12,12 +10,12 @@ class ApiRequest : public MRestRequest
     Q_OBJECT
 
 public:
-    explicit ApiRequest(const QString &method);
-    void setMethod(const QString &apiMethodPath);
+    explicit ApiRequest(const QString &apiEndpoint);
 
 protected:
-    QString mApiMethod;
-    virtual void customizeRequest(QNetworkRequest &request);
+    void customizeRequest(QNetworkRequest &request) override;
+    virtual void handleError(const QString &errorMessage,
+                             const QNetworkReply::NetworkError errorCode);
 };
 
 #endif // APIREQUEST_H

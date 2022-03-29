@@ -1,36 +1,75 @@
 #ifndef TASK_H
 #define TASK_H
+
 #include <QObject>
+#include <QScopedPointer>
+
+#include "types.h"
+#include "datatagmodel.h"
 
 class Task : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int projectId READ projectId WRITE setProjectId)
-    Q_PROPERTY(int taskId READ taskId WRITE setTaskId)
-    Q_PROPERTY(QString action READ action WRITE setAction NOTIFY actionChanged)
-    Q_PROPERTY(double reward READ reward WRITE setReward NOTIFY rewardChanged)
-public:
-    Task(QObject *parent = nullptr);
-    int projectId() const;
-    QString action() const;
-    double reward() const;
-    int taskId() const;
 
-public slots:
-    void setProjectId(const int projectId);
-    void setAction(const QString &action);
-    void setReward(const double reward);
-    void setTaskId(int taskId);
+    Q_PROPERTY(int id READ id CONSTANT)
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(qreal reward READ reward WRITE setReward NOTIFY rewardChanged)
+    Q_PROPERTY(qreal batch READ batch WRITE setBatch NOTIFY batchChanged)
+    Q_PROPERTY(bool finished READ finished WRITE setFinished NOTIFY finishedChanged)
+    Q_PROPERTY(bool favourite READ favourite WRITE setFavourite NOTIFY favouriteChanged)
+    Q_PROPERTY(QString dataTypeTag READ dataTypeTag WRITE setDataTypeTag NOTIFY dataTypeTagChanged)
+    Q_PROPERTY(DataTagModel* dataTags READ dataTags CONSTANT)
+
+public:
+    explicit Task(const int id,
+                  const QString &name,
+                  const qreal reward,
+                  const qreal batch,
+                  const bool finished,
+                  const bool favourite,
+                  const QString &dataTypeTag,
+                  const DataTagList &dataTags,
+                  QObject *parent = nullptr);
+
+    int id() const;
+    QString name() const;
+    void setName(const QString &name);
+    qreal reward() const;
+    void setReward(const qreal reward);
+    qreal batch() const;
+    void setBatch(const qreal batch);
+    bool finished() const;
+    void setFinished(const bool finished);
+    bool favourite() const;
+    void setFavourite(const bool favourite);
+    QString dataTypeTag() const;
+    void setDataTypeTag(const QString &dataTypeTag);
+    DataTagModel* dataTags() const;
+    void reloadDataTags(const DataTagList &dataTags);
+
+    static TaskPtr createFromJson(const QJsonObject &taskObject);
 
 signals:
-    void actionChanged(QString action);
-    void rewardChanged(double reward);
+    void nameChanged(const QString &action);
+    void rewardChanged(const qreal reward);
+    void batchChanged(const qreal batch);
+    void finishedChanged(const bool finished);
+    void favouriteChanged(const bool favourite);
+    void dataTypeTagChanged(const QString &dataTypeTag);
 
 private:
-    int m_projectId;
-    QString m_action;
-    double m_reward;
-    int m_taskId;
+    int m_id;
+    QString m_name;
+    qreal m_reward;
+    qreal m_batch;
+    bool m_finished;
+    bool m_favourite;
+    QString m_dataTypeTag;
+    QScopedPointer<DataTagModel> m_dataTags;
 };
+
+Q_DECLARE_METATYPE(Task*)
+Q_DECLARE_METATYPE(TaskPtr)
+Q_DECLARE_METATYPE(TaskList)
 
 #endif // TASK_H

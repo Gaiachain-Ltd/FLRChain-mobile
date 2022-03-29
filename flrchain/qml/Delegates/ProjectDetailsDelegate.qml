@@ -6,175 +6,226 @@ import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 
-Item {
-    height: childrenRect.height
-    width: parent.width
+Pane {
+    id: root
+    topPadding: Style.projectDetailsPanePadding
+    bottomPadding: Style.projectDetailsPanePadding
+    leftPadding: Style.projectDetailsPanePadding
+    rightPadding: Style.projectDetailsPanePadding
 
-    property alias button: btn
-    property string deadline: ""
+    property alias button: joinButton
+
+    property date deadline: new Date
     property string description: ""
-    property string startDate: ""
-    property string endDate: ""
-    property int status: Project.InvestmentUnknown
-    property int assignmentStatus: Project.Undefined
-    property bool investmentOngoing: status === Project.InvestmentOngoing
-    property bool investmentFinished: status === Project.InvestmentFinished
+    property string photo: ""
+    property int status: Project.ProjectStatus.Undefined
+    property int assignmentStatus: Project.AssignmentStatus.Undefined
 
-    Custom.ShadowedRectangle {
-        height: contentRect.height
-        width: parent.width
+    readonly property bool investmentActive: status === Project.ProjectStatus.Active
+    readonly property bool investmentClosed: status === Project.ProjectStatus.Closed
 
-        Rectangle{
-            id: contentRect
-            width: parent.width
-            height: childrenRect.height
-            color: Style.bgColor
-            radius: Style.rectangleRadius
+    background: Custom.ShadowedRectangle {
+        color: Style.paneBackgroundColor
+        radius: Style.paneBackgroundRadius
+        shadowHorizontalOffset: Style.paneShadowHorizontalOffset
+        shadowVerticalOffset: Style.paneShadowVerticalOffset
+        shadowRadius: Style.paneShadowRadius
+        shadowColor: Style.paneShadowColor
 
-            Custom.StatusLabel{
-                status: assignmentStatus
-                anchors {
-                    bottom: parent.top
-                    bottomMargin: -Style.tinyMargin
-                    left: parent.left
-                    leftMargin: Style.baseMargin
-                }
+        Custom.StatusLabel {
+            anchors {
+                top: parent.top
+                topMargin: root.topPadding
+                right: parent.right
+                rightMargin: root.rightPadding
+            }
+            status: assignmentStatus
+        }
+    }
+
+    ColumnLayout {
+        width: root.availableWidth
+        spacing: Style.projectDetailsContentSpacing
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            spacing: Style.projectDetailsSectionSpacing
+
+            Label {
+                Layout.fillWidth: true
+                font: Style.projectDetailsPaneSectionTitleFont
+                color: Style.projectDetailsPaneSectionTitleFontColor
+                wrapMode: Label.WordWrap
+                text: qsTr("Project deadline")
             }
 
-            ColumnLayout {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.baseMargin
-                    rightMargin: Style.baseMargin
-                }
-                spacing: Style.tinyMargin
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: false
+                Layout.preferredHeight: Style.iconSize
+                spacing: Style.projectDetailsSectionSpacing
 
-                Label{
-                    Layout.topMargin: Style.bigMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Project deadline")
-                    color: Style.accentColor
-                }
-
-                RowLayout {
-                    spacing: Style.microMargin
-                    Layout.fillWidth: true
+                Image {
+                    Layout.preferredWidth: Style.iconSize
                     Layout.preferredHeight: Style.iconSize
-                    Image {
-                        source: "qrc:/img/icon-calendar.svg"
-                        asynchronous: true
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: deadline
-                        color: Style.mediumLabelColor
-                    }
+                    asynchronous: true
+                    fillMode: Image.PreserveAspectFit
+                    sourceSize: Qt.size(width, height)
+                    source: "qrc:/img/icon-calendar.svg"
                 }
 
                 Label {
-                    Layout.topMargin: Style.tinyMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Investment time")
-                    color: Style.accentColor
-                }
-
-                RowLayout {
-                    spacing: Style.microMargin
+                    id: deadlineLabel
                     Layout.fillWidth: true
-                    Layout.preferredHeight: Style.iconSize
-                    Image {
-                        source: "qrc:/img/icon-calendar.svg"
-                        asynchronous: true
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: startDate + " - " + endDate
-                        color: Style.mediumLabelColor
-                    }
+                    font: Style.projectDetailsPaneContentFont
+                    color: Style.projectDetailsPaneContentFontColor
+                    wrapMode: Label.WordWrap
+                    text: deadline.toLocaleString(Qt.locale(), "MMMM dd, yyyy")
                 }
+            }
+        }
 
-                Label{
-                    Layout.topMargin: Style.tinyMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Project status")
-                    color: Style.accentColor
-                }
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            spacing: Style.projectDetailsSectionSpacing
 
-                RowLayout {
-                    spacing: Style.microMargin
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.iconSize
-                    Image {
-                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
-                        asynchronous: true
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
+            Label {
+                Layout.fillWidth: true
+                font: Style.projectDetailsPaneSectionTitleFont
+                color: Style.projectDetailsPaneSectionTitleFontColor
+                wrapMode: Label.WordWrap
+                text: qsTr("Project status")
+            }
 
-                    Label {
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
-                        color: Style.mediumLabelColor
-                    }
-                }
+            RowLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: false
+                Layout.preferredHeight: Style.iconSize
+                spacing: Style.projectDetailsSectionSpacing
 
                 Label {
-                    Layout.topMargin: Style.tinyMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Description")
-                    color: Style.accentColor
+                    id: projectStatusLabel
+                    font: Style.projectDetailsPaneContentFont
+                    color: Style.projectDetailsPaneContentFontColor
+                    wrapMode: Label.WordWrap
+                    text:
+                    {
+                        switch (status) {
+                            case Project.ProjectStatus.Fundraising:
+                                return qsTr("Fundraising")
+
+                            case Project.ProjectStatus.Active:
+                                return qsTr("Active")
+
+                            case Project.ProjectStatus.Closed:
+                                return qsTr("Closed")
+                        }
+
+                        console.warn("Could not set proper text for project status label:", status)
+                        return ""
+                    }
                 }
 
-                Text {
-                    text: description
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: contentHeight
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Style.mediumLabelColor
-                }
+                Rectangle {
+                    id: projectStatusIndicator
+                    Layout.preferredWidth: Style.iconSize
+                    Layout.preferredHeight: Style.iconSize
+                    radius: Style.investmentStatusIndicatorRadius
+                    color:
+                    {
+                        switch (status) {
+                            case Project.ProjectStatus.Fundraising:
+                                return Style.projectFundraisingColor
 
-                Label{
-                    Layout.topMargin: Style.tinyMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Photo")
-                    color: Style.accentColor
+                            case Project.ProjectStatus.Active:
+                                return Style.projectActiveColor
+
+                            case Project.ProjectStatus.Closed:
+                                return Style.projectClosedColor
+                        }
+
+                        console.warn("Could not set proper color for project status label:", status)
+                        return "#FFFFFF"
+                    }
+                }
+            }
+        }
+
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            spacing: Style.projectDetailsSectionSpacing
+
+            Label {
+                Layout.fillWidth: true
+                font: Style.projectDetailsPaneSectionTitleFont
+                color: Style.projectDetailsPaneSectionTitleFontColor
+                wrapMode: Label.WordWrap
+                text: qsTr("Description")
+            }
+
+            Label {
+                id: descriptionLabel
+                Layout.fillWidth: true
+                font: Style.projectDetailsPaneContentFont
+                color: Style.projectDetailsPaneContentFontColor
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+                text: description
+            }
+        }
+
+        ColumnLayout {
+            id: photoLayout
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+            spacing: Style.projectDetailsSectionSpacing
+            visible: photo.length > 0
+
+            Label {
+                Layout.fillWidth: true
+                font: Style.projectDetailsPaneSectionTitleFont
+                color: Style.projectDetailsPaneSectionTitleFontColor
+                wrapMode: Label.WordWrap
+                text: qsTr("Photo")
+            }
+
+            StackLayout {
+                Layout.fillWidth: true
+                Layout.fillHeight: false
+                currentIndex: projectImage.status == Image.Ready ? 1 : 0
+
+                Rectangle {
+                    implicitWidth: photoLayout.width
+                    implicitHeight: 0.65*implicitWidth
+                    radius: 7
+                    color: "#05000000"
+                    border {
+                        width: 2
+                        color: Style.transactionSectionSeparatorColor
+                    }
+
+                    Custom.BusyIndicator {
+                        anchors.centerIn: parent
+                    }
                 }
 
                 Image {
-                    source: ""
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.projectImgHeight
-                }
-
-                Custom.PrimaryButton {
-                    id: btn
-                    Layout.topMargin: Style.tinyMargin
-                    Layout.bottomMargin: Style.baseMargin
-                    Layout.fillWidth: true
-                    text: qsTr("Join")
-                    visible: !investmentFinished && assignmentStatus === Project.Undefined
+                    id: projectImage
+                    sourceSize.width: photoLayout.width
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    source: photoLayout.visible ? session.apiUrl + photo : ""
                 }
             }
+        }
+
+        Custom.PrimaryButton {
+            id: joinButton
+            Layout.fillWidth: true
+            text: qsTr("Ask to join")
+            visible: !investmentClosed && assignmentStatus === Project.AssignmentStatus.New
         }
     }
 }

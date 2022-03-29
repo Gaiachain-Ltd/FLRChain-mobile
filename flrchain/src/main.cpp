@@ -67,12 +67,12 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("projectsModel", dataManager.projectsModel());
     engine.rootContext()->setContextProperty("transactionsModel", dataManager.transactionsModel());
     engine.rootContext()->setContextProperty("workModel", dataManager.workModel());
-    engine.rootContext()->setContextProperty("tasksModel", dataManager.tasksModel());
+//    engine.rootContext()->setContextProperty("tasksModel", dataManager.tasksModel());
 
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
     qmlRegisterUncreatableType<Pages>("com.flrchain.objects", 1, 0, "Pages", "Pages");
-    qmlRegisterType<Project>("com.flrchain.objects", 1, 0, "Project");
+    qmlRegisterUncreatableType<Project>("com.flrchain.objects", 1, 0, "Project", "");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

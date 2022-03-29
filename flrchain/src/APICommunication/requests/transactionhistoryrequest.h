@@ -12,11 +12,12 @@ class TransactionHistoryRequest : public ApiRequest
 
 public:
     TransactionHistoryRequest(const QByteArray &token);
-    void errorHandler(const QString &error);
+
 signals:
     void walletDataReply(const QJsonObject &response) const;
-protected:
-    virtual void parse() override final;
+
+private:
+    void parse() final;
 };
 
 #endif // TRANSACTIONHISTORYREQUEST_H

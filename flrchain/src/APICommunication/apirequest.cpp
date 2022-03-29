@@ -1,26 +1,28 @@
 #include "apirequest.h"
 
-ApiRequest::ApiRequest(const QString &method)
-    : MRestRequest()
+ApiRequest::ApiRequest(const QString &apiEndpoint)
+    : MRestRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
 {
-    setMethod(method);
     setPriority(Priority::Normal);
-}
 
-void ApiRequest::setMethod(const QString &apiMethodPath)
-{
-    mApiMethod = apiMethodPath;
-    setAddress(QUrl(APIUrl + QLatin1String("/api/v1/") + mApiMethod + "/?format=json"));
+    connect(this, &MRestRequest::replyError,
+            this, &ApiRequest::handleError);
 }
 
 void ApiRequest::customizeRequest(QNetworkRequest &request)
 {
     Q_ASSERT_X(!isTokenRequired() || !m_token.isEmpty(),
                objectName().toLatin1(),
-               "This request require token and it's not provided!");
+               "This request requires token and it's not provided!");
 
     if (!m_token.isEmpty()) {
         request.setRawHeader(QByteArray("Authorization"),
                              QStringLiteral("%1 %2").arg("Token", m_token).toLatin1());
     }
+}
+
+void ApiRequest::handleError(const QString &errorMessage,
+                             const QNetworkReply::NetworkError errorCode)
+{
+    qCritical() << "HTTP response" << errorCode << errorMessage;
 }

@@ -11,13 +11,14 @@ class CashOutRequest : public ApiRequest
 
 public:
     CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token);
-    void errorHandler(const QString &error);
 
 signals:
     void transferReply(const bool successful) const;
 
-protected:
-    virtual void parse() override final;
+private:
+    void parse() final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
 };
 
 #endif // CASHOUTREQUEST_H

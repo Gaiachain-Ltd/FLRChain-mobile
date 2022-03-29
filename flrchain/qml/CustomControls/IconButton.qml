@@ -6,7 +6,7 @@ Button {
     id: control
 
     property int radius: 0
-    property string iconSrc: ""
+    property string iconSource: ""
     property size iconSize: Qt.size(Style.iconSize, Style.iconSize)
     property size iconContainerSize: iconSize
 
@@ -30,7 +30,7 @@ Button {
                 id: imageIcon
                 anchors.centerIn: parent
 
-                source: control.iconSrc
+                source: control.iconSource
                 asynchronous: true
 
                 opacity: control.enabled ? 1.0 : 0.3

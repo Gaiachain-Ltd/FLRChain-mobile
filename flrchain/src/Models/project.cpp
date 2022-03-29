@@ -1,19 +1,32 @@
 #include "project.h"
+#include "action.h"
 
-Project::Project(QObject *parent):
-    QObject(parent),
-    m_id(),
-    m_name(QString()),
-    m_description(QString()),
-    m_status(),
-    m_deadline(QString()),
-    m_investmentStart(QString()),
-    m_investmentEnd(QString()),
-    m_photo(QString()),
-    m_tasks(QList<Task *>()),
-    m_assignmentStatus()
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+
+Project::Project(const int id,
+                 const QString &name,
+                 const QString &description,
+                 const QString &photo,
+                 const ProjectStatus status,
+                 const QDate &startDate,
+                 const QDate &endDate,
+                 const AssignmentStatus assignmentStatus,
+                 const ActionList &actions,
+                 QObject *parent)
+    : QObject(parent)
+    , m_id(id)
+    , m_name(name)
+    , m_description(description)
+    , m_photo(photo)
+    , m_status(status)
+    , m_startDate(startDate)
+    , m_endDate(endDate)
+    , m_assignmentStatus(assignmentStatus)
+    , m_actions(new ActionModel)
 {
-
+    reloadActions(actions);
 }
 
 int Project::id() const
@@ -26,65 +39,17 @@ QString Project::name() const
     return m_name;
 }
 
-QString Project::description() const
-{
-    return m_description;
-}
-
-int Project::status() const
-{
-    return m_status;
-}
-
-QString Project::deadline() const
-{
-    return m_deadline;
-}
-
-QString Project::investmentStart() const
-{
-    return m_investmentStart;
-}
-
-QString Project::investmentEnd() const
-{
-    return m_investmentEnd;
-}
-
-QString Project::photo() const
-{
-    return m_photo;
-}
-
-QList<Task *> Project::tasks() const
-{
-    return m_tasks;
-}
-
-int Project::assignmentStatus() const
-{
-    return m_assignmentStatus;
-}
-
-bool Project::confirmed() const
-{
-    return m_confirmed;
-}
-
-void Project::setId(const int id)
-{
-    if (m_id != id) {
-        m_id = id;
-        emit idChanged(id);
-    }
-}
-
 void Project::setName(const QString &name)
 {
     if (m_name != name) {
         m_name = name;
         emit nameChanged(name);
     }
+}
+
+QString Project::description() const
+{
+    return m_description;
 }
 
 void Project::setDescription(const QString &description)
@@ -95,36 +60,9 @@ void Project::setDescription(const QString &description)
     }
 }
 
-void Project::setStatus(const int status)
+QString Project::photo() const
 {
-    if (m_status != status) {
-        m_status = status;
-        emit statusChanged(status);
-    }
-}
-
-void Project::setDeadline(const QString &deadline)
-{
-    if (m_deadline != deadline) {
-        m_deadline = deadline;
-        emit deadlineChanged(deadline);
-    }
-}
-
-void Project::setInvestmentStart(const QString &investmentStart)
-{
-    if (m_investmentStart != investmentStart) {
-        m_investmentStart = investmentStart;
-        emit investmentStartChanged(investmentStart);
-    }
-}
-
-void Project::setInvestmentEnd(const QString &investmentEnd)
-{
-    if (m_investmentEnd != investmentEnd) {
-        m_investmentEnd = investmentEnd;
-        emit investmentEndChanged(investmentEnd);
-    }
+    return m_photo;
 }
 
 void Project::setPhoto(const QString &photo)
@@ -135,15 +73,51 @@ void Project::setPhoto(const QString &photo)
     }
 }
 
-void Project::setTasks(const QList<Task *> &tasks)
+Project::ProjectStatus Project::status() const
 {
-    if (m_tasks != tasks) {
-        m_tasks = tasks;
-        emit tasksChanged(tasks);
+    return m_status;
+}
+
+void Project::setStatus(const ProjectStatus status)
+{
+    if (m_status != status) {
+        m_status = status;
+        emit statusChanged(status);
     }
 }
 
-void Project::setAssignmentStatus(const int status)
+QDate Project::startDate() const
+{
+    return m_startDate;
+}
+
+void Project::setStartDate(const QDate &startDate)
+{
+    if (m_startDate != startDate) {
+        m_startDate = startDate;
+        emit startDateChanged(startDate);
+    }
+}
+
+QDate Project::endDate() const
+{
+    return m_endDate;
+}
+
+void Project::setEndDate(const QDate &endDate)
+{
+    if (m_endDate != endDate) {
+        m_endDate = endDate;
+        emit endDateChanged(endDate);
+    }
+}
+
+Project::AssignmentStatus Project::assignmentStatus() const
+{
+    return m_assignmentStatus;
+}
+
+void Project::setAssignmentStatus(const AssignmentStatus status)
 {
     if (m_assignmentStatus != status) {
         m_assignmentStatus = status;
@@ -151,11 +125,56 @@ void Project::setAssignmentStatus(const int status)
     }
 }
 
-void Project::setConfirmed(bool confirmed)
+ActionModel *Project::actions() const
 {
-    if (m_confirmed == confirmed)
-        return;
+    return m_actions.get();
+}
 
-    m_confirmed = confirmed;
-    emit confirmedChanged(m_confirmed);
+void Project::reloadActions(const ActionList &actions)
+{
+    m_actions->reload(actions);
+}
+
+ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
+{
+    const int projectId = projectObject.value(u"id").toInt();
+    const QString projectName = projectObject.value(u"title").toString();
+    const QString projectDescription = projectObject.value(u"description").toString();
+    const QString projectPhoto = projectObject.value(u"image").toString();
+    const Project::ProjectStatus projectStatus =
+            static_cast<Project::ProjectStatus>(projectObject.value(u"status").toInt());
+    const QDate projectStartDate = QDate::fromString(projectObject.value(u"start").toString(), QStringLiteral("yyyy-MM-dd"));
+    const QDate projectEndDate = QDate::fromString(projectObject.value(u"end").toString(), QStringLiteral("yyyy-MM-dd"));
+
+    Project::AssignmentStatus projectAssignmentStatus;
+    if (projectObject.value(QLatin1String("assignment_status")).isNull()) {
+        projectAssignmentStatus = Project::AssignmentStatus::New;
+    } else {
+        projectAssignmentStatus = static_cast<Project::AssignmentStatus>(projectObject.value(QLatin1String("assignment_status")).toInt());
+    }
+
+    ActionList projectActions;
+    const QJsonArray actionsArray = projectObject.value(u"actions").toArray();
+
+    for (const QJsonValue &value : actionsArray) {
+        const QJsonObject actionObject = value.toObject();
+        const ActionPtr &action = Action::createFromJson(actionObject);
+        projectActions.append(action);
+    }
+
+    return ProjectPtr::create(projectId,
+                              projectName,
+                              projectDescription,
+                              projectPhoto,
+                              projectStatus,
+                              projectStartDate,
+                              projectEndDate,
+                              projectAssignmentStatus,
+                              projectActions);
+}
+
+ProjectPtr Project::emptyProject()
+{
+    return ProjectPtr::create(-1, QString(), QString(), QString(), Project::ProjectStatus::Undefined,
+                              QDate(), QDate(), Project::AssignmentStatus::Undefined, ActionList());
 }
