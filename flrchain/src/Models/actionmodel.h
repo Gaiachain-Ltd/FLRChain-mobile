@@ -9,12 +9,16 @@ class ActionModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+    Q_PROPERTY(bool hasFavouriteTask READ hasFavouriteTask NOTIFY hasFavouriteTaskChanged)
+
 public:
     enum Roles
     {
         ActionIdRole = Qt::UserRole,
         ActionNameRole,
-        ActionMilestonesRole
+        ActionMilestonesRole,
+        ActionHasFavouriteTaskRole
     };
 
     explicit ActionModel(QObject *parent = nullptr);
@@ -25,6 +29,11 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
     void reload(const ActionList &actions);
+    bool hasFavouriteTask() const;
+
+signals:
+    void countChanged();
+    void hasFavouriteTaskChanged();
 
 private:
     ActionList m_actions;

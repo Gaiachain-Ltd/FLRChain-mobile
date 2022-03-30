@@ -1,8 +1,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import SortFilterProxyModel 0.2
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -20,15 +22,11 @@ Page {
     readonly property date projectEndDate: project ? project.endDate : new Date
     readonly property int projectStatus: project ? project.status : Project.ProjectStatus.Undefined
     readonly property int projectAssignmentStatus: project ? project.assignmentStatus : Project.AssignmentStatus.Undefined
-    readonly property var projectActions: project ? project.actions : []
+    readonly property var projectActions: project ? project.actions : null
 
     readonly property bool projectIsActive: projectStatus === Project.ProjectStatus.Active
     readonly property bool userHasJoined: projectAssignmentStatus === Project.AssignmentStatus.Accepted
-
-    property bool projectInvestmentConfirmed: false
-    property var tasks
-    property var workData
-    property double workBalance: 0.0
+    readonly property bool showFavouritesOnly: tabBar.currentIndex == 1
 
     Custom.BusyIndicator {
         id: busyIndicator
@@ -63,7 +61,8 @@ Page {
         target: dataManager
 
         function onDetailedProjectChanged() {
-            session.getWorkData(root.projectId)
+            busyIndicator.visible = false
+//            session.getWorkData(root.projectId)
         }
 
         function onJoinRequestSent(projectId) {
@@ -81,7 +80,7 @@ Page {
                 busyIndicator.visible = false
                 return;
             }
-            workBalance = rewardsBalance
+//            workBalance = rewardsBalance
         }
 
         function onWorkUpdated() {
@@ -147,7 +146,19 @@ Page {
                 font: Style.projectDetailsTitleFont
                 color: Style.projectDetailsTitleFontColor
                 wrapMode: Label.WordWrap
-                text: qsTr("Tasks")
+                text: qsTr("Overview")
+            }
+
+            TabBar {
+                id: tabBar
+                Layout.fillWidth: true
+                Layout.preferredHeight: Style.defaultTabButtonHeight
+                spacing: 0
+                currentIndex: 0
+                visible: userHasJoined
+
+                Custom.TabButton { text: qsTr("All tasks") }
+                Custom.TabButton { text: qsTr("My tasks") }
             }
 
             ListView {
@@ -157,7 +168,17 @@ Page {
                 Layout.bottomMargin: Style.projectDetailsTopBottomMargin
                 spacing: 20
                 interactive: false
-                model: projectActions
+
+                model: SortFilterProxyModel {
+                    sourceModel: root.projectActions
+                    filters: [
+                        ValueFilter {
+                            enabled: showFavouritesOnly
+                            roleName: "actionHasFavouriteTask"
+                            value: true
+                        }
+                    ]
+                }
 
                 delegate: Delegates.ProjectActionListDelegate {
                     width: ListView.view.width

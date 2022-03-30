@@ -3,6 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import SortFilterProxyModel 0.2
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -45,7 +46,17 @@ Pane {
             Layout.preferredHeight: contentHeight
             spacing: parent.spacing
             interactive: false
-            model: root.milestoneTasks
+
+            model: SortFilterProxyModel {
+                sourceModel: root.milestoneTasks
+                filters: [
+                    ValueFilter {
+                        enabled: showFavouritesOnly
+                        roleName: "taskFavourite"
+                        value: true
+                    }
+                ]
+            }
 
             delegate: Delegates.ProjectTaskListDelegate {
                 width: ListView.view.width

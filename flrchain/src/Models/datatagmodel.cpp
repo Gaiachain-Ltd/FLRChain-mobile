@@ -7,7 +7,9 @@ DataTagModel::DataTagModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_dataTags()
 {
-
+    connect(this, &DataTagModel::rowsInserted, this, &DataTagModel::countChanged);
+    connect(this, &DataTagModel::rowsRemoved, this, &DataTagModel::countChanged);
+    connect(this, &DataTagModel::modelReset, this, &DataTagModel::countChanged);
 }
 
 QHash<int, QByteArray> DataTagModel::roleNames() const

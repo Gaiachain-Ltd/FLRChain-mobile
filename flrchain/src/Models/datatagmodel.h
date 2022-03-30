@@ -9,6 +9,8 @@ class DataTagModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+
 public:
     enum Roles
     {
@@ -25,6 +27,9 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     void reload(const DataTagList &dataTags);
+
+signals:
+    void countChanged();
 
 private:
     DataTagList m_dataTags;

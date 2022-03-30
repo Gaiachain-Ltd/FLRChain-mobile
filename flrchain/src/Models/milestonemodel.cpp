@@ -7,7 +7,11 @@ MilestoneModel::MilestoneModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_milestones()
 {
+    connect(this, &MilestoneModel::rowsInserted, this, &MilestoneModel::countChanged);
+    connect(this, &MilestoneModel::rowsRemoved, this, &MilestoneModel::countChanged);
+    connect(this, &MilestoneModel::modelReset, this, &MilestoneModel::countChanged);
 
+    connect(this, &MilestoneModel::countChanged, this, &MilestoneModel::hasFavouriteTaskChanged);
 }
 
 QHash<int, QByteArray> MilestoneModel::roleNames() const
@@ -15,7 +19,8 @@ QHash<int, QByteArray> MilestoneModel::roleNames() const
     static const QHash<int, QByteArray> ROLE_NAMES = {
         { MilestoneIdRole, QByteArrayLiteral("milestoneId") },
         { MilestoneNameRole, QByteArrayLiteral("milestoneName") },
-        { MilestoneTasksRole, QByteArrayLiteral("milestoneTasks") }
+        { MilestoneTasksRole, QByteArrayLiteral("milestoneTasks") },
+        { MilestoneHasFavouriteTaskRole, QByteArrayLiteral("milestoneHasFavouriteTask") }
     };
 
     return ROLE_NAMES;
@@ -46,6 +51,9 @@ QVariant MilestoneModel::data(const QModelIndex &index, int role) const
 
         case MilestoneTasksRole:
             return QVariant::fromValue(milestone->tasks());
+
+        case MilestoneHasFavouriteTaskRole:
+            return milestone->hasFavouriteTask();
     }
 
     qWarning() << "Unsupported model role:" << role;
@@ -72,6 +80,7 @@ bool MilestoneModel::setData(const QModelIndex &index, const QVariant &value, in
 
         case MilestoneIdRole:
         case MilestoneTasksRole:
+        case MilestoneHasFavouriteTaskRole:
             qWarning() << "Trying to use role that is not editable:" << role;
             break;
     }
@@ -87,7 +96,26 @@ bool MilestoneModel::setData(const QModelIndex &index, const QVariant &value, in
 void MilestoneModel::reload(const MilestoneList &milestones)
 {
     beginResetModel();
+
+    for (const MilestonePtr &milestone : qAsConst(m_milestones)) {
+        disconnect(milestone.get(), &Milestone::hasFavouriteTaskChanged,
+                   this, &MilestoneModel::hasFavouriteTaskChanged);
+    }
+
     m_milestones.clear();
     m_milestones = milestones;
+
+    for (const MilestonePtr &milestone : qAsConst(m_milestones)) {
+        connect(milestone.get(), &Milestone::hasFavouriteTaskChanged,
+                this, &MilestoneModel::hasFavouriteTaskChanged);
+    }
+
     endResetModel();
+}
+
+bool MilestoneModel::hasFavouriteTask() const
+{
+    return std::find_if(m_milestones.constBegin(), m_milestones.constEnd(), [&](const MilestonePtr &milestone){
+        return milestone->hasFavouriteTask();
+    }) != m_milestones.constEnd();
 }

@@ -9,6 +9,9 @@ class TaskModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+    Q_PROPERTY(bool hasFavouriteTask READ hasFavouriteTask NOTIFY hasFavouriteTaskChanged)
+
 public:
     enum Roles
     {
@@ -19,7 +22,6 @@ public:
         TaskFinishedRole,
         TaskFavouriteRole,
         TaskDataTypeTagRole,
-        TaskProjectIdRole,
         TaskDataTagsRole
     };
 
@@ -31,6 +33,11 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
     void reload(const TaskList &tasks);
+    bool hasFavouriteTask() const;
+
+signals:
+    void countChanged();
+    void hasFavouriteTaskChanged();
 
 private:
     TaskList m_tasks;

@@ -1,10 +1,5 @@
-## Milo Solutions - project file TEMPLATE
-#
-#
-## (c) Milo Solutions, 2016
-
 include(../version.pri)
-include(../mrestapi/mrestapi.pri)
+
 # Warning! QStringBuilder can crash your app! See last point here:
 # https://www.kdab.com/uncovering-32-qt-best-practices-compile-time-clazy/
 # !!!
@@ -163,3 +158,6 @@ contains(ANDROID_ABIS, "x86") {
 contains(ANDROID_ABIS, "x86_64") {
     ANDROID_EXTRA_LIBS += $$SSL_PATH/x86_64/libcrypto_1_1.so $$SSL_PATH/x86_64/libssl_1_1.so
 }
+
+include(../mrestapi/mrestapi.pri)
+include(../SortFilterProxyModel/SortFilterProxyModel.pri)

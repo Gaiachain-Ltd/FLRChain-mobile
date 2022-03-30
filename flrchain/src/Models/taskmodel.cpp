@@ -7,7 +7,11 @@ TaskModel::TaskModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_tasks()
 {
+    connect(this, &TaskModel::rowsInserted, this, &TaskModel::countChanged);
+    connect(this, &TaskModel::rowsRemoved, this, &TaskModel::countChanged);
+    connect(this, &TaskModel::modelReset, this, &TaskModel::countChanged);
 
+    connect(this, &TaskModel::countChanged, this, &TaskModel::hasFavouriteTaskChanged);
 }
 
 QHash<int, QByteArray> TaskModel::roleNames() const
@@ -123,6 +127,11 @@ bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int rol
 
     if (modified) {
         emit dataChanged(index, index, {role});
+
+        if (role == TaskFavouriteRole) {
+            emit hasFavouriteTaskChanged();
+        }
+
         return true;
     }
 
@@ -132,7 +141,26 @@ bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int rol
 void TaskModel::reload(const TaskList &tasks)
 {
     beginResetModel();
+
+    for (const TaskPtr &task : qAsConst(m_tasks)) {
+        disconnect(task.get(), &Task::favouriteChanged,
+                   this, &TaskModel::hasFavouriteTaskChanged);
+    }
+
     m_tasks.clear();
     m_tasks = tasks;
+
+    for (const TaskPtr &task : qAsConst(m_tasks)) {
+        connect(task.get(), &Task::favouriteChanged,
+                this, &TaskModel::hasFavouriteTaskChanged);
+    }
+
     endResetModel();
+}
+
+bool TaskModel::hasFavouriteTask() const
+{
+    return std::find_if(m_tasks.constBegin(), m_tasks.constEnd(), [&](const TaskPtr& task){
+        return task->favourite();
+    }) != m_tasks.constEnd();
 }

@@ -45,6 +45,11 @@ void Action::reloadMilestones(const MilestoneList &milestones)
     m_milestones->reload(milestones);
 }
 
+bool Action::hasFavouriteTask() const
+{
+    return m_milestones->hasFavouriteTask();
+}
+
 ActionPtr Action::createFromJson(const QJsonObject &actionObject)
 {
     const int actionId = actionObject.value(u"id").toInt();

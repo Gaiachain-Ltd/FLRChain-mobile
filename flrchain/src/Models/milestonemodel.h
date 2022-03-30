@@ -9,12 +9,16 @@ class MilestoneModel : public QAbstractListModel
 {
     Q_OBJECT
 
+    Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+    Q_PROPERTY(bool hasFavouriteTask READ hasFavouriteTask NOTIFY hasFavouriteTaskChanged)
+
 public:
     enum Roles
     {
         MilestoneIdRole = Qt::UserRole,
         MilestoneNameRole,
-        MilestoneTasksRole
+        MilestoneTasksRole,
+        MilestoneHasFavouriteTaskRole
     };
 
     explicit MilestoneModel(QObject *parent = nullptr);
@@ -25,6 +29,11 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
     void reload(const MilestoneList &milestones);
+    bool hasFavouriteTask() const;
+
+signals:
+    void countChanged();
+    void hasFavouriteTaskChanged();
 
 private:
     MilestoneList m_milestones;

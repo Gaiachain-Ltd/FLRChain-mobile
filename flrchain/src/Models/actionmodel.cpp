@@ -7,7 +7,11 @@ ActionModel::ActionModel(QObject *parent)
     : QAbstractListModel(parent)
     , m_actions()
 {
+    connect(this, &ActionModel::rowsInserted, this, &ActionModel::countChanged);
+    connect(this, &ActionModel::rowsRemoved, this, &ActionModel::countChanged);
+    connect(this, &ActionModel::modelReset, this, &ActionModel::countChanged);
 
+    connect(this, &ActionModel::countChanged, this, &ActionModel::hasFavouriteTaskChanged);
 }
 
 QHash<int, QByteArray> ActionModel::roleNames() const
@@ -15,7 +19,8 @@ QHash<int, QByteArray> ActionModel::roleNames() const
     static const QHash<int, QByteArray> ROLE_NAMES = {
         { ActionIdRole, QByteArrayLiteral("actionId") },
         { ActionNameRole, QByteArrayLiteral("actionName") },
-        { ActionMilestonesRole, QByteArrayLiteral("actionMilestones") }
+        { ActionMilestonesRole, QByteArrayLiteral("actionMilestones") },
+        { ActionHasFavouriteTaskRole, QByteArrayLiteral("actionHasFavouriteTask") }
     };
 
     return ROLE_NAMES;
@@ -46,6 +51,9 @@ QVariant ActionModel::data(const QModelIndex &index, int role) const
 
         case ActionMilestonesRole:
             return QVariant::fromValue(action->milestones());
+
+        case ActionHasFavouriteTaskRole:
+            return action->hasFavouriteTask();
     }
 
     qWarning() << "Unsupported model role:" << role;
@@ -72,6 +80,7 @@ bool ActionModel::setData(const QModelIndex &index, const QVariant &value, int r
 
         case ActionIdRole:
         case ActionMilestonesRole:
+        case ActionHasFavouriteTaskRole:
             qWarning() << "Trying to use role that is not editable:" << role;
             break;
     }
@@ -87,7 +96,26 @@ bool ActionModel::setData(const QModelIndex &index, const QVariant &value, int r
 void ActionModel::reload(const ActionList &actions)
 {
     beginResetModel();
+
+    for (const ActionPtr &action : qAsConst(m_actions)) {
+        disconnect(action.get(), &Action::hasFavouriteTaskChanged,
+                   this, &ActionModel::hasFavouriteTaskChanged);
+    }
+
     m_actions.clear();
     m_actions = actions;
+
+    for (const ActionPtr &action : qAsConst(m_actions)) {
+        connect(action.get(), &Action::hasFavouriteTaskChanged,
+                this, &ActionModel::hasFavouriteTaskChanged);
+    }
+
     endResetModel();
+}
+
+bool ActionModel::hasFavouriteTask() const
+{
+    return std::find_if(m_actions.constBegin(), m_actions.constEnd(), [&](const ActionPtr& action){
+        return action->hasFavouriteTask();
+    }) != m_actions.constEnd();
 }

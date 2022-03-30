@@ -15,6 +15,9 @@ Milestone::Milestone(const int id,
     , m_tasks(new TaskModel)
 {
     reloadTasks(tasks);
+
+    connect(m_tasks.get(), &TaskModel::hasFavouriteTaskChanged,
+            this, &Milestone::hasFavouriteTaskChanged);
 }
 
 int Milestone::id() const
@@ -43,6 +46,11 @@ TaskModel* Milestone::tasks() const
 void Milestone::reloadTasks(const TaskList &tasks)
 {
     m_tasks->reload(tasks);
+}
+
+bool Milestone::hasFavouriteTask() const
+{
+    return m_tasks->hasFavouriteTask();
 }
 
 MilestonePtr Milestone::createFromJson(const QJsonObject &milestoneObject)

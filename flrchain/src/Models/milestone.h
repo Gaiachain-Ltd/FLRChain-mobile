@@ -14,6 +14,7 @@ class Milestone : public QObject
     Q_PROPERTY(int id READ id CONSTANT)
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(TaskModel* tasks READ tasks CONSTANT)
+    Q_PROPERTY(bool hasFavouriteTask READ hasFavouriteTask NOTIFY hasFavouriteTaskChanged)
 
 public:
     explicit Milestone(const int id,
@@ -26,11 +27,13 @@ public:
     void setName(const QString &name);
     TaskModel* tasks() const;
     void reloadTasks(const TaskList &tasks);
+    bool hasFavouriteTask() const;
 
     static MilestonePtr createFromJson(const QJsonObject &milestoneObject);
 
 signals:
     void nameChanged(const QString &name);
+    void hasFavouriteTaskChanged();
 
 private:
     int m_id;
