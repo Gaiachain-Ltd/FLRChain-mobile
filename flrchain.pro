@@ -12,24 +12,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
-CONFIG += tests
-
 TEMPLATE = subdirs
 
 docs {
     message("Updating doxygen file. No compilation will be performed!")
-    doxy.input = $$PWD/template.doxyfile.in
-    doxy.output = $$PWD/template.doxyfile
+    include($$PWD/version.pri)
+    doxy.input = $$PWD/FLRChain.doxyfile.in
+    doxy.output = $$PWD/FLRChain.doxyfile
     QMAKE_SUBSTITUTES += doxy
 } else {
-    SUBDIRS += flrchain \
-
-    tests {
-        !android {
-            CONFIG(debug, debug|release) {
-                message("Running test suite")
-                SUBDIRS += tests \
-            }
-        }
+    android {
+        message("Building FLRChain application")
+        SUBDIRS += flrchain
+    } else {
+        message("Building unit test suite")
+        SUBDIRS += tests
     }
 }
