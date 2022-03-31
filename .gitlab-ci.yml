@@ -76,4 +76,4 @@ generate_docs:
     - $QT_DESKTOP_PATH/bin/qmake CONFIG+=docs flrchain.pro
     - doxygen FLRChain.doxyfile
     - zip -r flrchain-docs.zip doc/html
-    - curl -u "$UPLOAD_USER:$UPLOAD_PASS" -v -T flrchain-docs.zip "$UPLOAD_URL"
+    - curl -u "$UPLOAD_USER:$UPLOAD_PASS" -v -T flrchain-docs.zip "$UPLOAD_URL/flrchain-docs.zip"
