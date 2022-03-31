@@ -20,10 +20,13 @@ include(../version.pri)
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick core network androidextras svg
+
+QT += quick core network svg
+android: QT += androidextras
+
 TEMPLATE = app
 CONFIG += c++14
-TARGET = template
+TARGET = FLRChain
 
 INCLUDEPATH += \
     src \
@@ -118,21 +121,10 @@ RESOURCES +=  \
     images/images.qrc
 
 OTHER_FILES += \
-    ../template.doxyfile \
+    ../FLRChain.doxyfile.in \
     ../README.md \
-    ../Release.md \
     ../.gitignore \
-    ../license-Qt.txt \
     ../.gitlab-ci.yml
-
-## Put all build files into build directory
-##  This also works with shadow building, so don't worry!
-BUILD_DIR = build
-OBJECTS_DIR = $$BUILD_DIR
-MOC_DIR = $$BUILD_DIR
-RCC_DIR = $$BUILD_DIR
-UI_DIR = $$BUILD_DIR
-DESTDIR = $$BUILD_DIR/bin
 
 ## Platforms
 
