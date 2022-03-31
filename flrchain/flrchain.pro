@@ -41,6 +41,7 @@ HEADERS += \
     src/Models/projectmodel.h \
     src/Models/taskmodel.h \
     src/datamanager.h \
+    src/favouritetaskstorage.h \
     src/filemanager.h \
     src/pagemanager.h \
     src/pages.h \
@@ -82,6 +83,7 @@ SOURCES += src/main.cpp  \
     src/Models/projectmodel.cpp \
     src/Models/taskmodel.cpp \
     src/datamanager.cpp \
+    src/favouritetaskstorage.cpp \
     src/filemanager.cpp \
     src/pagemanager.cpp \
     src/session.cpp \

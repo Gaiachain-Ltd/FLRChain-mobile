@@ -43,7 +43,6 @@ public:
                   const qreal reward,
                   const qreal batch,
                   const bool finished,
-                  const bool favourite,
                   const QString &dataTypeTag,
                   const DataTagList &dataTags,
                   QObject *parent = nullptr);
@@ -80,7 +79,6 @@ private:
     qreal m_reward;
     qreal m_batch;
     bool m_finished;
-    bool m_favourite;
     QString m_dataTypeTag;
     QScopedPointer<DataTagModel> m_dataTags;
 };
