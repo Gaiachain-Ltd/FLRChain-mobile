@@ -33,6 +33,7 @@ public:
         ProjectNameRole,
         ProjectDescriptionRole,
         ProjectPhotoRole,
+        ProjectMapLinkRole,
         ProjectStatusRole,
         ProjectStartDateRole,
         ProjectEndDateRole,

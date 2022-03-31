@@ -26,6 +26,7 @@ Project::Project(const int id,
                  const QString &name,
                  const QString &description,
                  const QString &photo,
+                 const QUrl &mapLink,
                  const ProjectStatus status,
                  const QDate &startDate,
                  const QDate &endDate,
@@ -37,6 +38,7 @@ Project::Project(const int id,
     , m_name(name)
     , m_description(description)
     , m_photo(photo)
+    , m_mapLink(mapLink)
     , m_status(status)
     , m_startDate(startDate)
     , m_endDate(endDate)
@@ -87,6 +89,19 @@ void Project::setPhoto(const QString &photo)
     if (m_photo != photo) {
         m_photo = photo;
         emit photoChanged(photo);
+    }
+}
+
+QUrl Project::mapLink() const
+{
+    return m_mapLink;
+}
+
+void Project::setMapLink(const QUrl &mapLink)
+{
+    if (mapLink != m_mapLink) {
+        m_mapLink = mapLink;
+        emit mapLinkChanged(mapLink);
     }
 }
 
@@ -158,6 +173,7 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
     const QString projectName = projectObject.value(u"title").toString();
     const QString projectDescription = projectObject.value(u"description").toString();
     const QString projectPhoto = projectObject.value(u"image").toString();
+    const QUrl projectMapLink = projectObject.value(u"maplink").toString();
     const Project::ProjectStatus projectStatus =
             static_cast<Project::ProjectStatus>(projectObject.value(u"status").toInt());
     const QDate projectStartDate = QDate::fromString(projectObject.value(u"start").toString(), QStringLiteral("yyyy-MM-dd"));
@@ -183,6 +199,7 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
                               projectName,
                               projectDescription,
                               projectPhoto,
+                              projectMapLink,
                               projectStatus,
                               projectStartDate,
                               projectEndDate,
@@ -192,6 +209,6 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
 
 ProjectPtr Project::emptyProject()
 {
-    return ProjectPtr::create(-1, QString(), QString(), QString(), Project::ProjectStatus::Undefined,
+    return ProjectPtr::create(-1, QString(), QString(), QString(), QUrl(), Project::ProjectStatus::Undefined,
                               QDate(), QDate(), Project::AssignmentStatus::Undefined, ActionList());
 }
