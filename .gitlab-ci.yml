@@ -41,7 +41,7 @@ app_build:
     - $QT_ANDROID_PATH/bin/qmake -spec android-clang CONFIG+=release CONFIG+=qtquickcompiler CONFIG+=dev
     - make -j $(nproc)
     - make install INSTALL_ROOT=android-build
-    - $QT_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-28 --gradle
+    - $QT_ANDROID_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-28 --gradle
 
 upload_app:
   extends:
