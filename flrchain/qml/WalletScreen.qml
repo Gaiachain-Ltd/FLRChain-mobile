@@ -209,7 +209,7 @@ Page {
 
                     delegate: Delegates.TransactionDelegate {
                         width: listView.width
-                        transactionProjectName: "TODO: project name"
+                        transactionProjectName: title
                         transactionType: action
                         transactionAmount: amount
                         separatorVisible: index !== listView.count - 1

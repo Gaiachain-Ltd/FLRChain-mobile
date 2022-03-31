@@ -45,7 +45,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     void clear();
 public slots:
-    void parseJsonObject(const QJsonObject &response);
+    void parseJsonObject(const QJsonArray &response);
 signals:
     void transactionsReceived();
 

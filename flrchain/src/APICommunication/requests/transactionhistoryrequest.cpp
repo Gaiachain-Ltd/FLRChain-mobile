@@ -17,7 +17,7 @@
 
 #include "transactionhistoryrequest.h"
 
-#include <QJsonObject>
+#include <QJsonArray>
 
 TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token)
     : ApiRequest("transactions")
@@ -28,5 +28,5 @@ TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token)
 
 void TransactionHistoryRequest::parse()
 {
-    emit walletDataReply(m_replyDocument.object());
+    emit walletDataReply(m_replyDocument.array());
 }

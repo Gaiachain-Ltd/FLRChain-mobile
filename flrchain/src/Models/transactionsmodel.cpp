@@ -110,20 +110,26 @@ bool TransactionsModel::setData(const QModelIndex &index, const QVariant &value,
     return true;
 }
 
-void TransactionsModel::parseJsonObject(const QJsonObject &response)
+void TransactionsModel::parseJsonObject(const QJsonArray &response)
 {
     clear();
     beginResetModel();
-    QJsonArray walletArray = response.value(QLatin1String("results")).toArray();
 
-    const int arraySize = walletArray.count();
+    const int arraySize = response.count();
 
     for(int i = 0; i < arraySize; ++i) {
-        QJsonObject projectObject = walletArray.at(i).toObject();
+        QJsonObject projectObject = response.at(i).toObject();
 
         Transaction *transaction = new Transaction();
         transaction->setId(projectObject.value(QLatin1String("id")).toInt());
-        transaction->setTitle(projectObject.value(QLatin1String("project_name")).toString());
+
+        const QString &pName = projectObject.value(QLatin1String("project_name")).toString();
+        if (pName.isEmpty()) {
+            transaction->setTitle(QLatin1String("-"));
+        } else {
+            transaction->setTitle(pName);
+        }
+
         transaction->setAmount(projectObject.value(QLatin1String("amount")).toString().toDouble());
         QDateTime date = QDateTime::fromString(projectObject.value(QLatin1String("created")).toString(), Qt::ISODate);
         transaction->setCreationDate(date.toString(QLatin1String("dd.MM.yyyy")));

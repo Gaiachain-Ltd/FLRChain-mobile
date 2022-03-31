@@ -30,12 +30,7 @@ ColumnLayout {
     property bool separatorVisible
 
     function signType() {
-        switch(transactionType) {
-        case 9:
-            return "-";
-        default:
-            return "+";
-        }
+        return transactionType ? "+" : "-";
     }
 
     RowLayout {
@@ -54,7 +49,7 @@ ColumnLayout {
                 id: transactionTypeLabel
                 font: Style.transactionTypeFont
                 color: Style.transactionTypeFontColor
-                text: root.transactionType == 9 ? qsTr("Cash out") : qsTr("Reward")
+                text: root.transactionType ? qsTr("Reward") : qsTr("Cash out")
             }
         }
 
@@ -68,7 +63,7 @@ ColumnLayout {
             Label {
                 id: amountLabel
                 font: Style.transactionAmountFont
-                color: root.transactionType == 9 ? Style.transactionOutgoingColor : Style.transactionIncomingColor
+                color: root.transactionType ? Style.transactionIncomingColor : Style.transactionOutgoingColor
                 text: signType() + root.transactionAmount
             }
 

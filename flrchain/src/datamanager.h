@@ -68,7 +68,7 @@ signals:
     void workAdded(const QString &taskName, const QString &projectName) const;
     void walletBalanceReceived(const double balance) const;
     void projectsDataReply(const QJsonObject &projects);
-    void transactionsDataReply(const QJsonObject &transactions);
+    void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
     void detailedProjectChanged();
