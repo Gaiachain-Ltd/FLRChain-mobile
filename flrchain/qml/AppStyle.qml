@@ -299,6 +299,11 @@ QtObject {
     readonly property int assignmentStatusLabelLeftRightPadding: 4
     readonly property size investmentStatusIndicatorSize: Qt.size(10, 10)
     readonly property int investmentStatusIndicatorRadius: 2
+    readonly property font myTaskDelegateInfoTypeFont: semiBoldSmallFont
+    readonly property font myTaskDelegateProjectNameFont: regularSmallFont
+    readonly property font myTaskDelegateTaskDataFont: boldSmallFont
+    readonly property color myTaskDelegateInfoTypeFontColor: "#414D55"
+    readonly property color myTaskDelegateDataFontColor: "#72809D"
 
     // Project details page
     readonly property int projectDetailsSideMargins: 16

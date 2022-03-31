@@ -23,11 +23,14 @@ import com.flrchain.style 1.0
 
 Controls.Pane {
     id: root
+    padding: Style.panePadding
+    topPadding: padding
+    bottomPadding: padding
+    leftPadding: padding
+    rightPadding: padding
 
     default property alias content: contentColumn.data
     property alias contentSpacing: contentColumn.spacing
-
-    padding: Style.panePadding
 
     background: ShadowedRectangle {
         color: Style.paneBackgroundColor
@@ -40,6 +43,7 @@ Controls.Pane {
 
     ColumnLayout {
         id: contentColumn
-        anchors.fill: parent
+        width: root.availableWidth
+        height: root.availableHeight
     }
 }

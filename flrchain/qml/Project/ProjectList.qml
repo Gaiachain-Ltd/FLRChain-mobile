@@ -18,6 +18,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 
 import "qrc:/Delegates" as Delegates
@@ -39,8 +40,7 @@ Flickable {
         spacing: Style.baseMargin
 
         Label {
-            Layout.topMargin: Style.bigMargin
-            Layout.bottomMargin: Style.tinyMargin
+            Layout.topMargin: 20
             font: Style.projectListTitleFont
             color: Style.projectListTitleFontColor
             text: qsTr("Project list (%1)").arg(listView.count)
@@ -53,7 +53,7 @@ Flickable {
 
             Layout.fillWidth: true
             Layout.preferredHeight: contentHeight
-            Layout.bottomMargin: Style.smallMargin
+            Layout.bottomMargin: 20
 
             spacing: Style.baseMargin
 

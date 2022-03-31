@@ -18,10 +18,11 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
-import "qrc:/Project" as ProjectPage
+import "qrc:/Project" as ProjectComponents
 
 Page {
     id: projectsScreen
@@ -71,6 +72,7 @@ Page {
             Layout.fillWidth: true
             Layout.preferredHeight: Style.defaultTabButtonHeight
             spacing: 0
+            currentIndex: 0
 
             Custom.TabButton { text: qsTr("My tasks") }
             Custom.TabButton { text: qsTr("Projects") }
@@ -81,11 +83,11 @@ Page {
             Layout.fillHeight: true
             currentIndex: tabBar.currentIndex
 
-            ProjectPage.TaskList {
+            ProjectComponents.MyTasksList {
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }
-            ProjectPage.ProjectList {
+            ProjectComponents.ProjectList {
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }

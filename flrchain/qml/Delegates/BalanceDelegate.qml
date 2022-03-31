@@ -52,7 +52,7 @@ Item {
 
                 Label{
                     Layout.topMargin: Style.baseMargin
-                    font.pixelSize: Style.fontSmall
+                    font.pixelSize: Style.smallFontPixelSize
                     font.weight: Font.DemiBold
                     text: title
                     color: Style.accentColor
@@ -68,7 +68,7 @@ Item {
 
                 Label {
                     id: valueLabel
-                    font.pixelSize: Style.fontMax
+                    font.pixelSize: Style.hugeFontPixelSize
                     font.weight: Font.DemiBold
                     text: qsTr("%1 USDC").arg(value)
                     color: Style.mediumLabelColor

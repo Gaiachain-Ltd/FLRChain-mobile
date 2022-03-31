@@ -68,7 +68,7 @@ Column {
                 anchors.left: iconAccepted.right
                 anchors.leftMargin: Style.tinyMargin
                 anchors.verticalCenter: parent.verticalCenter
-                font.pixelSize: Style.fontTiny
+                font.pixelSize: Style.tinyFontPixelSize
                 font.weight: Font.DemiBold
                 text: qsTr("Accepted")
                 color: Style.bgColor
@@ -88,7 +88,7 @@ Column {
             Label{
                 id: rewardLabel
                 anchors.centerIn: parent
-                font.pixelSize: Style.fontBig
+                font.pixelSize: Style.largeFontPixelSize
                 font.weight: Font.Bold
                 text: qsTr("%1 USDC").arg(amount)
                 color: Style.bgColor
@@ -110,7 +110,7 @@ Column {
         }
 
         Label{
-            font.pixelSize: Style.fontTiny
+            font.pixelSize: Style.tinyFontPixelSize
             font.weight: Font.DemiBold
             text: date
             color: Style.mediumLabelColor

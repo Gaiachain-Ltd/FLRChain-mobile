@@ -26,6 +26,7 @@ import SortFilterProxyModel 0.2
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
+import "qrc:/Project" as ProjectComponents
 
 Page {
     id: root
@@ -178,31 +179,14 @@ Page {
                 Custom.TabButton { text: qsTr("My tasks") }
             }
 
-            ListView {
-                id: projectActionsList
+            ProjectComponents.ProjectTaskList {
+                id: projectTaskList
                 Layout.fillWidth: true
-                Layout.preferredHeight: contentHeight
                 Layout.bottomMargin: Style.projectDetailsTopBottomMargin
-                spacing: 20
-                interactive: false
-
-                model: SortFilterProxyModel {
-                    sourceModel: root.projectActions
-                    filters: [
-                        ValueFilter {
-                            enabled: showFavouritesOnly
-                            roleName: "actionHasFavouriteTask"
-                            value: true
-                        }
-                    ]
-                }
-
-                delegate: Delegates.ProjectActionListDelegate {
-                    width: ListView.view.width
-                    actionName: model.actionName
-                    actionNumber: model.index + 1
-                    actionMilestones: model.actionMilestones
-                }
+                sourceModel: root.projectActions
+                projectIsActive: root.projectIsActive
+                userHasJoined: root.userHasJoined
+                showFavouritesOnly: root.showFavouritesOnly
             }
         }
     }

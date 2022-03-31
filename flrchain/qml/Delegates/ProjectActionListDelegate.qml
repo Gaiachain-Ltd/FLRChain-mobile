@@ -26,26 +26,25 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
 Pane {
-    id: root
+    id: actionListDelegate
     padding: 0
     background: null
 
-    property int actionNumber
-    property string actionName
-    property var actionMilestones
+    property int actionNumber: model.actionNumber
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
-        spacing: 5
+        spacing: projectTaskList.showActionInfo ? 5 : 0
 
         RowLayout {
             Layout.fillWidth: true
             spacing: 0
+            visible: projectTaskList.showActionInfo
 
             Label {
                 font: Qt.font({family: Style.appFontFamily, styleName: "Regular", pixelSize: 16})
                 color: "#414D55"
-                text: String("%1 %2: ").arg(qsTr("FLR Action")).arg(root.actionNumber)
+                text: String("%1 %2: ").arg(qsTr("FLR Action")).arg(actionNumber)
             }
 
             Label {
@@ -53,7 +52,7 @@ Pane {
                 font: Qt.font({family: Style.appFontFamily, styleName: "SemiBold", pixelSize: 16})
                 color: "#414D55"
                 wrapMode: Label.WordWrap
-                text: root.actionName
+                text: actionName
             }
         }
 
@@ -64,7 +63,7 @@ Pane {
             interactive: false
 
             model: SortFilterProxyModel {
-                sourceModel: root.actionMilestones
+                sourceModel: actionMilestones
                 filters: [
                     ValueFilter {
                         enabled: showFavouritesOnly
@@ -72,15 +71,19 @@ Pane {
                         value: true
                     }
                 ]
+                proxyRoles: [
+                    ExpressionRole {
+                        name: "actionNumber"
+                        expression: actionListDelegate.actionNumber
+                    },
+                    ExpressionRole {
+                        name: "milestoneNumber"
+                        expression: index + 1
+                    }
+                ]
             }
 
-            delegate: Delegates.ProjectMilestoneListDelegate {
-                width: ListView.view.width
-                actionNumber: root.actionNumber
-                milestoneNumber: model.index + 1
-                milestoneName: model.milestoneName
-                milestoneTasks: model.milestoneTasks
-            }
+            delegate: projectTaskList.milestoneDelegate
         }
     }
 }

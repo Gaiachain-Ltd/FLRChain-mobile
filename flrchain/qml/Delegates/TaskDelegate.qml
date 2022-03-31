@@ -51,14 +51,14 @@ Item {
 
                 Label{
                     Layout.topMargin: Style.baseMargin
-                    font.pixelSize: Style.fontSmall
+                    font.pixelSize: Style.smallFontPixelSize
                     font.weight: Font.DemiBold
                     text: qsTr("Action")
                     color: Style.accentColor
                 }
 
                 Label{
-                    font.pixelSize: Style.fontSmall
+                    font.pixelSize: Style.smallFontPixelSize
                     font.weight: Font.DemiBold
                     text: actionName
                     color: Style.mediumLabelColor
@@ -66,14 +66,14 @@ Item {
 
                 Label {
                     Layout.topMargin: Style.tinyMargin
-                    font.pixelSize: Style.fontSmall
+                    font.pixelSize: Style.smallFontPixelSize
                     font.weight: Font.DemiBold
                     text: qsTr("Rewards per unit")
                     color: Style.accentColor
                 }
 
                 Label{
-                    font.pixelSize: Style.fontSmall
+                    font.pixelSize: Style.smallFontPixelSize
                     font.weight: Font.DemiBold
                     text: qsTr("%1 USDC").arg(reward)
                     color: Style.mediumLabelColor
