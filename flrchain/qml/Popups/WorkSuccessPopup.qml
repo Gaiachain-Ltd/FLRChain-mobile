@@ -35,7 +35,7 @@ Custom.Popup {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
+            font.pointSize: Style.smallFontPixelSize
             font.weight: Font.DemiBold
             color: Style.darkLabelColor
             text: qsTr("The work for project: ")
@@ -44,7 +44,7 @@ Custom.Popup {
         Label {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: -Style.smallMargin
-            font.pointSize: Style.fontSmall
+            font.pointSize: Style.smallFontPixelSize
             color: Style.darkLabelColor
             font.weight: Font.Bold
             text: projectName
@@ -57,7 +57,7 @@ Custom.Popup {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.fontSmall
+            font.pointSize: Style.smallFontPixelSize
             font.weight: Font.DemiBold
             color: Style.darkLabelColor
             text: qsTr("in task: ")
@@ -66,7 +66,7 @@ Custom.Popup {
         Label {
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: -Style.smallMargin
-            font.pointSize: Style.fontSmall
+            font.pointSize: Style.smallFontPixelSize
             color: Style.darkLabelColor
             font.weight: Font.Bold
             text: taskName
@@ -76,7 +76,7 @@ Custom.Popup {
     Label {
         Layout.topMargin: -Style.baseMargin
         Layout.alignment: Qt.AlignHCenter
-        font.pointSize: Style.fontSmall
+        font.pointSize: Style.smallFontPixelSize
         font.weight: Font.DemiBold
         color: Style.darkLabelColor
         text: qsTr("has been successfully added")

@@ -24,20 +24,11 @@ import com.flrchain.style 1.0
 import "qrc:/CustomControls" as Custom
 
 Pane {
-    id: root
+    id: taskListDelegate
     topPadding: Style.panePadding
     bottomPadding: Style.panePadding
     leftPadding: Style.panePadding
     rightPadding: Style.panePadding
-
-    property int actionNumber
-    property int milestoneNumber
-    property int taskNumber
-    property int taskId
-    property string taskName
-    property real taskReward
-    property real taskBatch
-    property bool taskFavourite
 
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor
@@ -51,9 +42,9 @@ Pane {
             id: favLayout
             anchors {
                 top: parent.top
-                topMargin: root.topPadding
+                topMargin: taskListDelegate.topPadding
                 right: parent.right
-                rightMargin: root.rightPadding
+                rightMargin: taskListDelegate.rightPadding
             }
             spacing: 5
             visible: userHasJoined
@@ -62,7 +53,7 @@ Pane {
                 Layout.alignment: Qt.AlignVCenter
                 font: Style.projectDetailsPaneSectionTitleFont
                 color: Style.projectDetailsPaneSectionTitleFontColor
-                text: root.isFavourite ? qsTr("Remove") : qsTr("Add")
+                text: taskFavourite ? qsTr("Remove") : qsTr("Add")
             }
 
             Custom.IconButton {
@@ -70,8 +61,8 @@ Pane {
                 Layout.preferredWidth: Style.projectTaskFavouriteButtonSize.width
                 Layout.preferredHeight: Style.projectTaskFavouriteButtonSize.height
                 iconSize: Style.projectTaskFavouriteButtonSize
-                iconSource: root.isFavourite ? "qrc:/img/icon-remove-fav.svg"
-                                             : "qrc:/img/icon-add-fav.svg"
+                iconSource: taskFavourite ? "qrc:/img/icon-remove-fav.svg"
+                                          : "qrc:/img/icon-add-fav.svg"
 
                 onClicked: {
                     // TODO
@@ -83,7 +74,7 @@ Pane {
     }
 
     ColumnLayout {
-        width: root.availableWidth
+        width: taskListDelegate.availableWidth
         spacing: 10
 
         ColumnLayout {
@@ -96,7 +87,7 @@ Pane {
                 font: Style.projectDetailsPaneSectionTitleFont
                 color: Style.projectDetailsPaneSectionTitleFontColor
                 wrapMode: Label.WordWrap
-                text: String("%1 %2.%3.%4").arg(qsTr("Task")).arg(root.actionNumber).arg(root.milestoneNumber).arg(root.taskNumber)
+                text: String("%1 %2.%3.%4").arg(qsTr("Task")).arg(actionNumber).arg(milestoneNumber).arg(taskNumber)
             }
 
             Label {
@@ -105,7 +96,7 @@ Pane {
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
                 wrapMode: Label.WordWrap
-                text: root.taskName
+                text: taskName
             }
         }
 
@@ -128,7 +119,7 @@ Pane {
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
                 wrapMode: Label.WordWrap
-                text: root.taskReward + " USDC"
+                text: taskReward + " USDC"
             }
         }
 
@@ -151,7 +142,7 @@ Pane {
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
                 wrapMode: Label.WordWrap
-                text: String("%1 USDC (%2)").arg(root.taskBatch).arg(qsTr("evenly divided among all participants"))
+                text: String("%1 USDC (%2)").arg(taskBatch).arg(qsTr("evenly divided among all participants"))
             }
         }
 

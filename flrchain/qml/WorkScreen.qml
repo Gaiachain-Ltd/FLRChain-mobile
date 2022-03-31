@@ -108,13 +108,13 @@ Page {
 
             Label {
                 text: projectName
-                font.pixelSize: Style.fontUltra
+                font.pixelSize: Style.hugeFontPixelSize
                 color: Style.darkLabelColor
             }
 
             Label {
                 text: taskName
-                font.pixelSize: Style.fontBig
+                font.pixelSize: Style.largeFontPixelSize
                 color: Style.darkLabelColor
             }
 
@@ -142,7 +142,7 @@ Page {
                     Label {
                         Layout.topMargin: Style.baseMargin
                         text: qsTr("Photo")
-                        font.pixelSize: Style.fontTiny
+                        font.pixelSize: Style.tinyFontPixelSize
                         color: Style.darkLabelColor
                         font.weight: Font.DemiBold
                     }

@@ -26,27 +26,26 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
 Pane {
-    id: root
+    id: milestoneListDelegate
     padding: 0
     background: null
 
-    property int actionNumber
-    property int milestoneNumber
-    property string milestoneName
-    property var milestoneTasks
+    property int actionNumber: model.actionNumber
+    property int milestoneNumber: model.milestoneNumber
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
-        spacing: 10
+        spacing: projectTaskList.showMilestoneInfo ? 10 : 0
 
         RowLayout {
             Layout.fillWidth: true
             spacing: 0
+            visible: projectTaskList.showMilestoneInfo
 
             Label {
                 font: Qt.font({family: Style.appFontFamily, styleName: "Regular", pixelSize: 16})
                 color: "#414D55"
-                text: String("%1 %2: ").arg(qsTr("Milestone")).arg(root.milestoneNumber)
+                text: String("%1 %2.%3: ").arg(qsTr("Milestone")).arg(actionNumber).arg(milestoneNumber)
             }
 
             Label {
@@ -54,18 +53,18 @@ Pane {
                 font: Qt.font({family: Style.appFontFamily, styleName: "SemiBold", pixelSize: 16})
                 color: "#414D55"
                 wrapMode: Label.WordWrap
-                text: root.milestoneName
+                text: milestoneName
             }
         }
 
         ListView {
             Layout.fillWidth: true
             Layout.preferredHeight: contentHeight
-            spacing: parent.spacing
+            spacing: 10
             interactive: false
 
             model: SortFilterProxyModel {
-                sourceModel: root.milestoneTasks
+                sourceModel: milestoneTasks
                 filters: [
                     ValueFilter {
                         enabled: showFavouritesOnly
@@ -73,19 +72,23 @@ Pane {
                         value: true
                     }
                 ]
+                proxyRoles: [
+                    ExpressionRole {
+                        name: "actionNumber"
+                        expression: milestoneListDelegate.actionNumber
+                    },
+                    ExpressionRole {
+                        name: "milestoneNumber"
+                        expression: milestoneListDelegate.milestoneNumber
+                    },
+                    ExpressionRole {
+                        name: "taskNumber"
+                        expression: index + 1
+                    }
+                ]
             }
 
-            delegate: Delegates.ProjectTaskListDelegate {
-                width: ListView.view.width
-                actionNumber: root.actionNumber
-                milestoneNumber: root.milestoneNumber
-                taskNumber: model.index + 1
-                taskId: model.taskId
-                taskName: model.taskName
-                taskReward: model.taskReward
-                taskBatch: model.taskBatch
-                taskFavourite: model.taskFavourite
-            }
+            delegate: projectTaskList.taskDelegate
         }
     }
 }
