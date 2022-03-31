@@ -31,7 +31,7 @@ public:
     TransactionHistoryRequest(const QByteArray &token);
 
 signals:
-    void walletDataReply(const QJsonObject &response) const;
+    void walletDataReply(const QJsonArray &response) const;
 
 private:
     void parse() final;
