@@ -150,23 +150,6 @@ dev {
 }
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
-SSL_PATH = $$PWD/../android_openssl/latest
-
-contains(ANDROID_ABIS, "armeabi-v7a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm/libcrypto_1_1.so $$SSL_PATH/arm/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "arm64-v8a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm64/libcrypto_1_1.so $$SSL_PATH/arm64/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86/libcrypto_1_1.so $$SSL_PATH/x86/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86_64") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86_64/libcrypto_1_1.so $$SSL_PATH/x86_64/libssl_1_1.so
-}
-
+include(../android_openssl/openssl.pri)
 include(../mrestapi/mrestapi.pri)
 include(../SortFilterProxyModel/SortFilterProxyModel.pri)
