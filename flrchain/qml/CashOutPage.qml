@@ -27,13 +27,15 @@ Page {
     id: root
     padding: Style.cashOutPageMargins
 
+    property real maxAmount: 0
     readonly property string sendToFacilitatorState: "SendToFacilitatorState"
     readonly property string sendToMobileNumberState: "SendToMobileNumberState"
 
     Connections {
         target: pageManager
 
-        function onSetupCashOutScreen(cashOutMode) {
+        function onSetupCashOutScreen(cashOutMode, maxAmount) {
+            root.maxAmount = maxAmount;
             if (cashOutMode === Pages.FacilitatorCashOutMode) {
                 root.state = root.sendToFacilitatorState
             } else {
@@ -71,11 +73,13 @@ Page {
                 id: amountInputTitle
                 font: Style.cashOutInputTitleFont
                 color: Style.cashOutInputTitleFontColor
-                text: qsTr("Amount")
+                text: qsTr("Amount") + " (max " + root.maxAmount +") USDC"
             }
 
             Custom.TextInput {
                 id: amountInput
+                property string prevAmount: ""
+
                 Layout.fillWidth: true
                 Layout.preferredHeight: Style.cashOutInputHeight
                 font: length > 0 ? Style.cashOutAmountInputFont : Style.textInputFont
@@ -83,7 +87,21 @@ Page {
                 horizontalAlignment: Qt.AlignHCenter
                 placeholderText: amountInputTitle.text
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: RegExpValidator{ regExp: /^[0-9]+([.][0-9]{1,2})?$/ }
+                validator: DoubleValidator{
+                    bottom: 0;
+                    decimals: 6;
+                    top: root.maxAmount;
+                }
+                onTextChanged:
+                {
+                    if(!acceptableInput) {
+                        amountInput.text = prevAmount
+                    } else if (amountInput.text.length > 1) {
+                        prevAmount = amountInput.text;
+                    } else {
+                        prevAmount = "";
+                    }
+                }
             }
         }
 

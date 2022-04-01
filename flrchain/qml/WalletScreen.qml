@@ -142,7 +142,7 @@ Page {
                     text: qsTr("Facilitator")
 
                     onClicked: {
-                        pageManager.enterCashOutScreen(Pages.FacilitatorCashOutMode)
+                        pageManager.enterCashOutScreen(Pages.FacilitatorCashOutMode, root.walletBalance);
                     }
                 }
 
@@ -153,7 +153,7 @@ Page {
                     text: qsTr("Mobile money")
 
                     onClicked: {
-                        pageManager.enterCashOutScreen(Pages.MobileNumberCashOutMode)
+                        pageManager.enterCashOutScreen(Pages.MobileNumberCashOutMode, root.walletBalance);
                     }
                 }
             }

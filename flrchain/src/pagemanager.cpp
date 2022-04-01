@@ -140,10 +140,10 @@ bool PageManager::enterWalletScreen()
     return true;
 }
 
-bool PageManager::enterCashOutScreen(const Pages::CashOutPageMode cashOutMode)
+bool PageManager::enterCashOutScreen(const Pages::CashOutPageMode cashOutMode, double maxAmount)
 {
     enterPage(Pages::CashOutScreen);
-    emit setupCashOutScreen(cashOutMode);
+    emit setupCashOutScreen(cashOutMode, maxAmount);
     return true;
 }
 
