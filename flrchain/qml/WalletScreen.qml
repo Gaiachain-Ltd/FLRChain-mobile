@@ -67,7 +67,7 @@ Page {
     }
 
     background: Rectangle {
-        color: Style.bgColor
+        color: Style.backgroundColor
     }
 
     header: Custom.Header {
