@@ -19,6 +19,7 @@
 #define PROJECT_H
 
 #include <QObject>
+#include <QUrl>
 #include <QDate>
 
 #include "types.h"
@@ -33,6 +34,7 @@ class Project : public QObject
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged) // API field: title
     Q_PROPERTY(QString description READ description WRITE setDescription NOTIFY descriptionChanged)
     Q_PROPERTY(QString photo READ photo WRITE setPhoto NOTIFY photoChanged) // API field: image
+    Q_PROPERTY(QUrl mapLink READ mapLink WRITE setMapLink NOTIFY mapLinkChanged) // API field: maplink
     Q_PROPERTY(ProjectStatus status READ status WRITE setStatus NOTIFY statusChanged)
     Q_PROPERTY(QDate startDate READ startDate WRITE setStartDate NOTIFY startDateChanged) // API field: start
     Q_PROPERTY(QDate endDate READ endDate WRITE setEndDate NOTIFY endDateChanged) // API field: end
@@ -61,6 +63,7 @@ public:
                      const QString &name,
                      const QString &description,
                      const QString &photo,
+                     const QUrl &mapLink,
                      const ProjectStatus status,
                      const QDate &startDate,
                      const QDate &endDate,
@@ -75,6 +78,8 @@ public:
     void setDescription(const QString &description);
     QString photo() const;
     void setPhoto(const QString &photo);
+    QUrl mapLink() const;
+    void setMapLink(const QUrl &mapLink);
     ProjectStatus status() const;
     void setStatus(const ProjectStatus status);
     QDate startDate() const;
@@ -93,6 +98,7 @@ signals:
     void nameChanged(const QString &name);
     void descriptionChanged(const QString &description);
     void photoChanged(const QString &photo);
+    void mapLinkChanged(const QUrl &mapLink);
     void statusChanged(const ProjectStatus status);
     void startDateChanged(const QDate &startDate);
     void endDateChanged(const QDate &endDate);
@@ -103,6 +109,7 @@ private:
     QString m_name;
     QString m_description;
     QString m_photo;
+    QUrl m_mapLink;
     ProjectStatus m_status;
     QDate m_startDate;
     QDate m_endDate;

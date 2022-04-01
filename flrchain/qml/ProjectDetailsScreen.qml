@@ -36,6 +36,7 @@ Page {
     readonly property string projectName: project ? project.name : "N/A"
     readonly property string projectDescription: project ? project.description : "N/A"
     readonly property string projectPhoto: project ? project.photo : null
+    readonly property url projectMapLink: project ? project.mapLink : ""
     readonly property date projectStartDate: project ? project.startDate : new Date
     readonly property date projectEndDate: project ? project.endDate : new Date
     readonly property int projectStatus: project ? project.status : Project.ProjectStatus.Undefined
@@ -147,6 +148,7 @@ Page {
                 status: projectStatus
                 assignmentStatus: projectAssignmentStatus
                 photo: projectPhoto
+                mapLink: projectMapLink
 
                 button.onClicked: {
                     console.log(projectEndDate.toLocaleString(Qt.locale(), "MMMM dd, yyyy"))

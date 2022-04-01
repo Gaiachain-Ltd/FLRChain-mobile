@@ -17,6 +17,7 @@
 
 #include "task.h"
 #include "datatag.h"
+#include "favouritetaskstorage.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -27,7 +28,6 @@ Task::Task(const int id,
            const qreal reward,
            const qreal batch,
            const bool finished,
-           const bool favourite,
            const QString &dataTypeTag,
            const DataTagList &dataTags,
            QObject *parent)
@@ -37,7 +37,6 @@ Task::Task(const int id,
     , m_reward(reward)
     , m_batch(batch)
     , m_finished(finished)
-    , m_favourite(favourite)
     , m_dataTypeTag(dataTypeTag)
     , m_dataTags(new DataTagModel)
 {
@@ -103,13 +102,13 @@ void Task::setFinished(const bool finished)
 
 bool Task::favourite() const
 {
-    return m_favourite;
+    return FavouriteTaskStorage::instance().isTaskFavourite(m_id);
 }
 
 void Task::setFavourite(const bool favourite)
 {
-    if (favourite != m_favourite) {
-        m_favourite = favourite;
+    if (favourite != Task::favourite()) {
+        FavouriteTaskStorage::instance().setTaskFavouriteStatus(m_id, favourite);
         emit favouriteChanged(favourite);
     }
 }
@@ -162,7 +161,6 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
                            taskReward,
                            taskBatch,
                            taskFinished,
-                           false,
                            taskDataTypeTag,
                            taskDataTags);
 }

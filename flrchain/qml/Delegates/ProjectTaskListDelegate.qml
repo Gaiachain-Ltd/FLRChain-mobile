@@ -38,37 +38,39 @@ Pane {
         shadowRadius: Style.paneShadowRadius
         shadowColor: Style.paneShadowColor
 
-        RowLayout {
-            id: favLayout
+        AbstractButton {
             anchors {
                 top: parent.top
                 topMargin: taskListDelegate.topPadding
                 right: parent.right
                 rightMargin: taskListDelegate.rightPadding
             }
-            spacing: 5
+            padding: 10
             visible: userHasJoined
 
-            Label {
-                Layout.alignment: Qt.AlignVCenter
-                font: Style.projectDetailsPaneSectionTitleFont
-                color: Style.projectDetailsPaneSectionTitleFontColor
-                text: taskFavourite ? qsTr("Remove") : qsTr("Add")
+            contentItem: RowLayout {
+                id: favLayout
+                spacing: 5
+
+                Label {
+                    Layout.alignment: Qt.AlignVCenter
+                    font: Style.projectDetailsPaneSectionTitleFont
+                    color: Style.projectDetailsPaneSectionTitleFontColor
+                    text: taskFavourite ? qsTr("Remove") : qsTr("Add")
+                }
+
+                Image {
+                    Layout.alignment: Qt.AlignTop
+                    Layout.preferredWidth: Style.projectTaskFavouriteButtonSize.width
+                    Layout.preferredHeight: Style.projectTaskFavouriteButtonSize.height
+                    sourceSize: Style.projectTaskFavouriteButtonSize
+                    source: taskFavourite ? "qrc:/img/icon-remove-fav.svg"
+                                          : "qrc:/img/icon-add-fav.svg"
+                }
             }
 
-            Custom.IconButton {
-                Layout.alignment: Qt.AlignTop
-                Layout.preferredWidth: Style.projectTaskFavouriteButtonSize.width
-                Layout.preferredHeight: Style.projectTaskFavouriteButtonSize.height
-                iconSize: Style.projectTaskFavouriteButtonSize
-                iconSource: taskFavourite ? "qrc:/img/icon-remove-fav.svg"
-                                          : "qrc:/img/icon-add-fav.svg"
-
-                onClicked: {
-                    // TODO
-
-                    console.warn("TODO: not implemented")
-                }
+            onClicked: {
+                taskFavourite = !taskFavourite
             }
         }
     }

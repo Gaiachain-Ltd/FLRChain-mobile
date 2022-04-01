@@ -20,10 +20,13 @@ include(../version.pri)
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick core network androidextras svg
+
+QT += quick core network svg
+android: QT += androidextras
+
 TEMPLATE = app
 CONFIG += c++14
-TARGET = template
+TARGET = FLRChain
 
 INCLUDEPATH += \
     src \
@@ -42,6 +45,7 @@ HEADERS += \
     src/Models/projectmodel.h \
     src/Models/taskmodel.h \
     src/datamanager.h \
+    src/favouritetaskstorage.h \
     src/filemanager.h \
     src/pagemanager.h \
     src/pages.h \
@@ -84,6 +88,7 @@ SOURCES += src/main.cpp  \
     src/Models/projectmodel.cpp \
     src/Models/taskmodel.cpp \
     src/datamanager.cpp \
+    src/favouritetaskstorage.cpp \
     src/filemanager.cpp \
     src/pagemanager.cpp \
     src/session.cpp \
@@ -118,21 +123,10 @@ RESOURCES +=  \
     images/images.qrc
 
 OTHER_FILES += \
-    ../template.doxyfile \
+    ../FLRChain.doxyfile.in \
     ../README.md \
-    ../Release.md \
     ../.gitignore \
-    ../license-Qt.txt \
     ../.gitlab-ci.yml
-
-## Put all build files into build directory
-##  This also works with shadow building, so don't worry!
-BUILD_DIR = build
-OBJECTS_DIR = $$BUILD_DIR
-MOC_DIR = $$BUILD_DIR
-RCC_DIR = $$BUILD_DIR
-UI_DIR = $$BUILD_DIR
-DESTDIR = $$BUILD_DIR/bin
 
 ## Platforms
 
@@ -158,23 +152,6 @@ dev {
 }
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
-SSL_PATH = $$PWD/../android_openssl/latest
-
-contains(ANDROID_ABIS, "armeabi-v7a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm/libcrypto_1_1.so $$SSL_PATH/arm/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "arm64-v8a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm64/libcrypto_1_1.so $$SSL_PATH/arm64/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86/libcrypto_1_1.so $$SSL_PATH/x86/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86_64") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86_64/libcrypto_1_1.so $$SSL_PATH/x86_64/libssl_1_1.so
-}
-
+include(../android_openssl/openssl.pri)
 include(../mrestapi/mrestapi.pri)
 include(../SortFilterProxyModel/SortFilterProxyModel.pri)

@@ -1,0 +1,79 @@
+stages:
+- test
+- build
+- upload
+- docs
+
+.common:
+  allow_failure: false
+  before_script:
+    - git submodule sync --recursive
+    - git submodule update --init --recursive
+    - git submodule status --recursive
+
+unit_tests:
+  extends:
+    - .common
+  stage: test
+  tags:
+    - LinuxDesktop
+  script:
+    - $QT_DESKTOP_PATH/bin/qmake flrchain.pro
+    - make -j $(nproc)
+    - make check
+
+app_build:
+  extends:
+    - .common
+  stage: build
+  when: manual
+  tags:
+    - LinuxAndroid
+  only:
+    refs:
+      - development
+  cache: 
+    key: $CI_COMMIT_BRANCH 
+    paths: 
+        - flrchain/android-build/build/outputs/apk/debug/android-build-debug.apk
+  script:
+    - cd flrchain
+    - $QT_ANDROID_PATH/bin/qmake -spec android-clang CONFIG+=release CONFIG+=qtquickcompiler CONFIG+=dev
+    - make -j $(nproc)
+    - make install INSTALL_ROOT=android-build
+    - $QT_ANDROID_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-28 --gradle
+
+upload_app:
+  extends:
+    - .common
+  stage: upload
+  tags:
+    - LinuxAndroid
+  only:
+    refs:
+      - development
+  cache: 
+    key: $CI_COMMIT_BRANCH 
+    paths: 
+        - flrchain/android-build/build/outputs/apk/debug/android-build-debug.apk
+  before_script:
+    - source ~/.nvm/nvm.sh
+    - source ~/.nvm/bash_completion
+  script:
+    - appcenter distribute release --file flrchain/android-build/build/outputs/apk/debug/android-build-debug.apk --app milo-solutions/FLRChain --group Collaborators
+
+generate_docs:
+  extends:
+    - .common
+  stage: docs
+  when: manual
+  tags:
+    - LinuxDesktop
+  only:
+    refs:
+      - development
+  script:
+    - $QT_DESKTOP_PATH/bin/qmake CONFIG+=docs flrchain.pro
+    - doxygen FLRChain.doxyfile
+    - zip -r flrchain-docs.zip doc/html
+    - curl -u "$UPLOAD_USER:$UPLOAD_PASS" -v -T flrchain-docs.zip "$UPLOAD_URL/flrchain-docs.zip"

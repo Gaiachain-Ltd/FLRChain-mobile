@@ -35,6 +35,7 @@ Pane {
     property date deadline: new Date
     property string description: ""
     property string photo: ""
+    property url mapLink: ""
     property int status: Project.ProjectStatus.Undefined
     property int assignmentStatus: Project.AssignmentStatus.Undefined
 
@@ -235,6 +236,16 @@ Pane {
                     asynchronous: true
                     source: photoLayout.visible ? session.apiUrl + photo : ""
                 }
+            }
+        }
+
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Open map")
+            visible: mapLink != ""
+
+            onClicked: {
+                Qt.openUrlExternally(mapLink)
             }
         }
 

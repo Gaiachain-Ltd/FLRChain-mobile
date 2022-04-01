@@ -42,6 +42,7 @@ QHash<int, QByteArray> ProjectModel::roleNames() const
         { ProjectNameRole, QByteArrayLiteral("projectName") },
         { ProjectDescriptionRole, QByteArrayLiteral("projectDescription") },
         { ProjectPhotoRole, QByteArrayLiteral("projectPhoto") },
+        { ProjectMapLinkRole, QByteArrayLiteral("projectMapLink") },
         { ProjectStatusRole, QByteArrayLiteral("projectStatus") },
         { ProjectStartDateRole, QByteArrayLiteral("projectStartDate") },
         { ProjectEndDateRole, QByteArrayLiteral("projectEndDate") },
@@ -74,6 +75,9 @@ QVariant ProjectModel::data(const QModelIndex &index, int role) const
 
         case ProjectPhotoRole:
             return project->photo();
+
+        case ProjectMapLinkRole:
+            return project->mapLink();
 
         case ProjectStatusRole:
             return static_cast<int>(project->status());
@@ -120,6 +124,11 @@ bool ProjectModel::setData(const QModelIndex &index, const QVariant &value, int 
 
         case ProjectPhotoRole:
             project->setPhoto(value.toString());
+            modified = true;
+            break;
+
+        case ProjectMapLinkRole:
+            project->setMapLink(value.toUrl());
             modified = true;
             break;
 
