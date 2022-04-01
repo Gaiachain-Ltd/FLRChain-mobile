@@ -35,7 +35,9 @@
 #include "requests/transactionhistoryrequest.h"
 #include "requests/walletqrcoderequest.h"
 #include "requests/walletbalancerequest.h"
+#include "requests/facililatorlistrequest.h"
 #include "requests/cashoutrequest.h"
+#include "requests/facililatorcashoutrequest.h"
 #include "requests/projectdetailsrequest.h"
 #include "requests/getimagerequest.h"
 #include "requests/sendworkrequest.h"
@@ -266,6 +268,25 @@ void Session::getWalletQRCode() const
     mClient->send(request);
 }
 
+void Session::getFacililatorList() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<FacililatorListRequest>::create(getToken());
+    connect(request.data(), &FacililatorListRequest::facililatorListReply,
+            m_dataManager, &DataManager::facililatorListReceived);
+
+    mClient->send(request);
+}
+
 void Session::cashOut(const QString& amount, const QString& phone) const
 {
     if (mClient.isNull()) {
@@ -280,6 +301,25 @@ void Session::cashOut(const QString& amount, const QString& phone) const
 
     auto request = QSharedPointer<CashOutRequest>::create(amount, phone, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
+            m_dataManager, &DataManager::cashOutReplyReceived);
+
+    mClient->send(request);
+}
+
+void Session::facililatorCashOut(const QString &amount, int facililatorId) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<FacililatorCashOutRequest>::create(amount, facililatorId, getToken());
+    connect(request.data(), &FacililatorCashOutRequest::transferReply,
             m_dataManager, &DataManager::cashOutReplyReceived);
 
     mClient->send(request);
