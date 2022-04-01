@@ -47,6 +47,6 @@ Rectangle {
         anchors.bottom: parent.bottom
         width: parent.width
         height: Style.separatorHeight
-        color: Style.grayBgColor
+        color: Style.separatorColor
     }
 }

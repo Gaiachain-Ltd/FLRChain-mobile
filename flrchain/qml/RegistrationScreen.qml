@@ -59,7 +59,7 @@ Page {
     }
 
     background: Rectangle {
-        color: Style.shadowedBgColor
+        color: Style.loginPageBackgroundColor
     }
 
     Flickable {

@@ -79,7 +79,7 @@ Page {
     }
 
     background: Rectangle {
-        color: Style.bgColor
+        color: Style.backgroundColor
     }
 
     header: Custom.Header {
@@ -125,7 +125,7 @@ Page {
 
                 Rectangle {
                     anchors.fill: parent
-                    color: Style.bgColor
+                    color: Style.backgroundColor
                     radius: Style.rectangleRadius
                 }
 
@@ -149,7 +149,7 @@ Page {
 
                     Custom.ImageButton {
                         Layout.alignment: Qt.AlignHCenter
-                        backgroundColor: Style.inputBgColor
+                        backgroundColor: Style.inputBackgroundColor
                         text: qsTr("Upload from gallery...")
                         visible: !photoVisible
                         iconSource: "qrc:/img/icon-upload.svg"
@@ -161,7 +161,7 @@ Page {
 
                     Custom.ImageButton {
                         Layout.alignment: Qt.AlignHCenter
-                        backgroundColor: Style.inputBgColor
+                        backgroundColor: Style.inputBackgroundColor
                         visible: !photoVisible
                         text: qsTr("Take photo...")
                         iconSource: "qrc:/img/icon-camera.svg"

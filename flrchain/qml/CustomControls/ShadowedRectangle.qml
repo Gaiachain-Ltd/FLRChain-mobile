@@ -22,7 +22,7 @@ import com.flrchain.style 1.0
 Rectangle {
     id: root
     radius: Style.rectangleRadius
-    color: Style.colorTransparent
+    color: "#00FFFFFF"
 
     property int shadowHorizontalOffset: 5
     property int shadowVerticalOffset: 15
