@@ -56,6 +56,7 @@ public:
     Q_INVOKABLE void joinProject(const int projectId) const;
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
+    Q_INVOKABLE void getWalletQRCode() const;
     Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;

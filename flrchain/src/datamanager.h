@@ -66,7 +66,8 @@ signals:
     void processingPhoto();
     void photoDownloadResult(const int workId, const QString &path) const;
     void workAdded(const QString &taskName, const QString &projectName) const;
-    void walletBalanceReceived(const double balance) const;
+    void walletBalanceReceived(const double balance);
+    void walletQRCodeReceived(const QString &qrCode);
     void projectsDataReply(const QJsonObject &projects);
     void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);

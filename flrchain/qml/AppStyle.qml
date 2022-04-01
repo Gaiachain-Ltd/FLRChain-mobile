@@ -374,5 +374,5 @@ QtObject {
     readonly property int receiveMoneyPagePadding: 16
     readonly property font receiveMoneyInfoFont: semiBoldSmallFont
     readonly property color receiveMoneyInfoFontColor: "#72809D"
-    readonly property size receiveMoneyQrCodeSize: Qt.size(200, 200)
+    readonly property size receiveMoneyQrCodeSize: Qt.size(250, 250)
 }

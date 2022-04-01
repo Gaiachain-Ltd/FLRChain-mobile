@@ -32,6 +32,7 @@ INCLUDEPATH += \
 
 HEADERS += \
     src/APICommunication/apimultipartrequest.h \
+    src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
     src/Models/datatag.h \
@@ -73,6 +74,7 @@ HEADERS += \
 
 SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
+    src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \
     src/Models/datatag.cpp \

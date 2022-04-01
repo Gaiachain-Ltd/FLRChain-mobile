@@ -26,11 +26,17 @@ Page {
     id: root
     padding: Style.receiveMoneyPagePadding
 
-    Connections {
-        target: pageManager
+    Component.onCompleted: {
+        busyIndicator.visible = true;
+        session.getWalletQRCode();
+    }
 
-        function onSetupReceiveMoneyScreen(qrCodeUrl) {
-            qrCodeImage.source = qrCodeUrl
+    Connections {
+        target: dataManager
+
+        function onWalletQRCodeReceived(qrCodeData) {
+            busyIndicator.visible = false;
+            qrCodeImage.source = "data:image/svg+xml;utf-8," + qrCodeData;
         }
     }
 
@@ -56,6 +62,12 @@ Page {
         Item {
             Layout.fillWidth: true
             Layout.fillHeight: true
+
+            Custom.BusyIndicator {
+                id: busyIndicator
+                anchors.centerIn: parent
+                visible: false
+            }
 
             Image {
                 id: qrCodeImage

@@ -33,6 +33,7 @@
 #include "requests/userinforequest.h"
 #include "requests/joinprojectrequest.h"
 #include "requests/transactionhistoryrequest.h"
+#include "requests/walletqrcoderequest.h"
 #include "requests/walletbalancerequest.h"
 #include "requests/cashoutrequest.h"
 #include "requests/projectdetailsrequest.h"
@@ -242,6 +243,25 @@ void Session::getWalletBalance() const
     auto request = QSharedPointer<WalletBalanceRequest>::create(getToken());
     connect(request.data(), &WalletBalanceRequest::walletBalanceReply,
             m_dataManager, &DataManager::walletBalanceReceived);
+
+    mClient->send(request);
+}
+
+void Session::getWalletQRCode() const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<WalletQRCodeRequest>::create(getToken());
+    connect(request.data(), &WalletQRCodeRequest::walletQRCodeReply,
+            m_dataManager, &DataManager::walletQRCodeReceived);
 
     mClient->send(request);
 }
