@@ -29,7 +29,7 @@ ApplicationWindow {
     visible: true
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
-    color: Style.bgColor
+    color: Style.backgroundColor
 
     onClosing: {
         close.accepted = false;

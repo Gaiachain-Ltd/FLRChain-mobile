@@ -71,7 +71,7 @@ Column {
                 font.pixelSize: Style.tinyFontPixelSize
                 font.weight: Font.DemiBold
                 text: qsTr("Accepted")
-                color: Style.bgColor
+                color: Style.backgroundColor
             }
         }
 
@@ -91,7 +91,7 @@ Column {
                 font.pixelSize: Style.largeFontPixelSize
                 font.weight: Font.Bold
                 text: qsTr("%1 USDC").arg(amount)
-                color: Style.bgColor
+                color: Style.backgroundColor
             }
         }
     }
@@ -113,7 +113,7 @@ Column {
             font.pixelSize: Style.tinyFontPixelSize
             font.weight: Font.DemiBold
             text: date
-            color: Style.mediumLabelColor
+            color: Style.lightLabelColor
         }
 
         Item{

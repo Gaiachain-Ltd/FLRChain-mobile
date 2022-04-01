@@ -38,7 +38,7 @@ Item {
             id: contentRect
             width: parent.width
             height: childrenRect.height
-            color: Style.bgColor
+            color: Style.backgroundColor
             radius: Style.rectangleRadius
 
             ColumnLayout {
@@ -71,7 +71,7 @@ Item {
                     font.pixelSize: Style.hugeFontPixelSize
                     font.weight: Font.DemiBold
                     text: qsTr("%1 USDC").arg(value)
-                    color: Style.mediumLabelColor
+                    color: Style.lightLabelColor
                 }
 
                 Custom.PrimaryButton {

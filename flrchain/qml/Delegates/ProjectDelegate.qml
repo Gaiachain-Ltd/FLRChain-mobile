@@ -32,13 +32,6 @@ Custom.Pane {
     rightPadding: Style.projectListDelegatePadding
     contentSpacing: Style.projectListDelegateSpacing
 
-    readonly property bool accepted: projectAssignmentStatus === Project.AssignmentStatus.Accepted
-    readonly property bool undefinedStatus: projectAssignmentStatus === Project.AssignmentStatus.Undefined
-
-    readonly property bool investmentFundraising: projectStatus === Project.ProjectStatus.Fundraising
-    readonly property bool investmentActive: projectStatus === Project.ProjectStatus.Active
-    readonly property bool investmentClosed: projectStatus === Project.ProjectStatus.Closed
-
     RowLayout {
         Layout.fillWidth: true
         Layout.fillHeight: false
@@ -99,6 +92,9 @@ Custom.Pane {
 
                     case Project.ProjectStatus.Closed:
                         return qsTr("Closed")
+
+                    case Project.ProjectStatus.Undefined:
+                        return ""
                 }
 
                 console.warn("Could not set proper text for project status label:", projectStatus)
@@ -122,10 +118,13 @@ Custom.Pane {
 
                     case Project.ProjectStatus.Closed:
                         return Style.projectClosedColor
+
+                    case Project.ProjectStatus.Undefined:
+                        return Style.backgroundColor
                 }
 
                 console.warn("Could not set proper color for project status label:", projectStatus)
-                return "#FFFFFF"
+                return Style.backgroundColor
             }
         }
     }
@@ -153,12 +152,11 @@ Custom.Pane {
 
     Custom.PrimaryButton {
         Layout.fillWidth: true
-        backgroundColor: !investmentClosed && (accepted || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
-        text: !investmentClosed ? undefinedStatus ? qsTr("Join") : accepted && investmentActive ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
+        text: qsTr("Details")
 
         onClicked: {
             if (!session.user.optedIn) {
-                //Refresh user info:
+                // refresh user info to see if blockchain is ready
                 session.getUserInfo()
             }
 

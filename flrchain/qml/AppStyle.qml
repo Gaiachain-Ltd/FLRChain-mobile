@@ -20,25 +20,19 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
-
-    // Colors
+    // Color palette
     readonly property color accentColor: "#06BCC1"
-    readonly property color bgColor: "#FFFFFF"
-    readonly property color shadowedBgColor: "#FAFAFD"
-    readonly property color baseLabelColor: "#778699"
-    readonly property color grayBgColor: "#E2E9F0"
-    readonly property color colorTransparent: "#00ffffff"
-    readonly property color darkLabelColor: "#253F50"
-    readonly property color inputBgColor: "#F7F9FB"
-    readonly property color placeholderColor: "#C0C7D4"
-    readonly property color mediumLabelColor: "#72809D"
-    readonly property color buttonSecColor: "#06BCC1"
-    readonly property color yellowDelegateColor: "#FFFCE2"
-    readonly property color yellowLabelColor: "#FFC423"
+    readonly property color backgroundColor: "#FFFFFF"
+    readonly property color lightLabelColor: "#72809D"
+    readonly property color darkLabelColor: "#414D55"
+    readonly property color inputPlaceholderColor: "#C0C7D4"
+    readonly property color inputTextColor: "#253F50"
+    readonly property color inputBackgroundColor: "#F7F9FB"
     readonly property color successColor: "#23BC3D"
     readonly property color errorColor: "#FE2121"
-    readonly property color sectionColor: "#EDEEF2"
-    readonly property color grayLabelColor: "#606060"
+    readonly property color pendingColor: "#FFB623"
+    readonly property color separatorColor: "#EDEEF2"
+    readonly property color sectionColor: "#EDF0F6"
 
     // Typography
     readonly property string appFontFamily: "Open Sans"
@@ -124,20 +118,20 @@ QtObject {
     readonly property size defaultButtonSize: Qt.size(288, 42)
     readonly property int defaultButtonRadius: 7
     readonly property int defaultButtonBorderWidth: 1
-    readonly property color primaryButtonBackgroundColor: "#06BCC1"
+    readonly property color primaryButtonBackgroundColor: accentColor
     readonly property color primaryButtonBorderColor: primaryButtonBackgroundColor
-    readonly property color primaryButtonFontColor: "#FFFFFF"
-    readonly property color secondaryButtonBackgroundColor: "#FFFFFF"
-    readonly property color secondaryButtonBorderColor: "#06BCC1"
+    readonly property color primaryButtonFontColor: backgroundColor
+    readonly property color secondaryButtonBackgroundColor: backgroundColor
+    readonly property color secondaryButtonBorderColor: accentColor
     readonly property color secondaryButtonFontColor: secondaryButtonBorderColor
 
     // TabButton
     readonly property int defaultTabButtonHeight: 42
-    readonly property color tabButtonBackgroundInactiveColor: "#EDEEF2"
-    readonly property color tabButtonBackgroundActiveColor: "#06BCC1"
+    readonly property color tabButtonBackgroundInactiveColor: sectionColor
+    readonly property color tabButtonBackgroundActiveColor: accentColor
     readonly property font tabButtonFont: semiBoldMediumFont
-    readonly property color tabButtonLabelInactiveColor: "#414D55"
-    readonly property color tabButtonLabelActiveColor: "#FFFFFF"
+    readonly property color tabButtonLabelInactiveColor: darkLabelColor
+    readonly property color tabButtonLabelActiveColor: backgroundColor
 
     // CheckBox
     readonly property size checkboxSize: Qt.size(20, 20)
@@ -147,7 +141,7 @@ QtObject {
     readonly property int checkboxBorderRadius: 3
     readonly property color checkboxBorderColor: "#DCE0E7"
     readonly property font checkboxLabelFont: semiBoldMicroFont
-    readonly property color checkBoxLabelFontColor: "#253F50"
+    readonly property color checkBoxLabelFontColor: inputTextColor
 
     // ComboBox
     readonly property color comboBoxBackgroundColor: "#F7F9FB"
@@ -156,23 +150,23 @@ QtObject {
     readonly property int comboBoxItemHeight: 60
     readonly property int comboBoxItemSpacing: 2
     readonly property font comboBoxFont: semiBoldSmallFont
-    readonly property color comboBoxCurrentTextFontColor: "#253F50"
-    readonly property color comboBoxDelegateTextFontColor: "#72809D"
+    readonly property color comboBoxCurrentTextFontColor: inputTextColor
+    readonly property color comboBoxDelegateTextFontColor: lightLabelColor
 
     // TextInput
     readonly property size defaultTextInputSize: Qt.size(288, 36)
     readonly property int textInputRadius: 7
-    readonly property color textInputValidBackgroundColor: "#F7F9FB"
+    readonly property color textInputValidBackgroundColor: inputBackgroundColor
     readonly property color textInputInvalidBackgroundColor: "#FBF7F7"
     readonly property int textInputPadding: 16
     readonly property font textInputFont: semiBoldSmallFont
-    readonly property color textInputValidFontColor: "#253F50"
+    readonly property color textInputValidFontColor: inputTextColor
     readonly property color textInputInvalidFontColor: errorColor
-    readonly property color textInputPlaceholderFontColor: "#C0C7D4"
+    readonly property color textInputPlaceholderFontColor: inputPlaceholderColor
 
     // Pane
     readonly property int panePadding: 20
-    readonly property color paneBackgroundColor: "#FFFFFF"
+    readonly property color paneBackgroundColor: backgroundColor
     readonly property int paneBackgroundRadius: 7
     readonly property int paneShadowHorizontalOffset: 5
     readonly property int paneShadowVerticalOffset: 15
@@ -182,24 +176,24 @@ QtObject {
     // FormPane (used on login and register pages)
     readonly property int formPaneVerticalSpacing: 20
     readonly property font formPaneTitleFont: semiBoldExtraLargeFont
-    readonly property color formPaneTitleFontColor: "#414D55"
+    readonly property color formPaneTitleFontColor: darkLabelColor
     readonly property font formPaneSubtitleFont: semiBoldTinyFont
-    readonly property color formPaneSubtitleFontColor: "#778699"
-    readonly property color formPaneSeparatorColor: "#FAFAFD"
+    readonly property color formPaneSubtitleFontColor: lightLabelColor
+    readonly property color formPaneSeparatorColor: separatorColor
 
     // Popup
     readonly property int popupSideMargins: 16
     readonly property int popupLeftRightPadding: 20
     readonly property int popupTopBottomPadding: 30
     readonly property int popupSpacing: 20
-    readonly property color popupBackgroundColor: "#FFFFFF"
+    readonly property color popupBackgroundColor: backgroundColor
     readonly property size popupIconSize: Qt.size(72, 72)
     readonly property font popupTitleFont: semiBoldHugeFont
-    readonly property color popupTitleFontColor: "#253F50"
+    readonly property color popupTitleFontColor: darkLabelColor
     readonly property font popupTextFont: regularSmallFont
     readonly property color popupTextFontColor: popupTitleFontColor
-    readonly property color popupSuccessColor: "#23BC3D"
-    readonly property color popupErrorColor: "#FE2121"
+    readonly property color popupSuccessColor: successColor
+    readonly property color popupErrorColor: errorColor
     readonly property font popupHighlightedTextFont: boldSmallFont
 
     // Login and Register pages
@@ -211,22 +205,22 @@ QtObject {
     readonly property size loginPageIconSize: Qt.size(96, 96)
     readonly property int loginPanelPadding: 20
     readonly property font loginPanelInputTitleFont: semiBoldMicroFont
-    readonly property color loginPanelInputTitleFontColor: "#72809D"
+    readonly property color loginPanelInputTitleFontColor: lightLabelColor
     readonly property font loginPanelErrorMessageFont: semiBoldTinyFont
     readonly property color loginPanelErrorMessageFontColor: errorColor
     readonly property font loginPanelForgotPasswordFont: semiBoldTinyFont
-    readonly property color loginPanelForgotPasswordColor: "#06BCC1"
+    readonly property color loginPanelForgotPasswordColor: accentColor
     readonly property int registrationPageTopBottomMargin: 20
     readonly property font registrationTermsFont: semiBoldTinyFont
-    readonly property color registrationTermsFontInfoColor: "#606060"
-    readonly property color registrationTermsFontLinkColor: "#06BCC1"
+    readonly property color registrationTermsFontInfoColor: darkLabelColor
+    readonly property color registrationTermsFontLinkColor: accentColor
 
     // Header
     readonly property int headerHeight: 60
-    readonly property color headerBackgroundColor: bgColor
-    readonly property color headerSeparatorColor: "#EDEEF2"
+    readonly property color headerBackgroundColor: backgroundColor
+    readonly property color headerSeparatorColor: separatorColor
     readonly property font headerTitleFont: semiBoldExtraLargeFont
-    readonly property color headerTitleFontColor: "#414D55"
+    readonly property color headerTitleFontColor: darkLabelColor
     readonly property int backButtonClickAreaWidth: 40
     readonly property size backButtonIconSize: Qt.size(10, 18)
     readonly property int menuButtonClickAreaWidth: 60
@@ -245,14 +239,14 @@ QtObject {
     readonly property size menuItemIconSize: Qt.size(18, 18)
     readonly property size menuCloseIconSize: Qt.size(20, 20)
     readonly property int menuSeparatorHeight: 1
-    readonly property color menuSeparatorColor: "#EDEEF2"
+    readonly property color menuSeparatorColor: separatorColor
     readonly property font menuUserNameFont: regularExtraLargeFont
-    readonly property color menuUserNameFontColor: "#06BCC1"
+    readonly property color menuUserNameFontColor: accentColor
     readonly property font menuUserEmailFont: semiBoldSmallFont
-    readonly property color menuUserEmailFontColor: "#606C83"
+    readonly property color menuUserEmailFontColor: darkLabelColor
     readonly property font menuItemLabelFont: semiBoldSmallFont
-    readonly property color menuItemLabelFontColor: "#72809D"
-    readonly property color menuItemLogoutLabelFontColor: "#FE2121"
+    readonly property color menuItemLabelFontColor: lightLabelColor
+    readonly property color menuItemLogoutLabelFontColor: errorColor
 
     // Dashboard page
     readonly property int dashboardListTopMargin: 30
@@ -262,38 +256,38 @@ QtObject {
     readonly property int dashboardDelegateHeight: 170
     readonly property int dashboardDelegateLeftMargin: 30
     readonly property int dashboardDelegateRightMargin: 40
-    readonly property color dashboardDelegateBackgroundColor: "#FFFFFF"
+    readonly property color dashboardDelegateBackgroundColor: backgroundColor
     readonly property color dashboardDelegateBackgroundGradientStartColor: dashboardDelegateBackgroundColor
-    readonly property color dashboardDelegateBackgroundGradientEndColor: "#EDF0F6"
+    readonly property color dashboardDelegateBackgroundGradientEndColor: sectionColor
     readonly property int dashboardDelegateBackgroundRadius: 10
     readonly property int dashboardDelegateBackgroundBorderWidth: 2
     readonly property color dashboardDelegateBackgroundBorderColor: dashboardDelegateBackgroundColor
     readonly property font dashboardDelegatePrimaryLabelFont: semiBoldExtraLargeFont
-    readonly property color dashboardDelegatePrimaryLabelFontColor: "#414D55"
+    readonly property color dashboardDelegatePrimaryLabelFontColor: darkLabelColor
     readonly property font dashboardDelegateSecondaryLabelFont: regularSmallFont
-    readonly property color dashboardDelegateSecondaryLabelFontColor: "#778699"
+    readonly property color dashboardDelegateSecondaryLabelFontColor: lightLabelColor
     readonly property size dashboardDelegateIconSize: Qt.size(96, 96)
     readonly property int dashboardDelegateShadowHorizontalOffset: 5
     readonly property int dashboardDelegateShadowVerticalOffset: 15
     readonly property int dashboardDelegateShadowRadius: 30
-    readonly property color dashboardDelegateShadowColor: "#29000000"
+    readonly property color dashboardDelegateShadowColor: paneShadowColor
 
     // Project list (aka earn rewards) page
     readonly property int projectListSideMargins: 16
     readonly property font projectListTitleFont: semiBoldExtraLargeFont
-    readonly property color projectListTitleFontColor: "#414D55"
+    readonly property color projectListTitleFontColor: darkLabelColor
     readonly property int projectListDelegatePadding: 20
     readonly property int projectListDelegateSpacing: 20
     readonly property font projectListDelegateNameFont: semiBoldExtraLargeFont
-    readonly property color projectListDelegateNameFontColor: "#414D55"
+    readonly property color projectListDelegateNameFontColor: darkLabelColor
     readonly property size projectListDelegateIconSize: Qt.size(18, 18)
     readonly property font projectListDelegateDateFont: semiBoldTinyFont
     readonly property font projectListDelegateDescriptionTitleFont: boldSmallFont
     readonly property font projectListDelegateDescriptionFont: semiBoldSmallFont
-    readonly property color projectListDelegateFontColor: "#72809D"
+    readonly property color projectListDelegateFontColor: lightLabelColor
     readonly property int projectListDelegateDescriptionSpacing: 10
     readonly property font assignmentStatusLabelFont: semiBoldMicroFont
-    readonly property color assignmentStatusLabelFontColor: "#FFFFFF"
+    readonly property color assignmentStatusLabelFontColor: backgroundColor
     readonly property int assignmentStatusLabelRadius: 2
     readonly property int assignmentStatusLabelTopBottomPadding: 2
     readonly property int assignmentStatusLabelLeftRightPadding: 4
@@ -302,35 +296,38 @@ QtObject {
     readonly property font myTaskDelegateInfoTypeFont: semiBoldSmallFont
     readonly property font myTaskDelegateProjectNameFont: regularSmallFont
     readonly property font myTaskDelegateTaskDataFont: boldSmallFont
-    readonly property color myTaskDelegateInfoTypeFontColor: "#414D55"
-    readonly property color myTaskDelegateDataFontColor: "#72809D"
+    readonly property color myTaskDelegateInfoTypeFontColor: darkLabelColor
+    readonly property color myTaskDelegateDataFontColor: lightLabelColor
 
     // Project details page
     readonly property int projectDetailsSideMargins: 16
     readonly property int projectDetailsTopBottomMargin: 20
     readonly property int projectDetailsContentSpacing: 20
     readonly property font projectDetailsTitleFont: semiBoldExtraLargeFont
-    readonly property color projectDetailsTitleFontColor: "#414D55"
+    readonly property color projectDetailsTitleFontColor: darkLabelColor
     readonly property int projectDetailsPanePadding: 20
     readonly property int projectDetailsSectionSpacing: 10
     readonly property font projectDetailsPaneSectionTitleFont: semiBoldSmallFont
-    readonly property color projectDetailsPaneSectionTitleFontColor: "#06BCC1"
+    readonly property color projectDetailsPaneSectionTitleFontColor: accentColor
     readonly property font projectDetailsPaneContentFont: semiBoldTinyFont
-    readonly property color projectDetailsPaneContentFontColor: "#606C83"
+    readonly property color projectDetailsPaneContentFontColor: lightLabelColor
 
     // Project status label
-    readonly property color projectFundraisingColor: "#FFB623"
-    readonly property color projectActiveColor: "#00B854"
-    readonly property color projectClosedColor: "#06BCC1"
+    readonly property color projectFundraisingColor: pendingColor
+    readonly property color projectActiveColor: successColor
+    readonly property color projectClosedColor: accentColor
 
     // Project assignment status label
     readonly property color assignmentNewColor: "#71809C"
-    readonly property color assignmentWaitingColor: "#FF9123"
-    readonly property color assignmentAcceptedColor: "#00B854"
-    readonly property color assignmentRejectedColor: "#FE2121"
+    readonly property color assignmentWaitingColor: pendingColor
+    readonly property color assignmentAcceptedColor: successColor
+    readonly property color assignmentRejectedColor: errorColor
 
     // Project task delegate
     readonly property size projectTaskFavouriteButtonSize: Qt.size(24, 22)
+
+    // Task details page (submit work)
+    readonly property int taskDetailsPageSideMargins: 16
 
     // Wallet page
     readonly property int walletPagePadding: 16
@@ -338,23 +335,23 @@ QtObject {
     readonly property int walletPageTitleSpacing: 12
     readonly property int walletPagePanePadding: 20
     readonly property font walletPageSectionTitleFont: semiBoldExtraLargeFont
-    readonly property color walletPageSectionTitleFontColor: "#414D55"
+    readonly property color walletPageSectionTitleFontColor: darkLabelColor
     readonly property font balanceDelegateTitleFont: semiBoldMediumFont
-    readonly property color balanceDelegateTitleFontColor: "#72809D"
+    readonly property color balanceDelegateTitleFontColor: lightLabelColor
     readonly property font balanceDelegateAmountFont: semiBoldHugeFont
-    readonly property color balanceDelegateAmountFontColor: "#253F50"
+    readonly property color balanceDelegateAmountFontColor: inputTextColor
     readonly property font balanceDelegateCurrencyFont: regularHugeFont
-    readonly property color balanceDelegateCurrencyFontColor: "#253F50"
+    readonly property color balanceDelegateCurrencyFontColor: inputTextColor
     readonly property font transactionSectionFont: semiBoldTinyFont
-    readonly property color transactionSectionFontColor: "#72809D"
+    readonly property color transactionSectionFontColor: lightLabelColor
     readonly property int transactionSectionSeparatorHeight: 1
-    readonly property color transactionSectionSeparatorColor: "#C0C7D4"
+    readonly property color transactionSectionSeparatorColor: separatorColor
     readonly property color transactionIncomingColor: successColor
     readonly property color transactionOutgoingColor: errorColor
     readonly property font transactionProjectFont: regularTinyFont
-    readonly property color transactionProjectFontColor: "#72809D"
+    readonly property color transactionProjectFontColor: lightLabelColor
     readonly property font transactionTypeFont: semiBoldTinyFont
-    readonly property color transactionTypeFontColor: "#253F50"
+    readonly property color transactionTypeFontColor: inputTextColor
     readonly property font transactionAmountFont: balanceDelegateAmountFont
     readonly property font transactionCurrencyFont: balanceDelegateCurrencyFont
 
@@ -364,15 +361,15 @@ QtObject {
     readonly property int cashOutInputTitleSpacing: 5
     readonly property int cashOutInputHeight: 60
     readonly property font cashOutInfoFont: semiBoldSmallFont
-    readonly property color cashOutInfoFontColor: "#72809D"
+    readonly property color cashOutInfoFontColor: lightLabelColor
     readonly property font cashOutInputTitleFont: semiBoldTinyFont
-    readonly property color cashOutInputTitleFontColor: "#72809D"
+    readonly property color cashOutInputTitleFontColor: lightLabelColor
     readonly property font cashOutAmountInputFont: semiBoldHugeFont
-    readonly property color cashOutAmountInputFontColor: "#253F50"
+    readonly property color cashOutAmountInputFontColor: inputTextColor
 
     // Receive money page
     readonly property int receiveMoneyPagePadding: 16
     readonly property font receiveMoneyInfoFont: semiBoldSmallFont
-    readonly property color receiveMoneyInfoFontColor: "#72809D"
+    readonly property color receiveMoneyInfoFontColor: lightLabelColor
     readonly property size receiveMoneyQrCodeSize: Qt.size(250, 250)
 }
