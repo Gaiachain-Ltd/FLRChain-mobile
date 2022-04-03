@@ -50,17 +50,12 @@ Page {
     Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        visible: false
     }
 
     Popups.JoinProjectPopup {
         id: joinPopup
         projectId: root.projectId
         projectName: root.projectName
-    }
-
-    Component.onCompleted: {
-        busyIndicator.visible = true
     }
 
     Connections {
@@ -71,7 +66,7 @@ Page {
         }
 
         function onBackTriggered() {
-            busyIndicator.visible = true
+//            busyIndicator.visible = true
             session.getProjectDetails(projectId)
         }
     }
@@ -111,7 +106,7 @@ Page {
 
     header: Custom.Header {
         height: Style.headerHeight
-        title: qsTr("Project Details")
+        title: qsTr("Project details")
     }
 
     Flickable {
@@ -142,23 +137,12 @@ Page {
 
             Delegates.ProjectDetailsDelegate {
                 Layout.fillWidth: true
-
                 deadline: projectEndDate
                 description: projectDescription
                 status: projectStatus
                 assignmentStatus: projectAssignmentStatus
                 photo: projectPhoto
                 mapLink: projectMapLink
-
-                button.onClicked: {
-                    console.log(projectEndDate.toLocaleString(Qt.locale(), "MMMM dd, yyyy"))
-
-                    if (session.internetConnection) {
-                        joinPopup.open()
-                    } else {
-                        pageManager.enterErrorPopup("No Internet Connection")
-                    }
-                }
             }
 
             Label {
@@ -186,8 +170,10 @@ Page {
                 Layout.fillWidth: true
                 Layout.bottomMargin: Style.projectDetailsTopBottomMargin
                 sourceModel: root.projectActions
-                projectIsActive: root.projectIsActive
-                userHasJoined: root.userHasJoined
+                projectId: root.projectId
+                projectName: root.projectName
+                projectStatus: root.projectStatus
+                projectAssignmentStatus: root.projectAssignmentStatus
                 showFavouritesOnly: root.showFavouritesOnly
             }
         }

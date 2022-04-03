@@ -18,7 +18,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
+
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
@@ -26,11 +26,18 @@ import "qrc:/Popups" as Popups
 
 Page {
     id: workScreen
-    property bool photoVisible: false
+
     property int projectId: -1
+    property string projectName: ""
+    property string actionName: ""
+    property string milestoneName: ""
     property int taskId: -1
     property string taskName: ""
-    property string projectName: ""
+    property string taskTypeOfInformation: ""
+    property string taskInstructions: ""
+    property var taskRequiredData: []
+
+    property bool photoVisible: false
     property string photoPath: ""
 
     Connections {
@@ -38,17 +45,17 @@ Page {
 
         function onDisplayPhoto(filePath){
             img.source =  "file:///" + filePath
-            busyIndicator.visible = false
+//            busyIndicator.visible = false
             photoPath = filePath
         }
 
         function onPhotoError(){
-            busyIndicator.visible = false
+//            busyIndicator.visible = false
         }
 
         function onProcessingPhoto(){
-            busyIndicator.visible = true
-            photoVisible = true
+//            busyIndicator.visible = true
+//            photoVisible = true
         }
 
         function onWorkAdded(taskName, projectName){
@@ -60,17 +67,23 @@ Page {
 
     Connections {
         target: pageManager
-        function onSetupWorkScreen(projectId, taskId, projectName, taskName){
-            workScreen.projectId = projectId
-            workScreen.taskId = taskId
-            workScreen.projectName = projectName
-            workScreen.taskName = taskName
+
+        function onSetupWorkScreen(taskData) {
+            workScreen.projectId = taskData.projectId
+            workScreen.projectName = taskData.projectName
+            workScreen.actionName = taskData.actionName
+            workScreen.milestoneName = taskData.milestoneName
+            workScreen.taskId = taskData.taskId
+            workScreen.taskName = taskData.taskName
+            workScreen.taskTypeOfInformation = taskData.taskTypeOfInformation
+            workScreen.taskInstructions = taskData.taskInstructions
+            workScreen.taskRequiredData = taskData.taskRequiredData
         }
 
         function onBeforePopBack(){
-            if(photoVisible){
-                dataManager.removeCurrentWorkPhoto()
-            }
+//            if(photoVisible){
+//                dataManager.removeCurrentWorkPhoto()
+//            }
         }
     }
 
@@ -84,14 +97,11 @@ Page {
 
     header: Custom.Header {
         height: Style.headerHeight
-        title: qsTr("Earn rewards")
+        title: qsTr("Task details")
     }
 
     Flickable {
-        anchors {
-            fill: parent
-            topMargin: Style.baseMargin
-        }
+        anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
 
@@ -100,124 +110,212 @@ Page {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: Style.smallMargin
-                rightMargin: Style.smallMargin
-                topMargin: Style.bigMargin
-                bottomMargin: Style.smallMargin
+                leftMargin: Style.taskDetailsPageSideMargins
+                rightMargin: Style.taskDetailsPageSideMargins
             }
 
             Label {
-                text: projectName
-                font.pixelSize: Style.hugeFontPixelSize
-                color: Style.darkLabelColor
-            }
-
-            Label {
-                text: taskName
-                font.pixelSize: Style.largeFontPixelSize
-                color: Style.darkLabelColor
-            }
-
-            Custom.ShadowedRectangle {
-                Layout.preferredHeight: childrenRect.height
+                id: projectNameLabel
                 Layout.fillWidth: true
-                Layout.topMargin: Style.bigMargin
+                Layout.topMargin: Style.taskDetailsPageTopMargin
+                font: Style.semiBoldExtraLargeFont
+                color: Style.darkLabelColor
+                wrapMode: Label.WordWrap
+                text: projectName
+            }
 
-                Rectangle {
-                    anchors.fill: parent
-                    color: Style.backgroundColor
-                    radius: Style.rectangleRadius
-                }
+            Custom.Pane {
+                Layout.fillWidth: true
+                Layout.bottomMargin: Style.taskDetailsPageBottomMargin
+                contentSpacing: Style.taskDetailsContentSpacing
 
-                ColumnLayout{
-                    id: col
-                    anchors {
-                        left: parent.left
-                        right: parent.right
-                        margins: Style.baseMargin
-                        bottomMargin: Style.bigMargin
-                    }
-                    spacing: Style.baseMargin
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
-                        Layout.topMargin: Style.baseMargin
-                        text: qsTr("Photo")
-                        font.pixelSize: Style.tinyFontPixelSize
-                        color: Style.darkLabelColor
-                        font.weight: Font.DemiBold
-                    }
-
-                    Custom.ImageButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        backgroundColor: Style.inputBackgroundColor
-                        text: qsTr("Upload from gallery...")
-                        visible: !photoVisible
-                        iconSource: "qrc:/img/icon-upload.svg"
-
-                        onClicked: {
-                            platform.selectFile();
-                        }
-                    }
-
-                    Custom.ImageButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        backgroundColor: Style.inputBackgroundColor
-                        visible: !photoVisible
-                        text: qsTr("Take photo...")
-                        iconSource: "qrc:/img/icon-camera.svg"
-                        onClicked: {
-                            platform.capture()
-                        }
-                    }
-
-                    Custom.RoundedImage {
-                        id: img
-                        visible: photoVisible
                         Layout.fillWidth: true
-                        Layout.preferredHeight: Style.workImgHeight
-
-                        Custom.IconButton {
-                            id: closeButton
-                            anchors {
-                                right: parent.right
-                                top: parent.top
-                                margins: Style.microMargin
-                            }
-                            iconSize: Qt.size(Style.iconUltra, Style.iconUltra)
-                            iconSource: "qrc:/img/icon-delete.svg"
-                            visible: !busyIndicator.visible
-                            onClicked: {
-                                img.source = ""
-                                photoVisible = false
-                                dataManager.removeCurrentWorkPhoto()
-                            }
-                        }
-
-                        Custom.BusyIndicator {
-                            id: busyIndicator
-                            anchors.centerIn: img
-                        }
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("FLR Action")
                     }
 
-                    Item {
-                        Layout.fillHeight: true
+                    Label {
                         Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: actionName
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Milestone")
                     }
 
-                    Custom.PrimaryButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.bottomMargin: Style.bigMargin
-                        enabled: photoVisible && !busyIndicator.visible
-                        opacity: enabled ? 1 : 0.5
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: milestoneName
+                    }
+                }
 
-                        text: qsTr("Upload")
-                        onClicked: {
-                            if(session.internetConnection){
-                                session.sendWorkRequest(photoPath, projectId, taskId)
-                            } else {
-                                pageManager.enterErrorPopup("No Internet Connection")
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Task")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: taskName
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Type of information")
+                    }
+
+                    Pane {
+                        topPadding: 10
+                        bottomPadding: 10
+                        leftPadding: 20
+                        rightPadding: 20
+
+                        background: Rectangle {
+                            color: Style.paneBackgroundColor
+                            border {
+                                width: 1
+                                color: Style.lightLabelColor
+                            }
+                            radius: 20
+                        }
+
+                        contentItem: Label {
+                            font: Style.semiBoldTinyFont
+                            color: Style.lightLabelColor
+                            text: taskTypeOfInformation
+                        }
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Instructions")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: taskInstructions
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Required data")
+                    }
+
+                    ListView {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: contentHeight
+                        spacing: parent.spacing
+                        model: taskRequiredData
+
+                        Component {
+                            Custom.TextInput {
+
                             }
                         }
+
+                        Component {
+                            Custom.TextInput {
+
+                            }
+                        }
+
+                        Component {
+
+                        }
+
+                        // TODO
+                        delegate: Loader {
+                            width: ListView.view.width
+
+                            sourceComponent:
+                            {
+                                switch (dataTagType)
+                                {
+
+                                }
+                            }
+
+                            Label {
+                                anchors.centerIn: parent
+                                text: dataTagName
+                            }
+                        }
+                    }
+                }
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    text: qsTr("Submit")
+
+                    onClicked: {
+                        // TODO
+
+                        console.warn("TODO: not implemented")
                     }
                 }
             }

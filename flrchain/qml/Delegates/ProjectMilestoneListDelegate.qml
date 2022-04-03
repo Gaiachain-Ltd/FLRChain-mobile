@@ -30,8 +30,10 @@ Pane {
     padding: 0
     background: null
 
-    property int actionNumber: model.actionNumber
-    property int milestoneNumber: model.milestoneNumber
+    readonly property int actionNumber: model.actionNumber
+    readonly property string actionName: model.actionName
+    readonly property int milestoneNumber: model.index + 1
+    readonly property string milestoneName: model.milestoneName
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -62,9 +64,11 @@ Pane {
             Layout.preferredHeight: contentHeight
             spacing: 10
             interactive: false
+            delegate: taskDelegate
 
             model: SortFilterProxyModel {
                 sourceModel: milestoneTasks
+
                 filters: [
                     ValueFilter {
                         enabled: showFavouritesOnly
@@ -72,23 +76,26 @@ Pane {
                         value: true
                     }
                 ]
+
                 proxyRoles: [
                     ExpressionRole {
                         name: "actionNumber"
                         expression: milestoneListDelegate.actionNumber
                     },
                     ExpressionRole {
+                        name: "actionName"
+                        expression: milestoneListDelegate.actionName
+                    },
+                    ExpressionRole {
                         name: "milestoneNumber"
                         expression: milestoneListDelegate.milestoneNumber
                     },
                     ExpressionRole {
-                        name: "taskNumber"
-                        expression: index + 1
+                        name: "milestoneName"
+                        expression: milestoneListDelegate.milestoneName
                     }
                 ]
             }
-
-            delegate: projectTaskList.taskDelegate
         }
     }
 }

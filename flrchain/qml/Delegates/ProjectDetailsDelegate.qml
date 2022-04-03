@@ -30,17 +30,12 @@ Pane {
     leftPadding: Style.projectDetailsPanePadding
     rightPadding: Style.projectDetailsPanePadding
 
-    property alias button: joinButton
-
     property date deadline: new Date
     property string description: ""
     property string photo: ""
     property url mapLink: ""
     property int status: Project.ProjectStatus.Undefined
     property int assignmentStatus: Project.AssignmentStatus.Undefined
-
-    readonly property bool investmentActive: status === Project.ProjectStatus.Active
-    readonly property bool investmentClosed: status === Project.ProjectStatus.Closed
 
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor
@@ -253,7 +248,16 @@ Pane {
             id: joinButton
             Layout.fillWidth: true
             text: qsTr("Ask to join")
-            visible: !investmentClosed && assignmentStatus === Project.AssignmentStatus.New
+            visible: status !== Project.ProjectStatus.Closed &&
+                     assignmentStatus === Project.AssignmentStatus.New
+
+            onClicked: {
+                if (session.internetConnection) {
+                    joinPopup.open()
+                } else {
+                    pageManager.enterErrorPopup("No Internet Connection")
+                }
+            }
         }
     }
 }

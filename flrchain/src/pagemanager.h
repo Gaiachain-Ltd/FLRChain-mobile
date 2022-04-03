@@ -44,7 +44,7 @@ public:
     Q_INVOKABLE bool enterDashboardScreen();
     Q_INVOKABLE bool enterProjectListScreen();
     Q_INVOKABLE bool enterProjectDetailsScreen(const int projectId);
-    Q_INVOKABLE bool enterWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
+    Q_INVOKABLE bool enterWorkScreen(const QVariantMap &taskData);
     Q_INVOKABLE bool enterWalletScreen();
     Q_INVOKABLE bool enterCashOutScreen(const Pages::CashOutPageMode cashOutMode, double maxAmount);
     Q_INVOKABLE bool enterReceiveMoneyPage(const QUrl &qrCodeUrl);
@@ -59,7 +59,7 @@ signals:
 
     // Page setups
     void setupProjectDetailsScreen(const int projectId);
-    void setupWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName);
+    void setupWorkScreen(const QVariantMap &taskData);
     void setupCashOutScreen(const Pages::CashOutPageMode cashOutMode, double maxAmount);
     void setupReceiveMoneyScreen(const QUrl &qrCodeUrl);
     void setupErrorPopup(const QString &errorMsg) const;

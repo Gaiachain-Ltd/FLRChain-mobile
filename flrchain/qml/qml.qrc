@@ -18,12 +18,9 @@
         <file>ProjectDetailsScreen.qml</file>
         <file>Delegates/ProjectDetailsDelegate.qml</file>
         <file>Delegates/ProjectDelegate.qml</file>
-        <file>Delegates/WorkDelegate.qml</file>
-        <file>Delegates/TaskDelegate.qml</file>
         <file>CustomControls/Popup.qml</file>
         <file>Popups/JoinProjectPopup.qml</file>
         <file>AppStyle.qml</file>
-        <file>Delegates/BalanceDelegate.qml</file>
         <file>WalletScreen.qml</file>
         <file>Delegates/TransactionDelegate.qml</file>
         <file>Popups/SuccessPopup.qml</file>
@@ -49,5 +46,6 @@
         <file>Delegates/ProjectMilestoneListDelegate.qml</file>
         <file>CustomControls/BusyIndicator.qml</file>
         <file>Project/ProjectTaskList.qml</file>
+        <file>Delegates/TaskTextDataDelegate.qml</file>
     </qresource>
 </RCC>
