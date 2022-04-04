@@ -162,6 +162,7 @@ Page {
                     textColor: Style.loginPanelInputTitleFontColor
                     implicitHeight: Style.changePasswordButtonHeight
                     borderWidth: Style.changePasswordButtonBorderWidth
+                    centerContent: true
 
                     onClicked: {
                         changePasswordPopup.open();

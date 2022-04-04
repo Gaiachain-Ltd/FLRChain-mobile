@@ -30,6 +30,7 @@ Button {
     property int rowSpacing: Style.smallMargin
     property string borderColor: backgroundColor
     property int borderWidth: 0
+    property bool centerContent: false
 
     implicitWidth: Style.buttonHeight
     implicitHeight: Style.buttonHeight
@@ -50,7 +51,7 @@ Button {
 
         Row {
             anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenter: centerContent ? parent.horizontalCenter : undefined
             spacing: button.spacing
             layoutDirection: button.layoutDirection
 
