@@ -49,5 +49,6 @@
         <file>Delegates/ProjectMilestoneListDelegate.qml</file>
         <file>CustomControls/BusyIndicator.qml</file>
         <file>Project/ProjectTaskList.qml</file>
+        <file>ProfileScreen.qml</file>
     </qresource>
 </RCC>

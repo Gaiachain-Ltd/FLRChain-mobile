@@ -31,6 +31,7 @@
 #include "requests/projectsdatarequest.h"
 #include "requests/workdatarequest.h"
 #include "requests/userinforequest.h"
+#include "requests/saveuserinforequest.h"
 #include "requests/joinprojectrequest.h"
 #include "requests/transactionhistoryrequest.h"
 #include "requests/walletqrcoderequest.h"
@@ -68,7 +69,7 @@ bool Session::hasToken() const
     return !getToken().isEmpty();
 }
 
-User* Session::user() const
+User *Session::user() const
 {
     return mCurrentUser.data();
 }
@@ -80,7 +81,8 @@ void Session::onLoginSuccessful(const QString &token)
 }
 
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
-                         const QString &email, const QString &phone, bool optedIn)
+                         const QString &email, const QString &phone, const QString &village,
+                         bool optedIn)
 {
     if (!firstName.isEmpty()) {
         user()->setFirstName(firstName);
@@ -94,6 +96,11 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     if (!phone.isEmpty()) {
         user()->setPhone(phone);
     }
+
+    if (!village.isEmpty()) {
+        user()->setVillage(village);
+    }
+
     user()->setOptedIn(optedIn);
 }
 
@@ -114,7 +121,7 @@ void Session::login(const QString &email, const QString &password)
     mClient->send(request);
 }
 
-void Session::registerUser(const QString& email, const QString& password, const QString &firstName,
+void Session::registerUser(const QString &email, const QString &password, const QString &firstName,
                            const QString &lastName, const QString &phone, const QString &village)
 {
     if (mClient.isNull()) {
@@ -287,7 +294,7 @@ void Session::getFacililatorList() const
     mClient->send(request);
 }
 
-void Session::cashOut(const QString& amount, const QString& phone) const
+void Session::cashOut(const QString &amount, const QString &phone) const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -380,6 +387,28 @@ void Session::sendWorkRequest(const QString &filePath, const int projectId, cons
             m_dataManager, &DataManager::workAdded);
     connect(request.data(), &SendWorkRequest::sendWorkError,
             m_dataManager, &DataManager::addWorkError);
+
+    mClient->send(request);
+}
+
+void Session::saveUserInfo(const QString &firstName, const QString &lastName, const QString &phone, const QString &village) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<SaveUserInfoRequest>::create(firstName, lastName,
+                                                               phone, village, getToken());
+    connect(request.data(), &SaveUserInfoRequest::userInfoReply,
+            this, &Session::onUserInfo);
+    connect(request.data(), &SaveUserInfoRequest::saveUserInfoResult,
+            m_dataManager, &DataManager::saveUserInfoReplyReceived);
 
     mClient->send(request);
 }

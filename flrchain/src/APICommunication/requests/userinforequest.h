@@ -32,7 +32,8 @@ signals:
                        const QString &lastName,
                        const QString &email,
                        const QString &phone,
-                       bool optedIn) const;
+                       const QString &village,
+                       bool optedIn);
 protected:
     void parse() final;
 };

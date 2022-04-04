@@ -67,6 +67,9 @@ StackView {
             case Pages.ReceiveMoneyScreen:
                 stack.push("qrc:/ReceiveMoneyPage.qml")
                 break
+            case Pages.ProfileScreen:
+                stack.push("qrc:/ProfileScreen.qml");
+                break;
             }
         }
 

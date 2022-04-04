@@ -156,7 +156,7 @@ Page {
                     if (session.internetConnection) {
                         joinPopup.open()
                     } else {
-                        pageManager.enterErrorPopup("No Internet Connection")
+                        pageManager.enterErrorPopup(qsTr("No Internet Connection"))
                     }
                 }
             }

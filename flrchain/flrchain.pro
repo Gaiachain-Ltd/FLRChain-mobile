@@ -37,6 +37,7 @@ HEADERS += \
     src/APICommunication/apimultipartrequest.h \
     src/APICommunication/requests/facililatorcashoutrequest.h \
     src/APICommunication/requests/facililatorlistrequest.h \
+    src/APICommunication/requests/saveuserinforequest.h \
     src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
@@ -82,6 +83,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
     src/APICommunication/requests/facililatorcashoutrequest.cpp \
     src/APICommunication/requests/facililatorlistrequest.cpp \
+    src/APICommunication/requests/saveuserinforequest.cpp \
     src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \

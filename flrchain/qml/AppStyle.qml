@@ -372,4 +372,8 @@ QtObject {
     readonly property font receiveMoneyInfoFont: semiBoldSmallFont
     readonly property color receiveMoneyInfoFontColor: lightLabelColor
     readonly property size receiveMoneyQrCodeSize: Qt.size(250, 250)
+
+    // Profile screen
+    readonly property int profileScreenMargins: 16
+    readonly property int profileScreenSpacing: 20
 }

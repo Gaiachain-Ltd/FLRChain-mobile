@@ -34,7 +34,8 @@ public:
         WorkScreen,
         WalletScreen,
         CashOutScreen,
-        ReceiveMoneyScreen
+        ReceiveMoneyScreen,
+        ProfileScreen,
     };
 
     Q_ENUM(Page)

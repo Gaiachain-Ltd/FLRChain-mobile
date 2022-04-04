@@ -57,6 +57,7 @@ public slots:
     void cashOutReplyReceived(const bool result);
     void joinProjectError();
     void addWorkError();
+    void saveUserInfoReplyReceived(bool result);
 
 signals:
     void displayPhoto(const QString &filePath);
