@@ -93,6 +93,15 @@ void DataManager::saveUserInfoReplyReceived(bool result)
     }
 }
 
+void DataManager::changePasswordReplyReceived(bool result)
+{
+    if (result) {
+        PageManager::instance()->enterSuccessPopup("Password changed successfuly");
+    } else {
+        PageManager::instance()->enterErrorPopup("Couldn't change password. Try again");
+    }
+}
+
 void DataManager::cleanData()
 {
     cleanPhotosDir();

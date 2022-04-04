@@ -42,6 +42,7 @@
 #include "requests/projectdetailsrequest.h"
 #include "requests/getimagerequest.h"
 #include "requests/sendworkrequest.h"
+#include "requests/changepasswordrequest.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -409,6 +410,25 @@ void Session::saveUserInfo(const QString &firstName, const QString &lastName, co
             this, &Session::onUserInfo);
     connect(request.data(), &SaveUserInfoRequest::saveUserInfoResult,
             m_dataManager, &DataManager::saveUserInfoReplyReceived);
+
+    mClient->send(request);
+}
+
+void Session::changePassword(const QString &oldPassword, const QString &newPassword) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if(!hasToken()) {
+        qCDebug(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<ChangePasswordRequest>::create(oldPassword, newPassword, getToken());
+    connect(request.data(), &ChangePasswordRequest::changePasswordResult,
+            m_dataManager, &DataManager::changePasswordReplyReceived);
 
     mClient->send(request);
 }

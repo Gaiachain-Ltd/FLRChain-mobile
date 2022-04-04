@@ -376,4 +376,6 @@ QtObject {
     // Profile screen
     readonly property int profileScreenMargins: 16
     readonly property int profileScreenSpacing: 20
+    readonly property int changePasswordButtonHeight: 62
+    readonly property int changePasswordButtonBorderWidth: 2
 }

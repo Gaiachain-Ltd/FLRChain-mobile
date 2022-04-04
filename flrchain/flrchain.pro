@@ -35,6 +35,7 @@ INCLUDEPATH += \
 
 HEADERS += \
     src/APICommunication/apimultipartrequest.h \
+    src/APICommunication/requests/changepasswordrequest.h \
     src/APICommunication/requests/facililatorcashoutrequest.h \
     src/APICommunication/requests/facililatorlistrequest.h \
     src/APICommunication/requests/saveuserinforequest.h \
@@ -81,6 +82,7 @@ HEADERS += \
 
 SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
+    src/APICommunication/requests/changepasswordrequest.cpp \
     src/APICommunication/requests/facililatorcashoutrequest.cpp \
     src/APICommunication/requests/facililatorlistrequest.cpp \
     src/APICommunication/requests/saveuserinforequest.cpp \

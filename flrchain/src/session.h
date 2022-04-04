@@ -67,6 +67,8 @@ public:
                                   const QString &lastName,
                                   const QString &phone,
                                   const QString &village) const;
+    Q_INVOKABLE void changePassword(const QString &oldPassword,
+                                    const QString &newPassword) const;
 
 public slots:
     void setInternetConnection(const bool internetConnection);

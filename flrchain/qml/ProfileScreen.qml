@@ -22,6 +22,7 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
+import "qrc:/Popups" as Popups
 
 Page {
 
@@ -46,6 +47,8 @@ Page {
         height: Style.headerHeight
         title: qsTr("Wallet")
     }
+
+    Popups.ChangePasswordPopup {id: changePasswordPopup }
 
     Flickable {
         anchors {
@@ -144,19 +147,26 @@ Page {
                     font: Style.loginPanelErrorMessageFont
                     color: Style.loginPanelErrorMessageFontColor
                     wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    visible: errorLabel.text
                 }
 
-                Custom.SecondaryButton {
-                    id: changePasswordButton
+                Custom.ImageButton {
                     Layout.fillWidth: true
                     Layout.topMargin: Style.profileScreenSpacing
+                    backgroundColor: Style.backgroundColor
                     text: qsTr("Change password")
+                    iconSource: "qrc:/img/padlock.svg"
+                    layoutDirection: Qt.RightToLeft
+                    rowSpacing: Style.tinyMargin
+                    borderColor: Style.inputBackgroundColor
+                    textColor: Style.loginPanelInputTitleFontColor
+                    implicitHeight: Style.changePasswordButtonHeight
+                    borderWidth: Style.changePasswordButtonBorderWidth
 
                     onClicked: {
-//                        pageManager.enterLoginScreen()
+                        changePasswordPopup.open();
                     }
                 }
-
 
                 Custom.PrimaryButton {
                     id: saveChangesButton

@@ -50,5 +50,6 @@
         <file>CustomControls/BusyIndicator.qml</file>
         <file>Project/ProjectTaskList.qml</file>
         <file>ProfileScreen.qml</file>
+        <file>Popups/ChangePasswordPopup.qml</file>
     </qresource>
 </RCC>

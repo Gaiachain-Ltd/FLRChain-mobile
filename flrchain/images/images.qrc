@@ -40,5 +40,6 @@
         <file>qr-example.svg</file>
         <file>icon-add-fav.svg</file>
         <file>icon-remove-fav.svg</file>
+        <file>padlock.svg</file>
     </qresource>
 </RCC>

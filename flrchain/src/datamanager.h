@@ -58,6 +58,7 @@ public slots:
     void joinProjectError();
     void addWorkError();
     void saveUserInfoReplyReceived(bool result);
+    void changePasswordReplyReceived(bool result);
 
 signals:
     void displayPhoto(const QString &filePath);

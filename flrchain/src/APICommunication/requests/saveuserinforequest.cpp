@@ -5,7 +5,7 @@
 SaveUserInfoRequest::SaveUserInfoRequest(const QString &firstName, const QString &lastName,
                                          const QString &phone, const QString &village,
                                          const QByteArray &token)
-    : ApiRequest(QString("info"))
+    : ApiRequest(QLatin1String("info"))
 {
     QJsonObject object;
     object.insert(QLatin1String("first_name"), firstName);
