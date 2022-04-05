@@ -38,29 +38,20 @@ Page {
     property string taskTypeOfInformation: ""
     property string taskInstructions: ""
     property var taskRequiredData: []
+    property ListModel photosModel: ListModel {}
 
-    property bool photoVisible: false
-    property string photoPath: ""
+    Component.onDestruction: {
+        photosModel.clear()
+    }
 
     Connections {
         target: dataManager
 
-        function onDisplayPhoto(filePath){
-            img.source =  "file:///" + filePath
-//            busyIndicator.visible = false
-            photoPath = filePath
+        function onDisplayPhoto(filePath) {
+            photosModel.append({photoUrl: "file:///" + filePath})
         }
 
-        function onPhotoError(){
-//            busyIndicator.visible = false
-        }
-
-        function onProcessingPhoto(){
-//            busyIndicator.visible = true
-//            photoVisible = true
-        }
-
-        function onWorkAdded(taskName, projectName){
+        function onWorkAdded(taskName, projectName) {
             workSuccessPopup.taskName = taskName
             workSuccessPopup.projectName = projectName
             workSuccessPopup.open()
@@ -80,12 +71,6 @@ Page {
             workScreen.taskTypeOfInformation = taskData.taskTypeOfInformation
             workScreen.taskInstructions = taskData.taskInstructions
             workScreen.taskRequiredData = taskData.taskRequiredData
-        }
-
-        function onBeforePopBack(){
-//            if(photoVisible){
-//                dataManager.removeCurrentWorkPhoto()
-//            }
         }
     }
 
@@ -302,7 +287,11 @@ Page {
                                 id: photoDelegate
 
                                 Delegates.TaskRequiredDataPhotoDelegate {
-                                    photosModel: [] // TODO: attach photos model
+                                    photosModel: workScreen.photosModel
+
+                                    onDeletePhotoAt: {
+                                        workScreen.photosModel.remove(index)
+                                    }
                                 }
                             }
                         }

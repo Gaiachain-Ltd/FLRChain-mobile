@@ -28,6 +28,8 @@ ColumnLayout {
 
     property alias photosModel: thumbnailListView.model
 
+    signal deletePhotoAt(int index)
+
     Label {
         Layout.fillWidth: true
         font: Style.semiBoldTinyFont
@@ -54,6 +56,7 @@ ColumnLayout {
             boundsBehavior: ListView.StopAtBounds
             orientation: ListView.Horizontal
             spacing: 10
+            clip: true
 
             delegate: Image {
                 width: 100
@@ -71,9 +74,7 @@ ColumnLayout {
                     iconSource: "qrc:/img/icon-delete.svg"
 
                     onClicked: {
-                        // TODO
-
-                        console.warn("TODO: not implemented")
+                        root.deletePhotoAt(index)
                     }
                 }
             }
@@ -95,9 +96,7 @@ ColumnLayout {
             text: qsTr("Take picture")
 
             onClicked: {
-                // TODO
-
-                console.warn("TODO: not implemented")
+                platform.capture()
             }
         }
 
@@ -111,9 +110,7 @@ ColumnLayout {
             text: qsTr("Select from gallery")
 
             onClicked: {
-                // TODO
-
-                console.warn("TODO: not implemented")
+                platform.selectFile()
             }
         }
     }
