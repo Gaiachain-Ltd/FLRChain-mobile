@@ -95,6 +95,7 @@ void User::clear()
     setPassword(QByteArray());
     setFirstName(QString());
     setLastName(QString());
+    setVillage(QString());
     setOptedIn(false);
 }
 
@@ -109,4 +110,17 @@ void User::setPhone(const QString &newPhone)
         return;
     m_phone = newPhone;
     emit phoneChanged();
+}
+
+const QString &User::village() const
+{
+    return m_village;
+}
+
+void User::setVillage(const QString &newVillage)
+{
+    if (m_village == newVillage)
+        return;
+    m_village = newVillage;
+    emit villageChanged();
 }

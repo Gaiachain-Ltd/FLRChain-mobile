@@ -29,6 +29,7 @@ class User : public QObject
     Q_PROPERTY(QString email READ email WRITE setEmail NOTIFY emailChanged)
     Q_PROPERTY(QString firstName READ firstName WRITE setFirstName NOTIFY firstNameChanged)
     Q_PROPERTY(QString lastName READ lastName WRITE setLastName NOTIFY lastNameChanged)
+    Q_PROPERTY(QString village READ village WRITE setVillage NOTIFY villageChanged)
     Q_PROPERTY(bool optedIn READ optedIn WRITE setOptedIn NOTIFY optedInChanged)
 public:
     User(QObject *parent = nullptr);
@@ -39,6 +40,7 @@ public:
     bool optedIn() const;
     QByteArray password() const;
     const QString &phone() const;
+    const QString &village() const;
 
     void setEmail(const QString& email);
     void setFirstName(const QString& name);
@@ -46,16 +48,19 @@ public:
     void setPassword(const QByteArray& password);
     void setOptedIn(bool optedIn);
     void setPhone(const QString &newPhone);
+    void setVillage(const QString &newVillage);
 
     void clear();
 
 signals:
-    void emailChanged() const;
-    void firstNameChanged() const;
-    void lastNameChanged() const;
-    void phoneChanged() const;
-    void passwordChanged() const;
-    void optedInChanged() const;
+    void emailChanged();
+    void firstNameChanged();
+    void lastNameChanged();
+    void phoneChanged();
+    void passwordChanged();
+    void optedInChanged();
+
+    void villageChanged();
 
 private:
     QString m_email;
@@ -63,6 +68,7 @@ private:
     QString m_firstName;
     QString m_lastName;
     QString m_phone;
+    QString m_village;
     bool m_optedIn;
 };
 

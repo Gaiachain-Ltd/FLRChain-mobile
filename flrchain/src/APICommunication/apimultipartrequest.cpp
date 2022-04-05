@@ -32,6 +32,8 @@ void ApiMultiPartRequest::customizeRequest(QNetworkRequest &request)
                objectName().toLatin1(),
                "This request requires token and it's not provided!");
 
+    request.setHeader(QNetworkRequest::UserAgentHeader, "Qt");
+
     if (!m_token.isEmpty()) {
         request.setRawHeader(QByteArray("Authorization"),
                              QStringLiteral("%1 %2").arg("Token", m_token).toLatin1());

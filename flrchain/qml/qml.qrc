@@ -46,6 +46,9 @@
         <file>Delegates/ProjectMilestoneListDelegate.qml</file>
         <file>CustomControls/BusyIndicator.qml</file>
         <file>Project/ProjectTaskList.qml</file>
+        <file>ProfileScreen.qml</file>
+        <file>Popups/ChangePasswordPopup.qml</file>
+        <file>ForgotPasswordScreen.qml</file>
         <file>Delegates/TaskTextDataDelegate.qml</file>
         <file>Delegates/TaskRequiredDataInputDelegate.qml</file>
         <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>

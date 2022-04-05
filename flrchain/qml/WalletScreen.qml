@@ -66,7 +66,9 @@ Page {
         }
     }
 
-    background: null
+    background: Rectangle {
+        color: Style.backgroundColor
+    }
 
     header: Custom.Header {
         height: Style.headerHeight
@@ -78,7 +80,6 @@ Page {
         anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
-        clip: true
         visible: !busyIndicator.visible
 
         ColumnLayout {

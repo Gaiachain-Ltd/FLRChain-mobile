@@ -51,6 +51,7 @@ Controls.Popup {
             Layout.alignment: Qt.AlignHCenter
             sourceSize: Style.popupIconSize
             source: popup.iconSource
+            visible: popup.iconSource
         }
 
         Controls.Label {

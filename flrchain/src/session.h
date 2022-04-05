@@ -57,13 +57,23 @@ public:
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
     Q_INVOKABLE void getWalletQRCode() const;
+    Q_INVOKABLE void getFacililatorList() const;
     Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
+    Q_INVOKABLE void facililatorCashOut(const QString &amount, int facililatorId) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const;
+    Q_INVOKABLE void saveUserInfo(const QString &firstName,
+                                  const QString &lastName,
+                                  const QString &phone,
+                                  const QString &village) const;
+    Q_INVOKABLE void changePassword(const QString &oldPassword,
+                                    const QString &newPassword) const;
+    Q_INVOKABLE void resetPassword(const QString &email) const;
 
 public slots:
     void setInternetConnection(const bool internetConnection);
+
 signals:
     void loginSuccessful(const QString& token) const;
     void loginError(const QString& error) const;
@@ -72,12 +82,14 @@ signals:
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
     void internetConnectionChanged(bool internetConnection);
+
 private:
     void onLoginSuccessful(const QString& token);
     void onUserInfo(const QString &firstName,
                     const QString &lastName,
                     const QString &email,
                     const QString &phone,
+                    const QString &village,
                     bool optedIn);
     void setToken(const QByteArray &token);
 

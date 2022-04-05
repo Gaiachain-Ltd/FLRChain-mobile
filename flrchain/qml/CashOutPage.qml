@@ -28,6 +28,7 @@ Page {
     padding: Style.cashOutPageMargins
 
     property real maxAmount: 0
+    readonly property string loadingState: "Loading"
     readonly property string sendToFacilitatorState: "SendToFacilitatorState"
     readonly property string sendToMobileNumberState: "SendToMobileNumberState"
 
@@ -37,10 +38,20 @@ Page {
         function onSetupCashOutScreen(cashOutMode, maxAmount) {
             root.maxAmount = maxAmount;
             if (cashOutMode === Pages.FacilitatorCashOutMode) {
-                root.state = root.sendToFacilitatorState
+                session.getFacililatorList();
+                root.state = root.loadingState;
             } else {
-                root.state = root.sendToMobileNumberState
+                root.state = root.sendToMobileNumberState;
             }
+        }
+    }
+
+    Connections {
+        target: dataManager
+
+        function onFacililatorListReceived(facililators) {
+            receiverInput.model = facililators;
+            root.state = root.sendToFacilitatorState;
         }
     }
 
@@ -105,7 +116,14 @@ Page {
             }
         }
 
+
+        Custom.BusyIndicator {
+            id: busyIndicator
+            Layout.alignment: Qt.AlignHCenter
+        }
+
         ColumnLayout {
+            id: receiverColumn
             Layout.fillWidth: true
             Layout.fillHeight: false
             spacing: Style.cashOutInputTitleSpacing
@@ -124,9 +142,10 @@ Page {
 
                 Custom.ComboBox {
                     id: receiverInput
+                    textRole: "name"
+                    valueRole: "id"
                     Layout.fillWidth: true
                     Layout.preferredHeight: Style.cashOutInputHeight
-                    model: ["TODO: John Doe", "TODO: Mark McDonald", "TODO: Jerry Johnson"] // TODO
                 }
 
                 Custom.TextInput {
@@ -160,10 +179,11 @@ Page {
             enabled:
             {
                 if (root.state == root.sendToMobileNumberState) {
-                    return phoneNumberInput.displayText.length > 0 && amountInput.displayText.length > 0
+                    return phoneNumberInput.displayText.length > 0 && amountInput.displayText.length > 0;
+                } else if (root.state == root.sendToFacilitatorState) {
+                    return receiverInput.currentValue > 0 && amountInput.displayText.length > 0;
                 }
-
-                return false // TODO
+                return false;
             }
             opacity: enabled ? 1.0 : 0.5
             text: qsTr("Send money")
@@ -173,8 +193,8 @@ Page {
                     session.cashOut(amountInput.text, phoneNumberInput.text)
                     pageManager.back()
                 } else {
-                    // TODO
-                    console.warn("TODO: not implemented")
+                    session.facililatorCashOut(amountInput.text, receiverInput.currentValue);
+                    pageManager.back()
                 }
             }
         }
@@ -183,7 +203,41 @@ Page {
     state: sendToMobileNumberState
     states: [
         State {
+            name: loadingState
+
+            PropertyChanges {
+                target: receiverColumn
+                visible: false
+            }
+
+            PropertyChanges {
+                target: busyIndicator
+                visible: true
+            }
+
+            PropertyChanges {
+                target: amountInput
+                enabled: false
+            }
+        },
+
+        State {
             name: sendToFacilitatorState
+
+            PropertyChanges {
+                target: receiverColumn
+                visible: true
+            }
+
+            PropertyChanges {
+                target: busyIndicator
+                visible: false
+            }
+
+            PropertyChanges {
+                target: amountInput
+                enabled: true
+            }
 
             PropertyChanges {
                 target: infoLabel
@@ -203,6 +257,21 @@ Page {
 
         State {
             name: sendToMobileNumberState
+
+            PropertyChanges {
+                target: receiverColumn
+                visible: true
+            }
+
+            PropertyChanges {
+                target: busyIndicator
+                visible: false
+            }
+
+            PropertyChanges {
+                target: amountInput
+                enabled: true
+            }
 
             PropertyChanges {
                 target: infoLabel

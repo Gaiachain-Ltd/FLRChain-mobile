@@ -118,8 +118,7 @@ Page {
                 iconSource: "qrc:/img/dashboard-my-profile.svg"
 
                 onClicked: {
-                    // TODO: open my profile page
-                    console.warn("TODO: not implemented!")
+                    pageManager.enterProfileScreen();
                 }
             }
         }

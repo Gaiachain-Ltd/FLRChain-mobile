@@ -84,6 +84,24 @@ void DataManager::addWorkError()
     PageManager::instance()->enterErrorPopup("Uploading photo failed. Try again");
 }
 
+void DataManager::saveUserInfoReplyReceived(bool result)
+{
+    if (result) {
+        PageManager::instance()->enterSuccessPopup("Changes saved successfuly");
+    } else {
+        PageManager::instance()->enterErrorPopup("Couldn't save changes. Try again");
+    }
+}
+
+void DataManager::changePasswordReplyReceived(bool result)
+{
+    if (result) {
+        PageManager::instance()->enterSuccessPopup("Password changed successfuly");
+    } else {
+        PageManager::instance()->enterErrorPopup("Couldn't change password. Try again");
+    }
+}
+
 void DataManager::cleanData()
 {
     cleanPhotosDir();

@@ -26,6 +26,11 @@ Button {
     property string textColor: Style.darkLabelColor
     property string iconSource: ""
     property size iconSize: Qt.size(Style.iconMedium, Style.iconMedium)
+    property int layoutDirection: Qt.LeftToRight
+    property int rowSpacing: Style.smallMargin
+    property string borderColor: backgroundColor
+    property int borderWidth: 0
+    property bool centerContent: false
 
     implicitWidth: Style.buttonHeight
     implicitHeight: Style.buttonHeight
@@ -34,6 +39,8 @@ Button {
     background: Rectangle {
         radius: Style.baseRadius
         color: backgroundColor
+        border.color: button.borderColor
+        border.width: button.borderWidth
     }
 
     contentItem: Item {
@@ -44,7 +51,9 @@ Button {
 
         Row {
             anchors.verticalCenter: parent.verticalCenter
-            spacing: Style.smallMargin
+            anchors.horizontalCenter: centerContent ? parent.horizontalCenter : undefined
+            spacing: button.spacing
+            layoutDirection: button.layoutDirection
 
             Image {
                 width: button.iconSize.width

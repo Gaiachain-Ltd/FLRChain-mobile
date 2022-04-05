@@ -154,6 +154,18 @@ bool PageManager::enterReceiveMoneyPage(const QUrl &qrCodeUrl)
     return true;
 }
 
+bool PageManager::enterProfileScreen()
+{
+    enterPage(Pages::ProfileScreen);
+    return true;
+}
+
+bool PageManager::enterForgotPasswordScreen()
+{
+    enterPage(Pages::ForgotPasswordScreen);
+    return true;
+}
+
 void PageManager::closeAll()
 {
     m_visiblePages.clear();
