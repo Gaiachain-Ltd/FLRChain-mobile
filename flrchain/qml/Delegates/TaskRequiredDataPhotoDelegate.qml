@@ -15,8 +15,106 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import QtQuick 2.0
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
-Item {
+import com.flrchain.style 1.0
 
+import "qrc:/CustomControls" as Custom
+
+ColumnLayout {
+    id: root
+
+    property alias photosModel: thumbnailListView.model
+
+    Label {
+        Layout.fillWidth: true
+        font: Style.semiBoldTinyFont
+        color: Style.lightLabelColor
+        wrapMode: Label.WordWrap
+        text: dataTagName
+    }
+
+    Pane {
+        id: thumbnailPane
+        Layout.fillWidth: true
+        padding: 10
+
+        background: Rectangle {
+            implicitHeight: 120
+            color: "#F7F9FB"
+            radius: 7
+        }
+
+        contentItem: ListView {
+            id: thumbnailListView
+            width: thumbnailPane.availableWidth
+            height: thumbnailPane.availableHeight
+            boundsBehavior: ListView.StopAtBounds
+            orientation: ListView.Horizontal
+            spacing: 10
+
+            delegate: Image {
+                width: 100
+                height: ListView.view.height
+                source: modelData
+
+                Custom.IconButton {
+                    anchors {
+                        top: parent.top
+                        right: parent.right
+                    }
+                    width: 26
+                    height: 26
+                    iconSize: Qt.size(16, 16)
+                    iconSource: "qrc:/img/icon-delete.svg"
+
+                    onClicked: {
+                        // TODO
+
+                        console.warn("TODO: not implemented")
+                    }
+                }
+            }
+        }
+    }
+
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: false
+        spacing: 10
+
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            icon.source: "qrc:/img/icon-camera.svg"
+            icon.width: 21
+            icon.height: 16
+            icon.color: labelColor
+            font: Style.semiBoldTinyFont
+            text: qsTr("Take picture")
+
+            onClicked: {
+                // TODO
+
+                console.warn("TODO: not implemented")
+            }
+        }
+
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            icon.source: "qrc:/img/icon-gallery.svg"
+            icon.width: 21
+            icon.height: 16
+            icon.color: labelColor
+            font: Style.semiBoldTinyFont
+            text: qsTr("Select from gallery")
+
+            onClicked: {
+                // TODO
+
+                console.warn("TODO: not implemented")
+            }
+        }
+    }
 }

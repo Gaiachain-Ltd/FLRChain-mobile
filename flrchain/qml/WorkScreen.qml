@@ -301,7 +301,9 @@ Page {
                             Component {
                                 id: photoDelegate
 
-                                Delegates.TaskRequiredDataPhotoDelegate {}
+                                Delegates.TaskRequiredDataPhotoDelegate {
+                                    photosModel: [] // TODO: attach photos model
+                                }
                             }
                         }
                     }
