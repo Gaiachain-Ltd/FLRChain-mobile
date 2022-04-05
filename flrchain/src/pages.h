@@ -36,6 +36,7 @@ public:
         CashOutScreen,
         ReceiveMoneyScreen,
         ProfileScreen,
+        ForgotPasswordScreen
     };
 
     Q_ENUM(Page)

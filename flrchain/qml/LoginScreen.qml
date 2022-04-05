@@ -185,8 +185,7 @@ Page {
                         anchors.fill: parent
 
                         onClicked: {
-                            // TODO
-                            console.warn("TODO: not implemented!")
+                            pageManager.enterForgotPasswordScreen();
                         }
                     }
                 }

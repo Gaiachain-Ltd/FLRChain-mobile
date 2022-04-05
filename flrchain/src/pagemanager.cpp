@@ -160,6 +160,12 @@ bool PageManager::enterProfileScreen()
     return true;
 }
 
+bool PageManager::enterForgotPasswordScreen()
+{
+    enterPage(Pages::ForgotPasswordScreen);
+    return true;
+}
+
 void PageManager::closeAll()
 {
     m_visiblePages.clear();

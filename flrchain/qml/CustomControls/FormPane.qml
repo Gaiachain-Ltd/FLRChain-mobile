@@ -44,6 +44,7 @@ Custom.Pane {
             font: Style.formPaneSubtitleFont
             color: Style.formPaneSubtitleFontColor
             text: root.subtitle
+            wrapMode: "WordWrap"
         }
 
         Item {

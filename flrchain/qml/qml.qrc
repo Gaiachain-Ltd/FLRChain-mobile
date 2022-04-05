@@ -51,5 +51,6 @@
         <file>Project/ProjectTaskList.qml</file>
         <file>ProfileScreen.qml</file>
         <file>Popups/ChangePasswordPopup.qml</file>
+        <file>ForgotPasswordScreen.qml</file>
     </qresource>
 </RCC>

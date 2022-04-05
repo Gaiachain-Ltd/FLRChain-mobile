@@ -49,6 +49,7 @@ public:
     Q_INVOKABLE bool enterCashOutScreen(const Pages::CashOutPageMode cashOutMode, double maxAmount);
     Q_INVOKABLE bool enterReceiveMoneyPage(const QUrl &qrCodeUrl);
     Q_INVOKABLE bool enterProfileScreen();
+    Q_INVOKABLE bool enterForgotPasswordScreen();
     Q_INVOKABLE void closeAll();
     Q_INVOKABLE bool enterErrorPopup(const QString &errorMessage) const;
     Q_INVOKABLE bool enterSuccessPopup(const QString &message) const;

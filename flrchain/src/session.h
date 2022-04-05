@@ -69,6 +69,7 @@ public:
                                   const QString &village) const;
     Q_INVOKABLE void changePassword(const QString &oldPassword,
                                     const QString &newPassword) const;
+    Q_INVOKABLE void resetPassword(const QString &email) const;
 
 public slots:
     void setInternetConnection(const bool internetConnection);

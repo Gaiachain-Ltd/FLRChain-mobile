@@ -63,11 +63,11 @@ public slots:
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
-    void joinRequestSent(const int projectId) const;
+    void joinRequestSent(const int projectId);
     void projectDetailsReceived(Project *project);
     void processingPhoto();
-    void photoDownloadResult(const int workId, const QString &path) const;
-    void workAdded(const QString &taskName, const QString &projectName) const;
+    void photoDownloadResult(const int workId, const QString &path);
+    void workAdded(const QString &taskName, const QString &projectName);
     void walletBalanceReceived(const double balance);
     void walletQRCodeReceived(const QString &qrCode);
     void facililatorListReceived(const QJsonArray &facililators);
@@ -75,6 +75,7 @@ signals:
     void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
+    void resetPasswordReplyReceived(bool result);
     void detailedProjectChanged();
 
 private:

@@ -38,6 +38,7 @@ HEADERS += \
     src/APICommunication/requests/changepasswordrequest.h \
     src/APICommunication/requests/facililatorcashoutrequest.h \
     src/APICommunication/requests/facililatorlistrequest.h \
+    src/APICommunication/requests/resetpasswordrequest.h \
     src/APICommunication/requests/saveuserinforequest.h \
     src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
@@ -85,6 +86,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/changepasswordrequest.cpp \
     src/APICommunication/requests/facililatorcashoutrequest.cpp \
     src/APICommunication/requests/facililatorlistrequest.cpp \
+    src/APICommunication/requests/resetpasswordrequest.cpp \
     src/APICommunication/requests/saveuserinforequest.cpp \
     src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \

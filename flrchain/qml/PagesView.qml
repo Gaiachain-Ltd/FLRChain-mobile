@@ -40,36 +40,39 @@ StackView {
 
         function onPushPage(page) {
             switch (page) {
-            case Pages.LoginScreen:
-                stack.push("qrc:/LoginScreen.qml")
-                break
-            case Pages.RegistrationScreen:
-                stack.push("qrc:/RegistrationScreen.qml")
-                break
-            case Pages.Dashboard:
-                stack.push("qrc:/Dashboard.qml")
-                break
-            case Pages.ProjectListScreen:
-                stack.push("qrc:/ProjectListScreen.qml")
-                break
-            case Pages.ProjectDetailsScreen:
-                stack.push("qrc:/ProjectDetailsScreen.qml")
-                break
-            case Pages.WorkScreen:
-                stack.push("qrc:/WorkScreen.qml")
-                break
-            case Pages.WalletScreen:
-                stack.push("qrc:/WalletScreen.qml")
-                break
-            case Pages.CashOutScreen:
-                stack.push("qrc:/CashOutPage.qml")
-                break
-            case Pages.ReceiveMoneyScreen:
-                stack.push("qrc:/ReceiveMoneyPage.qml")
-                break
-            case Pages.ProfileScreen:
-                stack.push("qrc:/ProfileScreen.qml");
-                break;
+                case Pages.LoginScreen:
+                    stack.push("qrc:/LoginScreen.qml")
+                    break
+                case Pages.RegistrationScreen:
+                    stack.push("qrc:/RegistrationScreen.qml")
+                    break
+                case Pages.Dashboard:
+                    stack.push("qrc:/Dashboard.qml")
+                    break
+                case Pages.ProjectListScreen:
+                    stack.push("qrc:/ProjectListScreen.qml")
+                    break
+                case Pages.ProjectDetailsScreen:
+                    stack.push("qrc:/ProjectDetailsScreen.qml")
+                    break
+                case Pages.WorkScreen:
+                    stack.push("qrc:/WorkScreen.qml")
+                    break
+                case Pages.WalletScreen:
+                    stack.push("qrc:/WalletScreen.qml")
+                    break
+                case Pages.CashOutScreen:
+                    stack.push("qrc:/CashOutPage.qml")
+                    break
+                case Pages.ReceiveMoneyScreen:
+                    stack.push("qrc:/ReceiveMoneyPage.qml")
+                    break
+                case Pages.ProfileScreen:
+                    stack.push("qrc:/ProfileScreen.qml");
+                    break;
+                case Pages.ForgotPasswordScreen:
+                    stack.push("qrc:/ForgotPasswordScreen.qml");
+                    break;
             }
         }
 
