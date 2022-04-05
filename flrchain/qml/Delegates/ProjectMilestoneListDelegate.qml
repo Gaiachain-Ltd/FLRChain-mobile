@@ -31,9 +31,7 @@ Pane {
     background: null
 
     readonly property int actionNumber: model.actionNumber
-    readonly property string actionName: model.actionName
     readonly property int milestoneNumber: model.index + 1
-    readonly property string milestoneName: model.milestoneName
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -83,16 +81,8 @@ Pane {
                         expression: milestoneListDelegate.actionNumber
                     },
                     ExpressionRole {
-                        name: "actionName"
-                        expression: milestoneListDelegate.actionName
-                    },
-                    ExpressionRole {
                         name: "milestoneNumber"
                         expression: milestoneListDelegate.milestoneNumber
-                    },
-                    ExpressionRole {
-                        name: "milestoneName"
-                        expression: milestoneListDelegate.milestoneName
                     }
                 ]
             }

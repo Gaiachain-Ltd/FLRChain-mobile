@@ -20,8 +20,10 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
+import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
 Page {
@@ -270,25 +272,9 @@ Page {
                         Layout.fillWidth: true
                         Layout.preferredHeight: contentHeight
                         spacing: parent.spacing
+                        interactive: false
                         model: taskRequiredData
 
-                        Component {
-                            Custom.TextInput {
-
-                            }
-                        }
-
-                        Component {
-                            Custom.TextInput {
-
-                            }
-                        }
-
-                        Component {
-
-                        }
-
-                        // TODO
                         delegate: Loader {
                             width: ListView.view.width
 
@@ -296,13 +282,26 @@ Page {
                             {
                                 switch (dataTagType)
                                 {
+                                    case DataTag.Type.Text:
+                                    case DataTag.Type.Number:
+                                    case DataTag.Type.Area:
+                                        return inputDelegate
 
+                                    case DataTag.Type.Photo:
+                                        return photoDelegate
                                 }
                             }
 
-                            Label {
-                                anchors.centerIn: parent
-                                text: dataTagName
+                            Component {
+                                id: inputDelegate
+
+                                Delegates.TaskRequiredDataInputDelegate{}
+                            }
+
+                            Component {
+                                id: photoDelegate
+
+                                Delegates.TaskRequiredDataPhotoDelegate {}
                             }
                         }
                     }

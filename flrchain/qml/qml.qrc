@@ -47,5 +47,7 @@
         <file>CustomControls/BusyIndicator.qml</file>
         <file>Project/ProjectTaskList.qml</file>
         <file>Delegates/TaskTextDataDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataInputDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>
     </qresource>
 </RCC>

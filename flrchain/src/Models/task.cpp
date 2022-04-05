@@ -28,8 +28,15 @@ Task::Task(const int id,
            const qreal reward,
            const qreal batch,
            const bool finished,
+           const QString &instructions,
            const QString &dataTypeTag,
            const DataTagList &dataTags,
+           const int projectId,
+           const QString &projectName,
+           const int actionId,
+           const QString &actionName,
+           const int milestoneId,
+           const QString &milestoneName,
            QObject *parent)
     : QObject(parent)
     , m_id(id)
@@ -37,8 +44,15 @@ Task::Task(const int id,
     , m_reward(reward)
     , m_batch(batch)
     , m_finished(finished)
+    , m_instructions(instructions)
     , m_dataTypeTag(dataTypeTag)
     , m_dataTags(new DataTagModel)
+    , m_projectId(projectId)
+    , m_projectName(projectName)
+    , m_actionId(actionId)
+    , m_actionName(actionName)
+    , m_milestoneId(milestoneId)
+    , m_milestoneName(milestoneName)
 {
     reloadDataTags(dataTags);
 }
@@ -113,6 +127,19 @@ void Task::setFavourite(const bool favourite)
     }
 }
 
+QString Task::instructions() const
+{
+    return m_instructions;
+}
+
+void Task::setInstructions(const QString &instructions)
+{
+    if (instructions != m_instructions) {
+        m_instructions = instructions;
+        emit instructionsChanged(instructions);
+    }
+}
+
 QString Task::dataTypeTag() const
 {
     return m_dataTypeTag;
@@ -136,6 +163,60 @@ void Task::reloadDataTags(const DataTagList &dataTags)
     m_dataTags->reload(dataTags);
 }
 
+int Task::projectId() const
+{
+    return m_projectId;
+}
+
+QString Task::projectName() const
+{
+    return m_projectName;
+}
+
+void Task::setProjectName(const QString &projectName)
+{
+    if (projectName != m_projectName) {
+        m_projectName = projectName;
+        emit projectNameChanged(projectName);
+    }
+}
+
+int Task::actionId() const
+{
+    return m_actionId;
+}
+
+QString Task::actionName() const
+{
+    return m_actionName;
+}
+
+void Task::setActionName(const QString &actionName)
+{
+    if (actionName != m_actionName) {
+        m_actionName = actionName;
+        emit actionNameChanged(actionName);
+    }
+}
+
+int Task::milestoneId() const
+{
+    return m_milestoneId;
+}
+
+QString Task::milestoneName() const
+{
+    return m_milestoneName;
+}
+
+void Task::setMilestoneName(const QString &milestoneName)
+{
+    if (milestoneName != m_milestoneName) {
+        m_milestoneName = milestoneName;
+        emit milestoneNameChanged(milestoneName);
+    }
+}
+
 TaskPtr Task::createFromJson(const QJsonObject &taskObject)
 {
     const int taskId = taskObject.value(u"id").toInt();
@@ -143,6 +224,7 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
     const qreal taskReward = taskObject.value(u"reward").toDouble();
     const qreal taskBatch = taskObject.value(u"batch").toDouble();
     const bool taskFinished = taskObject.value(u"finished").toBool();
+    const QString taskInstructions = taskObject.value(u"instructions").toString();
 
     const QJsonObject dataTypeTagObject = taskObject.value(u"data_type_tag").toObject();
     const QString taskDataTypeTag = dataTypeTagObject.value(u"name").toString();
@@ -156,11 +238,25 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
         taskDataTags.append(dataTag);
     }
 
+    const int taskProjectId = taskObject.value(u"project_id").toInt();
+    const QString taskProjectName = taskObject.value(u"project_name").toString();
+    const int taskActionId = taskObject.value(u"milestone_id").toInt();
+    const QString taskActionName = taskObject.value(u"milestone_name").toString();
+    const int taskMilestoneId = taskObject.value(u"milestone_id").toInt();
+    const QString taskMilestoneName = taskObject.value(u"milestone_name").toString();
+
     return TaskPtr::create(taskId,
                            taskName,
                            taskReward,
                            taskBatch,
                            taskFinished,
+                           taskInstructions,
                            taskDataTypeTag,
-                           taskDataTags);
+                           taskDataTags,
+                           taskProjectId,
+                           taskProjectName,
+                           taskActionId,
+                           taskActionName,
+                           taskMilestoneId,
+                           taskMilestoneName);
 }

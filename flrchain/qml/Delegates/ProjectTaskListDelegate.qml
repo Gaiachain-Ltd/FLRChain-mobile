@@ -31,14 +31,8 @@ Pane {
     rightPadding: Style.panePadding
 
     readonly property int actionNumber: model.actionNumber
-    readonly property string actionName: model.actionName
     readonly property int milestoneNumber: model.milestoneNumber
-    readonly property string milestoneName: model.milestoneName
     readonly property int taskNumber: model.index + 1
-
-    Component.onCompleted: {
-        console.log(actionNumber, milestoneNumber, taskNumber, projectId, projectName, actionName, milestoneName)
-    }
 
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor
@@ -165,15 +159,15 @@ Pane {
 
             onClicked: {
                 var workScreenData = {}
-                workScreenData.projectId = projectId
-                workScreenData.projectName = projectName
-                workScreenData.actionName = actionName
-                workScreenData.milestoneName = milestoneName
+                workScreenData.projectId = taskProjectId
+                workScreenData.projectName = taskProjectName
+                workScreenData.actionName = taskActionName
+                workScreenData.milestoneName = taskMilestoneName
                 workScreenData.taskId = taskId
                 workScreenData.taskName = taskName
-                workScreenData.taskTypeOfInformation = taskDataTypeTag
-                workScreenData.taskInstructions = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna" // TODO
-                workScreenData.taskRequiredData = taskDataTags
+                workScreenData.taskTypeOfInformation = taskTypeOfInformation
+                workScreenData.taskInstructions = taskInstructions
+                workScreenData.taskRequiredData = taskRequiredData
 
                 pageManager.enterWorkScreen(workScreenData)
             }

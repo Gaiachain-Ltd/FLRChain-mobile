@@ -31,7 +31,6 @@ Pane {
     background: null
 
     readonly property int actionNumber: model.index + 1
-    readonly property string actionName: model.actionName
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -79,10 +78,6 @@ Pane {
                     ExpressionRole {
                         name: "actionNumber"
                         expression: actionListDelegate.actionNumber
-                    },
-                    ExpressionRole {
-                        name: "actionName"
-                        expression: actionListDelegate.actionName
                     }
                 ]
             }
