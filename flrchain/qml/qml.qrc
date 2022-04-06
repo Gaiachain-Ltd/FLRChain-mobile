@@ -18,12 +18,9 @@
         <file>ProjectDetailsScreen.qml</file>
         <file>Delegates/ProjectDetailsDelegate.qml</file>
         <file>Delegates/ProjectDelegate.qml</file>
-        <file>Delegates/WorkDelegate.qml</file>
-        <file>Delegates/TaskDelegate.qml</file>
         <file>CustomControls/Popup.qml</file>
         <file>Popups/JoinProjectPopup.qml</file>
         <file>AppStyle.qml</file>
-        <file>Delegates/BalanceDelegate.qml</file>
         <file>WalletScreen.qml</file>
         <file>Delegates/TransactionDelegate.qml</file>
         <file>Popups/SuccessPopup.qml</file>
@@ -52,5 +49,8 @@
         <file>ProfileScreen.qml</file>
         <file>Popups/ChangePasswordPopup.qml</file>
         <file>ForgotPasswordScreen.qml</file>
+        <file>Delegates/TaskTextDataDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataInputDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>
     </qresource>
 </RCC>

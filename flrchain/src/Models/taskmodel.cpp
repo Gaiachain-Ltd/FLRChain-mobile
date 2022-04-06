@@ -40,8 +40,15 @@ QHash<int, QByteArray> TaskModel::roleNames() const
         { TaskBatchRole, QByteArrayLiteral("taskBatch") },
         { TaskFinishedRole, QByteArrayLiteral("taskFinished") },
         { TaskFavouriteRole, QByteArrayLiteral("taskFavourite") },
-        { TaskDataTypeTagRole, QByteArrayLiteral("taskDataTypeTag") },
-        { TaskDataTagsRole, QByteArrayLiteral("taskDataTags") }
+        { TaskInstructionsRole, QByteArrayLiteral("taskInstructions") },
+        { TaskTypeOfInformationRole, QByteArrayLiteral("taskTypeOfInformation") },
+        { TaskRequiredDataRole, QByteArrayLiteral("taskRequiredData") },
+        { TaskProjectIdRole, QByteArrayLiteral("taskProjectId") },
+        { TaskProjectNameRole, QByteArrayLiteral("taskProjectName") },
+        { TaskActionIdRole, QByteArrayLiteral("taskActionId") },
+        { TaskActionNameRole, QByteArrayLiteral("taskActionName") },
+        { TaskMilestoneIdRole, QByteArrayLiteral("taskMilestoneId") },
+        { TaskMilestoneNameRole, QByteArrayLiteral("taskMilestoneName") }
     };
 
     return ROLE_NAMES;
@@ -82,11 +89,32 @@ QVariant TaskModel::data(const QModelIndex &index, int role) const
         case TaskFavouriteRole:
             return task->favourite();
 
-        case TaskDataTypeTagRole:
+        case TaskInstructionsRole:
+            return task->instructions();
+
+        case TaskTypeOfInformationRole:
             return task->dataTypeTag();
 
-        case TaskDataTagsRole:
+        case TaskRequiredDataRole:
             return QVariant::fromValue(task->dataTags());
+
+        case TaskProjectIdRole:
+            return task->projectId();
+
+        case TaskProjectNameRole:
+            return task->projectName();
+
+        case TaskActionIdRole:
+            return task->actionId();
+
+        case TaskActionNameRole:
+            return task->actionName();
+
+        case TaskMilestoneIdRole:
+            return task->milestoneId();
+
+        case TaskMilestoneNameRole:
+            return task->milestoneName();
     }
 
     qWarning() << "Unsupported model role:" << role;
@@ -131,13 +159,36 @@ bool TaskModel::setData(const QModelIndex &index, const QVariant &value, int rol
             modified = true;
             break;
 
-        case TaskDataTypeTagRole:
+        case TaskInstructionsRole:
+            task->setInstructions(value.toString());
+            modified = true;
+            break;
+
+        case TaskTypeOfInformationRole:
             task->setDataTypeTag(value.toString());
             modified = true;
             break;
 
+        case TaskProjectNameRole:
+            task->setProjectName(value.toString());
+            modified = true;
+            break;
+
+        case TaskActionNameRole:
+            task->setActionName(value.toString());
+            modified = true;
+            break;
+
+        case TaskMilestoneNameRole:
+            task->setMilestoneName(value.toString());
+            modified = true;
+            break;
+
         case TaskIdRole:
-        case TaskDataTagsRole:
+        case TaskRequiredDataRole:
+        case TaskProjectIdRole:
+        case TaskActionIdRole:
+        case TaskMilestoneIdRole:
             qWarning() << "Trying to use role that is not editable:" << role;
             break;
     }

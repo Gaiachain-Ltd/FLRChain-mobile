@@ -38,8 +38,15 @@ public:
         TaskBatchRole,
         TaskFinishedRole,
         TaskFavouriteRole,
-        TaskDataTypeTagRole,
-        TaskDataTagsRole
+        TaskInstructionsRole,
+        TaskTypeOfInformationRole,
+        TaskRequiredDataRole,
+        TaskProjectIdRole,
+        TaskProjectNameRole,
+        TaskActionIdRole,
+        TaskActionNameRole,
+        TaskMilestoneIdRole,
+        TaskMilestoneNameRole
     };
 
     explicit TaskModel(QObject *parent = nullptr);

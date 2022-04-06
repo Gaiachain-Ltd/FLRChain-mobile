@@ -63,8 +63,10 @@ Flickable {
                 width: ListView.view.width
                 spacing: 10
                 sourceModel: projectActions
-                projectIsActive: projectStatus === Project.ProjectStatus.Active
-                userHasJoined: projectAssignmentStatus === Project.AssignmentStatus.Accepted
+                projectId: projectId
+                projectName: projectName
+                projectStatus: projectStatus
+                projectAssignmentStatus: projectAssignmentStatus
                 showFavouritesOnly: true
                 showActionInfo: false
                 showMilestoneInfo: false

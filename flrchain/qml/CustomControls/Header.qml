@@ -35,7 +35,7 @@ Pane {
             left: parent.left
             right: parent.right
             bottom: parent.bottom
-            bottomMargin: session.internetConnection ? 0 : -height
+            bottomMargin: session && session.internetConnection ? 0 : -height
         }
 
         visible: anchors.bottomMargin < 0

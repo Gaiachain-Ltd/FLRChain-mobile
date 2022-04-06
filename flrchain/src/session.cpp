@@ -44,6 +44,7 @@
 #include "requests/sendworkrequest.h"
 #include "requests/changepasswordrequest.h"
 #include "requests/resetpasswordrequest.h"
+#include "requests/sendworkjob.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -372,7 +373,7 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
     mClient->send(request);
 }
 
-void Session::sendWorkRequest(const QString &filePath, const int projectId, const int taskId) const
+void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData) const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -384,13 +385,17 @@ void Session::sendWorkRequest(const QString &filePath, const int projectId, cons
         return;
     }
 
-    auto request = QSharedPointer<SendWorkRequest>::create(filePath, projectId, taskId, getToken());
-    connect(request.data(), &SendWorkRequest::workAdded,
-            m_dataManager, &DataManager::workAdded);
-    connect(request.data(), &SendWorkRequest::sendWorkError,
-            m_dataManager, &DataManager::addWorkError);
+    auto activityData = requiredData.value(QLatin1String("data")).toMap();
+    auto activityPhotos = requiredData.value(QLatin1String("photos")).toStringList();
+    auto job = new SendWorkJob(mClient, projectId, taskId, activityData, activityPhotos, getToken());
 
-    mClient->send(request);
+    connect(job, &SendWorkJob::finished, m_dataManager, &DataManager::workAdded);
+    connect(job, &SendWorkJob::failed, m_dataManager, &DataManager::addWorkError);
+
+    connect(job, &SendWorkJob::finished, job, &SendWorkJob::deleteLater);
+    connect(job, &SendWorkJob::failed, job, &SendWorkJob::deleteLater);
+
+    job->startJob();
 }
 
 void Session::saveUserInfo(const QString &firstName, const QString &lastName, const QString &phone, const QString &village) const

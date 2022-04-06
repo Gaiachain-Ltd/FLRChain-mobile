@@ -30,6 +30,10 @@ Pane {
     leftPadding: Style.panePadding
     rightPadding: Style.panePadding
 
+    readonly property int actionNumber: model.actionNumber
+    readonly property int milestoneNumber: model.milestoneNumber
+    readonly property int taskNumber: model.index + 1
+
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor
         radius: Style.paneBackgroundRadius
@@ -154,9 +158,18 @@ Pane {
             text: qsTr("Earn reward")
 
             onClicked: {
-                // TODO: open earn reward screen
+                var workScreenData = {}
+                workScreenData.projectId = taskProjectId
+                workScreenData.projectName = taskProjectName
+                workScreenData.actionName = taskActionName
+                workScreenData.milestoneName = taskMilestoneName
+                workScreenData.taskId = taskId
+                workScreenData.taskName = taskName
+                workScreenData.taskTypeOfInformation = taskTypeOfInformation
+                workScreenData.taskInstructions = taskInstructions
+                workScreenData.taskRequiredData = taskRequiredData
 
-                console.warn("TOOD: not implemented")
+                pageManager.enterWorkScreen(workScreenData)
             }
         }
     }

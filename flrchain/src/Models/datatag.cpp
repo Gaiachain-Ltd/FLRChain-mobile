@@ -19,6 +19,16 @@
 
 #include <QJsonObject>
 #include <QJsonValue>
+#include <QQmlEngine>
+#include <QCoreApplication>
+
+namespace
+{
+    void registerInQml()
+    {
+        qmlRegisterUncreatableType<DataTag>("com.flrchain.objects", 1, 0, "DataTag", QLatin1String());
+    }
+}
 
 DataTag::DataTag(const int id,
                  const QString &name,
@@ -63,3 +73,5 @@ DataTagPtr DataTag::createFromJson(const QJsonObject &dataTagObject)
 
     return DataTagPtr::create(dataTagId, dataTagName, dataTagType, dataTagUnit);
 }
+
+Q_COREAPP_STARTUP_FUNCTION(registerInQml)

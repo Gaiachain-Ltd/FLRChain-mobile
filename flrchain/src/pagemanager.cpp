@@ -127,10 +127,10 @@ bool PageManager::enterProjectDetailsScreen(const int projectId)
     return true;
 }
 
-bool PageManager::enterWorkScreen(const int projectId, const int taskId, const QString &projectName, const QString &taskName)
+bool PageManager::enterWorkScreen(const QVariantMap &taskData)
 {
     enterPage(Pages::WorkScreen);
-    emit setupWorkScreen(projectId, taskId, projectName, taskName);
+    emit setupWorkScreen(taskData);
     return true;
 }
 

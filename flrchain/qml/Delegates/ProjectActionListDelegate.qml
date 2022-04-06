@@ -30,7 +30,7 @@ Pane {
     padding: 0
     background: null
 
-    property int actionNumber: model.actionNumber
+    readonly property int actionNumber: model.index + 1
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -61,9 +61,11 @@ Pane {
             Layout.preferredHeight: contentHeight
             spacing: 20
             interactive: false
+            delegate: milestoneDelegate
 
             model: SortFilterProxyModel {
                 sourceModel: actionMilestones
+
                 filters: [
                     ValueFilter {
                         enabled: showFavouritesOnly
@@ -71,19 +73,14 @@ Pane {
                         value: true
                     }
                 ]
+
                 proxyRoles: [
                     ExpressionRole {
                         name: "actionNumber"
                         expression: actionListDelegate.actionNumber
-                    },
-                    ExpressionRole {
-                        name: "milestoneNumber"
-                        expression: index + 1
                     }
                 ]
             }
-
-            delegate: projectTaskList.milestoneDelegate
         }
     }
 }

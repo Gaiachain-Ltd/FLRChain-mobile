@@ -328,6 +328,10 @@ QtObject {
 
     // Task details page (submit work)
     readonly property int taskDetailsPageSideMargins: 16
+    readonly property int taskDetailsPageTopMargin: 20
+    readonly property int taskDetailsPageBottomMargin: 20
+    readonly property int taskDetailsContentSpacing: 20
+    readonly property int taskDetailsTitleDataSpacing: 5
 
     // Wallet page
     readonly property int walletPagePadding: 16

@@ -17,6 +17,7 @@
 
 import QtQuick 2.15
 
+import com.flrchain.objects 1.0
 import SortFilterProxyModel 0.2
 
 import "qrc:/Delegates" as Delegates
@@ -26,10 +27,17 @@ ListView {
     implicitHeight: contentHeight
     spacing: 20
     interactive: false
+    delegate: actionDelegate
 
-    property var sourceModel: null
-    property bool projectIsActive: false
-    property bool userHasJoined: false
+    property alias sourceModel: filterModel.sourceModel
+
+    property int projectId: -1
+    property string projectName: "N/A"
+    property int projectStatus: Project.ProjectStatus.Undefined
+    property int projectAssignmentStatus: Project.AssignmentStatus.Undefined
+    readonly property bool projectIsActive: projectStatus === Project.ProjectStatus.Active
+    readonly property bool userHasJoined: projectAssignmentStatus === Project.AssignmentStatus.Accepted
+
     property bool showFavouritesOnly: false
     property bool showActionInfo: true
     property bool showMilestoneInfo: true
@@ -47,7 +55,8 @@ ListView {
     }
 
     model: SortFilterProxyModel {
-        sourceModel: projectTaskList.sourceModel
+        id: filterModel
+
         filters: [
             ValueFilter {
                 enabled: showFavouritesOnly
@@ -55,13 +64,5 @@ ListView {
                 value: true
             }
         ]
-        proxyRoles: [
-            ExpressionRole {
-                name: "actionNumber"
-                expression: index + 1
-            }
-        ]
     }
-
-    delegate: projectTaskList.actionDelegate
 }
