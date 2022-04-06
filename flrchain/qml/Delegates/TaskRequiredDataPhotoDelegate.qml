@@ -26,9 +26,31 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
-    property alias photosModel: thumbnailListView.model
+    readonly property int dataTagType: model.dataTagType
+    readonly property bool hasValidData: thumbnailListView.count > 0
+    readonly property alias photosModel: thumbnailListView.model
 
-    signal deletePhotoAt(int index)
+    function photos() {
+        let photosArray = []
+
+        for (let i = 0; i < photosModel.count; ++i) {
+            photosArray.push(photosModel.get(i).photoUrl)
+        }
+
+        return photosArray
+    }
+
+    Component.onDestruction: {
+        photosModel.clear()
+    }
+
+    Connections {
+        target: dataManager
+
+        function onDisplayPhoto(filePath) {
+            photosModel.append({photoUrl: "file:/" + filePath})
+        }
+    }
 
     Label {
         Layout.fillWidth: true
@@ -58,6 +80,8 @@ ColumnLayout {
             spacing: 10
             clip: true
 
+            model: ListModel {}
+
             delegate: Image {
                 width: 100
                 height: ListView.view.height
@@ -74,7 +98,7 @@ ColumnLayout {
                     iconSource: "qrc:/img/icon-delete.svg"
 
                     onClicked: {
-                        root.deletePhotoAt(index)
+                        photosModel.remove(index)
                     }
                 }
             }

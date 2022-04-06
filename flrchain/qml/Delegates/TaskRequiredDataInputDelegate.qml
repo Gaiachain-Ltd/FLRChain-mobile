@@ -27,6 +27,13 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
+    readonly property int dataTagType: model.dataTagType
+
+    readonly property bool hasValidData: inputLoader.item &&
+                                         inputLoader.item.length > 0 &&
+                                         inputLoader.item.acceptableInput
+    readonly property var value: inputLoader.item ? inputLoader.item.text : null
+
     Label {
         Layout.fillWidth: true
         font: Style.semiBoldTinyFont
@@ -36,6 +43,7 @@ ColumnLayout {
     }
 
     Loader {
+        id: inputLoader
         Layout.fillWidth: true
 
         sourceComponent:
@@ -78,6 +86,7 @@ ColumnLayout {
 
         Custom.TextInput {
             placeholderText: qsTr("Type area...")
+            inputMethodHints: Qt.ImhDigitsOnly
         }
     }
 }

@@ -32,6 +32,7 @@ Controls.Popup {
     modal: true
     dim: true
     focus: true
+    closePolicy: Popup.NoAutoClose
 
     property string title: ""
     property string iconSource: ""

@@ -82,6 +82,7 @@ void DataManager::joinProjectError()
 void DataManager::addWorkError()
 {
     PageManager::instance()->enterErrorPopup("Uploading photo failed. Try again");
+    emit workAdditionFailed();
 }
 
 void DataManager::saveUserInfoReplyReceived(bool result)

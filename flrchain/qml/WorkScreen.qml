@@ -38,20 +38,22 @@ Page {
     property string taskTypeOfInformation: ""
     property string taskInstructions: ""
     property var taskRequiredData: []
-    property ListModel photosModel: ListModel {}
 
-    Component.onDestruction: {
-        photosModel.clear()
+    Custom.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
     }
 
     Connections {
         target: dataManager
 
-        function onDisplayPhoto(filePath) {
-            photosModel.append({photoUrl: "file:///" + filePath})
+        function onWorkAdditionFailed() {
+            busyIndicator.visible = false
         }
 
         function onWorkAdded(taskName, projectName) {
+            busyIndicator.visible = false
             workSuccessPopup.taskName = taskName
             workSuccessPopup.projectName = projectName
             workSuccessPopup.open()
@@ -91,6 +93,7 @@ Page {
         anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.StopAtBounds
+        visible: !busyIndicator.visible
 
         ColumnLayout {
             id: mainColumn
@@ -254,11 +257,63 @@ Page {
                     }
 
                     ListView {
+                        id: requiredDataList
                         Layout.fillWidth: true
                         Layout.preferredHeight: contentHeight
                         spacing: parent.spacing
                         interactive: false
                         model: taskRequiredData
+
+                        function allDataValid() {
+                            for (let i = 0; i < count; ++i) {
+                                let input = itemAtIndex(i).item
+
+                                if (!input.hasValidData) {
+                                    return false
+                                }
+                            }
+
+                            return true
+                        }
+
+                        function activityDataDump() {
+                            let activityData = {}
+
+                            for (let i = 0; i < count; ++i) {
+                                let input = itemAtIndex(i).item
+
+                                switch (input.dataTagType)
+                                {
+                                    case DataTag.Type.Text:
+                                        activityData.text = input.value
+                                        break
+
+                                    case DataTag.Type.Number:
+                                        activityData.number = parseInt(input.value)
+                                        break
+
+                                    case DataTag.Type.Area:
+                                        activityData.area = parseInt(input.value)
+                                        break
+                                }
+                            }
+
+                            return activityData
+                        }
+
+                        function activityPhotosDump() {
+                            let activityPhotos = []
+
+                            for (let i = 0; i < count; ++i) {
+                                let input = itemAtIndex(i).item
+
+                                if (input.dataTagType === DataTag.Type.Photo) {
+                                    activityPhotos = activityPhotos.concat(input.photos())
+                                }
+                            }
+
+                            return activityPhotos
+                        }
 
                         delegate: Loader {
                             width: ListView.view.width
@@ -286,13 +341,7 @@ Page {
                             Component {
                                 id: photoDelegate
 
-                                Delegates.TaskRequiredDataPhotoDelegate {
-                                    photosModel: workScreen.photosModel
-
-                                    onDeletePhotoAt: {
-                                        workScreen.photosModel.remove(index)
-                                    }
-                                }
+                                Delegates.TaskRequiredDataPhotoDelegate {}
                             }
                         }
                     }
@@ -303,9 +352,19 @@ Page {
                     text: qsTr("Submit")
 
                     onClicked: {
-                        // TODO
-
-                        console.warn("TODO: not implemented")
+                        if (session.internetConnection) {
+                            if (requiredDataList.allDataValid()) {
+                                var requiredData = {}
+                                requiredData.data = requiredDataList.activityDataDump()
+                                requiredData.photos = requiredDataList.activityPhotosDump()
+                                session.sendWorkRequest(projectId, taskId, requiredData)
+                                busyIndicator.visible = true
+                            } else {
+                                pageManager.enterErrorPopup("Please fill all required data before submitting work")
+                            }
+                        } else {
+                            pageManager.enterErrorPopup("No Internet Connection")
+                        }
                     }
                 }
             }

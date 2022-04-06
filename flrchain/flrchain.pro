@@ -36,10 +36,13 @@ INCLUDEPATH += \
 HEADERS += \
     src/APICommunication/apimultipartrequest.h \
     src/APICommunication/requests/changepasswordrequest.h \
+    src/APICommunication/requests/createactivityrequest.h \
     src/APICommunication/requests/facililatorcashoutrequest.h \
     src/APICommunication/requests/facililatorlistrequest.h \
     src/APICommunication/requests/resetpasswordrequest.h \
     src/APICommunication/requests/saveuserinforequest.h \
+    src/APICommunication/requests/sendactivityphotorequest.h \
+    src/APICommunication/requests/sendworkjob.h \
     src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
@@ -84,10 +87,13 @@ HEADERS += \
 SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
     src/APICommunication/requests/changepasswordrequest.cpp \
+    src/APICommunication/requests/createactivityrequest.cpp \
     src/APICommunication/requests/facililatorcashoutrequest.cpp \
     src/APICommunication/requests/facililatorlistrequest.cpp \
     src/APICommunication/requests/resetpasswordrequest.cpp \
     src/APICommunication/requests/saveuserinforequest.cpp \
+    src/APICommunication/requests/sendactivityphotorequest.cpp \
+    src/APICommunication/requests/sendworkjob.cpp \
     src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \

@@ -30,69 +30,46 @@ Custom.Popup {
     property string taskName: ""
     property string projectName: ""
 
-    Row {
-        Layout.alignment: Qt.AlignHCenter
+    ColumnLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: false
+        spacing: 0
 
         Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.smallFontPixelSize
-            font.weight: Font.DemiBold
+            Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
+            font: Style.regularSmallFont
             color: Style.darkLabelColor
-            text: qsTr("The work for project: ")
+            wrapMode: Label.WordWrap
+            text: String("%1: %2").arg(qsTr("The work for project")).arg(projectName)
         }
 
         Label {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: -Style.smallMargin
-            font.pointSize: Style.smallFontPixelSize
+            Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
+            font: Style.regularSmallFont
             color: Style.darkLabelColor
-            font.weight: Font.Bold
-            text: projectName
-        }
-    }
-
-    Row {
-        Layout.alignment: Qt.AlignHCenter
-        Layout.topMargin: -Style.baseMargin
-
-        Label {
-            Layout.alignment: Qt.AlignHCenter
-            font.pointSize: Style.smallFontPixelSize
-            font.weight: Font.DemiBold
-            color: Style.darkLabelColor
-            text: qsTr("in task: ")
+            wrapMode: Label.WordWrap
+            text: String("%1: %2").arg(qsTr("in task")).arg(taskName)
         }
 
         Label {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.topMargin: -Style.smallMargin
-            font.pointSize: Style.smallFontPixelSize
+            Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
+            font: Style.regularSmallFont
             color: Style.darkLabelColor
-            font.weight: Font.Bold
-            text: taskName
+            wrapMode: Label.WordWrap
+            text: qsTr("has been successfully added")
         }
-    }
-
-    Label {
-        Layout.topMargin: -Style.baseMargin
-        Layout.alignment: Qt.AlignHCenter
-        font.pointSize: Style.smallFontPixelSize
-        font.weight: Font.DemiBold
-        color: Style.darkLabelColor
-        text: qsTr("has been successfully added")
     }
 
     Custom.PrimaryButton {
-        text: qsTr("Back to project")
         Layout.fillWidth: true
+        text: qsTr("Back to project")
 
         onClicked: {
             popup.close()
             pageManager.back()
         }
-    }
-
-    Item {
-        Layout.fillWidth: true
     }
 }
