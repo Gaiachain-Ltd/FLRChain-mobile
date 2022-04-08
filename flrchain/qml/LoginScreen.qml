@@ -84,7 +84,7 @@ Page {
                     Label {
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Email")
+                        text: qsTr("Email*")
                     }
 
                     Custom.TextInput {
@@ -95,7 +95,7 @@ Page {
                         }
                         placeholderText: qsTr("Please enter your email...")
                         inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
-                        isValid: !errorMode
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
                             if(errorMode) {
@@ -113,7 +113,7 @@ Page {
                     Label {
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Password")
+                        text: qsTr("Password*")
                     }
 
                     Custom.TextInput {
@@ -124,7 +124,7 @@ Page {
                         }
                         placeholderText: qsTr("Please enter your password...")
                         echoMode: TextInput.Password
-                        isValid: !errorMode
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
                             if(errorMode){
@@ -157,10 +157,14 @@ Page {
                 Custom.PrimaryButton {
                     id: signInButton
                     Layout.fillWidth: true
-                    enabled: userEmailInput.text.length && passwordInput.text.length
                     text: qsTr("Log In")
 
                     onClicked: {
+                        if (!userEmailInput.text.length || !passwordInput.text.length) {
+                            errorMode = true;
+                            return;
+                        }
+
                         session.login(userEmailInput.text, passwordInput.text)
                     }
                 }

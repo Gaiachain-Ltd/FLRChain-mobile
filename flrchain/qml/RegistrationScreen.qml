@@ -45,12 +45,14 @@ Page {
            !userEmailInput.text.length || !passwordInput.text.length  ||
            !repeatPassword.text.length)
         {
-            errorLabel.text = qsTr("Please fill out all fields")
+            errorLabel.text = "";
+            errorMode = true;
             return
         }
 
         if(passwordInput.text !== repeatPassword.text) {
             errorLabel.text = qsTr("Passwords are not equal")
+            errorMode = true;
             return
         }
 
@@ -97,12 +99,20 @@ Page {
                         id: nameInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("First name")
+                        text: qsTr("First name*")
                     }
 
                     Custom.TextInput {
                         id: nameInput
                         placeholderText: nameInputTitle.text
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
+
+                        onTextEdited: {
+                            if(errorMode){
+                                errorMode = false
+                                errorLabel.text = ""
+                            }
+                        }
                     }
                 }
 
@@ -114,12 +124,20 @@ Page {
                         id: lastNameInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Last name")
+                        text: qsTr("Last name*")
                     }
 
                     Custom.TextInput {
                         id: lastNameInput
                         placeholderText: lastNameInputTitle.text
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
+
+                        onTextEdited: {
+                            if(errorMode){
+                                errorMode = false
+                                errorLabel.text = ""
+                            }
+                        }
                     }
                 }
 
@@ -131,13 +149,13 @@ Page {
                         id: userEmailInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Email")
+                        text: qsTr("Email*")
                     }
 
                     Custom.TextInput {
                         id: userEmailInput
                         placeholderText: userEmailInputTitle.text
-                        isValid: !errorMode
+                        isValid:  !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
                             if(errorMode){
@@ -191,13 +209,21 @@ Page {
                         id: passwordInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Password")
+                        text: qsTr("Password*")
                     }
 
                     Custom.TextInput {
                         id: passwordInput
                         echoMode: TextInput.Password
                         placeholderText: passwordInputTitle.text
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
+
+                        onTextEdited: {
+                            if(errorMode){
+                                errorMode = false
+                                errorLabel.text = ""
+                            }
+                        }
                     }
                 }
 
@@ -209,13 +235,21 @@ Page {
                         id: repeatPasswordInput
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Repeat password")
+                        text: qsTr("Repeat password*")
                     }
 
                     Custom.TextInput {
                         id: repeatPassword
                         echoMode: TextInput.Password
                         placeholderText: repeatPasswordInput.text
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
+
+                        onTextEdited: {
+                            if(errorMode){
+                                errorMode = false
+                                errorLabel.text = ""
+                            }
+                        }
                     }
                 }
 
