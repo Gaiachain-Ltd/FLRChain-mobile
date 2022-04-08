@@ -26,7 +26,6 @@ class ProjectDetailsRequest : public ApiRequest
 
 public:
     ProjectDetailsRequest(const QByteArray &token, const int projectId);
-    void errorHandler(const QString& error);
 
 signals:
     void projectDetailsReply(const QJsonObject &projectObject) const;

@@ -39,6 +39,7 @@ HEADERS += \
     src/APICommunication/requests/createactivityrequest.h \
     src/APICommunication/requests/facililatorcashoutrequest.h \
     src/APICommunication/requests/facililatorlistrequest.h \
+    src/APICommunication/requests/mytasksrequest.h \
     src/APICommunication/requests/resetpasswordrequest.h \
     src/APICommunication/requests/saveuserinforequest.h \
     src/APICommunication/requests/sendactivityphotorequest.h \
@@ -90,6 +91,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/createactivityrequest.cpp \
     src/APICommunication/requests/facililatorcashoutrequest.cpp \
     src/APICommunication/requests/facililatorlistrequest.cpp \
+    src/APICommunication/requests/mytasksrequest.cpp \
     src/APICommunication/requests/resetpasswordrequest.cpp \
     src/APICommunication/requests/saveuserinforequest.cpp \
     src/APICommunication/requests/sendactivityphotorequest.cpp \

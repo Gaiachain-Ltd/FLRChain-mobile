@@ -264,6 +264,8 @@ Page {
                         interactive: false
                         model: taskRequiredData
 
+                        readonly property bool modelIsArray: Array.isArray(model)
+
                         function allDataValid() {
                             for (let i = 0; i < count; ++i) {
                                 let input = itemAtIndex(i).item
@@ -280,9 +282,10 @@ Page {
                             let activityData = {}
 
                             for (let i = 0; i < count; ++i) {
+                                let type = itemAtIndex(i).dataTagType
                                 let input = itemAtIndex(i).item
 
-                                switch (input.dataTagType)
+                                switch (type)
                                 {
                                     case DataTag.Type.Text:
                                         activityData.text = input.value
@@ -305,9 +308,10 @@ Page {
                             let activityPhotos = []
 
                             for (let i = 0; i < count; ++i) {
+                                let type = itemAtIndex(i).dataTagType
                                 let input = itemAtIndex(i).item
 
-                                if (input.dataTagType === DataTag.Type.Photo) {
+                                if (type === DataTag.Type.Photo) {
                                     activityPhotos = activityPhotos.concat(input.photos())
                                 }
                             }
@@ -317,6 +321,11 @@ Page {
 
                         delegate: Loader {
                             width: ListView.view.width
+
+                            readonly property int dataTagType: requiredDataList.modelIsArray ? modelData.tag_type
+                                                                                             : model.dataTagType
+                            readonly property string dataTagName: requiredDataList.modelIsArray ? modelData.name
+                                                                                                : model.dataTagName
 
                             sourceComponent:
                             {

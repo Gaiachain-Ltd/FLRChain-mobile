@@ -19,12 +19,22 @@
 
 #include <QGlobalStatic>
 #include <QCoreApplication>
+#include <QQmlEngine>
 
 Q_GLOBAL_STATIC(FavouriteTaskStorage, favouriteTaskManagerInstance)
 
 namespace
 {
     constexpr QStringView STORAGE_KEY = u"favourites";
+
+    void registerInQml()
+    {
+        QQmlEngine::setObjectOwnership(favouriteTaskManagerInstance, QQmlEngine::CppOwnership);
+
+        qmlRegisterSingletonInstance<FavouriteTaskStorage>("com.flrchain.objects", 1, 0,
+                                                           "FavouriteTaskStorage",
+                                                           favouriteTaskManagerInstance);
+    }
 }
 
 FavouriteTaskStorage::FavouriteTaskStorage(QObject *parent)
@@ -34,7 +44,7 @@ FavouriteTaskStorage::FavouriteTaskStorage(QObject *parent)
                 qApp->organizationName(),
                 qApp->applicationName())
 {
-    m_cache = m_storage.value(STORAGE_KEY.toString()).toHash();
+    m_cache = m_storage.value(STORAGE_KEY.toString()).toList();
 }
 
 FavouriteTaskStorage &FavouriteTaskStorage::instance()
@@ -44,17 +54,24 @@ FavouriteTaskStorage &FavouriteTaskStorage::instance()
 
 bool FavouriteTaskStorage::isTaskFavourite(const int taskId) const
 {
-    return m_cache.contains(QString::number(taskId));
+    return m_cache.contains(taskId);
 }
 
 void FavouriteTaskStorage::setTaskFavouriteStatus(const int taskId,
                                                   const bool isFavourite)
 {
     if (isFavourite) {
-        m_cache.insert(QString::number(taskId), true);
+        m_cache.append(taskId);
     } else {
-        m_cache.remove(QString::number(taskId));
+        m_cache.removeAll(taskId);
     }
 
     m_storage.setValue(STORAGE_KEY.toString(), m_cache);
 }
+
+QVariantList FavouriteTaskStorage::favouriteIds() const
+{
+    return m_cache;
+}
+
+Q_COREAPP_STARTUP_FUNCTION(registerInQml)

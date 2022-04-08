@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Project" as ProjectComponents
@@ -33,11 +34,6 @@ Page {
         visible: false
     }
 
-    Component.onCompleted: {
-        busyIndicator.visible = true
-        session.getProjectsData()
-    }
-
     Connections {
         target: projectsModel
 
@@ -47,11 +43,11 @@ Page {
     }
 
     Connections {
-        target: pageManager
+        target: dataManager
 
-        function onBackTriggered() {
-            busyIndicator.visible = true
-            session.getProjectsData()
+        function onMyTasksReceived(myTasks) {
+            busyIndicator.visible = false
+            myTasksView.myTasks = myTasks
         }
     }
 
@@ -83,11 +79,27 @@ Page {
             Layout.fillHeight: true
             currentIndex: tabBar.currentIndex
 
+            function reloadData() {
+                busyIndicator.visible = true
+
+                if (currentIndex == 0) {
+                    session.getMyTasks(FavouriteTaskStorage.favouriteIds())
+                } else {
+                    session.getProjectsData()
+                }
+            }
+
+            Component.onCompleted: reloadData()
+            onCurrentIndexChanged: reloadData()
+
             ProjectComponents.MyTasksList {
+                id: myTasksView
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }
+
             ProjectComponents.ProjectList {
+                id: projectsView
                 Layout.leftMargin: Style.projectListSideMargins
                 Layout.rightMargin: Style.projectListSideMargins
             }

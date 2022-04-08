@@ -70,6 +70,7 @@ public:
     Q_INVOKABLE void changePassword(const QString &oldPassword,
                                     const QString &newPassword) const;
     Q_INVOKABLE void resetPassword(const QString &email) const;
+    Q_INVOKABLE void getMyTasks(const QVariantList &taskIds) const;
 
 public slots:
     void setInternetConnection(const bool internetConnection);

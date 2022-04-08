@@ -15,29 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef FAVOURITETASKSTORAGE_H
-#define FAVOURITETASKSTORAGE_H
+#include "mytasksrequest.h"
 
-#include <QObject>
-#include <QVariantHash>
-#include <QSettings>
+#include <QJsonObject>
+#include <QJsonArray>
 
-class FavouriteTaskStorage : public QObject
+MyTasksRequest::MyTasksRequest(const QVariantList &myTaskIds, const QByteArray &token)
+    : ApiRequest("projects/tasks")
 {
-    Q_OBJECT
+    setType(Type::Post);
+    setToken(token);
 
-public:
-    explicit FavouriteTaskStorage(QObject *parent = nullptr);
-    static FavouriteTaskStorage &instance();
+    QJsonObject object;
+    object.insert(QLatin1String("ids"), QJsonArray::fromVariantList(myTaskIds));
+    setDocument(QJsonDocument(object));
+}
 
-    bool isTaskFavourite(const int taskId) const;
-    void setTaskFavouriteStatus(const int taskId, const bool isFavourite);
-
-    Q_INVOKABLE QVariantList favouriteIds() const;
-
-private:
-    QVariantList m_cache;
-    QSettings m_storage;
-};
-
-#endif // FAVOURITETASKSTORAGE_H
+void MyTasksRequest::parse()
+{
+    emit myTasksReceived(m_replyDocument.array().toVariantList());
+}

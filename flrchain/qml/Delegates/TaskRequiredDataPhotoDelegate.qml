@@ -26,7 +26,6 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
-    readonly property int dataTagType: model.dataTagType
     readonly property bool hasValidData: thumbnailListView.count > 0
     readonly property alias photosModel: thumbnailListView.model
 
