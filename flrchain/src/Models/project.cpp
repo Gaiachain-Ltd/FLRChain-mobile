@@ -167,7 +167,8 @@ void Project::reloadActions(const ActionList &actions)
     m_actions->reload(actions);
 }
 
-ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
+
+ProjectPtr Project::parseJson(const QJsonObject &projectObject, ProjectPtr project)
 {
     const int projectId = projectObject.value(u"id").toInt();
     const QString projectName = projectObject.value(u"title").toString();
@@ -195,16 +196,39 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
         projectActions.append(action);
     }
 
-    return ProjectPtr::create(projectId,
-                              projectName,
-                              projectDescription,
-                              projectPhoto,
-                              projectMapLink,
-                              projectStatus,
-                              projectStartDate,
-                              projectEndDate,
-                              projectAssignmentStatus,
-                              projectActions);
+    if (project.isNull()) {
+        return ProjectPtr::create(projectId,
+                                  projectName,
+                                  projectDescription,
+                                  projectPhoto,
+                                  projectMapLink,
+                                  projectStatus,
+                                  projectStartDate,
+                                  projectEndDate,
+                                  projectAssignmentStatus,
+                                  projectActions);
+    } else {
+        project->setName(projectName);
+        project->setDescription(projectDescription);
+        project->setPhoto(projectPhoto);
+        project->setMapLink(projectMapLink);
+        project->setStatus(projectStatus);
+        project->setStartDate(projectStartDate);
+        project->setEndDate(projectEndDate);
+        project->setAssignmentStatus(projectAssignmentStatus);
+        project->reloadActions(projectActions);
+        return project;
+    }
+}
+
+ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
+{
+    return Project::parseJson(projectObject);
+}
+
+ProjectPtr Project::updateFromJson(const QJsonObject &projectObject, ProjectPtr project)
+{
+    return Project::parseJson(projectObject, project);
 }
 
 ProjectPtr Project::emptyProject()

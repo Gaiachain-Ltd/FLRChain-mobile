@@ -91,7 +91,9 @@ public:
     ActionModel* actions() const;
     void reloadActions(const ActionList &actions);
 
+    static ProjectPtr parseJson(const QJsonObject &projectObject, ProjectPtr project = Q_NULLPTR);
     static ProjectPtr createFromJson(const QJsonObject& projectObject);
+    static ProjectPtr updateFromJson(const QJsonObject &projectObject, ProjectPtr project);
     static ProjectPtr emptyProject();
 
 signals:
