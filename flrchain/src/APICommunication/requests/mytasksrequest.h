@@ -15,29 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef FAVOURITETASKSTORAGE_H
-#define FAVOURITETASKSTORAGE_H
+#ifndef MYTASKSREQUEST_H
+#define MYTASKSREQUEST_H
 
-#include <QObject>
-#include <QVariantHash>
-#include <QSettings>
+#include "apirequest.h"
 
-class FavouriteTaskStorage : public QObject
+class MyTasksRequest : public ApiRequest
 {
     Q_OBJECT
 
 public:
-    explicit FavouriteTaskStorage(QObject *parent = nullptr);
-    static FavouriteTaskStorage &instance();
+    MyTasksRequest(const QVariantList &myTaskIds, const QByteArray &token);
 
-    bool isTaskFavourite(const int taskId) const;
-    void setTaskFavouriteStatus(const int taskId, const bool isFavourite);
-
-    Q_INVOKABLE QVariantList favouriteIds() const;
+signals:
+    void myTasksReceived(const QVariantList &myTasks);
 
 private:
-    QVariantList m_cache;
-    QSettings m_storage;
+    void parse() final;
 };
 
-#endif // FAVOURITETASKSTORAGE_H
+#endif // MYTASKSREQUEST_H

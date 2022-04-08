@@ -78,6 +78,7 @@ signals:
     void downloadRequest(const QString &photoPath, const int workId);
     void resetPasswordReplyReceived(bool result);
     void detailedProjectChanged();
+    void myTasksReceived(const QVariantList &myTasks);
 
 private:
     QSharedPointer<ProjectModel> m_projectsModel;

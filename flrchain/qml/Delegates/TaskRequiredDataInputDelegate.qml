@@ -27,8 +27,6 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
-    readonly property int dataTagType: model.dataTagType
-
     readonly property bool hasValidData: inputLoader.item &&
                                          inputLoader.item.length > 0 &&
                                          inputLoader.item.acceptableInput

@@ -32,6 +32,8 @@ Flickable {
     boundsBehavior: Flickable.StopAtBounds
     clip: true
 
+    property alias myTasks: myTasksList.model
+
     ColumnLayout {
         id: mainColumn
         anchors {
@@ -57,91 +59,85 @@ Flickable {
             spacing: 10
             interactive: false
 
-            model: projectsModel
-
-            delegate: ProjectComponents.ProjectTaskList {
+            delegate: Custom.Pane {
                 width: ListView.view.width
-                spacing: 10
-                sourceModel: projectActions
-                projectId: projectId
-                projectName: projectName
-                projectStatus: projectStatus
-                projectAssignmentStatus: projectAssignmentStatus
-                showFavouritesOnly: true
-                showActionInfo: false
-                showMilestoneInfo: false
 
-                taskDelegate: Custom.Pane {
-                    width: ListView.view.width
+                GridLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    columns: 2
+                    columnSpacing: 20
 
-                    GridLayout {
+                    Label {
+                        Layout.alignment: Qt.AlignVCenter
+                        font: Style.myTaskDelegateInfoTypeFont
+                        color: Style.myTaskDelegateInfoTypeFontColor
+                        text: qsTr("Project")
+                    }
+
+                    Label {
                         Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        columns: 2
-                        columnSpacing: 20
+                        font: Style.myTaskDelegateProjectNameFont
+                        color: Style.myTaskDelegateDataFontColor
+                        wrapMode: Label.WordWrap
+                        text: modelData.project_name
+                    }
 
-                        Label {
-                            Layout.alignment: Qt.AlignVCenter
-                            font: Style.myTaskDelegateInfoTypeFont
-                            color: Style.myTaskDelegateInfoTypeFontColor
-                            text: qsTr("Project")
-                        }
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.columnSpan: parent.columns
+                        Layout.preferredHeight: 2
+                        color: "#EDEEF2"
+                    }
 
-                        Label {
-                            Layout.fillWidth: true
-                            font: Style.myTaskDelegateProjectNameFont
-                            color: Style.myTaskDelegateDataFontColor
-                            wrapMode: Label.WordWrap
-                            text: projectName
-                        }
+                    Label {
+                        Layout.alignment: Qt.AlignVCenter
+                        font: Style.myTaskDelegateInfoTypeFont
+                        color: Style.myTaskDelegateInfoTypeFontColor
+                        text: qsTr("Task")
+                    }
 
-                        Rectangle {
-                            Layout.fillWidth: true
-                            Layout.columnSpan: parent.columns
-                            Layout.preferredHeight: 2
-                            color: "#EDEEF2"
-                        }
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.myTaskDelegateTaskDataFont
+                        color: Style.myTaskDelegateDataFontColor
+                        wrapMode: Label.WordWrap
+                        text: modelData.name
+                    }
 
-                        Label {
-                            Layout.alignment: Qt.AlignVCenter
-                            font: Style.myTaskDelegateInfoTypeFont
-                            color: Style.myTaskDelegateInfoTypeFontColor
-                            text: qsTr("Task")
-                        }
+                    Label {
+                        Layout.alignment: Qt.AlignVCenter
+                        font: Style.myTaskDelegateInfoTypeFont
+                        color: Style.myTaskDelegateInfoTypeFontColor
+                        text: qsTr("Reward")
+                    }
 
-                        Label {
-                            Layout.fillWidth: true
-                            font: Style.myTaskDelegateTaskDataFont
-                            color: Style.myTaskDelegateDataFontColor
-                            wrapMode: Label.WordWrap
-                            text: model.taskName
-                        }
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.myTaskDelegateTaskDataFont
+                        color: Style.myTaskDelegateDataFontColor
+                        wrapMode: Label.WordWrap
+                        text: modelData.reward
+                    }
 
-                        Label {
-                            Layout.alignment: Qt.AlignVCenter
-                            font: Style.myTaskDelegateInfoTypeFont
-                            color: Style.myTaskDelegateInfoTypeFontColor
-                            text: qsTr("Reward")
-                        }
+                    Custom.PrimaryButton {
+                        Layout.fillWidth: true
+                        Layout.columnSpan: parent.columns
+                        text: qsTr("Earn reward")
 
-                        Label {
-                            Layout.fillWidth: true
-                            font: Style.myTaskDelegateTaskDataFont
-                            color: Style.myTaskDelegateDataFontColor
-                            wrapMode: Label.WordWrap
-                            text: model.taskReward
-                        }
+                        onClicked: {
+                            var workScreenData = {}
+                            workScreenData.projectId = modelData.project_id
+                            workScreenData.projectName = modelData.project_name
+                            workScreenData.actionName = modelData.action_name
+                            workScreenData.milestoneName = modelData.milestone_name
+                            workScreenData.taskId = modelData.id
+                            workScreenData.taskName = modelData.name
+                            workScreenData.taskTypeOfInformation = modelData.data_type_tag.name
+                            workScreenData.taskInstructions = modelData.instructions
+                            workScreenData.taskRequiredData = modelData.data_tags
 
-                        Custom.PrimaryButton {
-                            Layout.fillWidth: true
-                            Layout.columnSpan: parent.columns
-                            text: qsTr("Earn reward")
-
-                            onClicked: {
-                                // TODO
-
-                                console.warn("TODO: not implemented")
-                            }
+                            pageManager.enterWorkScreen(workScreenData)
                         }
                     }
                 }

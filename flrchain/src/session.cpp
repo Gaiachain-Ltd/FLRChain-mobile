@@ -22,6 +22,7 @@
 #include "datamanager.h"
 #include "platformbridge.h"
 #include "pagemanager.h"
+
 #include <QSharedPointer>
 #include <QLoggingCategory>
 #include <QDebug>
@@ -45,6 +46,7 @@
 #include "requests/changepasswordrequest.h"
 #include "requests/resetpasswordrequest.h"
 #include "requests/sendworkjob.h"
+#include "requests/mytasksrequest.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -449,6 +451,24 @@ void Session::resetPassword(const QString &email) const
     auto request = QSharedPointer<ResetPasswordRequest>::create(email);
     connect(request.data(), &ResetPasswordRequest::passwordResetResult,
             m_dataManager, &DataManager::resetPasswordReplyReceived);
+
+    mClient->send(request);
+}
+
+void Session::getMyTasks(const QVariantList &taskIds) const
+{
+    if (mClient.isNull()) {
+        qCDebug(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if (taskIds.isEmpty()) {
+        return;
+    }
+
+    auto request = QSharedPointer<MyTasksRequest>::create(taskIds, getToken());
+    connect(request.get(), &MyTasksRequest::myTasksReceived,
+            m_dataManager, &DataManager::myTasksReceived);
 
     mClient->send(request);
 }
