@@ -51,6 +51,14 @@ Flickable {
             text: qsTr("My tasks to do")
         }
 
+        Label {
+            Layout.alignment: Qt.AlignHCenter
+            font: Style.projectListTitleFont
+            color: Style.projectListTitleFontColor
+            text: qsTr("No tasks")
+            visible: !myTasks.length
+        }
+
         ListView {
             id: myTasksList
             Layout.fillWidth: true
