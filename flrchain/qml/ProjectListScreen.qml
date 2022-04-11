@@ -83,7 +83,12 @@ Page {
                 busyIndicator.visible = true
 
                 if (currentIndex == 0) {
-                    session.getMyTasks(FavouriteTaskStorage.favouriteIds())
+                    const ids = FavouriteTaskStorage.favouriteIds();
+                    if (ids.length === 0) {
+                        busyIndicator.visible = false;
+                    } else {
+                        session.getMyTasks(FavouriteTaskStorage.favouriteIds())
+                    }
                 } else {
                     session.getProjectsData()
                 }
