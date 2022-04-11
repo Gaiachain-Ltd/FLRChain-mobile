@@ -36,6 +36,7 @@ Page {
         }
 
         function onRegistrationSuccessful(){
+            pageManager.enterSuccessPopup("Account has been created.")
             pageManager.enterLoginScreen()
         }
     }
