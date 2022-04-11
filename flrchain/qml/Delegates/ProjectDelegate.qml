@@ -41,7 +41,7 @@ Custom.Pane {
             Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
             font: Style.projectListDelegateNameFont
             color: Style.projectListDelegateNameFontColor
-            wrapMode: Label.WordWrap
+            wrapMode: Label.WrapAtWordBoundaryOrAnywhere
             text: projectName
         }
 

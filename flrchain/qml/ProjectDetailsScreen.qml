@@ -129,9 +129,10 @@ Page {
             Label {
                 id: title
                 Layout.topMargin: Style.projectDetailsTopBottomMargin
+                Layout.fillWidth: true
                 font: Style.projectDetailsTitleFont
                 color: Style.projectDetailsTitleFontColor
-                wrapMode: Label.WordWrap
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
                 text: projectName
             }
 
@@ -149,7 +150,7 @@ Page {
                 Layout.fillWidth: true
                 font: Style.projectDetailsTitleFont
                 color: Style.projectDetailsTitleFontColor
-                wrapMode: Label.WordWrap
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
                 text: qsTr("Overview")
             }
 
