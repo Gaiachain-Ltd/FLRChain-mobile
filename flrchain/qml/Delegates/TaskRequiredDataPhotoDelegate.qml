@@ -26,6 +26,7 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
+    property bool errorMode: false;
     readonly property bool hasValidData: thumbnailListView.count > 0
     readonly property alias photosModel: thumbnailListView.model
 
@@ -56,7 +57,7 @@ ColumnLayout {
         font: Style.semiBoldTinyFont
         color: Style.lightLabelColor
         wrapMode: Label.WordWrap
-        text: dataTagName
+        text: dataTagName + "*"
     }
 
     Pane {
@@ -68,6 +69,8 @@ ColumnLayout {
             implicitHeight: 120
             color: "#F7F9FB"
             radius: 7
+            border.color: "red"
+            border.width: errorMode ? 1 : 0
         }
 
         contentItem: ListView {
@@ -119,6 +122,7 @@ ColumnLayout {
             text: qsTr("Take picture")
 
             onClicked: {
+                errorMode = false;
                 platform.capture()
             }
         }
@@ -133,6 +137,7 @@ ColumnLayout {
             text: qsTr("Select from gallery")
 
             onClicked: {
+                errorMode = false;
                 platform.selectFile()
             }
         }

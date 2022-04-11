@@ -38,6 +38,7 @@ Page {
     property string taskTypeOfInformation: ""
     property string taskInstructions: ""
     property var taskRequiredData: []
+    property bool errorMode: false
 
     Custom.BusyIndicator {
         id: busyIndicator
@@ -267,15 +268,17 @@ Page {
                         readonly property bool modelIsArray: Array.isArray(model)
 
                         function allDataValid() {
+                            let isValid = true;
                             for (let i = 0; i < count; ++i) {
                                 let input = itemAtIndex(i).item
 
                                 if (!input.hasValidData) {
-                                    return false
+                                    input.errorMode = true;
+                                    isValid = false;
                                 }
                             }
 
-                            return true
+                            return isValid;
                         }
 
                         function activityDataDump() {

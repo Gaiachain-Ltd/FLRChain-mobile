@@ -27,6 +27,7 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
+    property bool errorMode: false;
     readonly property bool hasValidData: inputLoader.item &&
                                          inputLoader.item.length > 0 &&
                                          inputLoader.item.acceptableInput
@@ -37,7 +38,7 @@ ColumnLayout {
         font: Style.semiBoldTinyFont
         color: Style.lightLabelColor
         wrapMode: Label.WordWrap
-        text: dataTagName
+        text: dataTagName + "*"
     }
 
     Loader {
@@ -67,6 +68,13 @@ ColumnLayout {
 
         Custom.TextInput {
             placeholderText: qsTr("Type text...")
+            isValid: errorMode ? hasValidData : true
+
+            onTextEdited: {
+                if(errorMode){
+                    errorMode = false
+                }
+            }
         }
     }
 
@@ -76,6 +84,13 @@ ColumnLayout {
         Custom.TextInput {
             placeholderText: qsTr("Type number...")
             inputMethodHints: Qt.ImhDigitsOnly
+            isValid: errorMode ? hasValidData : true
+
+            onTextEdited: {
+                if(errorMode){
+                    errorMode = false
+                }
+            }
         }
     }
 
@@ -85,6 +100,13 @@ ColumnLayout {
         Custom.TextInput {
             placeholderText: qsTr("Type area...")
             inputMethodHints: Qt.ImhDigitsOnly
+            isValid: errorMode ? hasValidData : true
+
+            onTextEdited: {
+                if(errorMode){
+                    errorMode = false
+                }
+            }
         }
     }
 }

@@ -56,7 +56,7 @@ Flickable {
             font: Style.projectListTitleFont
             color: Style.projectListTitleFontColor
             text: qsTr("No tasks")
-            visible: !myTasks.length
+            visible: !myTasks || !myTasks.length
         }
 
         ListView {
