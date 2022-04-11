@@ -47,8 +47,10 @@ Custom.Popup {
 
         Label {
             Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
             font: Style.popupHighlightedTextFont
             color: Style.accentColor
+            wrapMode: Label.WrapAtWordBoundaryOrAnywhere
             text: popup.projectName
         }
     }
