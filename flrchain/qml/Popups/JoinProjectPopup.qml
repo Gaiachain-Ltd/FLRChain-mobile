@@ -36,7 +36,6 @@ Custom.Popup {
         spacing: 0
 
         Label {
-            Layout.alignment: Qt.AlignHCenter
             Layout.fillWidth: true
             horizontalAlignment: Label.AlignHCenter
             font: Style.popupTextFont
@@ -46,8 +45,8 @@ Custom.Popup {
         }
 
         Label {
-            Layout.alignment: Qt.AlignHCenter
             Layout.fillWidth: true
+            horizontalAlignment: Label.AlignHCenter
             font: Style.popupHighlightedTextFont
             color: Style.accentColor
             wrapMode: Label.WrapAtWordBoundaryOrAnywhere
