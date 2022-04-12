@@ -48,6 +48,21 @@ Project::Project(const int id,
     reloadActions(actions);
 }
 
+Project &Project::operator=(const ProjectPtr &other)
+{
+    setName(other->name());
+    setDescription(other->description());
+    setPhoto(other->photo());
+    setMapLink(other->mapLink());
+    setStatus(other->status());
+    setStartDate(other->startDate());
+    setEndDate(other->endDate());
+    setAssignmentStatus(other->assignmentStatus());
+    reloadActions(other->actions()->actions());
+
+    return *this;
+}
+
 int Project::id() const
 {
     return m_id;
@@ -167,8 +182,7 @@ void Project::reloadActions(const ActionList &actions)
     m_actions->reload(actions);
 }
 
-
-ProjectPtr Project::parseJson(const QJsonObject &projectObject, ProjectPtr project)
+ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
 {
     const int projectId = projectObject.value(u"id").toInt();
     const QString projectName = projectObject.value(u"title").toString();
@@ -196,39 +210,16 @@ ProjectPtr Project::parseJson(const QJsonObject &projectObject, ProjectPtr proje
         projectActions.append(action);
     }
 
-    if (project.isNull()) {
-        return ProjectPtr::create(projectId,
-                                  projectName,
-                                  projectDescription,
-                                  projectPhoto,
-                                  projectMapLink,
-                                  projectStatus,
-                                  projectStartDate,
-                                  projectEndDate,
-                                  projectAssignmentStatus,
-                                  projectActions);
-    } else {
-        project->setName(projectName);
-        project->setDescription(projectDescription);
-        project->setPhoto(projectPhoto);
-        project->setMapLink(projectMapLink);
-        project->setStatus(projectStatus);
-        project->setStartDate(projectStartDate);
-        project->setEndDate(projectEndDate);
-        project->setAssignmentStatus(projectAssignmentStatus);
-        project->reloadActions(projectActions);
-        return project;
-    }
-}
-
-ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
-{
-    return Project::parseJson(projectObject);
-}
-
-ProjectPtr Project::updateFromJson(const QJsonObject &projectObject, ProjectPtr project)
-{
-    return Project::parseJson(projectObject, project);
+    return ProjectPtr::create(projectId,
+                              projectName,
+                              projectDescription,
+                              projectPhoto,
+                              projectMapLink,
+                              projectStatus,
+                              projectStartDate,
+                              projectEndDate,
+                              projectAssignmentStatus,
+                              projectActions);
 }
 
 ProjectPtr Project::emptyProject()

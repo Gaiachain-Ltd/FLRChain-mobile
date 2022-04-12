@@ -45,6 +45,7 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 
+    const ActionList &actions() const;
     void reload(const ActionList &actions);
     bool hasFavouriteTask() const;
 

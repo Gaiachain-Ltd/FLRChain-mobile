@@ -110,6 +110,11 @@ bool ActionModel::setData(const QModelIndex &index, const QVariant &value, int r
     return false;
 }
 
+const ActionList &ActionModel::actions() const
+{
+    return m_actions;
+}
+
 void ActionModel::reload(const ActionList &actions)
 {
     beginResetModel();

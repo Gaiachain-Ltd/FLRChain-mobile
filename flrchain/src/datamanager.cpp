@@ -155,8 +155,9 @@ WorkModel *DataManager::workModel() const
 void DataManager::projectDetailsReply(const QJsonObject &projectObject)
 {
     m_detailedProject = m_projectsModel->projectWithId(projectObject.value("id").toInt());
+
     if (m_detailedProject) {
-        Project::updateFromJson(projectObject, m_detailedProject);
+        m_detailedProject = Project::createFromJson(projectObject);
         emit detailedProjectChanged();
     }
 }

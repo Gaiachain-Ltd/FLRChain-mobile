@@ -70,6 +70,7 @@ public:
                      const AssignmentStatus assignmentStatus,
                      const ActionList &actions,
                      QObject *parent = nullptr);
+    Project& operator=(const ProjectPtr &other);
 
     int id() const;
     QString name() const;
@@ -91,9 +92,7 @@ public:
     ActionModel* actions() const;
     void reloadActions(const ActionList &actions);
 
-    static ProjectPtr parseJson(const QJsonObject &projectObject, ProjectPtr project = Q_NULLPTR);
     static ProjectPtr createFromJson(const QJsonObject& projectObject);
-    static ProjectPtr updateFromJson(const QJsonObject &projectObject, ProjectPtr project);
     static ProjectPtr emptyProject();
 
 signals:
