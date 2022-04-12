@@ -33,6 +33,7 @@ Controls.Button {
 
     font: Style.buttonFont
     palette.buttonText: labelColor
+    opacity: enabled ? 1.0 : 0.5
 
     background: Rectangle {
         radius: button.backgroundRadius

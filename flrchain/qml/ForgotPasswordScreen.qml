@@ -26,28 +26,20 @@ import "qrc:/CustomControls" as Custom
 Page {
 
     property bool errorMode: false
+    property bool resetInProgress: false
 
     Connections {
         target: dataManager
 
         function onResetPasswordReplyReceived(result) {
             if (result) {
-                pageManager.enterSuccessPopup(qsTr("Reset link has been sent to your email"));
-                pageManager.back();
+                pageManager.enterSuccessPopup(qsTr("Reset link has been sent to your email"))
+                pageManager.back()
             } else {
-                pageManager.enterErrorPopup(qsTr("Couldn't send reset link. Try again"));
+                pageManager.enterErrorPopup(qsTr("Couldn't send reset link. Try again"))
+                resetInProgress = false
             }
         }
-    }
-
-    function validateData() {
-        if(!userEmailInput.text.length)
-        {
-            errorLabel.text = qsTr("Please enter email")
-            return
-        }
-
-        session.resetPassword(userEmailInput.text);
     }
 
     background: Rectangle {
@@ -98,13 +90,12 @@ Page {
                         isValid: !errorMode
 
                         onTextEdited: {
-                            if(errorMode){
+                            if (errorMode) {
                                 errorMode = false
                                 errorLabel.text = ""
                             }
                         }
                     }
-
                 }
 
                 Label {
@@ -118,10 +109,19 @@ Page {
                 Custom.PrimaryButton {
                     id: resetButton
                     Layout.fillWidth: true
+                    enabled: !resetInProgress
                     text: qsTr("Reset password")
 
                     onClicked: {
-                        validateData();
+                        if(!userEmailInput.text.length)
+                        {
+                            errorMode = true
+                            errorLabel.text = qsTr("Please enter email")
+                            return
+                        }
+
+                        resetInProgress = true
+                        session.resetPassword(userEmailInput.text)
                     }
                 }
 

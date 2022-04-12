@@ -189,7 +189,7 @@ Page {
                         anchors.fill: parent
 
                         onClicked: {
-                            pageManager.enterForgotPasswordScreen();
+                            pageManager.enterForgotPasswordScreen()
                         }
                     }
                 }

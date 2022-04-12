@@ -185,7 +185,6 @@ Page {
                 }
                 return false;
             }
-            opacity: enabled ? 1.0 : 0.5
             text: qsTr("Send money")
 
             onClicked: {
