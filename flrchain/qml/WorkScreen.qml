@@ -265,7 +265,7 @@ Page {
                         interactive: false
                         model: taskRequiredData
 
-                        readonly property bool modelIsArray: Array.isArray(model)
+                        readonly property bool modelIsArray: model ? Array.isArray(model) : false
                         property var missingData: []
 
                         function allDataValid() {

@@ -36,11 +36,16 @@ ColumnLayout {
     RowLayout {
         Layout.fillWidth: true
 
-        Column {
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+
             Label {
                 id: projectNameLabel
+                Layout.fillWidth: true
                 font: Style.transactionProjectFont
                 color: Style.transactionProjectFontColor
+                wrapMode: Label.WordWrap
                 text: root.transactionProjectName
                 visible: text.length > 0
             }
