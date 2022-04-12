@@ -26,7 +26,7 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
-    property bool errorMode: false;
+    property bool errorMode: false
     readonly property bool hasValidData: thumbnailListView.count > 0
     readonly property alias photosModel: thumbnailListView.model
 
@@ -122,7 +122,7 @@ ColumnLayout {
             text: qsTr("Take picture")
 
             onClicked: {
-                errorMode = false;
+                errorMode = false
                 platform.capture()
             }
         }
@@ -137,7 +137,7 @@ ColumnLayout {
             text: qsTr("Select from gallery")
 
             onClicked: {
-                errorMode = false;
+                errorMode = false
                 platform.selectFile()
             }
         }

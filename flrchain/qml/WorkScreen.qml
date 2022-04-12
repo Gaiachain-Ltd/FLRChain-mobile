@@ -266,19 +266,26 @@ Page {
                         model: taskRequiredData
 
                         readonly property bool modelIsArray: Array.isArray(model)
+                        property var missingData: []
 
                         function allDataValid() {
-                            let isValid = true;
+                            let isValid = true
+                            missingData = []
+
                             for (let i = 0; i < count; ++i) {
-                                let input = itemAtIndex(i).item
+                                let loader = itemAtIndex(i)
+                                let input = loader.item
 
                                 if (!input.hasValidData) {
-                                    input.errorMode = true;
-                                    isValid = false;
+                                    input.errorMode = true
+                                    isValid = false
+
+                                    missingData.push(loader.dataTagName.toString())
+                                    console.log(loader.dataTagName, missingData)
                                 }
                             }
 
-                            return isValid;
+                            return isValid
                         }
 
                         function activityDataDump() {
@@ -372,7 +379,13 @@ Page {
                                 session.sendWorkRequest(projectId, taskId, requiredData)
                                 busyIndicator.visible = true
                             } else {
-                                pageManager.enterErrorPopup("Please fill all required data before submitting work")
+                                let message = qsTr("The form is missing required information") + ": \n"
+
+                                for (let i in requiredDataList.missingData) {
+                                    message += requiredDataList.missingData[i] + "\n"
+                                }
+
+                                pageManager.enterErrorPopup(message)
                             }
                         } else {
                             pageManager.enterErrorPopup("No Internet Connection")

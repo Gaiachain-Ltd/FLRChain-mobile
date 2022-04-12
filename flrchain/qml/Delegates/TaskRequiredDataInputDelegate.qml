@@ -27,7 +27,7 @@ import "qrc:/CustomControls" as Custom
 ColumnLayout {
     id: root
 
-    property bool errorMode: false;
+    property bool errorMode: false
     readonly property bool hasValidData: inputLoader.item &&
                                          inputLoader.item.length > 0 &&
                                          inputLoader.item.acceptableInput
@@ -71,7 +71,7 @@ ColumnLayout {
             isValid: errorMode ? hasValidData : true
 
             onTextEdited: {
-                if(errorMode){
+                if (errorMode) {
                     errorMode = false
                 }
             }
@@ -87,7 +87,7 @@ ColumnLayout {
             isValid: errorMode ? hasValidData : true
 
             onTextEdited: {
-                if(errorMode){
+                if (errorMode) {
                     errorMode = false
                 }
             }
@@ -103,7 +103,7 @@ ColumnLayout {
             isValid: errorMode ? hasValidData : true
 
             onTextEdited: {
-                if(errorMode){
+                if (errorMode) {
                     errorMode = false
                 }
             }
