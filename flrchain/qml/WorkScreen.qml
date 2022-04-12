@@ -37,7 +37,7 @@ Page {
     property string taskName: ""
     property string taskTypeOfInformation: ""
     property string taskInstructions: ""
-    property var taskRequiredData: []
+    property var taskRequiredData: null
     property bool errorMode: false
 
     Custom.BusyIndicator {
