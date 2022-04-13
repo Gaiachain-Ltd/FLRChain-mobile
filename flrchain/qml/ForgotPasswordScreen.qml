@@ -61,7 +61,7 @@ Page {
             spacing: Style.loginPageSpacing
 
             Image {
-                Layout.topMargin: Style.registrationPageTopBottomMargin
+                Layout.topMargin: Style.loginLogoTopMargin
                 Layout.alignment: Qt.AlignHCenter
                 sourceSize: Style.loginPageLogoSize
                 source: "qrc:/img/logo-login.svg"
@@ -73,20 +73,22 @@ Page {
                 title: qsTr("Forgot password")
                 subtitle: qsTr("We will send reset link to your email address")
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: userEmailInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Email")
+                        text: qsTr("Email") + "*"
                     }
 
                     Custom.TextInput {
                         id: userEmailInput
-                        placeholderText: userEmailInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Please enter your email...")
                         isValid: !errorMode
 
                         onTextEdited: {
@@ -113,8 +115,7 @@ Page {
                     text: qsTr("Reset password")
 
                     onClicked: {
-                        if(!userEmailInput.text.length)
-                        {
+                        if(!userEmailInput.text.length) {
                             errorMode = true
                             errorLabel.text = qsTr("Please enter email")
                             return

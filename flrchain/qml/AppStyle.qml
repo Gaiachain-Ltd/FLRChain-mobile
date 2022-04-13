@@ -199,7 +199,7 @@ QtObject {
     // Login and Register pages
     readonly property color loginPageBackgroundColor: "#FAFAFD"
     readonly property int loginPageSideMargin: 16
-    readonly property int loginPageTopMargin: 50
+    readonly property int loginLogoTopMargin: 30
     readonly property int loginPageSpacing: 32
     readonly property size loginPageLogoSize: Qt.size(160, 60)
     readonly property size loginPageIconSize: Qt.size(96, 96)

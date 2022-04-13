@@ -59,21 +59,14 @@ Page {
             spacing: Style.loginPageSpacing
 
             Image {
-                Layout.topMargin: Style.loginPageTopMargin
+                Layout.topMargin: Style.loginLogoTopMargin
                 Layout.alignment: Qt.AlignHCenter
                 sourceSize: Style.loginPageLogoSize
                 source: "qrc:/img/logo-login.svg"
             }
 
-            Image {
-                Layout.alignment: Qt.AlignHCenter
-                sourceSize: Style.loginPageIconSize
-                source: "qrc:/img/dashboard-earn-rewards.svg"
-            }
-
             Custom.FormPane {
                 Layout.fillWidth: true
-                Layout.bottomMargin: 20
                 title: qsTr("Login")
                 subtitle: qsTr("Welcome Back!")
 
@@ -84,7 +77,7 @@ Page {
                     Label {
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Email*")
+                        text: qsTr("Email") + "*"
                     }
 
                     Custom.TextInput {
@@ -113,7 +106,7 @@ Page {
                     Label {
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Password*")
+                        text: qsTr("Password") + "*"
                     }
 
                     Custom.TextInput {
@@ -161,7 +154,7 @@ Page {
 
                     onClicked: {
                         if (!userEmailInput.text.length || !passwordInput.text.length) {
-                            errorMode = true;
+                            errorMode = true
                             return;
                         }
 
@@ -179,18 +172,18 @@ Page {
                     }
                 }
 
-                Label {
+                Custom.SecondaryButton {
                     Layout.alignment: Qt.AlignHCenter
+                    Layout.topMargin: -10
+                    Layout.bottomMargin: -5
+                    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
+                    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
+                    background: null
                     font: Style.loginPanelForgotPasswordFont
-                    color: Style.loginPanelForgotPasswordColor
                     text: qsTr("Forgot password?")
 
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            pageManager.enterForgotPasswordScreen()
-                        }
+                    onClicked: {
+                        pageManager.enterForgotPasswordScreen()
                     }
                 }
             }

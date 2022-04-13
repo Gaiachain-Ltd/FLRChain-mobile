@@ -46,14 +46,14 @@ Page {
            !userEmailInput.text.length || !passwordInput.text.length  ||
            !repeatPassword.text.length)
         {
-            errorLabel.text = "";
-            errorMode = true;
+            errorLabel.text = ""
+            errorMode = true
             return
         }
 
         if(passwordInput.text !== repeatPassword.text) {
             errorLabel.text = qsTr("Passwords are not equal")
-            errorMode = true;
+            errorMode = true
             return
         }
 
@@ -80,7 +80,7 @@ Page {
             spacing: Style.loginPageSpacing
 
             Image {
-                Layout.topMargin: Style.registrationPageTopBottomMargin
+                Layout.topMargin: Style.loginLogoTopMargin
                 Layout.alignment: Qt.AlignHCenter
                 sourceSize: Style.loginPageLogoSize
                 source: "qrc:/img/logo-login.svg"
@@ -92,20 +92,22 @@ Page {
                 title: qsTr("Register")
                 subtitle: qsTr("Fill the form, make sure it is correct")
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: nameInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("First name*")
+                        text: qsTr("First name") + "*"
                     }
 
                     Custom.TextInput {
                         id: nameInput
-                        placeholderText: nameInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Type in your first name...")
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
@@ -117,20 +119,22 @@ Page {
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: lastNameInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Last name*")
+                        text: qsTr("Last name") + "*"
                     }
 
                     Custom.TextInput {
                         id: lastNameInput
-                        placeholderText: lastNameInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Type in your last name...")
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
@@ -142,20 +146,22 @@ Page {
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: userEmailInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Email*")
+                        text: qsTr("Email") + "*"
                     }
 
                     Custom.TextInput {
                         id: userEmailInput
-                        placeholderText: userEmailInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Type in your email...")
                         isValid:  !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
@@ -168,8 +174,9 @@ Page {
 
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
@@ -181,12 +188,14 @@ Page {
 
                     Custom.TextInput {
                         id: phoneInput
-                        placeholderText: phoneInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Type in your phone number...")
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
@@ -198,25 +207,28 @@ Page {
 
                     Custom.TextInput {
                         id: villageNameInput
-                        placeholderText: villageNameInputTitle.text
+                        Layout.fillWidth: true
+                        placeholderText: qsTr("Type in your village name...")
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: passwordInputTitle
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Password*")
+                        text: qsTr("Password") + "*"
                     }
 
                     Custom.TextInput {
                         id: passwordInput
+                        Layout.fillWidth: true
                         echoMode: TextInput.Password
-                        placeholderText: passwordInputTitle.text
+                        placeholderText: qsTr("Type in your password...")
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
@@ -228,21 +240,23 @@ Page {
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: repeatPasswordInput
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
-                        text: qsTr("Repeat password*")
+                        text: qsTr("Repeat password") + "*"
                     }
 
                     Custom.TextInput {
                         id: repeatPassword
+                        Layout.fillWidth: true
                         echoMode: TextInput.Password
-                        placeholderText: repeatPasswordInput.text
+                        placeholderText: qsTr("Re-type your password...")
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
