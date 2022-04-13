@@ -200,6 +200,8 @@ Page {
                     }
 
                     Pane {
+                        id: typeOfInformationPane
+                        Layout.fillWidth: true
                         topPadding: 10
                         bottomPadding: 10
                         leftPadding: 20
@@ -215,8 +217,11 @@ Page {
                         }
 
                         contentItem: Label {
+                            width: typeOfInformationPane.availableWidth
+                            height: typeOfInformationPane.availableHeight
                             font: Style.semiBoldTinyFont
                             color: Style.lightLabelColor
+                            wrapMode: Label.WordWrap
                             text: taskTypeOfInformation
                         }
                     }
