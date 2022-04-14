@@ -18,6 +18,11 @@ COMMIT = $$system(git rev-parse --short HEAD)
 
 VERSION=0.0.1
 
+android: {
+    ANDROID_VERSION_NAME = $$VERSION
+    ANDROID_VERSION_CODE = $$system(git rev-list HEAD --count)
+}
+
 HOST_MACHINE = $$[QMAKE_SPEC]
 contains (HOST_MACHINE, .*win32.*) {
     BUILD_DATE=$$system(powershell -Command "Get-Date -format yyyy-MM-dd")
@@ -27,8 +32,8 @@ contains (HOST_MACHINE, .*win32.*) {
 
 APP_VERSION = "$$VERSION"
 APP_NAME = "FLRChain"
-COMPANY_NAME = "Milo Solutions"
-COMPANY_DOMAIN = "milosolutions.com"
+COMPANY_NAME = "Gaiachain Lab"
+COMPANY_DOMAIN = "gaiachainlab.org.uk"
 
 # add defines
 DEFINES += AppVersion='"\\\"$$APP_VERSION\\\""'
