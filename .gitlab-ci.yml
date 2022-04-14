@@ -35,13 +35,13 @@ app_build:
   cache: 
     key: $CI_COMMIT_BRANCH 
     paths: 
-        - flrchain/android-build/build/outputs/bundle/debug/android-build-debug.aab
+        - flrchain/android-build/build/outputs/bundle/release/android-build-release.aab
   script:
     - cd flrchain
     - $QT_ANDROID_PATH/bin/qmake -spec android-clang CONFIG+=release CONFIG+=qtquickcompiler CONFIG+=dev
     - make -j $(nproc)
     - make install INSTALL_ROOT=android-build
-    - $QT_ANDROID_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-28 --gradle --aab --jarsigner
+    - $QT_ANDROID_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-30 --jdk /usr/lib/jvm/java-11-openjdk-amd64 --gradle --aab --jarsigner --sign $FLRCHAIN_KEYSTORE_PATH $FLRCHAIN_KEYSTORE_ALIAS --storepass $FLRCHAIN_KEYSTORE_PASSWORD
 
 upload_app:
   extends:
@@ -55,12 +55,12 @@ upload_app:
   cache: 
     key: $CI_COMMIT_BRANCH 
     paths: 
-        - flrchain/android-build/build/outputs/bundle/debug/android-build-debug.aab
+        - flrchain/android-build/build/outputs/bundle/release/android-build-release.aab
   before_script:
     - source ~/.nvm/nvm.sh
     - source ~/.nvm/bash_completion
   script:
-    - appcenter distribute release --file flrchain/android-build/build/outputs/bundle/debug/android-build-debug.aab --app milo-solutions/FLRChain --group Collaborators
+    - appcenter distribute release --file flrchain/android-build/build/outputs/bundle/release/android-build-release.aab --app milo-solutions/FLRChain --group Collaborators
 
 generate_docs:
   extends:
