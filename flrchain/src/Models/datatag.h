@@ -27,7 +27,7 @@ class DataTag : public QObject
     Q_OBJECT
 
     Q_PROPERTY(int id READ id CONSTANT)
-    Q_PROPERTY(QString name CONSTANT)
+    Q_PROPERTY(QString name READ name CONSTANT)
     Q_PROPERTY(Type type READ type CONSTANT)
     Q_PROPERTY(QString unit READ unit CONSTANT)
 
