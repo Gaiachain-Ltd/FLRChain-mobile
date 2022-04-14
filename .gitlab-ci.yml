@@ -38,7 +38,7 @@ app_build:
         - flrchain/android-build/build/outputs/bundle/release/android-build-release.aab
   script:
     - cd flrchain
-    - $QT_ANDROID_PATH/bin/qmake -spec android-clang CONFIG+=release CONFIG+=qtquickcompiler CONFIG+=dev
+    - $QT_ANDROID_PATH/bin/qmake -spec android-clang CONFIG+=release CONFIG+=qtquickcompiler CONFIG+=dev ANDROID_TARGET_SDK_VERSION=30
     - make -j $(nproc)
     - make install INSTALL_ROOT=android-build
     - $QT_ANDROID_PATH/bin/androiddeployqt --output android-build --input android-FLRChain-deployment-settings.json --android-platform android-30 --jdk /usr/lib/jvm/java-11-openjdk-amd64 --gradle --aab --jarsigner --sign $FLRCHAIN_KEYSTORE_PATH $FLRCHAIN_KEYSTORE_ALIAS --storepass $FLRCHAIN_KEYSTORE_PASSWORD
