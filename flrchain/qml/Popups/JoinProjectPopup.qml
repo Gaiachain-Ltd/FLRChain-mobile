@@ -54,22 +54,23 @@ Custom.Popup {
         }
     }
 
-    Custom.SecondaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Cancel")
+    buttons: [
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Cancel")
 
-        onClicked: {
-            popup.close()
+            onClicked: {
+                popup.close()
+            }
+        },
+        Custom.PrimaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Send request")
+
+            onClicked: {
+                popup.close()
+                session.joinProject(popup.projectId)
+            }
         }
-    }
-
-    Custom.PrimaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Send request")
-
-        onClicked: {
-            popup.close()
-            session.joinProject(popup.projectId)
-        }
-    }
+    ]
 }

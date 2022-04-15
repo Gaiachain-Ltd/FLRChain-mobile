@@ -38,7 +38,7 @@ Custom.Popup {
         text: popup.message
     }
 
-    Custom.PrimaryButton {
+    buttons: Custom.PrimaryButton {
         Layout.fillWidth: true
         backgroundColor: Style.popupSuccessColor
         borderColor: Style.popupSuccessColor

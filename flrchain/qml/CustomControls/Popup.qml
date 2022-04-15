@@ -18,49 +18,88 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
+import QtQml.Models 2.15
 import com.flrchain.style 1.0
 
-Controls.Popup {
+Controls.Dialog {
     id: popup
-
     anchors.centerIn: parent
     implicitWidth: parent.width - 2 * Style.popupSideMargins
-    topPadding: Style.popupTopBottomPadding
-    bottomPadding: Style.popupTopBottomPadding
-    leftPadding: Style.popupLeftRightPadding
-    rightPadding: Style.popupLeftRightPadding
     modal: true
     dim: true
     focus: true
-    closePolicy: Popup.NoAutoClose
+    clip: true
+    closePolicy: Controls.Dialog.NoAutoClose
+    spacing: 0
 
-    property string title: ""
     property string iconSource: ""
+    default property alias content: contentColumn.data
+    property alias buttons: buttonsLayout.data
 
     background: ShadowedRectangle {
         color: Style.popupBackgroundColor
     }
 
-    contentItem: ColumnLayout {
-        width: parent.availableWidth
-        height: parent.availableHeight
-        spacing: Style.popupSpacing
+    header: Controls.Pane {
+        width: popup.availableWidth
+        topPadding: Style.popupLeftRightPadding
+        leftPadding: Style.popupLeftRightPadding
+        rightPadding: Style.popupLeftRightPadding
+        background: null
 
-        Image {
-            Layout.preferredWidth: Style.popupIconSize.width
-            Layout.preferredHeight: Style.popupIconSize.height
-            Layout.alignment: Qt.AlignHCenter
-            sourceSize: Style.popupIconSize
-            source: popup.iconSource
-            visible: popup.iconSource
+        ColumnLayout {
+            width: parent.width
+            spacing: Style.popupSpacing
+
+            Image {
+                Layout.preferredWidth: Style.popupIconSize.width
+                Layout.preferredHeight: Style.popupIconSize.height
+                Layout.alignment: Qt.AlignHCenter
+                sourceSize: Style.popupIconSize
+                source: popup.iconSource
+                visible: popup.iconSource
+            }
+
+            Controls.Label {
+                Layout.fillWidth: true
+                horizontalAlignment: Controls.Label.AlignHCenter
+                font: Style.popupTitleFont
+                color: Style.popupTitleFontColor
+                text: popup.title
+            }
         }
+    }
 
-        Controls.Label {
-            Layout.fillWidth: true
-            horizontalAlignment: Controls.Label.AlignHCenter
-            font: Style.popupTitleFont
-            color: Style.popupTitleFontColor
-            text: popup.title
+    contentItem: Controls.ScrollView {
+        width: popup.availableWidth
+        height: Math.min(contentHeight, popup.availableHeight - popup.header.height - popup.footer.height)
+        contentWidth: availableWidth
+        contentHeight: contentColumn.height
+        padding: 0
+        clip: true
+
+        palette.dark: Style.accentColor
+        palette.mid: Style.accentColor
+
+        ColumnLayout {
+            id: contentColumn
+            width: parent.width
+            spacing: Style.popupSpacing
+        }
+    }
+
+    footer: Controls.Pane {
+        id: popupFooter
+        width: popup.width
+        leftPadding: Style.popupLeftRightPadding
+        rightPadding: Style.popupLeftRightPadding
+        bottomPadding: Style.popupLeftRightPadding
+        background: null
+
+        contentItem: ColumnLayout {
+            id: buttonsLayout
+            width: popupFooter.availableWidth
+            spacing: 10
         }
     }
 }

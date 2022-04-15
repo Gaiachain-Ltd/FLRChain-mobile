@@ -18,6 +18,7 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtQml.Models 2.15
 import com.flrchain.style 1.0
 
 import "qrc:/CustomControls" as Custom
@@ -38,11 +39,11 @@ Custom.Popup {
         text: popup.errorMessage
     }
 
-    Custom.PrimaryButton {
+    buttons: Custom.PrimaryButton {
         Layout.fillWidth: true
         backgroundColor: Style.popupErrorColor
-        borderColor: Style.popupErrorColor
-        text: qsTr("OK")
+        borderColor: backgroundColor
+        text: qsTr("Ok")
 
         onClicked: {
             popup.close()

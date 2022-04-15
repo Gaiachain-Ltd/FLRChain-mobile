@@ -34,22 +34,23 @@ Custom.Popup {
         text: qsTr("Are you sure you want to log out?")
     }
 
-    Custom.SecondaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Cancel")
+    buttons: [
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Cancel")
 
-        onClicked: {
-            popup.close()
+            onClicked: {
+                popup.close()
+            }
+        },
+        Custom.PrimaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Log out")
+
+            onClicked: {
+                popup.close()
+                session.logout()
+            }
         }
-    }
-
-    Custom.PrimaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Log out")
-
-        onClicked: {
-            popup.close()
-            session.logout()
-        }
-    }
+    ]
 }

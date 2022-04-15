@@ -63,7 +63,7 @@ Custom.Popup {
         }
     }
 
-    Custom.PrimaryButton {
+    buttons: Custom.PrimaryButton {
         Layout.fillWidth: true
         text: qsTr("Back to project")
 

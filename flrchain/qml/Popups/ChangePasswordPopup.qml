@@ -104,23 +104,25 @@ Custom.Popup {
         visible: errorLabel.text
     }
 
-    Custom.SecondaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Cancel")
+    buttons: [
+        Custom.SecondaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Cancel")
 
-        onClicked: {
-            popup.close()
-        }
-    }
-
-    Custom.PrimaryButton {
-        Layout.fillWidth: true
-        text: qsTr("Change password")
-
-        onClicked: {
-            if (validateData()) {
+            onClicked: {
                 popup.close()
             }
+        },
+
+        Custom.PrimaryButton {
+            Layout.fillWidth: true
+            text: qsTr("Change password")
+
+            onClicked: {
+                if (validateData()) {
+                    popup.close()
+                }
+            }
         }
-    }
+    ]
 }

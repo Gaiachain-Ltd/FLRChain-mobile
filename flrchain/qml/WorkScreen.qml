@@ -286,7 +286,6 @@ Page {
                                     isValid = false
 
                                     missingData.push(loader.dataTagName.toString())
-                                    console.log(loader.dataTagName, missingData)
                                 }
                             }
 
