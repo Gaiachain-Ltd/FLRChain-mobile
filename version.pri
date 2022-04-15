@@ -20,7 +20,7 @@ VERSION=0.0.1
 
 android: {
     ANDROID_VERSION_NAME = $$VERSION
-    ANDROID_VERSION_CODE = $$system(git rev-list HEAD --count)
+    ANDROID_VERSION_CODE = 100
 }
 
 HOST_MACHINE = $$[QMAKE_SPEC]
