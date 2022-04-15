@@ -18,7 +18,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
-import QtQml.Models 2.15
 import com.flrchain.style 1.0
 
 Controls.Dialog {

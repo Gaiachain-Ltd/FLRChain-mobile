@@ -45,9 +45,9 @@ Pane {
         AbstractButton {
             anchors {
                 top: parent.top
-                topMargin: taskListDelegate.topPadding
+                topMargin: padding
                 right: parent.right
-                rightMargin: taskListDelegate.rightPadding
+                rightMargin: padding
             }
             padding: 10
             visible: userHasJoined

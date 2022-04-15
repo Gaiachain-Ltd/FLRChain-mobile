@@ -201,7 +201,7 @@ Page {
 
                     Pane {
                         id: typeOfInformationPane
-                        Layout.fillWidth: true
+                        Layout.maximumWidth: parent.width
                         topPadding: 10
                         bottomPadding: 10
                         leftPadding: 20
