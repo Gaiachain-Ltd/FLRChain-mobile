@@ -1,14 +1,14 @@
-#ifndef FACILILATORCASHOUTREQUEST_H
-#define FACILILATORCASHOUTREQUEST_H
+#ifndef FACILITATORCASHOUTREQUEST_H
+#define FACILITATORCASHOUTREQUEST_H
 
 #include "apirequest.h"
 
-class FacililatorCashOutRequest : public ApiRequest
+class FacilitatorCashOutRequest : public ApiRequest
 {
     Q_OBJECT
 
 public:
-    FacililatorCashOutRequest(const QString &amount, int facililatorId, const QByteArray &token);
+    FacilitatorCashOutRequest(const QString &amount, int facilitatorId, const QByteArray &token);
 
 signals:
     void transferReply(bool successful) const;
@@ -19,4 +19,4 @@ private:
                      const QNetworkReply::NetworkError errorCode) final;
 };
 
-#endif // FACILILATORCASHOUTREQUEST_H
+#endif // FACILITATORCASHOUTREQUEST_H

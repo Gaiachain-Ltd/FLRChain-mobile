@@ -1,30 +1,30 @@
-#include "facililatorcashoutrequest.h"
+#include "facilitatorcashoutrequest.h"
 
 #include <QJsonObject>
 
-FacililatorCashOutRequest::FacililatorCashOutRequest(const QString &amount, int facililatorId, const QByteArray &token)
+FacilitatorCashOutRequest::FacilitatorCashOutRequest(const QString &amount, int facilitatorId, const QByteArray &token)
     : ApiRequest("payments/facililator")
 {
-    if (!amount.isEmpty() && facililatorId > 0) {
+    if (!amount.isEmpty() && facilitatorId > 0) {
         QJsonObject object;
         object.insert(QLatin1String("amount"), QJsonValue(amount));
-        object.insert(QLatin1String("id"), QJsonValue(facililatorId));
+        object.insert(QLatin1String("id"), QJsonValue(facilitatorId));
 
         m_requestDocument.setObject(object);
         setPriority(Priority::High);
         setType(Type::Post);
         setToken(token);
     } else {
-        qDebug() << "Error: incorrect info";
+        qCritical() << "Error: incorrect info";
     }
 }
 
-void FacililatorCashOutRequest::parse()
+void FacilitatorCashOutRequest::parse()
 {
     emit transferReply(m_replyDocument.object().value("success").toBool());
 }
 
-void FacililatorCashOutRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
+void FacilitatorCashOutRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
 {
     ApiRequest::handleError(errorMessage, errorCode);
 

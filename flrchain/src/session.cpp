@@ -37,9 +37,9 @@
 #include "requests/transactionhistoryrequest.h"
 #include "requests/walletqrcoderequest.h"
 #include "requests/walletbalancerequest.h"
-#include "requests/facililatorlistrequest.h"
+#include "requests/facilitatorlistrequest.h"
 #include "requests/cashoutrequest.h"
-#include "requests/facililatorcashoutrequest.h"
+#include "requests/facilitatorcashoutrequest.h"
 #include "requests/projectdetailsrequest.h"
 #include "requests/getimagerequest.h"
 #include "requests/sendworkrequest.h"
@@ -280,7 +280,7 @@ void Session::getWalletQRCode() const
     mClient->send(request);
 }
 
-void Session::getFacililatorList() const
+void Session::getFacilitatorList() const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -292,9 +292,9 @@ void Session::getFacililatorList() const
         return;
     }
 
-    auto request = QSharedPointer<FacililatorListRequest>::create(getToken());
-    connect(request.data(), &FacililatorListRequest::facililatorListReply,
-            m_dataManager, &DataManager::facililatorListReceived);
+    auto request = QSharedPointer<FacilitatorListRequest>::create(getToken());
+    connect(request.data(), &FacilitatorListRequest::facilitatorListReply,
+            m_dataManager, &DataManager::facilitatorListReceived);
 
     mClient->send(request);
 }
@@ -318,7 +318,7 @@ void Session::cashOut(const QString &amount, const QString &phone) const
     mClient->send(request);
 }
 
-void Session::facililatorCashOut(const QString &amount, int facililatorId) const
+void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 {
     if (mClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -330,8 +330,8 @@ void Session::facililatorCashOut(const QString &amount, int facililatorId) const
         return;
     }
 
-    auto request = QSharedPointer<FacililatorCashOutRequest>::create(amount, facililatorId, getToken());
-    connect(request.data(), &FacililatorCashOutRequest::transferReply,
+    auto request = QSharedPointer<FacilitatorCashOutRequest>::create(amount, facilitatorId, getToken());
+    connect(request.data(), &FacilitatorCashOutRequest::transferReply,
             m_dataManager, &DataManager::cashOutReplyReceived);
 
     mClient->send(request);

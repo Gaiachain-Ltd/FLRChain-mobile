@@ -38,10 +38,10 @@ Page {
         function onSetupCashOutScreen(cashOutMode, maxAmount) {
             root.maxAmount = maxAmount;
             if (cashOutMode === Pages.FacilitatorCashOutMode) {
-                session.getFacililatorList();
-                root.state = root.loadingState;
+                session.getFacilitatorList()
+                root.state = root.loadingState
             } else {
-                root.state = root.sendToMobileNumberState;
+                root.state = root.sendToMobileNumberState
             }
         }
     }
@@ -49,9 +49,9 @@ Page {
     Connections {
         target: dataManager
 
-        function onFacililatorListReceived(facililators) {
-            receiverInput.model = facililators;
-            root.state = root.sendToFacilitatorState;
+        function onFacilitatorListReceived(facilitators) {
+            receiverInput.model = facilitators
+            root.state = root.sendToFacilitatorState
         }
     }
 
@@ -98,24 +98,23 @@ Page {
                 horizontalAlignment: Qt.AlignHCenter
                 placeholderText: amountInputTitle.text
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                validator: DoubleValidator{
-                    bottom: 0;
-                    decimals: 6;
-                    top: root.maxAmount;
+                validator: DoubleValidator {
+                    bottom: 0
+                    decimals: 6
+                    top: root.maxAmount
                 }
                 onTextChanged:
                 {
                     if(!acceptableInput) {
                         amountInput.text = prevAmount
                     } else if (amountInput.text.length > 1) {
-                        prevAmount = amountInput.text;
+                        prevAmount = amountInput.text
                     } else {
-                        prevAmount = "";
+                        prevAmount = ""
                     }
                 }
             }
         }
-
 
         Custom.BusyIndicator {
             id: busyIndicator
@@ -179,9 +178,9 @@ Page {
             enabled:
             {
                 if (root.state == root.sendToMobileNumberState) {
-                    return phoneNumberInput.displayText.length > 0 && amountInput.displayText.length > 0;
+                    return phoneNumberInput.displayText.length > 0 && amountInput.displayText.length > 0
                 } else if (root.state == root.sendToFacilitatorState) {
-                    return receiverInput.currentValue > 0 && amountInput.displayText.length > 0;
+                    return receiverInput.currentValue > 0 && amountInput.displayText.length > 0
                 }
                 return false;
             }
@@ -192,7 +191,7 @@ Page {
                     session.cashOut(amountInput.text, phoneNumberInput.text)
                     pageManager.back()
                 } else {
-                    session.facililatorCashOut(amountInput.text, receiverInput.currentValue);
+                    session.facilitatorCashOut(amountInput.text, receiverInput.currentValue)
                     pageManager.back()
                 }
             }

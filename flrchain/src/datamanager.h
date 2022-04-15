@@ -71,7 +71,7 @@ signals:
     void workAdditionFailed();
     void walletBalanceReceived(const double balance);
     void walletQRCodeReceived(const QString &qrCode);
-    void facililatorListReceived(const QJsonArray &facililators);
+    void facilitatorListReceived(const QJsonArray &facilitators);
     void projectsDataReply(const QJsonObject &projects);
     void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);

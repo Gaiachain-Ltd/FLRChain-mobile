@@ -57,9 +57,9 @@ public:
     Q_INVOKABLE void getTransactionsData() const;
     Q_INVOKABLE void getWalletBalance() const;
     Q_INVOKABLE void getWalletQRCode() const;
-    Q_INVOKABLE void getFacililatorList() const;
+    Q_INVOKABLE void getFacilitatorList() const;
     Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
-    Q_INVOKABLE void facililatorCashOut(const QString &amount, int facililatorId) const;
+    Q_INVOKABLE void facilitatorCashOut(const QString &amount, int facilitatorId) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData) const;
