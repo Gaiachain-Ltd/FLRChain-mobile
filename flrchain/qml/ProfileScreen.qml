@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -28,27 +29,12 @@ import "qrc:/Popups" as Popups
 AppPage {
     property bool errorMode: false
 
-    function validateData() {
-        if(!nameInput.text.length || !lastNameInput.text.length)
-        {
-            errorLabel.text = qsTr("Please fill out all fields")
-            return
-        }
-
-        session.saveUserInfo(nameInput.text, lastNameInput.text, phoneInput.text,
-                             villageNameInput.text);
-    }
-
-    background: Rectangle {
-        color: Style.backgroundColor
-    }
+    background: null
 
     header: Custom.Header {
         height: Style.headerHeight
         title: qsTr("My profile")
     }
-
-    Popups.ChangePasswordPopup {id: changePasswordPopup }
 
     Flickable {
         anchors {
@@ -165,7 +151,7 @@ AppPage {
                     centerContent: true
 
                     onClicked: {
-                        changePasswordPopup.open();
+                        AppNavigationController.openPopup(AppNavigation.ChangePasswordPopup)
                     }
                 }
 
@@ -176,7 +162,13 @@ AppPage {
                     text: qsTr("Save changes")
 
                     onClicked: {
-                        validateData()
+                        if(!nameInput.text.length || !lastNameInput.text.length) {
+                            errorLabel.text = qsTr("Please fill out all fields")
+                            return
+                        }
+
+                        session.saveUserInfo(nameInput.text, lastNameInput.text,
+                                             phoneInput.text, villageNameInput.text)
                     }
                 }
             }
