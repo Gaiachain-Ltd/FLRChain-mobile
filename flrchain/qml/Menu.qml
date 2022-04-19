@@ -187,7 +187,7 @@ Drawer {
 
             onClicked: {
                 drawer.close()
-                logoutPopup.open()
+                AppNavigationController.openPopup(AppNavigation.ConfirmLogoutPopup)
             }
         }
     }

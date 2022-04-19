@@ -21,6 +21,7 @@ import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
@@ -134,18 +135,18 @@ Flickable {
                         text: qsTr("Earn reward")
 
                         onClicked: {
-                            var workScreenData = {}
-                            workScreenData.projectId = modelData.project_id
-                            workScreenData.projectName = modelData.project_name
-                            workScreenData.actionName = modelData.action_name
-                            workScreenData.milestoneName = modelData.milestone_name
-                            workScreenData.taskId = modelData.id
-                            workScreenData.taskName = modelData.name
-                            workScreenData.taskTypeOfInformation = modelData.data_type_tag.name
-                            workScreenData.taskInstructions = modelData.instructions
-                            workScreenData.taskRequiredData = modelData.data_tags
-
-                            pageManager.enterWorkScreen(workScreenData)
+                            AppNavigationController.enterPage(AppNavigation.WorkPage,
+                                                              {
+                                                                  projectId: modelData.project_id,
+                                                                  projectName: modelData.project_name,
+                                                                  actionName: modelData.action_name,
+                                                                  milestoneName: modelData.milestone_name,
+                                                                  taskId: modelData.id,
+                                                                  taskName: modelData.name,
+                                                                  taskTypeOfInformation: modelData.data_type_tag.name,
+                                                                  taskInstructions: modelData.instructions,
+                                                                  taskRequiredData: modelData.data_tags
+                                                              })
                         }
                     }
                 }

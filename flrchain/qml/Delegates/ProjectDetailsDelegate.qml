@@ -18,8 +18,10 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -30,6 +32,8 @@ Pane {
     leftPadding: Style.projectDetailsPanePadding
     rightPadding: Style.projectDetailsPanePadding
 
+    property int projectId: -1
+    property string projectName: ""
     property date deadline: new Date
     property string description: ""
     property string photo: ""
@@ -136,7 +140,6 @@ Pane {
                                 return qsTr("Closed")
                         }
 
-                        console.warn("Could not set proper text for project status label:", status)
                         return ""
                     }
                 }
@@ -159,7 +162,6 @@ Pane {
                                 return Style.projectClosedColor
                         }
 
-                        console.warn("Could not set proper color for project status label:", status)
                         return "#FFFFFF"
                     }
                 }
@@ -253,9 +255,16 @@ Pane {
 
             onClicked: {
                 if (session.internetConnection) {
-                    joinPopup.open()
+                    AppNavigationController.openPopup(AppNavigation.JoinProjectPopup,
+                                                      {
+                                                          projectId: root.projectId,
+                                                          projectName: root.projectName
+                                                      })
                 } else {
-                    pageManager.enterErrorPopup("No Internet Connection")
+                    AppNavigationController.openPopup(AppNavigation.ErrorPopup,
+                                                      {
+                                                          errorMessage: qsTr("No Internet Connection")
+                                                      })
                 }
             }
         }

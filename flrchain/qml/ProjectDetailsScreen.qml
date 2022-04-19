@@ -26,7 +26,6 @@ import SortFilterProxyModel 0.2
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
-import "qrc:/Popups" as Popups
 import "qrc:/Project" as ProjectComponents
 
 AppPage {
@@ -51,55 +50,16 @@ AppPage {
     Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-    }
-
-    Popups.JoinProjectPopup {
-        id: joinPopup
-        projectId: root.projectId
-        projectName: root.projectName
-    }
-
-    Connections {
-        target: pageManager
-
-        function onSetupProjectDetailsScreen(projectId) {
-            dataManager.loadProjectDetails(projectId)
-        }
-
-        function onBackTriggered() {
-//            busyIndicator.visible = true
-            session.getProjectDetails(projectId)
-        }
+        visible: false
     }
 
     Connections {
         target: dataManager
 
-        function onDetailedProjectChanged() {
-            busyIndicator.visible = false
-//            session.getWorkData(root.projectId)
-        }
-
         function onJoinRequestSent(projectId) {
             if (projectId === projectId) {
                 session.getProjectDetails(projectId)
             }
-        }
-    }
-
-    Connections {
-        target: workModel
-
-        function onWorkReceived(rewardsBalance) {
-            if (workModel.rowCount() === 0) {
-                busyIndicator.visible = false
-                return;
-            }
-//            workBalance = rewardsBalance
-        }
-
-        function onWorkUpdated() {
-            busyIndicator.visible = false
         }
     }
 
@@ -139,12 +99,14 @@ AppPage {
 
             Delegates.ProjectDetailsDelegate {
                 Layout.fillWidth: true
-                deadline: projectEndDate
-                description: projectDescription
-                status: projectStatus
-                assignmentStatus: projectAssignmentStatus
-                photo: projectPhoto
-                mapLink: projectMapLink
+                projectId: root.projectId
+                projectName: root.projectName
+                deadline: root.projectEndDate
+                description: root.projectDescription
+                status: root.projectStatus
+                assignmentStatus: root.projectAssignmentStatus
+                photo: root.projectPhoto
+                mapLink: root.projectMapLink
             }
 
             Label {

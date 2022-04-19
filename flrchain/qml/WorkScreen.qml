@@ -21,6 +21,7 @@ import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -56,30 +57,13 @@ AppPage {
 
         function onWorkAdded(taskName, projectName) {
             busyIndicator.visible = false
-            workSuccessPopup.taskName = taskName
-            workSuccessPopup.projectName = projectName
-            workSuccessPopup.open()
+
+            AppNavigationController.openPopup(AppNavigation.WorkSuccessPopup,
+                                              {
+                                                  taskName: taskName,
+                                                  projectName: projectName
+                                              })
         }
-    }
-
-    Connections {
-        target: pageManager
-
-        function onSetupWorkScreen(taskData) {
-            workScreen.projectId = taskData.projectId
-            workScreen.projectName = taskData.projectName
-            workScreen.actionName = taskData.actionName
-            workScreen.milestoneName = taskData.milestoneName
-            workScreen.taskId = taskData.taskId
-            workScreen.taskName = taskData.taskName
-            workScreen.taskTypeOfInformation = taskData.taskTypeOfInformation
-            workScreen.taskInstructions = taskData.taskInstructions
-            workScreen.taskRequiredData = taskData.taskRequiredData
-        }
-    }
-
-    Popups.WorkSuccessPopup {
-        id: workSuccessPopup
     }
 
     background: Rectangle {
@@ -390,10 +374,10 @@ AppPage {
                                     message += requiredDataList.missingData[i] + "\n"
                                 }
 
-                                pageManager.enterErrorPopup(message)
+                                AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: message})
                             }
                         } else {
-                            pageManager.enterErrorPopup("No Internet Connection")
+                            AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: qsTr("No Internet Connection")})
                         }
                     }
                 }

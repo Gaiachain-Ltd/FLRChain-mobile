@@ -39,7 +39,6 @@ ApplicationWindow {
 
     Menu { id: menu }
 
-    Popups.ConfirmLogoutPopup { id: logoutPopup }
     Popups.ErrorPopup { id: errorPopup }
     Popups.SuccessPopup { id: successPopup }
 
