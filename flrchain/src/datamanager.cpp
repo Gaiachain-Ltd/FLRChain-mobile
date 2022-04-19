@@ -17,7 +17,7 @@
 
 #include "datamanager.h"
 #include "filemanager.h"
-#include "pagemanager.h"
+#include "AppNavigationController.h"
 
 #include <QDebug>
 #include <QJsonObject>
@@ -68,38 +68,54 @@ DataManager::~DataManager()
 void DataManager::cashOutReplyReceived(const bool result)
 {
     if (result) {
-        PageManager::instance()->enterSuccessPopup("Cashed out successfully.");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Cashed out successfully.")}
+                                                      });
     } else {
-        PageManager::instance()->enterErrorPopup("Cash out request failed.");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Cash out request failed.")}
+                                                      });
     }
 }
 
 void DataManager::joinProjectError()
 {
-    PageManager::instance()->enterErrorPopup("Couldn't join the project. Try again");
+    AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                      {"errorMessage", tr("Couldn't join the project. Try again")}
+                                                  });
 }
 
 void DataManager::addWorkError()
 {
-    PageManager::instance()->enterErrorPopup("Uploading photo failed. Try again");
+    AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                      {"errorMessage", tr("Uploading photo failed. Try again")}
+                                                  });
     emit workAdditionFailed();
 }
 
 void DataManager::saveUserInfoReplyReceived(bool result)
 {
     if (result) {
-        PageManager::instance()->enterSuccessPopup("Changes saved successfuly");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Changes saved successfuly")}
+                                                      });
     } else {
-        PageManager::instance()->enterErrorPopup("Couldn't save changes. Try again");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Couldn't save changes. Try again.")}
+                                                      });
     }
 }
 
 void DataManager::changePasswordReplyReceived(bool result)
 {
     if (result) {
-        PageManager::instance()->enterSuccessPopup("Password changed successfuly");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Password changed successfuly")}
+                                                      });
     } else {
-        PageManager::instance()->enterErrorPopup("Couldn't change password. Try again");
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Couldn't change password. Try again.")}
+                                                      });
     }
 }
 
