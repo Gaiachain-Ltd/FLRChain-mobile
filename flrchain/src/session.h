@@ -80,12 +80,15 @@ signals:
     void loginError(const QString& error) const;
     void registrationSuccessful() const;
     void registrationError(const QString& errors) const;
+    void resetPasswordSuccessful() const;
+    void resetPasswordError(const QString &error) const;
     void userChanged(User* user) const;
     void userInfoError(const QString& error) const;
     void internetConnectionChanged(bool internetConnection);
 
 private:
     void onLoginSuccessful(const QString& token);
+    void onResetPasswordResult(const bool wasSuccessful, const QString &errorMessage);
     void onUserInfo(const QString &firstName,
                     const QString &lastName,
                     const QString &email,

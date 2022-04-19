@@ -76,7 +76,6 @@ signals:
     void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
-    void resetPasswordReplyReceived(bool result);
     void detailedProjectChanged();
     void myTasksReceived(const QVariantList &myTasks);
 

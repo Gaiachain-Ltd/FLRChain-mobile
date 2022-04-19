@@ -30,16 +30,16 @@ AppPage {
     property bool resetInProgress: false
 
     Connections {
-        target: dataManager
+        target: session
 
-        function onResetPasswordReplyReceived(result) {
-            if (result) {
-                pageManager.enterSuccessPopup(qsTr("Reset link has been sent to your email"))
-                AppNavigationController.goBack()
-            } else {
-                pageManager.enterErrorPopup(qsTr("Couldn't send reset link. Try again"))
-                resetInProgress = false
-            }
+        function onResetPasswordSuccessful() {
+            AppNavigationController.goBack()
+            AppNavigationController.openPopup(AppNavigation.SuccessPopup, {message: qsTr("Reset link has been sent to your email.")})
+        }
+
+        function onResetPasswordError(message) {
+            AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: qsTr("Couldn't send reset link.") + "\n" + message})
+            resetInProgress = false
         }
     }
 

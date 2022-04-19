@@ -1,6 +1,7 @@
 #include "resetpasswordrequest.h"
 
 #include <QJsonObject>
+#include <QJsonArray>
 
 ResetPasswordRequest::ResetPasswordRequest(const QString &email)
     : ApiRequest(QLatin1String("password_reset"))
@@ -28,5 +29,5 @@ void ResetPasswordRequest::handleError(const QString &errorMessage, const QNetwo
 {
     ApiRequest::handleError(errorMessage, errorCode);
 
-    emit passwordResetResult(false);
+    emit passwordResetResult(false, QJsonDocument::fromJson(m_replyData).object().value(u"email").toArray().first().toString());
 }

@@ -85,6 +85,15 @@ void Session::onLoginSuccessful(const QString &token)
     emit loginSuccessful(token);
 }
 
+void Session::onResetPasswordResult(const bool wasSuccessful, const QString &errorMessage)
+{
+    if (wasSuccessful) {
+        emit resetPasswordSuccessful();
+    } else {
+        emit resetPasswordError(errorMessage);
+    }
+}
+
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
                          const QString &email, const QString &phone, const QString &village,
                          bool optedIn)
@@ -450,7 +459,7 @@ void Session::resetPassword(const QString &email) const
 
     auto request = QSharedPointer<ResetPasswordRequest>::create(email);
     connect(request.data(), &ResetPasswordRequest::passwordResetResult,
-            m_dataManager, &DataManager::resetPasswordReplyReceived);
+            this, &Session::onResetPasswordResult);
 
     mClient->send(request);
 }

@@ -11,7 +11,7 @@ public:
     ResetPasswordRequest(const QString &email);
 
 signals:
-    void passwordResetResult(bool success);
+    void passwordResetResult(bool success, const QString& errorMessage = QString());
 
 private:
     void parse() final;
