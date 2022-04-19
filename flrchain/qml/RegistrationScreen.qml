@@ -32,13 +32,12 @@ AppPage {
         target: session
 
         function onRegistrationError(error) {
-            errorMode = true
-            errorLabel.text = error
+            AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: qsTr("Could not create an account.") + "\n" + error})
         }
 
-        function onRegistrationSuccessful(){
-            pageManager.enterSuccessPopup("Account has been created.")
+        function onRegistrationSuccessful() {
             AppNavigationController.goBack()
+            AppNavigationController.openPopup(AppNavigation.SuccessPopup, {message: qsTr("Account has been created.")})
         }
     }
 
@@ -47,7 +46,7 @@ AppPage {
            !userEmailInput.text.length || !passwordInput.text.length  ||
            !repeatPassword.text.length)
         {
-            errorLabel.text = ""
+            errorLabel.text = qsTr("Not all of the required fields have been filled")
             errorMode = true
             return
         }
