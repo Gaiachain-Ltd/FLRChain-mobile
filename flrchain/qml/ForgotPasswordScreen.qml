@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -34,7 +35,7 @@ AppPage {
         function onResetPasswordReplyReceived(result) {
             if (result) {
                 pageManager.enterSuccessPopup(qsTr("Reset link has been sent to your email"))
-                pageManager.back()
+                AppNavigationController.goBack()
             } else {
                 pageManager.enterErrorPopup(qsTr("Couldn't send reset link. Try again"))
                 resetInProgress = false
@@ -132,7 +133,7 @@ AppPage {
                     text: qsTr("Log in")
 
                     onClicked: {
-                        pageManager.back()
+                        AppNavigationController.goBack()
                     }
                 }
             }

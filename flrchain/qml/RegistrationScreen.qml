@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -37,7 +38,7 @@ AppPage {
 
         function onRegistrationSuccessful(){
             pageManager.enterSuccessPopup("Account has been created.")
-            pageManager.enterLoginScreen()
+            AppNavigationController.goBack()
         }
     }
 
@@ -292,7 +293,7 @@ AppPage {
                     text: qsTr("Log in")
 
                     onClicked: {
-                        pageManager.enterLoginScreen()
+                        AppNavigationController.goBack()
                     }
                 }
 
