@@ -76,18 +76,16 @@ public slots:
     void setInternetConnection(const bool internetConnection);
 
 signals:
-    void loginSuccessful(const QString& token) const;
-    void loginError(const QString& error) const;
-    void registrationSuccessful() const;
-    void registrationError(const QString& errors) const;
-    void resetPasswordSuccessful() const;
-    void resetPasswordError(const QString &error) const;
-    void userChanged(User* user) const;
-    void userInfoError(const QString& error) const;
+    void loginError(const QString& error);
+    void registrationSuccessful();
+    void registrationError(const QString& errors);
+    void resetPasswordSuccessful();
+    void resetPasswordError(const QString &error);
+    void userChanged(User* user);
+    void userInfoError(const QString& error);
     void internetConnectionChanged(bool internetConnection);
 
 private:
-    void onLoginSuccessful(const QString& token);
     void onResetPasswordResult(const bool wasSuccessful, const QString &errorMessage);
     void onUserInfo(const QString &firstName,
                     const QString &lastName,
@@ -96,9 +94,11 @@ private:
                     const QString &village,
                     bool optedIn);
     void setToken(const QByteArray &token);
+    void onCashOutReplyReceived(const bool result);
+    void onJoinProjectError();
 
-    UserPtr mCurrentUser;
-    QPointer<RestAPIClient> mClient;
+    UserPtr m_currentUser;
+    QPointer<RestAPIClient> m_apiClient;
     QPointer<DataManager> m_dataManager;
     bool m_internetConnection;
 };

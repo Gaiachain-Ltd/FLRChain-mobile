@@ -29,7 +29,7 @@ public:
                     const QString &lastName, const QString &phone, const QString &village);
 
 signals:
-    void registrationSuccessful() const;
+    void registrationSuccessful();
     void registerError(const QString& error);
 
 private:

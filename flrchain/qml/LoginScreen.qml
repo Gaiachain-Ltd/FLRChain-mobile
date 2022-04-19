@@ -28,20 +28,6 @@ import "qrc:/CustomControls" as Custom
 AppPage {
     property bool errorMode: false
 
-    Connections {
-        target: session
-
-        function onLoginError(error) {
-            errorLabel.text = error
-            errorMode = true
-        }
-
-        function onLoginSuccessful(token) {
-            session.getUserInfo()
-            AppNavigationController.replaceAllPages(AppNavigation.DashboardPage)
-        }
-    }
-
     background: Rectangle {
         color: Style.loginPageBackgroundColor
     }
@@ -93,7 +79,7 @@ AppPage {
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
-                            if(errorMode) {
+                            if (errorMode) {
                                 errorMode = false
                                 errorLabel.text = ""
                             }
@@ -122,7 +108,7 @@ AppPage {
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
-                            if(errorMode){
+                            if (errorMode) {
                                 errorMode = false
                                 errorLabel.text = ""
                             }
@@ -156,8 +142,9 @@ AppPage {
 
                     onClicked: {
                         if (!userEmailInput.text.length || !passwordInput.text.length) {
+                            errorLabel.text = qsTr("Please enter both email and password")
                             errorMode = true
-                            return;
+                            return
                         }
 
                         session.login(userEmailInput.text, passwordInput.text)
