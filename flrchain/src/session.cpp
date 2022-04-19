@@ -21,7 +21,7 @@
 #include "settings.h"
 #include "datamanager.h"
 #include "platformbridge.h"
-#include "pagemanager.h"
+#include "AppNavigationController.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -516,8 +516,8 @@ void Session::logout()
     m_dataManager->cleanData();
     setRememberMe(0);
     setToken(QByteArray());
-    PageManager::instance()->closeAll();
-    PageManager::instance()->enterLoginScreen();
+
+    AppNavigationController::instance().replaceAllPages(AppNavigation::PageID::LoginPage);
 }
 
 void Session::setInternetConnection(const bool internetConnection)
