@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -66,7 +67,7 @@ Pane {
             visible: backButtonVisible
 
             onClicked: {
-                pageManager.back()
+                AppNavigationController.goBack()
             }
         }
 
@@ -91,7 +92,6 @@ Pane {
 
             onClicked: {
                 menu.open()
-                session.getUserInfo()
             }
         }
 
