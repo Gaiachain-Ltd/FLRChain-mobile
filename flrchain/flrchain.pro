@@ -83,7 +83,8 @@ HEADERS += \
     src/Models/project.h \
     src/Models/user.h \
     src/Models/work.h \
-    src/types.h
+    src/types.h \
+    src/AppNavigationData.h
 
 SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
