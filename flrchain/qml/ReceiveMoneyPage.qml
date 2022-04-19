@@ -18,7 +18,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -28,16 +30,16 @@ AppPage {
     padding: Style.receiveMoneyPagePadding
 
     Component.onCompleted: {
-        busyIndicator.visible = true;
-        session.getWalletQRCode();
+        busyIndicator.visible = true
+        session.getWalletQRCode()
     }
 
     Connections {
         target: dataManager
 
         function onWalletQRCodeReceived(qrCodeData) {
-            busyIndicator.visible = false;
-            qrCodeImage.source = "data:image/svg+xml;utf-8," + qrCodeData;
+            busyIndicator.visible = false
+            qrCodeImage.source = "data:image/svg+xml;utf-8," + qrCodeData
         }
     }
 
@@ -86,7 +88,7 @@ AppPage {
             text: qsTr("Close")
 
             onClicked: {
-                pageManager.back()
+                AppNavigationController.goBack()
             }
         }
     }
