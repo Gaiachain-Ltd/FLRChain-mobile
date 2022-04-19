@@ -24,7 +24,7 @@ import com.flrchain.style 1.0
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-AppNavigationPage {
+AppPage {
     property bool errorMode: false
 
     Connections {

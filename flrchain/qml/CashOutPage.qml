@@ -24,7 +24,7 @@ import com.flrchain.objects 1.0
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-AppNavigationPage {
+AppPage {
     id: root
     padding: Style.cashOutPageMargins
 

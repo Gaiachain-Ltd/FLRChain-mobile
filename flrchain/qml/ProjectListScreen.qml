@@ -26,7 +26,7 @@ import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Project" as ProjectComponents
 
-AppNavigationPage {
+AppPage {
     id: projectsScreen
 
     Custom.BusyIndicator {

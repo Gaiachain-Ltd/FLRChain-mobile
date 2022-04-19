@@ -25,7 +25,7 @@ import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Popups" as Popups
 
-AppNavigationPage {
+AppPage {
     property bool errorMode: false
 
     function validateData() {

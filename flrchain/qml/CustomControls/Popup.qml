@@ -22,7 +22,7 @@ import com.flrchain.style 1.0
 
 import "qrc:/AppNavigation"
 
-AppNavigationPopup {
+AppPopup {
     id: popup
     anchors.centerIn: parent
     implicitWidth: parent.width - 2 * Style.popupSideMargins

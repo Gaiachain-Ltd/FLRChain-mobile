@@ -27,7 +27,7 @@ import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-AppNavigationPage {
+AppPage {
     id: root
 
     property double walletBalance: 0.0

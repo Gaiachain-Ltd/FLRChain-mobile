@@ -29,7 +29,7 @@ import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 import "qrc:/Project" as ProjectComponents
 
-AppNavigationPage {
+AppPage {
     id: root
 
     readonly property Project project: dataManager.detailedProject

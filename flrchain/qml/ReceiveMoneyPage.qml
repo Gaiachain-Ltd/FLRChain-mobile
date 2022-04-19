@@ -23,7 +23,7 @@ import com.flrchain.style 1.0
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-AppNavigationPage {
+AppPage {
     id: root
     padding: Style.receiveMoneyPagePadding
 
