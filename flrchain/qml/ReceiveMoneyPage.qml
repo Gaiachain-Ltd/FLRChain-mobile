@@ -20,9 +20,10 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
+AppNavigationPage {
     id: root
     padding: Style.receiveMoneyPagePadding
 

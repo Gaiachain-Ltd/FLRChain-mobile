@@ -21,10 +21,11 @@ import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
-Page {
+AppNavigationPage {
     id: root
 
     property double walletBalance: 0.0

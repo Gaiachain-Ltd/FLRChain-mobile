@@ -21,11 +21,11 @@ import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Popups" as Popups
 
-Page {
-
+AppNavigationPage {
     property bool errorMode: false
 
     function validateData() {

@@ -22,11 +22,12 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Page {
+AppNavigationPage {
     id: workScreen
 
     property int projectId: -1

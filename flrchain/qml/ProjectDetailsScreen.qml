@@ -23,12 +23,13 @@ import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 import SortFilterProxyModel 0.2
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 import "qrc:/Project" as ProjectComponents
 
-Page {
+AppNavigationPage {
     id: root
 
     readonly property Project project: dataManager.detailedProject

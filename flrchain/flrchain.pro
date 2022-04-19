@@ -173,3 +173,4 @@ DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 include(../android_openssl/openssl.pri)
 include(../mrestapi/mrestapi.pri)
 include(../SortFilterProxyModel/SortFilterProxyModel.pri)
+include(../qml-app-navigation/AppNavigation/AppNavigation.pri)

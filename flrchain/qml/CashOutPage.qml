@@ -21,9 +21,10 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
+AppNavigationPage {
     id: root
     padding: Style.cashOutPageMargins
 

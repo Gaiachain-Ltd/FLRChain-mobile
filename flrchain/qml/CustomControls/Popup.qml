@@ -20,7 +20,9 @@ import QtQuick.Controls 2.15 as Controls
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
-Controls.Dialog {
+import "qrc:/AppNavigation"
+
+AppNavigationPopup {
     id: popup
     anchors.centerIn: parent
     implicitWidth: parent.width - 2 * Style.popupSideMargins
