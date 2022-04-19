@@ -45,7 +45,7 @@ AppPage {
 
     header: Custom.Header {
         height: Style.headerHeight
-        title: qsTr("Wallet")
+        title: qsTr("My profile")
     }
 
     Popups.ChangePasswordPopup {id: changePasswordPopup }
