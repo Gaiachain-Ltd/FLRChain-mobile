@@ -240,8 +240,8 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
 
     const int taskProjectId = taskObject.value(u"project_id").toInt();
     const QString taskProjectName = taskObject.value(u"project_name").toString();
-    const int taskActionId = taskObject.value(u"milestone_id").toInt();
-    const QString taskActionName = taskObject.value(u"milestone_name").toString();
+    const int taskActionId = taskObject.value(u"action_id").toInt();
+    const QString taskActionName = taskObject.value(u"action_name").toString();
     const int taskMilestoneId = taskObject.value(u"milestone_id").toInt();
     const QString taskMilestoneName = taskObject.value(u"milestone_name").toString();
 
