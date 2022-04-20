@@ -56,8 +56,6 @@ HEADERS += \
     src/datamanager.h \
     src/favouritetaskstorage.h \
     src/filemanager.h \
-    src/pagemanager.h \
-    src/pages.h \
     src/session.h \
     src/settings.h \
     src/APICommunication/restapiclient.h \
@@ -109,7 +107,6 @@ SOURCES += src/main.cpp  \
     src/datamanager.cpp \
     src/favouritetaskstorage.cpp \
     src/filemanager.cpp \
-    src/pagemanager.cpp \
     src/session.cpp \
     src/settings.cpp \
     src/APICommunication/restapiclient.cpp \

@@ -24,14 +24,11 @@
 #include "platformbridge.h"
 #include "datamanager.h"
 #include "user.h"
-#include "pages.h"
-#include "pagemanager.h"
 #include "project.h"
 #include "settings.h"
 
 void cleanUp() {
    PlatformBridge::instance()->cleanup();
-   PageManager::dealloc();
    Settings::dealloc();
 }
 
@@ -57,7 +54,6 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
-    engine.rootContext()->setContextProperty("pageManager", QVariant::fromValue(PageManager::instance()));
     engine.rootContext()->setContextProperty("projectsModel", dataManager.projectsModel());
     engine.rootContext()->setContextProperty("transactionsModel", dataManager.transactionsModel());
     engine.rootContext()->setContextProperty("workModel", dataManager.workModel());
@@ -65,7 +61,6 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
-    qmlRegisterUncreatableType<Pages>("com.flrchain.objects", 1, 0, "Pages", "Pages");
     qmlRegisterUncreatableType<Project>("com.flrchain.objects", 1, 0, "Project", "");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
