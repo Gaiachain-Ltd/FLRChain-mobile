@@ -56,7 +56,6 @@ public:
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
-    void joinRequestSent(const int projectId);
     void projectDetailsReceived(Project *project);
     void processingPhoto();
     void photoDownloadResult(const int workId, const QString &path);

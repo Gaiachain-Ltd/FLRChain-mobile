@@ -88,6 +88,7 @@ signals:
     void walletQRCodeReceived(const QString &qrCode);
     void facilitatorListReceived(const QJsonArray &facilitators);
     void sendWorkJobFinished();
+    void joinRequestSent(const int projectId);
 
 private:
     void setInternetConnection(const bool internetConnection);

@@ -54,7 +54,7 @@ AppPage {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onJoinRequestSent(projectId) {
             if (projectId === projectId) {

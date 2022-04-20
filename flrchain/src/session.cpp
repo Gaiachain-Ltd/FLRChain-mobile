@@ -242,9 +242,9 @@ void Session::joinProject(const int projectId) const
 
     auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
-            m_dataManager, &DataManager::joinRequestSent);
+            this, &Session::joinRequestSent);
     connect(request.data(), &JoinProjectRequest::joinProjectError,
-            m_dataManager, [&]()
+            this, [&]()
     {
         AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
                                                           {"errorMessage", tr("Couldn't join the project. Try again.")}
