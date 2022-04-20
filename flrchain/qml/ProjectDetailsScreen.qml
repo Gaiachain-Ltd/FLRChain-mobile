@@ -17,11 +17,13 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 import SortFilterProxyModel 0.2
+import com.melije.pulltorefresh 2.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -54,10 +56,18 @@ AppPage {
     }
 
     Connections {
+        target: dataManager
+
+        function onDetailedProjectChanged() {
+            busyIndicator.visible = false
+        }
+    }
+
+    Connections {
         target: session
 
         function onJoinRequestSent(projectId) {
-            if (projectId === projectId) {
+            if (projectId === root.projectId) {
                 session.getProjectDetails(projectId)
             }
         }
@@ -71,9 +81,10 @@ AppPage {
     }
 
     Flickable {
+        id: projectDetailsFlickable
         anchors.fill: parent
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
         clip: true
         visible: !busyIndicator.visible
 
@@ -139,6 +150,19 @@ AppPage {
                 projectStatus: root.projectStatus
                 projectAssignmentStatus: root.projectAssignmentStatus
                 showFavouritesOnly: root.showFavouritesOnly
+            }
+        }
+
+        PullToRefreshHandler {
+            target: projectDetailsFlickable
+            refreshIndicatorDelegate: RefreshIndicator {
+                Material.accent: Style.accentColor
+            }
+
+            onPullDownRelease:
+            {
+                busyIndicator.visible = true
+                session.getProjectDetails(projectId)
             }
         }
     }

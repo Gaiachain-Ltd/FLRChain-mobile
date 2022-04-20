@@ -11,3 +11,6 @@
 [submodule "qml-app-navigation"]
 	path = addons/qml-app-navigation
 	url = https://github.com/milosolutions/qml-app-navigation.git
+[submodule "pulltorefreshhandler"]
+	path = addons/pulltorefreshhandler
+	url = https://github.com/milosolutions/pulltorefreshhandler.git

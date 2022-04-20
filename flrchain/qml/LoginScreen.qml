@@ -39,7 +39,7 @@ AppPage {
             rightMargin: Style.loginPageSideMargin
         }
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
 
         ColumnLayout {
             id: mainColumn

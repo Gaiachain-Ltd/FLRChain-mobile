@@ -26,7 +26,7 @@ import "qrc:/Delegates" as Delegates
 Flickable {
     id: root
     contentHeight: mainColumn.height
-    boundsBehavior: Flickable.StopAtBounds
+    boundsBehavior: Flickable.DragOverBounds
     clip: true
 
     ColumnLayout {

@@ -43,7 +43,7 @@ AppPage {
             rightMargin: Style.profileScreenMargins
         }
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
 
         ColumnLayout {
             id: mainColumn

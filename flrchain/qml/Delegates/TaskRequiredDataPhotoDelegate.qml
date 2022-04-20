@@ -77,7 +77,7 @@ ColumnLayout {
             id: thumbnailListView
             width: thumbnailPane.availableWidth
             height: thumbnailPane.availableHeight
-            boundsBehavior: ListView.StopAtBounds
+            boundsBehavior: ListView.DragOverBounds
             orientation: ListView.Horizontal
             spacing: 10
             clip: true

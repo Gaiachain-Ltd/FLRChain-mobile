@@ -30,7 +30,7 @@ import "qrc:/Project" as ProjectComponents
 Flickable {
     id: root
     contentHeight: mainColumn.height
-    boundsBehavior: Flickable.StopAtBounds
+    boundsBehavior: Flickable.DragOverBounds
     clip: true
 
     property alias myTasks: myTasksList.model

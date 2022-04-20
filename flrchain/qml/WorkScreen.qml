@@ -64,9 +64,10 @@ AppPage {
     }
 
     Flickable {
+        id: taskDetailsFlickable
         anchors.fill: parent
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
         visible: !busyIndicator.visible
 
         ColumnLayout {

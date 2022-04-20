@@ -17,11 +17,13 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 import com.milosolutions.AppNavigation 1.0
+import com.melije.pulltorefresh 2.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -40,6 +42,10 @@ AppPage {
     }
 
     Component.onCompleted: {
+        reloadData()
+    }
+
+    function reloadData() {
         busyIndicator.visible = true
         session.getWalletBalance()
         session.getTransactionsData()
@@ -69,10 +75,10 @@ AppPage {
     }
 
     Flickable {
-        id: flick
+        id: walletFlickable
         anchors.fill: parent
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
+        boundsBehavior: Flickable.DragOverBounds
         visible: !busyIndicator.visible
 
         ColumnLayout {
@@ -217,6 +223,19 @@ AppPage {
                         separatorVisible: index !== listView.count - 1
                     }
                 }
+            }
+        }
+
+        PullToRefreshHandler {
+            target: walletFlickable
+            threshold: 25
+            refreshIndicatorDelegate: RefreshIndicator {
+                Material.accent: Style.accentColor
+            }
+
+            onPullDownRelease:
+            {
+                reloadData()
             }
         }
     }
