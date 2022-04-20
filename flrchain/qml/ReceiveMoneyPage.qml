@@ -35,7 +35,7 @@ AppPage {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onWalletQRCodeReceived(qrCodeData) {
             busyIndicator.visible = false

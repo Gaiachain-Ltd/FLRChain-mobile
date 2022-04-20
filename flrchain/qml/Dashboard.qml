@@ -38,7 +38,7 @@ AppPage {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onWalletBalanceReceived(balance) {
             walletBalance = balance

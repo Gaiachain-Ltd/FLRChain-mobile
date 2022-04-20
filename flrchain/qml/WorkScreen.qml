@@ -49,26 +49,14 @@ AppPage {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
-        function onWorkAdditionFailed() {
+        function onSendWorkJobFinished() {
             busyIndicator.visible = false
-        }
-
-        function onWorkAdded(taskName, projectName) {
-            busyIndicator.visible = false
-
-            AppNavigationController.openPopup(AppNavigation.WorkSuccessPopup,
-                                              {
-                                                  taskName: taskName,
-                                                  projectName: projectName
-                                              })
         }
     }
 
-    background: Rectangle {
-        color: Style.backgroundColor
-    }
+    background: null
 
     header: Custom.Header {
         height: Style.headerHeight

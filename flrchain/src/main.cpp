@@ -35,25 +35,25 @@ void cleanUp() {
    Settings::dealloc();
 }
 
-int main(int argc, char *argv[]) {
-
+int main(int argc, char *argv[])
+{
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
     app.setApplicationVersion(AppVersion);
-    app.setOrganizationName("Milo Solutions");
-    app.setOrganizationDomain("milosolutions.com");
+    app.setOrganizationName("Gaiachain Lab");
+    app.setOrganizationDomain("gaiachainlab.org.uk");
     app.setApplicationName("FLRChain");
 
     qAddPostRoutine(cleanUp);
     QQmlApplicationEngine engine;
 
     RestAPIClient client;
-
-    Session session;
     DataManager dataManager;
-    session.setDataManager(&dataManager);
+    Session session;
     session.setClient(&client);
+    session.setDataManager(&dataManager);
+
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));

@@ -53,13 +53,6 @@ public:
     TransactionsModel *transactionsModel() const;
     WorkModel *workModel() const;
 
-public slots:
-    void cashOutReplyReceived(const bool result);
-    void joinProjectError();
-    void addWorkError();
-    void saveUserInfoReplyReceived(bool result);
-    void changePasswordReplyReceived(bool result);
-
 signals:
     void displayPhoto(const QString &filePath);
     void photoError();
@@ -67,11 +60,6 @@ signals:
     void projectDetailsReceived(Project *project);
     void processingPhoto();
     void photoDownloadResult(const int workId, const QString &path);
-    void workAdded(const QString &taskName, const QString &projectName);
-    void workAdditionFailed();
-    void walletBalanceReceived(const double balance);
-    void walletQRCodeReceived(const QString &qrCode);
-    void facilitatorListReceived(const QJsonArray &facilitators);
     void projectsDataReply(const QJsonObject &projects);
     void transactionsDataReply(const QJsonArray &transactions);
     void workReply(const QJsonObject &work);

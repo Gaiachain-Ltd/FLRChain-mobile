@@ -50,12 +50,13 @@
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
-Session::Session(QObject *parent) :
-    QObject(parent),
-    m_currentUser(UserPtr::create())
+Session::Session(QObject *parent)
+    : QObject(parent)
+    , m_currentUser(UserPtr::create())
 {
     connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
             this, &Session::setInternetConnection);
+
     PlatformBridge::instance()->checkConnection();
 }
 
@@ -104,7 +105,6 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     if (!phone.isEmpty()) {
         user()->setPhone(phone);
     }
-
     if (!village.isEmpty()) {
         user()->setVillage(village);
     }
@@ -244,7 +244,12 @@ void Session::joinProject(const int projectId) const
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
             m_dataManager, &DataManager::joinRequestSent);
     connect(request.data(), &JoinProjectRequest::joinProjectError,
-            m_dataManager, &DataManager::joinProjectError);
+            m_dataManager, [&]()
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Couldn't join the project. Try again.")}
+                                                      });
+    });
 
     m_apiClient->send(request);
 }
@@ -282,7 +287,7 @@ void Session::getWalletBalance() const
 
     auto request = QSharedPointer<WalletBalanceRequest>::create(getToken());
     connect(request.data(), &WalletBalanceRequest::walletBalanceReply,
-            m_dataManager, &DataManager::walletBalanceReceived);
+            this, &Session::walletBalanceReceived);
 
     m_apiClient->send(request);
 }
@@ -301,7 +306,7 @@ void Session::getWalletQRCode() const
 
     auto request = QSharedPointer<WalletQRCodeRequest>::create(getToken());
     connect(request.data(), &WalletQRCodeRequest::walletQRCodeReply,
-            m_dataManager, &DataManager::walletQRCodeReceived);
+            this, &Session::walletQRCodeReceived);
 
     m_apiClient->send(request);
 }
@@ -320,7 +325,7 @@ void Session::getFacilitatorList() const
 
     auto request = QSharedPointer<FacilitatorListRequest>::create(getToken());
     connect(request.data(), &FacilitatorListRequest::facilitatorListReply,
-            m_dataManager, &DataManager::facilitatorListReceived);
+            this, &Session::facilitatorListReceived);
 
     m_apiClient->send(request);
 }
@@ -339,7 +344,7 @@ void Session::cashOut(const QString &amount, const QString &phone) const
 
     auto request = QSharedPointer<CashOutRequest>::create(amount, phone, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
-            m_dataManager, &DataManager::cashOutReplyReceived);
+            this, &Session::onCashOutReplyReceived);
 
     m_apiClient->send(request);
 }
@@ -358,7 +363,7 @@ void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 
     auto request = QSharedPointer<FacilitatorCashOutRequest>::create(amount, facilitatorId, getToken());
     connect(request.data(), &FacilitatorCashOutRequest::transferReply,
-            m_dataManager, &DataManager::cashOutReplyReceived);
+            this, &Session::onCashOutReplyReceived);
 
     m_apiClient->send(request);
 }
@@ -401,7 +406,7 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
     m_apiClient->send(request);
 }
 
-void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData) const
+void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData)
 {
     if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -417,8 +422,25 @@ void Session::sendWorkRequest(const int projectId, const int taskId, const QVari
     auto activityPhotos = requiredData.value(QLatin1String("photos")).toStringList();
     auto job = new SendWorkJob(m_apiClient, projectId, taskId, activityData, activityPhotos, getToken());
 
-    connect(job, &SendWorkJob::finished, m_dataManager, &DataManager::workAdded);
-    connect(job, &SendWorkJob::failed, m_dataManager, &DataManager::addWorkError);
+    connect(job, &SendWorkJob::finished,
+            this, [&](const QString &taskName, const QString &projectName)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::WorkSuccessPopup, {
+                                                          {"taskName", taskName},
+                                                          {"projectName", projectName}
+                                                      });
+        emit sendWorkJobFinished();
+    });
+    connect(job, &SendWorkJob::failed,
+            this, [&](const QString &errorMessage)
+    {
+        const QString message = tr("Uploading work details failed.") + "\n" + errorMessage;
+
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", message}
+                                                      });
+        emit sendWorkJobFinished();
+    });
 
     connect(job, &SendWorkJob::finished, job, &SendWorkJob::deleteLater);
     connect(job, &SendWorkJob::failed, job, &SendWorkJob::deleteLater);
@@ -443,7 +465,18 @@ void Session::saveUserInfo(const QString &firstName, const QString &lastName, co
     connect(request.data(), &SaveUserInfoRequest::userInfoReply,
             this, &Session::onUserInfo);
     connect(request.data(), &SaveUserInfoRequest::saveUserInfoResult,
-            m_dataManager, &DataManager::saveUserInfoReplyReceived);
+            this, [&](const bool result)
+    {
+        if (result) {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                              {"message", tr("Changes saved successfuly")}
+                                                          });
+        } else {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                              {"errorMessage", tr("Couldn't save changes. Try again.")}
+                                                          });
+        }
+    });
 
     m_apiClient->send(request);
 }
@@ -462,7 +495,18 @@ void Session::changePassword(const QString &oldPassword, const QString &newPassw
 
     auto request = QSharedPointer<ChangePasswordRequest>::create(oldPassword, newPassword, getToken());
     connect(request.data(), &ChangePasswordRequest::changePasswordResult,
-            m_dataManager, &DataManager::changePasswordReplyReceived);
+            this, [&](const bool result)
+    {
+        if (result) {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                              {"message", tr("Password changed successfuly")}
+                                                          });
+        } else {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                              {"errorMessage", tr("Couldn't change password. Try again.")}
+                                                          });
+        }
+    });
 
     m_apiClient->send(request);
 }
@@ -512,6 +556,19 @@ bool Session::getRememberMe() const
 void Session::setToken(const QByteArray &val)
 {
     Settings::instance()->setValue(Settings::Token, val);
+}
+
+void Session::onCashOutReplyReceived(const bool result)
+{
+    if (result) {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Cashed out successfully.")}
+                                                      });
+    } else {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Cash out request failed.")}
+                                                      });
+    }
 }
 
 QByteArray Session::getToken() const

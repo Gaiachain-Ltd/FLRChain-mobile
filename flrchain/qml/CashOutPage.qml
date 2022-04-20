@@ -47,7 +47,7 @@ AppPage {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onFacilitatorListReceived(facilitators) {
             receiverInput.model = facilitators

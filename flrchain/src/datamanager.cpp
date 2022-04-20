@@ -65,60 +65,6 @@ DataManager::~DataManager()
     cleanData();
 }
 
-void DataManager::cashOutReplyReceived(const bool result)
-{
-    if (result) {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
-                                                          {"message", tr("Cashed out successfully.")}
-                                                      });
-    } else {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                          {"errorMessage", tr("Cash out request failed.")}
-                                                      });
-    }
-}
-
-void DataManager::joinProjectError()
-{
-    AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                      {"errorMessage", tr("Couldn't join the project. Try again")}
-                                                  });
-}
-
-void DataManager::addWorkError()
-{
-    AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                      {"errorMessage", tr("Uploading photo failed. Try again")}
-                                                  });
-    emit workAdditionFailed();
-}
-
-void DataManager::saveUserInfoReplyReceived(bool result)
-{
-    if (result) {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
-                                                          {"message", tr("Changes saved successfuly")}
-                                                      });
-    } else {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                          {"errorMessage", tr("Couldn't save changes. Try again.")}
-                                                      });
-    }
-}
-
-void DataManager::changePasswordReplyReceived(bool result)
-{
-    if (result) {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
-                                                          {"message", tr("Password changed successfuly")}
-                                                      });
-    } else {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                          {"errorMessage", tr("Couldn't change password. Try again.")}
-                                                      });
-    }
-}
-
 void DataManager::cleanData()
 {
     cleanPhotosDir();
