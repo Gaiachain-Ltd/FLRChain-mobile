@@ -24,7 +24,6 @@ import "qrc:/Delegates" as Delegates
 
 ListView {
     id: projectTaskList
-    implicitHeight: contentHeight
     spacing: 20
     interactive: false
     delegate: actionDelegate

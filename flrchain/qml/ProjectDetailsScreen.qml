@@ -143,6 +143,7 @@ AppPage {
             ProjectComponents.ProjectTaskList {
                 id: projectTaskList
                 Layout.fillWidth: true
+                Layout.preferredHeight: contentHeight
                 Layout.bottomMargin: Style.projectDetailsTopBottomMargin
                 sourceModel: root.projectActions
                 projectId: root.projectId
