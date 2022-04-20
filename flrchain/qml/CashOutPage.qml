@@ -18,36 +18,36 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
+AppPage {
     id: root
     padding: Style.cashOutPageMargins
 
     property real maxAmount: 0
-    readonly property string loadingState: "Loading"
+    readonly property string loadingState: "LoadingState"
     readonly property string sendToFacilitatorState: "SendToFacilitatorState"
     readonly property string sendToMobileNumberState: "SendToMobileNumberState"
 
-    Connections {
-        target: pageManager
+    Component.onCompleted: {
+        root.maxAmount = maxAmount
 
-        function onSetupCashOutScreen(cashOutMode, maxAmount) {
-            root.maxAmount = maxAmount;
-            if (cashOutMode === Pages.FacilitatorCashOutMode) {
-                session.getFacilitatorList()
-                root.state = root.loadingState
-            } else {
-                root.state = root.sendToMobileNumberState
-            }
+        if (state === loadingState) {
+            session.getFacilitatorList()
+            root.state = root.loadingState
+        } else {
+            root.state = root.sendToMobileNumberState
         }
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onFacilitatorListReceived(facilitators) {
             receiverInput.model = facilitators
@@ -169,7 +169,7 @@ Page {
             text: qsTr("Cancel")
 
             onClicked: {
-                pageManager.back()
+                AppNavigationController.goBack()
             }
         }
 
@@ -182,17 +182,17 @@ Page {
                 } else if (root.state == root.sendToFacilitatorState) {
                     return receiverInput.currentValue > 0 && amountInput.displayText.length > 0
                 }
-                return false;
+                return false
             }
             text: qsTr("Send money")
 
             onClicked: {
                 if (root.state == root.sendToMobileNumberState) {
                     session.cashOut(amountInput.text, phoneNumberInput.text)
-                    pageManager.back()
+                    AppNavigationController.goBack()
                 } else {
                     session.facilitatorCashOut(amountInput.text, receiverInput.currentValue)
-                    pageManager.back()
+                    AppNavigationController.goBack()
                 }
             }
         }

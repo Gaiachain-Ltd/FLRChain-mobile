@@ -18,7 +18,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -75,8 +77,9 @@ Drawer {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        // TODO: open my profile page
-                        console.warn("TODO: not implemented!")
+                        drawer.close()
+                        AppNavigationController.replaceUpToPage(AppNavigation.DashboardPage,
+                                                                AppNavigation.ProfilePage)
                     }
                 }
             }
@@ -121,7 +124,7 @@ Drawer {
 
             onClicked: {
                 drawer.close()
-                pageManager.enterDashboardScreen()
+                AppNavigationController.goBackToPage(AppNavigation.DashboardPage)
             }
         }
 
@@ -143,7 +146,8 @@ Drawer {
 
             onClicked: {
                 drawer.close()
-                pageManager.enterProjectListScreen()
+                AppNavigationController.replaceUpToPage(AppNavigation.DashboardPage,
+                                                        AppNavigation.ProjectListPage)
             }
         }
 
@@ -165,7 +169,8 @@ Drawer {
 
             onClicked: {
                 drawer.close()
-                pageManager.enterWalletScreen()
+                AppNavigationController.replaceUpToPage(AppNavigation.DashboardPage,
+                                                        AppNavigation.WalletPage)
             }
         }
 
@@ -187,7 +192,7 @@ Drawer {
 
             onClicked: {
                 drawer.close()
-                logoutPopup.open()
+                AppNavigationController.openPopup(AppNavigation.ConfirmLogoutPopup)
             }
         }
     }

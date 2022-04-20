@@ -20,11 +20,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 
-Page {
+AppPage {
     id: root
 
     property double walletBalance: 0.0
@@ -36,7 +38,7 @@ Page {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
@@ -48,15 +50,6 @@ Page {
 
         function onProjectsReceived(){
             projectsCount = projectsModel.rowCount()
-        }
-    }
-
-    Connections {
-        target: pageManager
-
-        function onBackTriggered(){
-            session.getWalletBalance()
-            session.getProjectsData()
         }
     }
 
@@ -94,7 +87,7 @@ Page {
                 iconSource: "qrc:/img/dashboard-earn-rewards.svg"
 
                 onClicked: {
-                    pageManager.enterProjectListScreen()
+                    AppNavigationController.enterPage(AppNavigation.ProjectListPage)
                 }
             }
 
@@ -106,7 +99,7 @@ Page {
                 iconSource: "qrc:/img/dashboard-wallet.svg"
 
                 onClicked: {
-                    pageManager.enterWalletScreen()
+                    AppNavigationController.enterPage(AppNavigation.WalletPage)
                 }
             }
 
@@ -118,7 +111,7 @@ Page {
                 iconSource: "qrc:/img/dashboard-my-profile.svg"
 
                 onClicked: {
-                    pageManager.enterProfileScreen();
+                    AppNavigationController.enterPage(AppNavigation.ProfilePage)
                 }
             }
         }

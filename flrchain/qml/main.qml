@@ -21,7 +21,9 @@ import QtQuick.Controls 2.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/Popups" as Popups
 
 ApplicationWindow {
@@ -31,24 +33,27 @@ ApplicationWindow {
     height: Screen.desktopAvailableHeight
     color: Style.backgroundColor
 
-    onClosing: {
-        close.accepted = false;
-        pageManager.back()
-    }
-
     Component.onCompleted: {
         session.getUserInfo()
     }
 
     Menu { id: menu }
 
-    Popups.ConfirmLogoutPopup { id: logoutPopup }
     Popups.ErrorPopup { id: errorPopup }
     Popups.SuccessPopup { id: successPopup }
 
-    PagesView {
-        id: stack
+    AppStackView {
+        id: appStackView
         anchors.fill: parent
+        applicationWindow: mainWindow
+
+        Component.onCompleted: {
+            if (session.hasToken() && session.getRememberMe()) {
+                AppNavigationController.enterPage(AppNavigation.DashboardPage, {}, true)
+            } else {
+                AppNavigationController.enterPage(AppNavigation.LoginPage, {}, true)
+            }
+        }
     }
 
     FontLoader { source: "qrc:/font/OpenSans-Bold.ttf" }

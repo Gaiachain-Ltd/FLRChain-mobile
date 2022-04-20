@@ -21,6 +21,7 @@ import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -160,7 +161,8 @@ Custom.Pane {
                 session.getUserInfo()
             }
 
-            pageManager.enterProjectDetailsScreen(projectId)
+            dataManager.loadProjectDetails(projectId)
+            AppNavigationController.enterPage(AppNavigation.ProjectDetailsPage)
         }
     }
 }

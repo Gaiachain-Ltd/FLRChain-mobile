@@ -26,21 +26,6 @@ Custom.Popup {
     id: popup
     title: qsTr("Change password")
 
-    function validateData() {
-        if (!oldPasswordInput.length || !passwordInput.text.length || !repeatPassword.text.length) {
-            errorLabel.text = qsTr("Please fill out all fields")
-            return false;
-        }
-
-        if(passwordInput.text !== repeatPassword.text) {
-            errorLabel.text = qsTr("Passwords are not equal")
-            return false;
-        }
-
-        session.changePassword(oldPasswordInput.text, passwordInput.text);
-        return true;
-    }
-
     Column {
         Layout.fillWidth: true
         spacing: 5
@@ -119,9 +104,18 @@ Custom.Popup {
             text: qsTr("Change password")
 
             onClicked: {
-                if (validateData()) {
-                    popup.close()
+                if (!oldPasswordInput.length || !passwordInput.text.length || !repeatPassword.text.length) {
+                    errorLabel.text = qsTr("Please fill out all fields")
+                    return
                 }
+
+                if (passwordInput.text !== repeatPassword.text) {
+                    errorLabel.text = qsTr("Passwords are not equal")
+                    return
+                }
+
+                session.changePassword(oldPasswordInput.text, passwordInput.text)
+                popup.close()
             }
         }
     ]

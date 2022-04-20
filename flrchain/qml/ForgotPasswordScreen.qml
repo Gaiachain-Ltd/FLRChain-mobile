@@ -20,25 +20,26 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
-
+AppPage {
     property bool errorMode: false
     property bool resetInProgress: false
 
     Connections {
-        target: dataManager
+        target: session
 
-        function onResetPasswordReplyReceived(result) {
-            if (result) {
-                pageManager.enterSuccessPopup(qsTr("Reset link has been sent to your email"))
-                pageManager.back()
-            } else {
-                pageManager.enterErrorPopup(qsTr("Couldn't send reset link. Try again"))
-                resetInProgress = false
-            }
+        function onResetPasswordSuccessful() {
+            AppNavigationController.goBack()
+            AppNavigationController.openPopup(AppNavigation.SuccessPopup, {message: qsTr("Reset link has been sent to your email.")})
+        }
+
+        function onResetPasswordError(message) {
+            AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: qsTr("Couldn't send reset link.") + "\n" + message})
+            resetInProgress = false
         }
     }
 
@@ -132,7 +133,7 @@ Page {
                     text: qsTr("Log in")
 
                     onClicked: {
-                        pageManager.back()
+                        AppNavigationController.goBack()
                     }
                 }
             }

@@ -18,14 +18,17 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Page {
+AppPage {
     id: root
 
     property double walletBalance: 0.0
@@ -43,7 +46,7 @@ Page {
     }
 
     Connections {
-        target: dataManager
+        target: session
 
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
@@ -52,23 +55,13 @@ Page {
 
     Connections {
         target: transactionsModel
-        function onTransactionsReceived(){
+
+        function onTransactionsReceived() {
             busyIndicator.visible = false
         }
     }
 
-    Connections {
-        target: pageManager
-        function onBackTriggered(){
-            busyIndicator.visible = true
-            session.getWalletBalance()
-            session.getTransactionsData()
-        }
-    }
-
-    background: Rectangle {
-        color: Style.backgroundColor
-    }
+    background: null
 
     header: Custom.Header {
         height: Style.headerHeight
@@ -143,7 +136,11 @@ Page {
                     text: qsTr("Facilitator")
 
                     onClicked: {
-                        pageManager.enterCashOutScreen(Pages.FacilitatorCashOutMode, root.walletBalance);
+                        AppNavigationController.enterPage(AppNavigation.CashOutPage,
+                                                          {
+                                                              maxAmount: root.walletBalance,
+                                                              state: "LoadingState"
+                                                          })
                     }
                 }
 
@@ -154,7 +151,11 @@ Page {
                     text: qsTr("Mobile money")
 
                     onClicked: {
-                        pageManager.enterCashOutScreen(Pages.MobileNumberCashOutMode, root.walletBalance);
+                        AppNavigationController.enterPage(AppNavigation.CashOutPage,
+                                                          {
+                                                              maxAmount: root.walletBalance,
+                                                              state: "SendToMobileNumberState"
+                                                          })
                     }
                 }
             }
@@ -179,7 +180,7 @@ Page {
                     text: qsTr("Receive USDC")
 
                     onClicked: {
-                        pageManager.enterReceiveMoneyPage("qrc:/img/qr-example.svg") // TODO
+                        AppNavigationController.enterPage(AppNavigation.ReceiveMoneyPage)
                     }
                 }
             }

@@ -56,8 +56,6 @@ HEADERS += \
     src/datamanager.h \
     src/favouritetaskstorage.h \
     src/filemanager.h \
-    src/pagemanager.h \
-    src/pages.h \
     src/session.h \
     src/settings.h \
     src/APICommunication/restapiclient.h \
@@ -83,7 +81,8 @@ HEADERS += \
     src/Models/project.h \
     src/Models/user.h \
     src/Models/work.h \
-    src/types.h
+    src/types.h \
+    src/AppNavigationData.h
 
 SOURCES += src/main.cpp  \
     src/APICommunication/apimultipartrequest.cpp \
@@ -108,7 +107,6 @@ SOURCES += src/main.cpp  \
     src/datamanager.cpp \
     src/favouritetaskstorage.cpp \
     src/filemanager.cpp \
-    src/pagemanager.cpp \
     src/session.cpp \
     src/settings.cpp \
     src/APICommunication/restapiclient.cpp \
@@ -173,3 +171,4 @@ DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 include(../android_openssl/openssl.pri)
 include(../mrestapi/mrestapi.pri)
 include(../SortFilterProxyModel/SortFilterProxyModel.pri)
+include(../qml-app-navigation/AppNavigation/AppNavigation.pri)

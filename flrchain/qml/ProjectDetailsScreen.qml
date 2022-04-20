@@ -23,12 +23,12 @@ import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 import SortFilterProxyModel 0.2
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
-import "qrc:/Popups" as Popups
 import "qrc:/Project" as ProjectComponents
 
-Page {
+AppPage {
     id: root
 
     readonly property Project project: dataManager.detailedProject
@@ -50,55 +50,16 @@ Page {
     Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-    }
-
-    Popups.JoinProjectPopup {
-        id: joinPopup
-        projectId: root.projectId
-        projectName: root.projectName
+        visible: false
     }
 
     Connections {
-        target: pageManager
-
-        function onSetupProjectDetailsScreen(projectId) {
-            dataManager.loadProjectDetails(projectId)
-        }
-
-        function onBackTriggered() {
-//            busyIndicator.visible = true
-            session.getProjectDetails(projectId)
-        }
-    }
-
-    Connections {
-        target: dataManager
-
-        function onDetailedProjectChanged() {
-            busyIndicator.visible = false
-//            session.getWorkData(root.projectId)
-        }
+        target: session
 
         function onJoinRequestSent(projectId) {
             if (projectId === projectId) {
                 session.getProjectDetails(projectId)
             }
-        }
-    }
-
-    Connections {
-        target: workModel
-
-        function onWorkReceived(rewardsBalance) {
-            if (workModel.rowCount() === 0) {
-                busyIndicator.visible = false
-                return;
-            }
-//            workBalance = rewardsBalance
-        }
-
-        function onWorkUpdated() {
-            busyIndicator.visible = false
         }
     }
 
@@ -138,12 +99,14 @@ Page {
 
             Delegates.ProjectDetailsDelegate {
                 Layout.fillWidth: true
-                deadline: projectEndDate
-                description: projectDescription
-                status: projectStatus
-                assignmentStatus: projectAssignmentStatus
-                photo: projectPhoto
-                mapLink: projectMapLink
+                projectId: root.projectId
+                projectName: root.projectName
+                deadline: root.projectEndDate
+                description: root.projectDescription
+                status: root.projectStatus
+                assignmentStatus: root.projectAssignmentStatus
+                photo: root.projectPhoto
+                mapLink: root.projectMapLink
             }
 
             Label {

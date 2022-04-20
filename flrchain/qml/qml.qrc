@@ -3,7 +3,6 @@
         <file>main.qml</file>
         <file>LoginScreen.qml</file>
         <file>RegistrationScreen.qml</file>
-        <file>PagesView.qml</file>
         <file>WorkScreen.qml</file>
         <file>CustomControls/TextInput.qml</file>
         <file>CustomControls/IconButton.qml</file>

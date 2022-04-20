@@ -22,10 +22,11 @@ import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Project" as ProjectComponents
 
-Page {
+AppPage {
     id: projectsScreen
 
     Custom.BusyIndicator {

@@ -20,46 +20,13 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
-
+AppPage {
     property bool errorMode: false
-
-    Connections {
-        target: session
-
-        function onRegistrationError(error) {
-            errorMode = true
-            errorLabel.text = error
-        }
-
-        function onRegistrationSuccessful(){
-            pageManager.enterSuccessPopup("Account has been created.")
-            pageManager.enterLoginScreen()
-        }
-    }
-
-    function validateData() {
-        if(!nameInput.text.length || !lastNameInput.text.length ||
-           !userEmailInput.text.length || !passwordInput.text.length  ||
-           !repeatPassword.text.length)
-        {
-            errorLabel.text = ""
-            errorMode = true
-            return
-        }
-
-        if(passwordInput.text !== repeatPassword.text) {
-            errorLabel.text = qsTr("Passwords are not equal")
-            errorMode = true
-            return
-        }
-
-        session.registerUser(userEmailInput.text, passwordInput.text, nameInput.text,
-                             lastNameInput.text, phoneInput.text, villageNameInput.text)
-    }
 
     background: Rectangle {
         color: Style.loginPageBackgroundColor
@@ -282,7 +249,23 @@ Page {
                     text: qsTr("Register")
 
                     onClicked: {
-                        validateData()
+                        if(!nameInput.text.length || !lastNameInput.text.length ||
+                           !userEmailInput.text.length || !passwordInput.text.length  ||
+                           !repeatPassword.text.length)
+                        {
+                            errorLabel.text = qsTr("Not all of the required fields have been filled")
+                            errorMode = true
+                            return
+                        }
+
+                        if(passwordInput.text !== repeatPassword.text) {
+                            errorLabel.text = qsTr("Passwords are not equal")
+                            errorMode = true
+                            return
+                        }
+
+                        session.registerUser(userEmailInput.text, passwordInput.text, nameInput.text,
+                                             lastNameInput.text, phoneInput.text, villageNameInput.text)
                     }
                 }
 
@@ -292,7 +275,7 @@ Page {
                     text: qsTr("Log in")
 
                     onClicked: {
-                        pageManager.enterLoginScreen()
+                        AppNavigationController.goBack()
                     }
                 }
 

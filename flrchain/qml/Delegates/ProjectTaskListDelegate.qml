@@ -20,6 +20,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
@@ -158,18 +159,18 @@ Pane {
             text: qsTr("Earn reward")
 
             onClicked: {
-                var workScreenData = {}
-                workScreenData.projectId = taskProjectId
-                workScreenData.projectName = taskProjectName
-                workScreenData.actionName = taskActionName
-                workScreenData.milestoneName = taskMilestoneName
-                workScreenData.taskId = taskId
-                workScreenData.taskName = taskName
-                workScreenData.taskTypeOfInformation = taskTypeOfInformation
-                workScreenData.taskInstructions = taskInstructions
-                workScreenData.taskRequiredData = taskRequiredData
-
-                pageManager.enterWorkScreen(workScreenData)
+                AppNavigationController.enterPage(AppNavigation.WorkPage,
+                                                  {
+                                                      projectId: taskProjectId,
+                                                      projectName: taskProjectName,
+                                                      actionName: taskActionName,
+                                                      milestoneName: taskMilestoneName,
+                                                      taskId: taskId,
+                                                      taskName: taskName,
+                                                      taskTypeOfInformation: taskTypeOfInformation,
+                                                      taskInstructions: taskInstructions,
+                                                      taskRequiredData: taskRequiredData
+                                                  })
             }
         }
     }

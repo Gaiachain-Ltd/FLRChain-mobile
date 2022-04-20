@@ -18,27 +18,15 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import com.flrchain.style 1.0
 
+import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
+
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Page {
-
+AppPage {
     property bool errorMode: false
-
-    Connections {
-        target: session
-
-        function onLoginError(error) {
-            errorLabel.text = error
-            errorMode = true
-        }
-
-        function onLoginSuccessful(token) {
-            session.getUserInfo()
-            pageManager.enterDashboardScreen()
-        }
-    }
 
     background: Rectangle {
         color: Style.loginPageBackgroundColor
@@ -91,7 +79,7 @@ Page {
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
-                            if(errorMode) {
+                            if (errorMode) {
                                 errorMode = false
                                 errorLabel.text = ""
                             }
@@ -120,7 +108,7 @@ Page {
                         isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
                         onTextEdited: {
-                            if(errorMode){
+                            if (errorMode) {
                                 errorMode = false
                                 errorLabel.text = ""
                             }
@@ -154,8 +142,9 @@ Page {
 
                     onClicked: {
                         if (!userEmailInput.text.length || !passwordInput.text.length) {
+                            errorLabel.text = qsTr("Please enter both email and password")
                             errorMode = true
-                            return;
+                            return
                         }
 
                         session.login(userEmailInput.text, passwordInput.text)
@@ -168,7 +157,7 @@ Page {
                     text: qsTr("Register")
 
                     onClicked: {
-                        pageManager.enterRegistrationScreen()
+                        AppNavigationController.enterPage(AppNavigation.RegistrationPage)
                     }
                 }
 
@@ -183,7 +172,7 @@ Page {
                     text: qsTr("Forgot password?")
 
                     onClicked: {
-                        pageManager.enterForgotPasswordScreen()
+                        AppNavigationController.enterPage(AppNavigation.ForgotPasswordPage)
                     }
                 }
             }

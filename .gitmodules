@@ -8,3 +8,6 @@
 [submodule "SortFilterProxyModel"]
 	path = SortFilterProxyModel
 	url = https://github.com/milosolutions/SortFilterProxyModel.git
+[submodule "qml-app-navigation"]
+	path = qml-app-navigation
+	url = https://github.com/milosolutions/qml-app-navigation.git

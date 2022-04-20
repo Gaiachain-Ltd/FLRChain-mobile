@@ -21,7 +21,7 @@
 #include "settings.h"
 #include "datamanager.h"
 #include "platformbridge.h"
-#include "pagemanager.h"
+#include "AppNavigationController.h"
 
 #include <QSharedPointer>
 #include <QLoggingCategory>
@@ -50,12 +50,13 @@
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
-Session::Session(QObject *parent) :
-    QObject(parent),
-    mCurrentUser(UserPtr::create())
+Session::Session(QObject *parent)
+    : QObject(parent)
+    , m_currentUser(UserPtr::create())
 {
     connect(PlatformBridge::instance(), &PlatformBridge::networkAvailableChanged,
             this, &Session::setInternetConnection);
+
     PlatformBridge::instance()->checkConnection();
 }
 
@@ -66,7 +67,7 @@ Session::~Session()
 
 void Session::setClient(RestAPIClient *client)
 {
-    mClient = client;
+    m_apiClient = client;
 }
 
 bool Session::hasToken() const
@@ -76,13 +77,16 @@ bool Session::hasToken() const
 
 User *Session::user() const
 {
-    return mCurrentUser.data();
+    return m_currentUser.data();
 }
 
-void Session::onLoginSuccessful(const QString &token)
+void Session::onResetPasswordResult(const bool wasSuccessful, const QString &errorMessage)
 {
-    setToken(token.toUtf8());
-    emit loginSuccessful(token);
+    if (wasSuccessful) {
+        emit resetPasswordSuccessful();
+    } else {
+        emit resetPasswordError(errorMessage);
+    }
 }
 
 void Session::onUserInfo(const QString &firstName, const QString &lastName,
@@ -101,7 +105,6 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
     if (!phone.isEmpty()) {
         user()->setPhone(phone);
     }
-
     if (!village.isEmpty()) {
         user()->setVillage(village);
     }
@@ -111,7 +114,7 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
 
 void Session::login(const QString &email, const QString &password)
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send login request!";
         return;
     }
@@ -119,33 +122,56 @@ void Session::login(const QString &email, const QString &password)
     auto request = QSharedPointer<LoginRequest>::create(email, password);
 
     connect(request.data(), &LoginRequest::loginSuccessful,
-            this, &Session::onLoginSuccessful);
-    connect(request.data(), &LoginRequest::loginError,
-            this, &Session::loginError);
+            this, [&](const QString &token)
+    {
+        setToken(token.toUtf8());
 
-    mClient->send(request);
+        getUserInfo();
+        AppNavigationController::instance().replaceAllPages(AppNavigation::PageID::DashboardPage);
+    });
+
+    connect(request.data(), &LoginRequest::loginError,
+            this, [&](const QString &errorMessage)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", errorMessage}
+                                                      });
+    });
+
+    m_apiClient->send(request);
 }
 
 void Session::registerUser(const QString &email, const QString &password, const QString &firstName,
                            const QString &lastName, const QString &phone, const QString &village)
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
 
     auto request = QSharedPointer<RegisterRequest>::create(email, password, firstName, lastName, phone, village);
     connect(request.data(), &RegisterRequest::registrationSuccessful,
-            this, &Session::registrationSuccessful);
+            this, [&]()
+    {
+        AppNavigationController::instance().enterPage(AppNavigation::PageID::LoginPage);
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Account has been created.")}
+                                                      });
+    });
     connect(request.data(), &RegisterRequest::registerError,
-            this, &Session::registrationError);
+            this, [&](const QString& errorMessage)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", errorMessage}
+                                                      });
+    });
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getProjectsData() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -159,12 +185,12 @@ void Session::getProjectsData() const
     connect(request.data(), &ProjectsDataRequest::projectsDataReply,
             m_dataManager, &DataManager::projectsDataReply);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getWorkData(const int projectId) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -180,12 +206,12 @@ void Session::getWorkData(const int projectId) const
     connect(request.data(), &WorkDataRequest::workDataReply,
             m_dataManager, &DataManager::workReply);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getUserInfo() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -199,12 +225,12 @@ void Session::getUserInfo() const
     connect(request.data(), &UserInfoRequest::userInfoReply,
             this, &Session::onUserInfo);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::joinProject(const int projectId) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -216,16 +242,21 @@ void Session::joinProject(const int projectId) const
 
     auto request = QSharedPointer<JoinProjectRequest>::create(projectId, getToken());
     connect(request.data(), &JoinProjectRequest::joinProjectReply,
-            m_dataManager, &DataManager::joinRequestSent);
+            this, &Session::joinRequestSent);
     connect(request.data(), &JoinProjectRequest::joinProjectError,
-            m_dataManager, &DataManager::joinProjectError);
+            this, [&]()
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Couldn't join the project. Try again.")}
+                                                      });
+    });
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getTransactionsData() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -239,12 +270,12 @@ void Session::getTransactionsData() const
     connect(request.data(), &TransactionHistoryRequest::walletDataReply,
             m_dataManager, &DataManager::transactionsDataReply);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getWalletBalance() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -256,14 +287,14 @@ void Session::getWalletBalance() const
 
     auto request = QSharedPointer<WalletBalanceRequest>::create(getToken());
     connect(request.data(), &WalletBalanceRequest::walletBalanceReply,
-            m_dataManager, &DataManager::walletBalanceReceived);
+            this, &Session::walletBalanceReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getWalletQRCode() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -275,14 +306,14 @@ void Session::getWalletQRCode() const
 
     auto request = QSharedPointer<WalletQRCodeRequest>::create(getToken());
     connect(request.data(), &WalletQRCodeRequest::walletQRCodeReply,
-            m_dataManager, &DataManager::walletQRCodeReceived);
+            this, &Session::walletQRCodeReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getFacilitatorList() const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -294,14 +325,14 @@ void Session::getFacilitatorList() const
 
     auto request = QSharedPointer<FacilitatorListRequest>::create(getToken());
     connect(request.data(), &FacilitatorListRequest::facilitatorListReply,
-            m_dataManager, &DataManager::facilitatorListReceived);
+            this, &Session::facilitatorListReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::cashOut(const QString &amount, const QString &phone) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -313,14 +344,14 @@ void Session::cashOut(const QString &amount, const QString &phone) const
 
     auto request = QSharedPointer<CashOutRequest>::create(amount, phone, getToken());
     connect(request.data(), &CashOutRequest::transferReply,
-            m_dataManager, &DataManager::cashOutReplyReceived);
+            this, &Session::onCashOutReplyReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -332,14 +363,14 @@ void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 
     auto request = QSharedPointer<FacilitatorCashOutRequest>::create(amount, facilitatorId, getToken());
     connect(request.data(), &FacilitatorCashOutRequest::transferReply,
-            m_dataManager, &DataManager::cashOutReplyReceived);
+            this, &Session::onCashOutReplyReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getProjectDetails(const int projectId) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -353,12 +384,12 @@ void Session::getProjectDetails(const int projectId) const
     connect(request.data(), &ProjectDetailsRequest::projectDetailsReply,
             m_dataManager, &DataManager::projectDetailsReply);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::downloadPhoto(const QString &fileName, const int workId) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -372,12 +403,12 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
     connect(request.data(), &GetImageRequest::fileDownloadResult,
             m_dataManager, &DataManager::photoDownloadResult);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
-void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData) const
+void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData)
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -389,10 +420,27 @@ void Session::sendWorkRequest(const int projectId, const int taskId, const QVari
 
     auto activityData = requiredData.value(QLatin1String("data")).toMap();
     auto activityPhotos = requiredData.value(QLatin1String("photos")).toStringList();
-    auto job = new SendWorkJob(mClient, projectId, taskId, activityData, activityPhotos, getToken());
+    auto job = new SendWorkJob(m_apiClient, projectId, taskId, activityData, activityPhotos, getToken());
 
-    connect(job, &SendWorkJob::finished, m_dataManager, &DataManager::workAdded);
-    connect(job, &SendWorkJob::failed, m_dataManager, &DataManager::addWorkError);
+    connect(job, &SendWorkJob::finished,
+            this, [&](const QString &taskName, const QString &projectName)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::WorkSuccessPopup, {
+                                                          {"taskName", taskName},
+                                                          {"projectName", projectName}
+                                                      });
+        emit sendWorkJobFinished();
+    });
+    connect(job, &SendWorkJob::failed,
+            this, [&](const QString &errorMessage)
+    {
+        const QString message = tr("Uploading work details failed.") + "\n" + errorMessage;
+
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", message}
+                                                      });
+        emit sendWorkJobFinished();
+    });
 
     connect(job, &SendWorkJob::finished, job, &SendWorkJob::deleteLater);
     connect(job, &SendWorkJob::failed, job, &SendWorkJob::deleteLater);
@@ -402,7 +450,7 @@ void Session::sendWorkRequest(const int projectId, const int taskId, const QVari
 
 void Session::saveUserInfo(const QString &firstName, const QString &lastName, const QString &phone, const QString &village) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -417,14 +465,25 @@ void Session::saveUserInfo(const QString &firstName, const QString &lastName, co
     connect(request.data(), &SaveUserInfoRequest::userInfoReply,
             this, &Session::onUserInfo);
     connect(request.data(), &SaveUserInfoRequest::saveUserInfoResult,
-            m_dataManager, &DataManager::saveUserInfoReplyReceived);
+            this, [&](const bool result)
+    {
+        if (result) {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                              {"message", tr("Changes saved successfuly")}
+                                                          });
+        } else {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                              {"errorMessage", tr("Couldn't save changes. Try again.")}
+                                                          });
+        }
+    });
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::changePassword(const QString &oldPassword, const QString &newPassword) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -436,28 +495,39 @@ void Session::changePassword(const QString &oldPassword, const QString &newPassw
 
     auto request = QSharedPointer<ChangePasswordRequest>::create(oldPassword, newPassword, getToken());
     connect(request.data(), &ChangePasswordRequest::changePasswordResult,
-            m_dataManager, &DataManager::changePasswordReplyReceived);
+            this, [&](const bool result)
+    {
+        if (result) {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                              {"message", tr("Password changed successfuly")}
+                                                          });
+        } else {
+            AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                              {"errorMessage", tr("Couldn't change password. Try again.")}
+                                                          });
+        }
+    });
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::resetPassword(const QString &email) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
 
     auto request = QSharedPointer<ResetPasswordRequest>::create(email);
     connect(request.data(), &ResetPasswordRequest::passwordResetResult,
-            m_dataManager, &DataManager::resetPasswordReplyReceived);
+            this, &Session::onResetPasswordResult);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::getMyTasks(const QVariantList &taskIds) const
 {
-    if (mClient.isNull()) {
+    if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
         return;
     }
@@ -470,7 +540,7 @@ void Session::getMyTasks(const QVariantList &taskIds) const
     connect(request.get(), &MyTasksRequest::myTasksReceived,
             m_dataManager, &DataManager::myTasksReceived);
 
-    mClient->send(request);
+    m_apiClient->send(request);
 }
 
 void Session::setRememberMe(const bool val)
@@ -488,6 +558,19 @@ void Session::setToken(const QByteArray &val)
     Settings::instance()->setValue(Settings::Token, val);
 }
 
+void Session::onCashOutReplyReceived(const bool result)
+{
+    if (result) {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
+                                                          {"message", tr("Cashed out successfully.")}
+                                                      });
+    } else {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", tr("Cash out request failed.")}
+                                                      });
+    }
+}
+
 QByteArray Session::getToken() const
 {
     return Settings::instance()->getValue(Settings::Token).toByteArray();
@@ -503,12 +586,12 @@ void Session::setDataManager(DataManager *dataManager)
 
 void Session::logout()
 {
-    mCurrentUser->clear();
+    m_currentUser->clear();
     m_dataManager->cleanData();
     setRememberMe(0);
     setToken(QByteArray());
-    PageManager::instance()->closeAll();
-    PageManager::instance()->enterLoginScreen();
+
+    AppNavigationController::instance().replaceAllPages(AppNavigation::PageID::LoginPage);
 }
 
 void Session::setInternetConnection(const bool internetConnection)
