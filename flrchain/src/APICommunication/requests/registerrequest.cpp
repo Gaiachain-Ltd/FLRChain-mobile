@@ -1,10 +1,24 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "registerrequest.h"
 
 #include <QJsonObject>
-#include <QJsonValue>
-
 #include <QLoggingCategory>
-#include <QDebug>
 
 Q_LOGGING_CATEGORY(requestRegister, "request.register")
 
@@ -12,13 +26,9 @@ RegisterRequest::RegisterRequest(const QString &email, const QString &password, 
                                  const QString &lastName, const QString &phone, const QString &village)
     : ApiRequest("register")
 {
-    connect(this, &RegisterRequest::replyError,
-            this, &RegisterRequest::errorHandler);
-
     if (!email.isEmpty() && !password.isEmpty()) {
-
         QJsonObject object;
-        object.insert(QLatin1String("email"), QJsonValue(email));
+        object.insert(QLatin1String("email"), QJsonValue(email.toLower()));
         object.insert(QLatin1String("password"), QJsonValue(password));
         object.insert(QLatin1String("first_name"), QJsonValue(firstName));
         object.insert(QLatin1String("last_name"), QJsonValue(lastName));
@@ -34,25 +44,6 @@ RegisterRequest::RegisterRequest(const QString &email, const QString &password, 
     }
 }
 
-void RegisterRequest::errorHandler(const QString &error)
-{
-    qDebug() << "Error" << error;
-
-    QString errorMsg;
-
-    if(QString(m_replyData).contains(QLatin1String("user with this email address already exists.")))
-    {
-        errorMsg = QLatin1String("There is an account registered to this email address. Please enter a different email address");
-    }
-    else if(QString(m_replyData).contains(QLatin1String("Enter a valid email address."))){
-        errorMsg = QLatin1String("Enter a valid email address.");
-    }
-    else {
-        errorMsg = QLatin1String("Registration error");
-    }
-    emit registerError(errorMsg);
-}
-
 void RegisterRequest::parse()
 {
     emit registrationSuccessful();
@@ -61,4 +52,21 @@ void RegisterRequest::parse()
 bool RegisterRequest::isTokenRequired() const
 {
     return false;
+}
+
+void RegisterRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
+{
+    ApiRequest::handleError(errorMessage, errorCode);
+
+    QString message;
+
+    if(QLatin1String(m_replyData).contains(QLatin1String("user with this email address already exists."))) {
+        message = tr("There is an account registered to this email address. Please enter a different email address");
+    } else if(QLatin1String(m_replyData).contains(QLatin1String("Enter a valid email address."))) {
+        message = tr("Enter a valid email address.");
+    } else {
+        message = tr("Registration error");
+    }
+
+    emit registerError(message);
 }

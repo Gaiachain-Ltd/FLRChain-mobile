@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="delete-icon" transform="translate(0 -5)">
+    <circle id="Ellipse_1468" data-name="Ellipse 1468" cx="8" cy="8" r="8" transform="translate(0 5)" fill="#dc0000"/>
+    <g id="Group_10525" data-name="Group 10525" transform="translate(4 9)">
+      <rect id="Rectangle_5402" data-name="Rectangle 5402" width="2.2" height="9.114" rx="1" transform="translate(6.444 0) rotate(45)" fill="#fff"/>
+      <rect id="Rectangle_5403" data-name="Rectangle 5403" width="2.2" height="9.114" rx="1" transform="translate(0 1.556) rotate(-45)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

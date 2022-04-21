@@ -1,44 +1,55 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick.Controls 2.15 as Controls
+
 import com.flrchain.style 1.0
 
-CheckBox {
+Controls.CheckBox {
     id: checkBox
+    padding: 0
+    spacing: Style.checkboxSpacing
+
+    background: null
 
     indicator: Rectangle {
-        id: contentRec
-        implicitWidth: Style.checkboxHeight
-        implicitHeight: Style.checkboxHeight
-        radius: Style.checkBoxRadius
-        border.color: Style.accentColor
-        border.width: Style.borderWidth
+        implicitWidth: Style.checkboxSize.width
+        implicitHeight: Style.checkboxSize.height
+        radius: Style.checkboxBorderRadius
+        border {
+            width: Style.checkboxBorderWidth
+            color: Style.checkboxBorderColor
+        }
 
-        Rectangle {
+        Image {
+            anchors.centerIn: parent
+            sourceSize: Style.checkboxTickSize
+            source: "qrc:/img/checkbox-check.svg"
             visible: checkBox.checked
-            color: Style.accentColor
-            border.color: Style.accentColor
-            radius: Style.checkBoxRadius
-            anchors.fill: parent
-
-            Image{
-                source: "qrc:/img/checkbox-check.svg"
-                height: Style.checkboxHeight
-                width: Style.checkboxHeight
-                anchors.centerIn: parent
-                sourceSize: Qt.size(Style.checkboxHeight, Style.checkboxHeight)
-            }
         }
     }
 
-    contentItem: Text {
-        anchors.verticalCenter: contentRec.verticalCenter
-        text: checkBox.text
-        color: Style.baseLabelColor
+    contentItem: Controls.Label {
+        anchors.verticalCenter: indicator.verticalCenter
         verticalAlignment: Qt.AlignVCenter
-        leftPadding: contentRec.width + spacing
-        font.pixelSize: Style.fontTiny
-        font.weight: Font.DemiBold
+        leftPadding: indicator.width + spacing
+        font: Style.checkboxLabelFont
+        color: Style.checkBoxLabelFontColor
+        text: checkBox.text
     }
-
-    spacing: Style.microMargin
 }

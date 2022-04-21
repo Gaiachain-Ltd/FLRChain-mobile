@@ -1,0 +1,46 @@
+<RCC>
+    <qresource prefix="/"/>
+    <qresource prefix="/img">
+        <file>trees-login.svg</file>
+        <file>logo-login.svg</file>
+        <file>icon-upload.svg</file>
+        <file>icon-transaction.svg</file>
+        <file>icon-suspended.svg</file>
+        <file>icon-success.svg</file>
+        <file>icon-popup-faile.svg</file>
+        <file>icon-pending-total.svg</file>
+        <file>icon-pending.svg</file>
+        <file>icon-ongoing.svg</file>
+        <file>icon-menu-wallet.svg</file>
+        <file>icon-menu-logout.svg</file>
+        <file>icon-menu-home.svg</file>
+        <file>icon-menu-earn-rewards.svg</file>
+        <file>icon-menu.svg</file>
+        <file>icon-finished.svg</file>
+        <file>icon-delete.svg</file>
+        <file>icon-confirmation.svg</file>
+        <file>icon-close-menu.svg</file>
+        <file>icon-camera.svg</file>
+        <file>icon-calendar.svg</file>
+        <file>icon-back.svg</file>
+        <file>icon-accepted-total.svg</file>
+        <file>icon-accepted.svg</file>
+        <file>dropdown-arrow-down.svg</file>
+        <file>dashboard-wallet.svg</file>
+        <file>dashboard-earn-rewards.svg</file>
+        <file>dashboard-arrow-yellow.svg</file>
+        <file>dashboard-arrow-green.svg</file>
+        <file>checkbox-check.svg</file>
+        <file>checkbox.svg</file>
+        <file>dashboard-my-profile.svg</file>
+        <file>icon-facilitator.svg</file>
+        <file>icon-mobile-money.svg</file>
+        <file>icon-receive.svg</file>
+        <file>icon-arrow-down.svg</file>
+        <file>qr-example.svg</file>
+        <file>icon-add-fav.svg</file>
+        <file>icon-remove-fav.svg</file>
+        <file>padlock.svg</file>
+        <file>icon-gallery.svg</file>
+    </qresource>
+</RCC>

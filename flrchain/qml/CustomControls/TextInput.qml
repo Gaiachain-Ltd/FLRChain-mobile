@@ -1,27 +1,46 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+
 import com.flrchain.style 1.0
 
-TextField
-{
+TextField {
     id: textInput
-    implicitWidth: parent.width
-    implicitHeight: Style.textInputHeight
+    implicitWidth: Style.defaultTextInputSize.width
+    implicitHeight: Style.defaultTextInputSize.height
+
+    property bool isValid: true
 
     background: Rectangle {
         radius: Style.baseRadius
-        implicitWidth: parent.width
-        implicitHeight: parent.height
-        color: Style.inputBgColor
+        color: textInput.isValid ? Style.textInputValidBackgroundColor
+                                 : Style.textInputInvalidBackgroundColor
     }
 
     verticalAlignment: Qt.AlignVCenter
     horizontalAlignment: Qt.AlignLeft
-
-    color: Style.darkLabelColor
-    font.weight: Font.DemiBold
-    font.pixelSize: Style.fontTiny
+    leftPadding: Style.textInputPadding
+    rightPadding: Style.textInputPadding
+    font: Style.textInputFont
+    color: isValid ? Style.textInputValidFontColor
+                   : Style.textInputInvalidFontColor
     placeholderText: textInput.placeholderText
-    placeholderTextColor: Style.placeholderColor
-    leftPadding: Style.baseMargin
+    placeholderTextColor: isValid ? Style.textInputPlaceholderFontColor
+                                  : Style.textInputInvalidFontColor
 }

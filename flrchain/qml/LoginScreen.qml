@@ -1,199 +1,178 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import com.flrchain.style 1.0
 
+import com.flrchain.style 1.0
+import com.milosolutions.AppNavigation 1.0
+
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 
-Item {
-
+AppPage {
     property bool errorMode: false
 
-    Connections{
-        target: session
-        function onLoginError(error){
-            errorLabel.text = error
-            errorMode = true
-        }
-
-        function onLoginSuccessful(token){
-            pageManager.enterDashboardScreen();
-        }
+    background: Rectangle {
+        color: Style.loginPageBackgroundColor
     }
 
-    Rectangle {
-        id: background
-        color: Style.shadowedBgColor
-        anchors.fill: parent
+    Flickable {
+        anchors {
+            fill: parent
+            leftMargin: Style.loginPageSideMargin
+            rightMargin: Style.loginPageSideMargin
+        }
+        contentHeight: mainColumn.height
+        boundsBehavior: Flickable.DragOverBounds
 
-        Flickable {
-            anchors {
-                top: parent.top
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                topMargin: Style.baseMargin
+        ColumnLayout {
+            id: mainColumn
+            width: parent.width
+            spacing: Style.loginPageSpacing
+
+            Image {
+                Layout.topMargin: Style.loginLogoTopMargin
+                Layout.alignment: Qt.AlignHCenter
+                sourceSize: Style.loginPageLogoSize
+                source: "qrc:/img/logo-login.svg"
             }
-            contentHeight: mainColumn.height
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: mainColumn
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.smallMargin
-                    rightMargin: Style.smallMargin
-                    topMargin: Style.baseMargin
-                    bottomMargin: Style.smallMargin
-                }
-                Item{
-                    Layout.fillHeight: true
-                    Layout.preferredHeight: Style.ultraMargin
-                    Layout.maximumHeight: Style.ultraMargin
+            Custom.FormPane {
+                Layout.fillWidth: true
+                title: qsTr("Login")
+                subtitle: qsTr("Welcome Back!")
+
+                Column {
                     Layout.fillWidth: true
-                }
+                    spacing: 5
 
-                Image {
-                    id: logo
-                    source: "qrc:/img/logo-login.svg"
-                    Layout.preferredWidth: Style.logoWidth
-                    Layout.preferredHeight: Style.logoHeight
-                    Layout.alignment: Qt.AlignHCenter
-                    sourceSize: Qt.size(Style.logoWidth, Style.logoHeight)
-                }
+                    Label {
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Email") + "*"
+                    }
 
-                Image {
-                    id: logoImg
-                    source: "qrc:/img/trees-login.svg"
-                    Layout.preferredWidth: 298
-                    Layout.preferredHeight: 140
-                    Layout.topMargin: Style.baseMargin
-                    Layout.alignment: Qt.AlignHCenter
-                    sourceSize: Qt.size(298, 140)
-                }
-
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: childrenRect.height
-
-                    color: Style.bgColor
-                    radius: Style.baseRadius
-
-                    ColumnLayout{
+                    Custom.TextInput {
+                        id: userEmailInput
                         anchors {
                             left: parent.left
                             right: parent.right
-                            margins: Style.baseMargin
                         }
-                        spacing: Style.smallMargin
+                        placeholderText: qsTr("Please enter your email...")
+                        inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhLowercaseOnly
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
-                        Label {
-                            Layout.topMargin: Style.baseMargin
-                            text: qsTr("Login")
-                            font.pixelSize: Style.fontLarge
-                            color: Style.accentColor
-                        }
-
-                        Label {
-                            Layout.topMargin: -Style.tinyMargin
-                            text: qsTr("Welcome Back!")
-                            font.pixelSize: Style.fontTiny
-                            font.weight: Font.DemiBold
-                            color: Style.baseLabelColor
-                        }
-
-                        Rectangle {
-                            Layout.fillWidth: true
-                            Layout.leftMargin: -Style.baseMargin
-                            Layout.rightMargin: -Style.baseMargin
-                            color: Style.grayBgColor
-                            height: Style.separatorHeight
-                        }
-
-                        Label {
-                            text: qsTr("Email")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
-                        }
-
-                        Custom.TextInput {
-                            id: userEmail
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Please enter your email...")
-                            color: errorMode ? Style.errorColor : Style.darkLabelColor
-                            onTextChanged: {
-                                if(errorMode) {
-                                    errorMode = false
-                                    errorLabel.text = ""
-                                }
+                        onTextEdited: {
+                            if (errorMode) {
+                                errorMode = false
+                                errorLabel.text = ""
                             }
                         }
+                    }
+                }
 
-                        Label {
-                            text: qsTr("Password")
-                            font.pixelSize: Style.fontMicro
-                            color: Style.mediumLabelColor
+                Column {
+                    Layout.fillWidth: true
+                    spacing: 5
+
+                    Label {
+                        font: Style.loginPanelInputTitleFont
+                        color: Style.loginPanelInputTitleFontColor
+                        text: qsTr("Password") + "*"
+                    }
+
+                    Custom.TextInput {
+                        id: passwordInput
+                        anchors {
+                            left: parent.left
+                            right: parent.right
                         }
+                        placeholderText: qsTr("Please enter your password...")
+                        echoMode: TextInput.Password
+                        isValid: !errorMode || (errorMode && !errorLabel.text.length && text.length)
 
-                        Custom.TextInput {
-                            id: password
-                            Layout.topMargin: -Style.tinyMargin
-                            placeholderText: qsTr("Please enter your password...")
-                            echoMode: TextInput.Password
-                            color: errorMode ? Style.errorColor : Style.darkLabelColor
-                            onTextChanged: {
-                                if(errorMode){
-                                    errorMode = false
-                                    errorLabel.text = ""
-                                }
+                        onTextEdited: {
+                            if (errorMode) {
+                                errorMode = false
+                                errorLabel.text = ""
                             }
                         }
+                    }
+                }
 
-                        Custom.CheckBox {
-                            checked: session.getRememberMe()
-                            text: qsTr("Remember me")
-                            onCheckedChanged: {
-                                session.setRememberMe(checked)
-                            }
+                Custom.CheckBox {
+                    checked: session.getRememberMe()
+                    text: qsTr("Remember me")
+
+                    onToggled: {
+                        if (session) {
+                            session.setRememberMe(checked)
+                        }
+                    }
+                }
+
+                Label {
+                    id: errorLabel
+                    Layout.fillWidth: true
+                    font: Style.loginPanelErrorMessageFont
+                    color: Style.loginPanelErrorMessageFontColor
+                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                }
+
+                Custom.PrimaryButton {
+                    id: signInButton
+                    Layout.fillWidth: true
+                    text: qsTr("Log In")
+
+                    onClicked: {
+                        if (!userEmailInput.text.length || !passwordInput.text.length) {
+                            errorLabel.text = qsTr("Please enter both email and password")
+                            errorMode = true
+                            return
                         }
 
-                        Label {
-                            id: errorLabel
-                            Layout.topMargin: -Style.smallMargin
-                            Layout.fillWidth: true
-                            font.pixelSize: Style.fontTiny
-                            font.weight: Font.DemiBold
-                            color: Style.errorColor
-                        }
+                        session.login(userEmailInput.text, passwordInput.text)
+                    }
+                }
 
-                        Custom.Button {
-                            id: signInButton
-                            enabled: userEmail.text.length && password.text.length
-                            text: qsTr("Log In")
+                Custom.SecondaryButton {
+                    id: registerButton
+                    Layout.fillWidth: true
+                    text: qsTr("Register")
 
-                            onClicked: {
-                                session.login(userEmail.text, password.text)
-                            }
-                        }
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.RegistrationPage)
+                    }
+                }
 
-                        Custom.Button {
-                            id: registerButton
-                            text: qsTr("Register")
-                            bgColor: Style.buttonSecColor
+                Custom.SecondaryButton {
+                    Layout.alignment: Qt.AlignHCenter
+                    Layout.topMargin: -10
+                    Layout.bottomMargin: -5
+                    implicitWidth: contentItem.implicitWidth + leftPadding + rightPadding
+                    implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
+                    background: null
+                    font: Style.loginPanelForgotPasswordFont
+                    text: qsTr("Forgot password?")
 
-                            onClicked: {
-                                pageManager.enterRegistrationScreen()
-                            }
-                        }
-
-                        Label {
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.bottomMargin: Style.baseMargin
-                            text: qsTr("Forgot password?")
-                            font.pixelSize: Style.fontTiny
-                            color: Style.accentColor
-                        }
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.ForgotPasswordPage)
                     }
                 }
             }

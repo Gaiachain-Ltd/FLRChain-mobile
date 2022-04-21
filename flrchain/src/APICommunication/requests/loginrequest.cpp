@@ -1,24 +1,33 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "loginrequest.h"
 
 #include <QJsonObject>
-#include <QJsonValue>
-
 #include <QLoggingCategory>
-#include <QDebug>
-#include <QList>
 
 Q_LOGGING_CATEGORY(requestLogin, "request.login")
 
 LoginRequest::LoginRequest(const QString &email, const QString &password)
     : ApiRequest("login")
 {
-    connect(this, &LoginRequest::replyError,
-            this, &LoginRequest::errorHandler);
-
     if (!email.isEmpty() && !password.isEmpty()) {
-
         QJsonObject object;
-        object.insert(QLatin1String("username"), QJsonValue(email));
+        object.insert(QLatin1String("username"), QJsonValue(email.toLower()));
         object.insert(QLatin1String("password"), QJsonValue(password));
 
         m_requestDocument.setObject(object);
@@ -30,22 +39,6 @@ LoginRequest::LoginRequest(const QString &email, const QString &password)
     }
 }
 
-void LoginRequest::errorHandler(const QString &error)
-{
-    qDebug() << "Error" << error;
-
-    QString errorMsg;
-
-    if(QString(m_replyData).contains(QLatin1String("Unable to log in with provided credentials.")))
-    {
-        errorMsg = QLatin1String("Unable to log in with provided credentials");
-    }
-    else {
-        errorMsg = QLatin1String("Login error");
-    }
-    emit loginError(errorMsg);
-}
-
 void LoginRequest::parse()
 {
     const QJsonObject object(m_replyDocument.object());
@@ -53,8 +46,7 @@ void LoginRequest::parse()
 
     if (token.isEmpty()) {
         qCDebug(requestLogin) << "Error in parsing server reply"
-                              << m_replyDocument.toJson()
-                              << token;
+                              << m_replyDocument.toJson();
         emit loginError("Login error");
         return;
     }
@@ -66,4 +58,19 @@ void LoginRequest::parse()
 bool LoginRequest::isTokenRequired() const
 {
     return false;
+}
+
+void LoginRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
+{
+    ApiRequest::handleError(errorMessage, errorCode);
+
+    QString message;
+
+    if (QLatin1String(m_replyData).contains(QLatin1String("Unable to log in with provided credentials."))) {
+        message = tr("Unable to log in with provided credentials");
+    } else {
+        message = tr("Login error");
+    }
+
+    emit loginError(message);
 }

@@ -1,26 +1,41 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #ifndef LOGINREQUEST_H
 #define LOGINREQUEST_H
 
 #include "apirequest.h"
-
-#include <QString>
-#include <QObject>
 
 class LoginRequest : public ApiRequest
 {
     Q_OBJECT
 
 public:
-    LoginRequest(const QString &email = QString(),
-                 const QString &password = QString());
-    void errorHandler(const QString& error);
+    LoginRequest(const QString &email, const QString &password);
 
 signals:
     void loginSuccessful(const QString &token) const;
-    void loginError(const QString &msgs) const;
-protected:
-    virtual void parse() override final;
-    virtual bool isTokenRequired() const override final;
+    void loginError(const QString &error) const;
+
+private:
+    void parse() final;
+    bool isTokenRequired() const final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
 };
 
 #endif // LOGINREQUEST_H

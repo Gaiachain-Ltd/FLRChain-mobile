@@ -1,7 +1,16 @@
 [submodule "mrestapi"]
-	path = mrestapi
+	path = addons/mrestapi
 	url = https://github.com/milosolutions/mrestapi.git
 [submodule "android_openssl"]
-	path = android_openssl
+	path = addons/android_openssl
 	url = https://github.com/KDAB/android_openssl.git
-	branch = 1.1.1k_1.0.2u
+	branch = 1.1.1l_1.0.2u
+[submodule "SortFilterProxyModel"]
+	path = addons/SortFilterProxyModel
+	url = https://github.com/milosolutions/SortFilterProxyModel.git
+[submodule "qml-app-navigation"]
+	path = addons/qml-app-navigation
+	url = https://github.com/milosolutions/qml-app-navigation.git
+[submodule "pulltorefreshhandler"]
+	path = addons/pulltorefreshhandler
+	url = https://github.com/milosolutions/pulltorefreshhandler.git

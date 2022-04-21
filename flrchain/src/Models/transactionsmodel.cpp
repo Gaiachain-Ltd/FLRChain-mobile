@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "transactionsmodel.h"
 #include "transaction.h"
 
@@ -10,7 +27,7 @@ TransactionsModel::TransactionsModel(QObject *parent) :
 {
     m_customNames[TransactionId] = "transactionId";
     m_customNames[Title] = "title";
-    m_customNames[Type] = "type";
+    m_customNames[Action] = "action";
     m_customNames[Amount] = "amount";
     m_customNames[CreationDate] = "creationDate";
     m_customNames[Status] = "status";
@@ -41,8 +58,8 @@ QVariant TransactionsModel::data(const QModelIndex &index, int role) const
         return item->id();
     case Title:
         return item->title();
-    case Type:
-        return item->type();
+    case Action:
+        return item->action();
     case Amount:
         return item->amount();
     case CreationDate:
@@ -73,8 +90,8 @@ bool TransactionsModel::setData(const QModelIndex &index, const QVariant &value,
     case Title:
         item->setTitle(value.toString());
         break;
-    case Type:
-        item->setType(value.toString());
+    case Action:
+        item->setAction(value.toInt());
         break;
     case Amount:
         item->setAmount(value.toDouble());
@@ -93,24 +110,31 @@ bool TransactionsModel::setData(const QModelIndex &index, const QVariant &value,
     return true;
 }
 
-void TransactionsModel::parseJsonObject(const QJsonObject &response)
+void TransactionsModel::parseJsonObject(const QJsonArray &response)
 {
     clear();
     beginResetModel();
-    QJsonArray walletArray = response.value(QLatin1String("results")).toArray();
 
-    const int arraySize = walletArray.count();
+    const int arraySize = response.count();
 
     for(int i = 0; i < arraySize; ++i) {
-        QJsonObject projectObject = walletArray.at(i).toObject();
+        QJsonObject projectObject = response.at(i).toObject();
 
         Transaction *transaction = new Transaction();
         transaction->setId(projectObject.value(QLatin1String("id")).toInt());
-        transaction->setTitle(projectObject.value(QLatin1String("project_name")).toString());
+
+        const QString &pName = projectObject.value(QLatin1String("project_name")).toString();
+        if (pName.isEmpty()) {
+            transaction->setTitle(QLatin1String("-"));
+        } else {
+            transaction->setTitle(pName);
+        }
+
         transaction->setAmount(projectObject.value(QLatin1String("amount")).toString().toDouble());
         QDateTime date = QDateTime::fromString(projectObject.value(QLatin1String("created")).toString(), Qt::ISODate);
         transaction->setCreationDate(date.toString(QLatin1String("dd.MM.yyyy")));
         transaction->setStatus(projectObject.value(QLatin1String("status")).toInt());
+        transaction->setAction(projectObject.value(QLatin1String("action")).toInt());
 
         m_items.append(transaction);
     }

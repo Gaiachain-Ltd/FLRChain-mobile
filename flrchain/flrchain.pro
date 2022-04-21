@@ -1,32 +1,63 @@
-## Milo Solutions - project file TEMPLATE
+# Copyright (C) 2022  Milo Solutions
 #
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-## (c) Milo Solutions, 2016
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 include(../version.pri)
-include(../mrestapi/mrestapi.pri)
+
 # Warning! QStringBuilder can crash your app! See last point here:
 # https://www.kdab.com/uncovering-32-qt-best-practices-compile-time-clazy/
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
 QMAKE_CXXFLAGS += -Werror
-QT += quick core network androidextras svg
+
+QT += quick core network svg
+android: QT += androidextras
+
 TEMPLATE = app
 CONFIG += c++14
-TARGET = template
+TARGET = FLRChain
 
 INCLUDEPATH += \
+    src \
     src/APICommunication \
     src/Models
 
 HEADERS += \
+    src/APICommunication/apimultipartrequest.h \
+    src/APICommunication/requests/changepasswordrequest.h \
+    src/APICommunication/requests/createactivityrequest.h \
+    src/APICommunication/requests/facilitatorcashoutrequest.h \
+    src/APICommunication/requests/facilitatorlistrequest.h \
+    src/APICommunication/requests/mytasksrequest.h \
+    src/APICommunication/requests/resetpasswordrequest.h \
+    src/APICommunication/requests/saveuserinforequest.h \
+    src/APICommunication/requests/sendactivityphotorequest.h \
+    src/APICommunication/requests/sendworkjob.h \
+    src/APICommunication/requests/walletqrcoderequest.h \
+    src/Models/action.h \
+    src/Models/actionmodel.h \
+    src/Models/datatag.h \
+    src/Models/datatagmodel.h \
+    src/Models/milestone.h \
+    src/Models/milestonemodel.h \
+    src/Models/projectmodel.h \
+    src/Models/taskmodel.h \
     src/datamanager.h \
+    src/favouritetaskstorage.h \
     src/filemanager.h \
-    src/pagemanager.h \
-    src/pages.h \
     src/session.h \
     src/settings.h \
-    src/userptr.h \
     src/APICommunication/restapiclient.h \
     src/APICommunication/apirequest.h \
     src/APICommunication/requests/loginrequest.h \
@@ -43,20 +74,39 @@ HEADERS += \
     src/APICommunication/requests/sendworkrequest.h \
     src/platformbridgeprivate.h \
     src/platformbridge.h \
-    src/Models/projectsmodel.h \
-    src/Models/tasksmodel.h \
     src/Models/transactionsmodel.h \
     src/Models/workmodel.h \
     src/Models/transaction.h \
     src/Models/task.h \
     src/Models/project.h \
     src/Models/user.h \
-    src/Models/work.h
+    src/Models/work.h \
+    src/types.h \
+    src/AppNavigationData.h
 
 SOURCES += src/main.cpp  \
+    src/APICommunication/apimultipartrequest.cpp \
+    src/APICommunication/requests/changepasswordrequest.cpp \
+    src/APICommunication/requests/createactivityrequest.cpp \
+    src/APICommunication/requests/facilitatorcashoutrequest.cpp \
+    src/APICommunication/requests/facilitatorlistrequest.cpp \
+    src/APICommunication/requests/mytasksrequest.cpp \
+    src/APICommunication/requests/resetpasswordrequest.cpp \
+    src/APICommunication/requests/saveuserinforequest.cpp \
+    src/APICommunication/requests/sendactivityphotorequest.cpp \
+    src/APICommunication/requests/sendworkjob.cpp \
+    src/APICommunication/requests/walletqrcoderequest.cpp \
+    src/Models/action.cpp \
+    src/Models/actionmodel.cpp \
+    src/Models/datatag.cpp \
+    src/Models/datatagmodel.cpp \
+    src/Models/milestone.cpp \
+    src/Models/milestonemodel.cpp \
+    src/Models/projectmodel.cpp \
+    src/Models/taskmodel.cpp \
     src/datamanager.cpp \
+    src/favouritetaskstorage.cpp \
     src/filemanager.cpp \
-    src/pagemanager.cpp \
     src/session.cpp \
     src/settings.cpp \
     src/APICommunication/restapiclient.cpp \
@@ -75,8 +125,6 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/sendworkrequest.cpp \
     src/platformbridgeandroid.cpp \
     src/platformbridge.cpp \
-    src/Models/projectsmodel.cpp \
-    src/Models/tasksmodel.cpp \
     src/Models/transactionsmodel.cpp \
     src/Models/workmodel.cpp \
     src/Models/transaction.cpp \
@@ -86,25 +134,15 @@ SOURCES += src/main.cpp  \
     src/Models/work.cpp
 
 RESOURCES +=  \
+    fonts/fonts.qrc \
     qml/qml.qrc \
-    resources/resources.qrc
+    images/images.qrc
 
 OTHER_FILES += \
-    ../template.doxyfile \
+    ../FLRChain.doxyfile.in \
     ../README.md \
-    ../Release.md \
     ../.gitignore \
-    ../license-Qt.txt \
     ../.gitlab-ci.yml
-
-## Put all build files into build directory
-##  This also works with shadow building, so don't worry!
-BUILD_DIR = build
-OBJECTS_DIR = $$BUILD_DIR
-MOC_DIR = $$BUILD_DIR
-RCC_DIR = $$BUILD_DIR
-UI_DIR = $$BUILD_DIR
-DESTDIR = $$BUILD_DIR/bin
 
 ## Platforms
 
@@ -123,23 +161,15 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
-API_URL = "https://flrchain.milosolutions.com:8000"
+dev {
+    API_URL = "https://dev.flrchain.milosolutions.com:8000"
+} else {
+    API_URL = "https://flrchain.milosolutions.com:8000"
+}
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
-SSL_PATH = $$PWD/../android_openssl/latest
-
-contains(ANDROID_ABIS, "armeabi-v7a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm/libcrypto_1_1.so $$SSL_PATH/arm/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "arm64-v8a") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/arm64/libcrypto_1_1.so $$SSL_PATH/arm64/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86/libcrypto_1_1.so $$SSL_PATH/x86/libssl_1_1.so
-}
-
-contains(ANDROID_ABIS, "x86_64") {
-    ANDROID_EXTRA_LIBS += $$SSL_PATH/x86_64/libcrypto_1_1.so $$SSL_PATH/x86_64/libssl_1_1.so
-}
+include(../addons/android_openssl/openssl.pri)
+include(../addons/mrestapi/mrestapi.pri)
+include(../addons/SortFilterProxyModel/SortFilterProxyModel.pri)
+include(../addons/qml-app-navigation/AppNavigation/AppNavigation.pri)
+include(../addons/pulltorefreshhandler/src/PullToRefreshHandler.pri)

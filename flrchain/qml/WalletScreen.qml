@@ -1,30 +1,58 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
-import com.flrchain.style 1.0
 
+import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
+import com.melije.pulltorefresh 2.0
+
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
 import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Item {
+AppPage {
+    id: root
+
     property double walletBalance: 0.0
 
-    BusyIndicator {
+    Custom.BusyIndicator {
         id: busyIndicator
         anchors.centerIn: parent
-        running: true
         visible: false
     }
 
     Component.onCompleted: {
+        reloadData()
+    }
+
+    function reloadData() {
         busyIndicator.visible = true
         session.getWalletBalance()
         session.getTransactionsData()
     }
 
-    Connections{
-        target: dataManager
+    Connections {
+        target: session
 
         function onWalletBalanceReceived(balance) {
             walletBalance = balance
@@ -33,49 +61,24 @@ Item {
 
     Connections {
         target: transactionsModel
-        function onTransactionsReceived(){
+
+        function onTransactionsReceived() {
             busyIndicator.visible = false
         }
     }
 
-    Connections{
-        target: pageManager
-        function onBackTriggered(){
-            busyIndicator.visible = true
-            session.getWalletBalance()
-            session.getTransactionsData()
-        }
-    }
+    background: null
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
+    header: Custom.Header {
+        height: Style.headerHeight
         title: qsTr("Wallet")
     }
 
-    Popups.TransactionPopup{
-        id: transactionPopup
-    }
-
-    Popups.TransferSuccessPopup{
-        id: transferSuccess
-    }
-
     Flickable {
-        id: flick
-        anchors {
-            top: header.bottom
-            left: parent.left
-            right: parent.right
-            bottom: parent.bottom
-        }
+        id: walletFlickable
+        anchors.fill: parent
         contentHeight: mainColumn.height
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
+        boundsBehavior: Flickable.DragOverBounds
         visible: !busyIndicator.visible
 
         ColumnLayout {
@@ -83,94 +86,156 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: Style.smallMargin
-                rightMargin: Style.smallMargin
-            }
-            spacing: Style.baseMargin
-
-            Label {
-                Layout.topMargin: Style.baseMargin
-                text: qsTr("Your account")
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
+                leftMargin: Style.walletPagePadding
+                rightMargin: Style.walletPagePadding
             }
 
-            Delegates.BalanceDelegate {
-                Layout.topMargin: Style.tinyMargin
+            Custom.Pane {
                 Layout.fillWidth: true
-                buttonVisible: true
-                title: qsTr("Balance")
-                value: walletBalance
-                btn.onClicked: {
-                    transactionPopup.open()
+                Layout.topMargin: Style.walletPagePadding
+                padding: Style.walletPagePanePadding
+
+                Label {
+                    Layout.fillWidth: true
+                    horizontalAlignment: Label.AlignHCenter
+                    wrapMode: Label.WordWrap
+                    font: Style.balanceDelegateTitleFont
+                    color: Style.balanceDelegateTitleFontColor
+                    text: qsTr("You have")
                 }
-            }
 
-            Label {
-                Layout.topMargin: Style.smallMargin
-                text: qsTr("Transaction history")
-                font.pixelSize: Style.fontUltra
-                color: Style.darkLabelColor
-            }
+                Row {
+                    Layout.alignment: Qt.AlignHCenter
 
-            Custom.ShadowedRectangle {
-                Layout.fillWidth: true
-                Layout.preferredHeight: listView.contentHeight
-                Layout.bottomMargin: Style.baseMargin
-                Layout.topMargin: Style.microMargin
-                visible: listView.count > 0
+                    Label {
+                        id: valueLabel
+                        font: Style.balanceDelegateAmountFont
+                        color: Style.balanceDelegateAmountFontColor
+                        text: walletBalance
+                    }
 
-                Rectangle{
-                    id: contentRect
-                    width: parent.width
-                    height: listView.contentHeight
-                    color: Style.bgColor
-                    radius: Style.rectangleRadius
-                    ListView {
-                        id: listView
-                        model: transactionsModel
-                        interactive: false
-
-                        width: parent.width
-                        height: contentHeight
-
-                        spacing: 0
-
-                        delegate: Delegates.TransactionDelegate {
-                            separatorVisible: index !== listView.count - 1
-                            width: contentRect.width
-                        }
-                        section.property: "creationDate"
-                        section.delegate: ColumnLayout {
-                            width: parent.width
-
-                            Item{
-                                Layout.preferredHeight: Style.baseMargin
-                                Layout.fillWidth: true
-                            }
-
-                            RowLayout {
-                                Layout.fillWidth: true
-                                Layout.leftMargin: Style.baseMargin
-                                Layout.rightMargin: Style.baseMargin
-                                Label
-                                {
-                                    id: dateLabel
-                                    font.pixelSize: Style.fontTiny
-                                    color: Style.placeholderColor
-                                    text: section
-                                }
-
-                                Rectangle{
-                                    Layout.fillWidth: true
-                                    Layout.preferredHeight: Style.borderWidth
-                                    color: Style.placeholderColor
-                                    Layout.alignment: Qt.AlignVCenter
-                                }
-                            }
-                        }
+                    Label {
+                        font: Style.balanceDelegateCurrencyFont
+                        color: Style.balanceDelegateCurrencyFontColor
+                        text: " USDC"
                     }
                 }
+            }
+
+            Label {
+                Layout.topMargin: Style.walletPageSectionSpacing
+                font: Style.walletPageSectionTitleFont
+                color: Style.walletPageSectionTitleFontColor
+                text: qsTr("Cash out")
+            }
+
+            Custom.Pane {
+                Layout.fillWidth: true
+                Layout.topMargin: Style.walletPageTitleSpacing
+                padding: Style.walletPagePanePadding
+                contentSpacing: Style.walletPagePanePadding
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    icon.source: "qrc:/img/icon-facilitator.svg"
+                    icon.color: labelColor
+                    text: qsTr("Facilitator")
+
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.CashOutPage,
+                                                          {
+                                                              maxAmount: root.walletBalance,
+                                                              state: "LoadingState"
+                                                          })
+                    }
+                }
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    icon.source: "qrc:/img/icon-mobile-money.svg"
+                    icon.color: labelColor
+                    text: qsTr("Mobile money")
+
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.CashOutPage,
+                                                          {
+                                                              maxAmount: root.walletBalance,
+                                                              state: "SendToMobileNumberState"
+                                                          })
+                    }
+                }
+            }
+
+            Label {
+                Layout.topMargin: Style.walletPageSectionSpacing
+                font: Style.walletPageSectionTitleFont
+                color: Style.walletPageSectionTitleFontColor
+                text: qsTr("Crypto")
+            }
+
+            Custom.Pane {
+                Layout.fillWidth: true
+                Layout.topMargin: Style.walletPageTitleSpacing
+                padding: Style.walletPagePanePadding
+                contentSpacing: Style.walletPagePanePadding
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    icon.source: "qrc:/img/icon-receive.svg"
+                    icon.color: labelColor
+                    text: qsTr("Receive USDC")
+
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.ReceiveMoneyPage)
+                    }
+                }
+            }
+
+            Label {
+                Layout.topMargin: Style.walletPageSectionSpacing
+                font: Style.walletPageSectionTitleFont
+                color: Style.walletPageSectionTitleFontColor
+                text: qsTr("Transaction history")
+            }
+
+            Custom.Pane {
+                Layout.fillWidth: true
+                Layout.topMargin: Style.walletPageTitleSpacing
+                Layout.bottomMargin: Style.walletPagePadding
+
+                ListView {
+                    id: listView
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: contentHeight
+                    model: transactionsModel
+                    interactive: false
+
+                    section.property: "creationDate"
+                    section.delegate: Delegates.TransactionSectionDelegate {
+                        width: listView.width
+                    }
+
+                    delegate: Delegates.TransactionDelegate {
+                        width: listView.width
+                        transactionProjectName: title
+                        transactionType: action
+                        transactionAmount: amount
+                        separatorVisible: index !== listView.count - 1
+                    }
+                }
+            }
+        }
+
+        PullToRefreshHandler {
+            target: walletFlickable
+            threshold: 25
+            refreshIndicatorDelegate: RefreshIndicator {
+                Material.accent: Style.accentColor
+            }
+
+            onPullDownRelease:
+            {
+                reloadData()
             }
         }
     }

@@ -3,12 +3,11 @@
         <file>main.qml</file>
         <file>LoginScreen.qml</file>
         <file>RegistrationScreen.qml</file>
-        <file>PagesView.qml</file>
         <file>WorkScreen.qml</file>
         <file>CustomControls/TextInput.qml</file>
         <file>CustomControls/IconButton.qml</file>
         <file>CustomControls/Header.qml</file>
-        <file>CustomControls/Button.qml</file>
+        <file>CustomControls/PrimaryButton.qml</file>
         <file>CustomControls/CheckBox.qml</file>
         <file>CustomControls/ImageButton.qml</file>
         <file>Dashboard.qml</file>
@@ -18,20 +17,39 @@
         <file>ProjectDetailsScreen.qml</file>
         <file>Delegates/ProjectDetailsDelegate.qml</file>
         <file>Delegates/ProjectDelegate.qml</file>
-        <file>Delegates/WorkDelegate.qml</file>
-        <file>Delegates/TaskDelegate.qml</file>
         <file>CustomControls/Popup.qml</file>
         <file>Popups/JoinProjectPopup.qml</file>
         <file>AppStyle.qml</file>
-        <file>Delegates/BalanceDelegate.qml</file>
         <file>WalletScreen.qml</file>
         <file>Delegates/TransactionDelegate.qml</file>
-        <file>Popups/TransactionPopup.qml</file>
-        <file>Popups/TransferSuccessPopup.qml</file>
+        <file>Popups/SuccessPopup.qml</file>
         <file>Popups/ErrorPopup.qml</file>
         <file>Popups/WorkSuccessPopup.qml</file>
         <file>CustomControls/StatusLabel.qml</file>
         <file>CustomControls/RoundedImage.qml</file>
         <file>Popups/ConfirmLogoutPopup.qml</file>
+        <file>Delegates/DashboardDelegate.qml</file>
+        <file>CustomControls/InternetConnectionIssueBanner.qml</file>
+        <file>CustomControls/SecondaryButton.qml</file>
+        <file>CustomControls/FormPane.qml</file>
+        <file>CustomControls/Pane.qml</file>
+        <file>Project/ProjectList.qml</file>
+        <file>Project/MyTasksList.qml</file>
+        <file>CustomControls/TabButton.qml</file>
+        <file>Delegates/TransactionSectionDelegate.qml</file>
+        <file>CashOutPage.qml</file>
+        <file>CustomControls/ComboBox.qml</file>
+        <file>ReceiveMoneyPage.qml</file>
+        <file>Delegates/ProjectTaskListDelegate.qml</file>
+        <file>Delegates/ProjectActionListDelegate.qml</file>
+        <file>Delegates/ProjectMilestoneListDelegate.qml</file>
+        <file>CustomControls/BusyIndicator.qml</file>
+        <file>Project/ProjectTaskList.qml</file>
+        <file>ProfileScreen.qml</file>
+        <file>Popups/ChangePasswordPopup.qml</file>
+        <file>ForgotPasswordScreen.qml</file>
+        <file>Delegates/TaskTextDataDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataInputDelegate.qml</file>
+        <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>
     </qresource>
 </RCC>

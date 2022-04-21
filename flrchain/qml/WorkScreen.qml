@@ -1,217 +1,372 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
-import QtGraphicalEffects 1.15
-import com.flrchain.style 1.0
 
+import com.flrchain.style 1.0
+import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
+
+import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
+import "qrc:/Delegates" as Delegates
 import "qrc:/Popups" as Popups
 
-Item {
+AppPage {
     id: workScreen
-    property bool photoVisible: false
+
     property int projectId: -1
+    property string projectName: ""
+    property string actionName: ""
+    property string milestoneName: ""
     property int taskId: -1
     property string taskName: ""
-    property string projectName: ""
-    property string photoPath: ""
+    property string taskTypeOfInformation: ""
+    property string taskInstructions: ""
+    property var taskRequiredData: null
+    property bool errorMode: false
 
-    Connections{
-        target: dataManager
+    Custom.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
+    }
 
-        function onDisplayPhoto(filePath){
-            img.source =  "file:///" + filePath
+    Connections {
+        target: session
+
+        function onSendWorkJobFinished() {
             busyIndicator.visible = false
-            photoPath = filePath
-        }
-
-        function onPhotoError(){
-            busyIndicator.visible = false
-        }
-
-        function onProcessingPhoto(){
-            busyIndicator.visible = true
-            photoVisible = true
-        }
-
-        function onWorkAdded(taskName, projectName){
-            workSuccessPopup.taskName = taskName
-            workSuccessPopup.projectName = projectName
-            workSuccessPopup.open()
         }
     }
 
-    Connections{
-        target: pageManager
-        function onSetupWorkScreen(projectId, taskId, projectName, taskName){
-            workScreen.projectId = projectId
-            workScreen.taskId = taskId
-            workScreen.projectName = projectName
-            workScreen.taskName = taskName
-        }
+    background: null
 
-        function onBeforePopBack(){
-            if(photoVisible){
-                dataManager.removeCurrentWorkPhoto()
-            }
-        }
+    header: Custom.Header {
+        height: Style.headerHeight
+        title: qsTr("Task details")
     }
 
-    Custom.Header {
-        id: header
-        anchors {
-            top: parent.top
-            left: parent.left
-            right: parent.right
-        }
-        title: qsTr("Earn rewards")
-    }
-
-    Popups.WorkSuccessPopup {
-        id: workSuccessPopup
-
-    }
-
-    Rectangle {
-        id: background
-        color: Style.bgColor
+    Flickable {
+        id: taskDetailsFlickable
         anchors.fill: parent
+        contentHeight: mainColumn.height
+        boundsBehavior: Flickable.DragOverBounds
+        visible: !busyIndicator.visible
 
-        Flickable {
+        ColumnLayout {
+            id: mainColumn
             anchors {
-                top: parent.top
                 left: parent.left
                 right: parent.right
-                bottom: parent.bottom
-                topMargin: Style.baseMargin
+                leftMargin: Style.taskDetailsPageSideMargins
+                rightMargin: Style.taskDetailsPageSideMargins
             }
-            contentHeight: mainColumn.height
-            boundsBehavior: Flickable.StopAtBounds
 
-            ColumnLayout {
-                id: mainColumn
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.smallMargin
-                    rightMargin: Style.smallMargin
-                    topMargin: Style.bigMargin
-                    bottomMargin: Style.smallMargin
-                }
-                Label {
-                    text: projectName
-                    font.pixelSize: Style.fontUltra
-                    color: Style.darkLabelColor
-                }
+            Label {
+                id: projectNameLabel
+                Layout.fillWidth: true
+                Layout.topMargin: Style.taskDetailsPageTopMargin
+                font: Style.semiBoldExtraLargeFont
+                color: Style.darkLabelColor
+                wrapMode: Label.WordWrap
+                text: projectName
+            }
 
-                Label {
-                    text: taskName
-                    font.pixelSize: Style.fontBig
-                    color: Style.darkLabelColor
-                }
+            Custom.Pane {
+                Layout.fillWidth: true
+                Layout.bottomMargin: Style.taskDetailsPageBottomMargin
+                contentSpacing: Style.taskDetailsContentSpacing
 
-                Custom.ShadowedRectangle {
-                    Layout.preferredHeight: childrenRect.height
+                ColumnLayout {
                     Layout.fillWidth: true
-                    Layout.topMargin: Style.bigMargin
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
 
-                    Rectangle {
-                        anchors.fill: parent
-                        color: Style.bgColor
-                        radius: Style.rectangleRadius
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("FLR Action")
                     }
 
-                    ColumnLayout{
-                        id: col
-                        anchors {
-                            left: parent.left
-                            right: parent.right
-                            margins: Style.baseMargin
-                            bottomMargin: Style.bigMargin
-                        }
-                        spacing: Style.baseMargin
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: actionName
+                    }
+                }
 
-                        Label {
-                            Layout.topMargin: Style.baseMargin
-                            text: qsTr("Photo")
-                            font.pixelSize: Style.fontTiny
-                            color: Style.darkLabelColor
-                            font.weight: Font.DemiBold
-                        }
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
 
-                        Custom.ImageButton{
-                            Layout.alignment: Qt.AlignHCenter
-                            bgColor: Style.inputBgColor
-                            text: qsTr("Upload from gallery...")
-                            visible: !photoVisible
-                            iconSrc: "qrc:/img/icon-upload.svg"
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Milestone")
+                    }
 
-                            onClicked: {
-                                platform.selectFile();
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: milestoneName
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Task")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: taskName
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Type of information")
+                    }
+
+                    Pane {
+                        id: typeOfInformationPane
+                        Layout.maximumWidth: parent.width
+                        topPadding: 10
+                        bottomPadding: 10
+                        leftPadding: 20
+                        rightPadding: 20
+
+                        background: Rectangle {
+                            color: Style.paneBackgroundColor
+                            border {
+                                width: 1
+                                color: Style.lightLabelColor
                             }
+                            radius: 20
                         }
 
-                        Custom.ImageButton{
-                            Layout.alignment: Qt.AlignHCenter
-                            bgColor: Style.inputBgColor
-                            visible: !photoVisible
-                            text: qsTr("Take photo...")
-                            iconSrc: "qrc:/img/icon-camera.svg"
-                            onClicked: {
-                                platform.capture()
-                            }
+                        contentItem: Label {
+                            width: typeOfInformationPane.availableWidth
+                            height: typeOfInformationPane.availableHeight
+                            font: Style.semiBoldTinyFont
+                            color: Style.lightLabelColor
+                            wrapMode: Label.WordWrap
+                            text: taskTypeOfInformation
                         }
+                    }
+                }
 
-                        Custom.RoundedImage {
-                            id: img
-                            visible: photoVisible
-                            Layout.fillWidth: true
-                            Layout.preferredHeight: Style.workImgHeight
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
 
-                            Custom.IconButton {
-                                id: closeButton
-                                anchors {
-                                    right: parent.right
-                                    top: parent.top
-                                    margins: Style.microMargin
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Instructions")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: taskInstructions
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Required data")
+                    }
+
+                    ListView {
+                        id: requiredDataList
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: contentHeight
+                        spacing: parent.spacing
+                        interactive: false
+                        model: taskRequiredData
+
+                        readonly property bool modelIsArray: model ? Array.isArray(model) : false
+                        property var missingData: []
+
+                        function allDataValid() {
+                            let isValid = true
+                            missingData = []
+
+                            for (let i = 0; i < count; ++i) {
+                                let loader = itemAtIndex(i)
+                                let input = loader.item
+
+                                if (!input.hasValidData) {
+                                    input.errorMode = true
+                                    isValid = false
+
+                                    missingData.push(loader.dataTagName.toString())
                                 }
-                                iconSize: Style.iconUltra
-                                iconSrc: "qrc:/img/icon-delete.svg"
-                                visible: !busyIndicator.visible
-                                onClicked: {
-                                    img.source = ""
-                                    photoVisible = false
-                                    dataManager.removeCurrentWorkPhoto()
-                                }
                             }
 
-                            BusyIndicator {
-                                id: busyIndicator
-                                anchors.centerIn: img
-                                running: true
-                            }
+                            return isValid
                         }
 
-                        Item {
-                            Layout.fillHeight: true
-                            Layout.fillWidth: true
-                        }
+                        function activityDataDump() {
+                            let activityData = {}
 
-                        Custom.Button{
-                            Layout.alignment: Qt.AlignHCenter
-                            Layout.bottomMargin: Style.bigMargin
-                            enabled: photoVisible && !busyIndicator.visible
-                            opacity: enabled ? 1 : 0.5
+                            for (let i = 0; i < count; ++i) {
+                                let type = itemAtIndex(i).dataTagType
+                                let input = itemAtIndex(i).item
 
-                            text: qsTr("Upload")
-                            onClicked: {
-                                if(session.internetConnection){
-                                    session.sendWorkRequest(photoPath, projectId, taskId)
-                                }
-                                else{
-                                    pageManager.enterErrorPopup("No Internet Connection")
+                                switch (type)
+                                {
+                                    case DataTag.Type.Text:
+                                        activityData.text = input.value
+                                        break
+
+                                    case DataTag.Type.Number:
+                                        activityData.number = parseInt(input.value)
+                                        break
+
+                                    case DataTag.Type.Area:
+                                        activityData.area = parseInt(input.value)
+                                        break
                                 }
                             }
+
+                            return activityData
+                        }
+
+                        function activityPhotosDump() {
+                            let activityPhotos = []
+
+                            for (let i = 0; i < count; ++i) {
+                                let type = itemAtIndex(i).dataTagType
+                                let input = itemAtIndex(i).item
+
+                                if (type === DataTag.Type.Photo) {
+                                    activityPhotos = activityPhotos.concat(input.photos())
+                                }
+                            }
+
+                            return activityPhotos
+                        }
+
+                        delegate: Loader {
+                            width: ListView.view.width
+
+                            readonly property int dataTagType: requiredDataList.modelIsArray ? modelData.tag_type
+                                                                                             : model.dataTagType
+                            readonly property string dataTagName: requiredDataList.modelIsArray ? modelData.name
+                                                                                                : model.dataTagName
+
+                            sourceComponent:
+                            {
+                                switch (dataTagType)
+                                {
+                                    case DataTag.Type.Text:
+                                    case DataTag.Type.Number:
+                                    case DataTag.Type.Area:
+                                        return inputDelegate
+
+                                    case DataTag.Type.Photo:
+                                        return photoDelegate
+                                }
+                            }
+
+                            Component {
+                                id: inputDelegate
+
+                                Delegates.TaskRequiredDataInputDelegate{}
+                            }
+
+                            Component {
+                                id: photoDelegate
+
+                                Delegates.TaskRequiredDataPhotoDelegate {}
+                            }
+                        }
+                    }
+                }
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    text: qsTr("Submit")
+
+                    onClicked: {
+                        if (session.internetConnection) {
+                            if (requiredDataList.allDataValid()) {
+                                var requiredData = {}
+                                requiredData.data = requiredDataList.activityDataDump()
+                                requiredData.photos = requiredDataList.activityPhotosDump()
+                                session.sendWorkRequest(projectId, taskId, requiredData)
+                                busyIndicator.visible = true
+                            } else {
+                                let message = qsTr("The form is missing required information") + ": \n"
+
+                                for (let i in requiredDataList.missingData) {
+                                    message += requiredDataList.missingData[i] + "\n"
+                                }
+
+                                AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: message})
+                            }
+                        } else {
+                            AppNavigationController.openPopup(AppNavigation.ErrorPopup, {errorMessage: qsTr("No Internet Connection")})
                         }
                     }
                 }

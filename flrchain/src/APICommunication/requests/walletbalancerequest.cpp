@@ -1,24 +1,32 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "walletbalancerequest.h"
 
 #include <QJsonObject>
 
-WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token) : ApiRequest("accounts")
+WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token)
+    : ApiRequest("accounts/balance")
 {
-    setPriority(Priority::Normal);
     setType(Type::Get);
     setToken(token);
-    connect(this, &WalletBalanceRequest::replyError, this, &WalletBalanceRequest::errorHandler);
-}
-
-void WalletBalanceRequest::errorHandler(const QString &error)
-{
-    qDebug() << "Error" << error;
 }
 
 void WalletBalanceRequest::parse()
 {
-    const QJsonObject object(m_replyDocument.object());
-    const double balance(object.value(QLatin1String("balance")).toDouble());
-
-    emit walletBalanceReply(balance);
+    emit walletBalanceReply(m_replyDocument.object().value(QLatin1String("balance")).toDouble());
 }

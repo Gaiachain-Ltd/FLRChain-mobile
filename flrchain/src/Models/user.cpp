@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "user.h"
 
 User::User(QObject *parent) :
@@ -78,5 +95,32 @@ void User::clear()
     setPassword(QByteArray());
     setFirstName(QString());
     setLastName(QString());
+    setVillage(QString());
     setOptedIn(false);
+}
+
+const QString &User::phone() const
+{
+    return m_phone;
+}
+
+void User::setPhone(const QString &newPhone)
+{
+    if (m_phone == newPhone)
+        return;
+    m_phone = newPhone;
+    emit phoneChanged();
+}
+
+const QString &User::village() const
+{
+    return m_village;
+}
+
+void User::setVillage(const QString &newVillage)
+{
+    if (m_village == newVillage)
+        return;
+    m_village = newVillage;
+    emit villageChanged();
 }

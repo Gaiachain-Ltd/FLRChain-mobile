@@ -1,133 +1,168 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
+import com.milosolutions.AppNavigation 1.0
 
 import "qrc:/CustomControls" as Custom
 
-Item {
-    height: childrenRect.height
-    width: parent.width
+Custom.Pane {
+    id: root
+    topPadding: Style.projectListDelegatePadding
+    bottomPadding: Style.projectListDelegatePadding
+    leftPadding: Style.projectListDelegatePadding
+    rightPadding: Style.projectListDelegatePadding
+    contentSpacing: Style.projectListDelegateSpacing
 
-    property bool joined: assignmentStatus === Project.Joined
-    property bool undefinedStatus: assignmentStatus === Project.Undefined
-    property bool investmentOngoing: status === Project.InvestmentOngoing
-    property bool investmentFinished: status === Project.InvestmentFinished
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: false
 
-    Custom.ShadowedRectangle {
-        width: parent.width
-        height: childrenRect.height
+        Label {
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            font: Style.projectListDelegateNameFont
+            color: Style.projectListDelegateNameFontColor
+            wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+            text: projectName
+        }
 
-        Rectangle{
-            id: contentRect
-            width: parent.width
-            height: childrenRect.height
-            color: Style.bgColor
-            radius: Style.rectangleRadius
+        Custom.StatusLabel {
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            status: projectAssignmentStatus
+        }
+    }
 
-            ColumnLayout {
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                    leftMargin: Style.baseMargin
-                    rightMargin: Style.baseMargin
-                }
-                spacing: Style.tinyMargin
+    RowLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: false
+        spacing: Style.microMargin
 
-                Item{
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.tinyMargin
-                }
+        Image {
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            Layout.preferredWidth: Style.projectListDelegateIconSize.width
+            Layout.preferredHeight: Style.projectListDelegateIconSize.height
+            sourceSize: Style.projectListDelegateIconSize
+            asynchronous: true
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/icon-calendar.svg"
+        }
 
-                Custom.StatusLabel{
-                    status: assignmentStatus
-                }
+        Label {
+            id: projectDeadlineLabel
+            Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
+            font: Style.projectListDelegateDateFont
+            color: Style.projectListDelegateFontColor
+            text: String("%1: %2").arg(qsTr("Closes")).arg(projectEndDate.toLocaleString(Qt.locale(), "MMMM dd, yyyy"))
+        }
 
-                Label{
-                    font.pixelSize: Style.fontUltra
-                    font.weight: Font.DemiBold
-                    text: name
-                    color: Style.darkLabelColor
-                }
+        Item { Layout.fillWidth: true }
 
-                RowLayout {
-                    spacing: Style.microMargin
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: Style.iconSize
+        Label {
+            id: investmentStatusLabel
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            font: Style.projectListDelegateDateFont
+            color: "#414D55"
+            text:
+            {
+                switch (projectStatus) {
+                    case Project.ProjectStatus.Fundraising:
+                        return qsTr("Fundraising")
 
-                    Image {
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        source: "qrc:/img/icon-calendar.svg"
-                        asynchronous: true
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
+                    case Project.ProjectStatus.Active:
+                        return qsTr("Active")
 
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: deadline
-                        color: Style.mediumLabelColor
-                    }
+                    case Project.ProjectStatus.Closed:
+                        return qsTr("Closed")
 
-                    Image {
-                        Layout.preferredWidth: Style.iconSize
-                        Layout.preferredHeight: Style.iconSize
-                        Layout.leftMargin: Style.microMargin
-                        source: investmentOngoing ? "qrc:/img/icon-ongoing.svg" : investmentFinished ? "qrc:/img/icon-finished.svg" : "qrc:/img/icon-suspended.svg"
-                        asynchronous: true
-
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize: Qt.size(width, height)
-                    }
-
-                    Label{
-                        font.pixelSize: Style.fontTiny
-                        font.weight: Font.DemiBold
-                        text: investmentOngoing ? qsTr("Ongoing") : investmentFinished ? qsTr("Finished") : qsTr("Pending")
-                        color: investmentOngoing ? Style.accentColor : investmentFinished ? Style.errorColor : Style.yellowLabelColor
-                    }
-
-                    Item{
-                        Layout.fillWidth: true
-                        Layout.preferredHeight: Style.iconSize
-                    }
+                    case Project.ProjectStatus.Undefined:
+                        return ""
                 }
 
-                Label{
-                    Layout.topMargin: Style.baseMargin
-                    font.pixelSize: Style.fontSmall
-                    font.weight: Font.DemiBold
-                    text: qsTr("Description")
-                    color: Style.mediumLabelColor
-                }
-
-                Text {
-                    text: description
-                    Layout.fillWidth: true
-                    wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                    color: Style.mediumLabelColor
-                    maximumLineCount: 3
-                    elide: Text.ElideRight
-                }
-
-                Custom.Button{
-                    Layout.topMargin: Style.tinyMargin
-                    Layout.bottomMargin: Style.baseMargin
-                    Layout.fillWidth: true
-                    text: !investmentFinished ? undefinedStatus ? qsTr("Join") : joined && investmentOngoing ? qsTr("Earn reward") : qsTr("Details") : qsTr("Details")
-                    bgColor: !investmentFinished && (joined || undefinedStatus) ? Style.accentColor : Style.buttonSecColor
-                    onClicked:{
-                        if (!session.user.optedIn) {
-                            //Refresh user info:
-                            session.getUserInfo();
-                        }
-                        pageManager.enterProjectDetailsScreen(projectId)
-                    }
-                }
+                console.warn("Could not set proper text for project status label:", projectStatus)
+                return ""
             }
+        }
+
+        Rectangle {
+            id: investmentStatusIndicator
+            Layout.preferredWidth: Style.investmentStatusIndicatorSize.width
+            Layout.preferredHeight: Style.investmentStatusIndicatorSize.height
+            radius: Style.investmentStatusIndicatorRadius
+            color:
+            {
+                switch (projectStatus) {
+                    case Project.ProjectStatus.Fundraising:
+                        return Style.projectFundraisingColor
+
+                    case Project.ProjectStatus.Active:
+                        return Style.projectActiveColor
+
+                    case Project.ProjectStatus.Closed:
+                        return Style.projectClosedColor
+
+                    case Project.ProjectStatus.Undefined:
+                        return Style.backgroundColor
+                }
+
+                console.warn("Could not set proper color for project status label:", projectStatus)
+                return Style.backgroundColor
+            }
+        }
+    }
+
+    ColumnLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: false
+        spacing: Style.projectListDelegateDescriptionSpacing
+
+        Label {
+            font: Style.projectListDelegateDescriptionTitleFont
+            color: Style.projectListDelegateFontColor
+            text: qsTr("Description")
+        }
+
+        Label {
+            id: descriptionLabel
+            Layout.fillWidth: true
+            font: Style.projectListDelegateDescriptionFont
+            color: Style.projectListDelegateFontColor
+            wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+            text: projectDescription
+        }
+    }
+
+    Custom.PrimaryButton {
+        Layout.fillWidth: true
+        text: qsTr("Details")
+
+        onClicked: {
+            if (!session.user.optedIn) {
+                // refresh user info to see if blockchain is ready
+                session.getUserInfo()
+            }
+
+            dataManager.loadProjectDetails(projectId)
+            AppNavigationController.enterPage(AppNavigation.ProjectDetailsPage)
         }
     }
 }

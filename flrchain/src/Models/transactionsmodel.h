@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #ifndef TRANSACTIONSMODEL_H
 #define TRANSACTIONSMODEL_H
 
@@ -14,7 +31,7 @@ public:
     {
         TransactionId = Qt::UserRole + 1,
         Title,
-        Type,
+        Action,
         Amount,
         CreationDate,
         Status,
@@ -28,7 +45,7 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) Q_DECL_OVERRIDE;
     void clear();
 public slots:
-    void parseJsonObject(const QJsonObject &response);
+    void parseJsonObject(const QJsonArray &response);
 signals:
     void transactionsReceived();
 

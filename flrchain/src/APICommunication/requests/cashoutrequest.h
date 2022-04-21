@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #ifndef CASHOUTREQUEST_H
 #define CASHOUTREQUEST_H
 
@@ -10,14 +27,15 @@ class CashOutRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    CashOutRequest(const double amount, const QString &address, const QByteArray &token);
-    void errorHandler(const QString &error);
+    CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token);
 
 signals:
     void transferReply(const bool successful) const;
 
-protected:
-    virtual void parse() override final;
+private:
+    void parse() final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
 };
 
 #endif // CASHOUTREQUEST_H

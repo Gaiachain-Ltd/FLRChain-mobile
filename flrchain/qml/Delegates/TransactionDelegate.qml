@@ -1,85 +1,91 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import com.flrchain.style 1.0
 
-Item {
-    height: Style.walletDelegateHeight
-    width: parent.width
-    property bool separatorVisible: true
+ColumnLayout {
+    id: root
+    spacing: 0
 
-    function statusName() {
-        switch(status) {
-        case 0:
-            return qsTr("Rejected")
-        case 1:
-            return qsTr("Confirmed")
-        case 2:
-            return qsTr("Pending")
-        }
+    property string transactionProjectName
+    property int transactionType
+    property real transactionAmount
+    property bool separatorVisible
+
+    function signType() {
+        return transactionType == 1 ? "+" : "-";
     }
 
-    function statusColor() {
-        switch(status) {
-        case 0:
-            return Style.errorColor;
-        case 1:
-            return Style.accentColor;
-        case 2:
-            return Style.yellowLabelColor;
-        }
-    }
+    RowLayout {
+        Layout.fillWidth: true
 
-    RowLayout{
-        height: childrenRect.height
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            right: parent.right
-            leftMargin: Style.baseMargin
-            rightMargin: Style.baseMargin
-        }
-        Column{
+        ColumnLayout {
+            Layout.fillWidth: true
+            Layout.fillHeight: false
+
             Label {
-                text: title
-                font.pixelSize: Style.fontTiny
-                color: Style.mediumLabelColor
+                id: projectNameLabel
+                Layout.fillWidth: true
+                font: Style.transactionProjectFont
+                color: Style.transactionProjectFontColor
+                wrapMode: Label.WordWrap
+                text: root.transactionProjectName
+                visible: text.length > 0
             }
 
             Label {
-                text: qsTr("Reward")
-                font.pixelSize: Style.fontTiny
-                color: Style.darkLabelColor
-            }
-
-            Label {
-                text: statusName()
-                font.pixelSize: Style.fontTiny
-                color: statusColor()
+                id: transactionTypeLabel
+                font: Style.transactionTypeFont
+                color: Style.transactionTypeFontColor
+                text: root.transactionType == 1 ? qsTr("Reward") : qsTr("Cash out")
             }
         }
 
-        Item{
+        Item {
             Layout.fillWidth: true
         }
 
-        Label {
-            text: "+ " + amount
-            font.pixelSize: Style.fontLarge
-            color: Style.accentColor
+        Row {
+            spacing: 5
+
+            Label {
+                id: amountLabel
+                font: Style.transactionAmountFont
+                color: root.transactionType == 1 ? Style.transactionIncomingColor : Style.transactionOutgoingColor
+                text: signType() + root.transactionAmount
+            }
+
+            Label {
+                font: Style.transactionCurrencyFont
+                color: amountLabel.color
+                text: "USDC"
+            }
         }
     }
 
-    Rectangle{
-        visible: separatorVisible
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            right: parent.right
-            leftMargin: Style.baseMargin
-            rightMargin: Style.baseMargin
-        }
-        height: Style.borderWidth
+    Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: Style.borderWidth
+        Layout.topMargin: 20
+        Layout.bottomMargin: 20
         color: Style.sectionColor
+        visible: root.separatorVisible
     }
 }

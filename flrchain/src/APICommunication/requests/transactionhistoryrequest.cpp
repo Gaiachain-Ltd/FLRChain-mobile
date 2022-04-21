@@ -1,26 +1,32 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "transactionhistoryrequest.h"
 
-#include <QJsonObject>
-#include <QJsonValue>
 #include <QJsonArray>
-#include "transaction.h"
 
-TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token) : ApiRequest("transactions")
+TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token)
+    : ApiRequest("transactions")
 {
-    setPriority(Priority::Normal);
     setType(Type::Get);
     setToken(token);
-    connect(this, &TransactionHistoryRequest::replyError, this, &TransactionHistoryRequest::errorHandler);
-}
-
-void TransactionHistoryRequest::errorHandler(const QString &error)
-{
-    qDebug() << "Error" << error;
 }
 
 void TransactionHistoryRequest::parse()
 {
-    QJsonObject response(m_replyDocument.object());
-
-    emit walletDataReply(response);
+    emit walletDataReply(m_replyDocument.array());
 }

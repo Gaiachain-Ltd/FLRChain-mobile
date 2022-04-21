@@ -1,26 +1,47 @@
+/*
+ * Copyright (C) 2022  Milo Solutions
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "apirequest.h"
 
-ApiRequest::ApiRequest(const QString &method)
-    : MRestRequest()
+ApiRequest::ApiRequest(const QString &apiEndpoint)
+    : MRestRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
 {
-    setMethod(method);
     setPriority(Priority::Normal);
-}
 
-void ApiRequest::setMethod(const QString &apiMethodPath)
-{
-    mApiMethod = apiMethodPath;
-    setAddress(QUrl(APIUrl + QLatin1String("/api/v1/") + mApiMethod + "/?format=json"));
+    connect(this, &MRestRequest::replyError,
+            this, &ApiRequest::handleError);
 }
 
 void ApiRequest::customizeRequest(QNetworkRequest &request)
 {
     Q_ASSERT_X(!isTokenRequired() || !m_token.isEmpty(),
                objectName().toLatin1(),
-               "This request require token and it's not provided!");
+               "This request requires token and it's not provided!");
+
+    request.setHeader(QNetworkRequest::UserAgentHeader, "Qt");
 
     if (!m_token.isEmpty()) {
         request.setRawHeader(QByteArray("Authorization"),
                              QStringLiteral("%1 %2").arg("Token", m_token).toLatin1());
     }
+}
+
+void ApiRequest::handleError(const QString &errorMessage,
+                             const QNetworkReply::NetworkError errorCode)
+{
+    qCritical() << "HTTP response" << errorCode << errorMessage;
 }
