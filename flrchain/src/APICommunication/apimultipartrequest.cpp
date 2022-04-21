@@ -18,7 +18,7 @@
 #include "apimultipartrequest.h"
 
 ApiMultiPartRequest::ApiMultiPartRequest(const QString &apiEndpoint)
-    : MMultiPartRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
+    : MMultiPartRequest(QLatin1String("%1/api/v1/%2").arg(APIUrl, apiEndpoint))
 {
     setPriority(Priority::Normal);
 
