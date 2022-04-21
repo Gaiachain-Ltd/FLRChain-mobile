@@ -25,13 +25,18 @@ class WorkDataRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    WorkDataRequest(const QByteArray &token, const int projectId);
+    WorkDataRequest(const int projectId,
+                    const int taskId,
+                    const QByteArray &token);
 
 signals:
-    void workDataReply(const QJsonObject &workReply) const;
+    void workDataReply(const QJsonArray &workReply);
+    void workDataError(const QString &errorMessage);
 
 private:
     void parse() final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
 };
 
 #endif // WORKDATAREQUEST_H

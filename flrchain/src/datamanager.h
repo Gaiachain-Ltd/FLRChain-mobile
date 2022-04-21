@@ -61,7 +61,6 @@ signals:
     void photoDownloadResult(const int workId, const QString &path);
     void projectsDataReply(const QJsonObject &projects);
     void transactionsDataReply(const QJsonArray &transactions);
-    void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
     void detailedProjectChanged();
     void myTasksReceived(const QVariantList &myTasks);

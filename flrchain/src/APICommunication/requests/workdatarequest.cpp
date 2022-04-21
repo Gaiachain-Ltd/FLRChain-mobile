@@ -18,9 +18,13 @@
 #include "workdatarequest.h"
 
 #include <QJsonObject>
+#include <QJsonArray>
 
-WorkDataRequest::WorkDataRequest(const QByteArray &token, const int projectId)
-    : ApiRequest(QString("projects/%1/activities").arg(projectId))
+WorkDataRequest::WorkDataRequest(const int projectId,
+                                 const int taskId,
+                                 const QByteArray &token)
+    : ApiRequest(QString("projects/%1/tasks/%2/activities").arg(QString::number(projectId),
+                                                                QString::number(taskId)))
 {
     setType(Type::Get);
     setToken(token);
@@ -28,5 +32,13 @@ WorkDataRequest::WorkDataRequest(const QByteArray &token, const int projectId)
 
 void WorkDataRequest::parse()
 {
-    emit workDataReply(m_replyDocument.object());
+    emit workDataReply(m_replyDocument.array());
+}
+
+void WorkDataRequest::handleError(const QString &errorMessage,
+                                  const QNetworkReply::NetworkError errorCode)
+{
+    qCritical() << "HTTP response" << errorCode << errorMessage;
+
+    emit workDataError(errorMessage);
 }

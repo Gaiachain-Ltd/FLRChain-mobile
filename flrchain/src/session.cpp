@@ -188,7 +188,7 @@ void Session::getProjectsData() const
     m_apiClient->send(request);
 }
 
-void Session::getWorkData(const int projectId) const
+void Session::getWorkData(const int projectId, const int taskId) const
 {
     if (m_apiClient.isNull()) {
         qCDebug(session) << "Client class not set - cannot send request!";
@@ -200,11 +200,18 @@ void Session::getWorkData(const int projectId) const
         return;
     }
 
-    m_dataManager->cleanPhotosDir();
-
-    auto request = QSharedPointer<WorkDataRequest>::create(getToken(), projectId);
+    auto request = QSharedPointer<WorkDataRequest>::create(projectId, taskId, getToken());
     connect(request.data(), &WorkDataRequest::workDataReply,
-            m_dataManager, &DataManager::workReply);
+            this, &Session::workDataReceived);
+    connect(request.get(), &WorkDataRequest::workDataError,
+            this, [&](const QString &message)
+    {
+        const QString errorMessage = tr("Could not get information about submitted work.") + "\n" + message;
+
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", errorMessage}
+                                                      });
+    });
 
     m_apiClient->send(request);
 }

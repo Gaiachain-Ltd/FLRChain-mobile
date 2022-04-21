@@ -37,8 +37,6 @@ DataManager::DataManager(QObject *parent) :
             m_projectsModel.get(), &ProjectModel::reloadFromJson, Qt::QueuedConnection);
     connect(this, &DataManager::transactionsDataReply,
             m_transactionsModel.get(), &TransactionsModel::parseJsonObject, Qt::QueuedConnection);
-    connect(this, &DataManager::workReply,
-            m_workModel.get(), &WorkModel::parseJsonObject, Qt::QueuedConnection);
     connect(m_workModel.get(), &WorkModel::downloadPhoto,
             this, &DataManager::downloadRequest, Qt::QueuedConnection);
     connect(this, &DataManager::photoDownloadResult,

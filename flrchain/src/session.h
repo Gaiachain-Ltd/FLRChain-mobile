@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE void logout();
 
     Q_INVOKABLE void getProjectsData() const;
-    Q_INVOKABLE void getWorkData(const int projectId) const;
+    Q_INVOKABLE void getWorkData(const int projectId, const int taskId) const;
     Q_INVOKABLE void getUserInfo() const;
     Q_INVOKABLE void joinProject(const int projectId) const;
     Q_INVOKABLE void getTransactionsData() const;
@@ -88,6 +88,7 @@ signals:
     void walletQRCodeReceived(const QString &qrCode);
     void facilitatorListReceived(const QJsonArray &facilitators);
     void sendWorkJobFinished();
+    void workDataReceived(const QJsonArray &workData);
     void joinRequestSent(const int projectId);
 
 private:
