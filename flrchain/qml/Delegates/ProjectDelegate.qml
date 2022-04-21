@@ -161,8 +161,7 @@ Custom.Pane {
                 session.getUserInfo()
             }
 
-            dataManager.loadProjectDetails(projectId)
-            AppNavigationController.enterPage(AppNavigation.ProjectDetailsPage)
+            AppNavigationController.enterPage(AppNavigation.ProjectDetailsPage, {projectId: projectId})
         }
     }
 }

@@ -159,18 +159,7 @@ Pane {
             text: qsTr("Earn reward")
 
             onClicked: {
-                AppNavigationController.enterPage(AppNavigation.WorkPage,
-                                                  {
-                                                      projectId: taskProjectId,
-                                                      projectName: taskProjectName,
-                                                      actionName: taskActionName,
-                                                      milestoneName: taskMilestoneName,
-                                                      taskId: taskId,
-                                                      taskName: taskName,
-                                                      taskTypeOfInformation: taskTypeOfInformation,
-                                                      taskInstructions: taskInstructions,
-                                                      taskRequiredData: taskRequiredData
-                                                  })
+                AppNavigationController.enterPage(AppNavigation.WorkPage, {taskId: taskId})
             }
         }
     }

@@ -74,6 +74,7 @@ public:
                                     const QString &newPassword) const;
     Q_INVOKABLE void resetPassword(const QString &email) const;
     Q_INVOKABLE void getMyTasks(const QVariantList &taskIds) const;
+    Q_INVOKABLE void getTaskDetails(const int taskId) const;
 
 signals:
     void loginError(const QString& error);
@@ -90,6 +91,7 @@ signals:
     void sendWorkJobFinished();
     void workDataReceived(const QJsonArray &workData);
     void joinRequestSent(const int projectId);
+    void taskDetailsError() const;
 
 private:
     void setInternetConnection(const bool internetConnection);

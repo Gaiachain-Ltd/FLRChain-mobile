@@ -33,8 +33,9 @@ import "qrc:/Project" as ProjectComponents
 AppPage {
     id: root
 
+    property int projectId: -1
+
     readonly property Project project: dataManager.detailedProject
-    readonly property int projectId: project ? project.id : -1
     readonly property string projectName: project ? project.name : "N/A"
     readonly property string projectDescription: project ? project.description : "N/A"
     readonly property string projectPhoto: project ? project.photo : null
@@ -49,10 +50,15 @@ AppPage {
     readonly property bool userHasJoined: projectAssignmentStatus === Project.AssignmentStatus.Accepted
     readonly property bool showFavouritesOnly: tabBar.currentIndex == 1
 
-    Custom.BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: false
+    Component.onCompleted: {
+        reloadData()
+    }
+
+    function reloadData() {
+        if (projectId != -1) {
+            busyIndicator.visible = true
+            session.getProjectDetails(projectId)
+        }
     }
 
     Connections {
@@ -71,6 +77,12 @@ AppPage {
                 session.getProjectDetails(projectId)
             }
         }
+    }
+
+    Custom.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
     }
 
     background: null
@@ -160,10 +172,8 @@ AppPage {
                 Material.accent: Style.accentColor
             }
 
-            onPullDownRelease:
-            {
-                busyIndicator.visible = true
-                session.getProjectDetails(projectId)
+            onPullDownRelease: {
+                reloadData()
             }
         }
     }

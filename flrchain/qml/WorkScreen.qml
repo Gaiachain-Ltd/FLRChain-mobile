@@ -33,26 +33,38 @@ import "qrc:/Popups" as Popups
 AppPage {
     id: workScreen
 
-    property int projectId: -1
-    property string projectName: ""
-    property string actionName: ""
-    property string milestoneName: ""
     property int taskId: -1
-    property string taskName: ""
-    property string taskTypeOfInformation: ""
-    property string taskInstructions: ""
-    property var taskRequiredData: null
+
+    readonly property Task task: dataManager.detailedTask
+    readonly property int projectId: task ? task.projectId : -1
+    readonly property string projectName: task ? task.projectName : ""
+    readonly property string actionName: task ? task.actionName : ""
+    readonly property string milestoneName: task ? task.milestoneName : ""
+    readonly property string taskName: task ? task.name : ""
+    readonly property string taskTypeOfInformation: task ? task.dataTypeTag : ""
+    readonly property string taskInstructions: task ? task.instructions : ""
+    readonly property var taskRequiredData: task ? task.dataTags : null
+
     property var taskSubmittedWork: null
     property bool errorMode: false
 
-    Custom.BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: false
+    Component.onCompleted: {
+        reloadData()
     }
 
-    Component.onCompleted: {
-        session.getWorkData(projectId, taskId)
+    function reloadData() {
+        if (taskId != -1) {
+            busyIndicator.visible = true
+            session.getTaskDetails(taskId)
+        }
+    }
+
+    Connections {
+        target: dataManager
+
+        function onDetailedTaskChanged() {
+            session.getWorkData(projectId, taskId)
+        }
     }
 
     Connections {
@@ -66,6 +78,16 @@ AppPage {
             busyIndicator.visible = false
             taskSubmittedWork = workData
         }
+
+        function onTaskDetailsError() {
+            busyIndicator.visible = false
+        }
+    }
+
+    Custom.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
     }
 
     background: null
@@ -559,10 +581,8 @@ AppPage {
                 Material.accent: Style.accentColor
             }
 
-            onPullDownRelease:
-            {
-                busyIndicator.visible = true
-                session.getWorkData(projectId, taskId)
+            onPullDownRelease: {
+                reloadData()
             }
         }
     }

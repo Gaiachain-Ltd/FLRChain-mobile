@@ -44,6 +44,7 @@ HEADERS += \
     src/APICommunication/requests/saveuserinforequest.h \
     src/APICommunication/requests/sendactivityphotorequest.h \
     src/APICommunication/requests/sendworkjob.h \
+    src/APICommunication/requests/taskdetailsrequest.h \
     src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
@@ -95,6 +96,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/saveuserinforequest.cpp \
     src/APICommunication/requests/sendactivityphotorequest.cpp \
     src/APICommunication/requests/sendworkjob.cpp \
+    src/APICommunication/requests/taskdetailsrequest.cpp \
     src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \

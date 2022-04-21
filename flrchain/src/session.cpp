@@ -47,6 +47,7 @@
 #include "requests/resetpasswordrequest.h"
 #include "requests/sendworkjob.h"
 #include "requests/mytasksrequest.h"
+#include "requests/taskdetailsrequest.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -115,7 +116,7 @@ void Session::onUserInfo(const QString &firstName, const QString &lastName,
 void Session::login(const QString &email, const QString &password)
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send login request!";
+        qCCritical(session) << "Client class not set - cannot send login request!";
         return;
     }
 
@@ -145,7 +146,7 @@ void Session::registerUser(const QString &email, const QString &password, const 
                            const QString &lastName, const QString &phone, const QString &village)
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
@@ -172,12 +173,12 @@ void Session::registerUser(const QString &email, const QString &password, const 
 void Session::getProjectsData() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -191,12 +192,12 @@ void Session::getProjectsData() const
 void Session::getWorkData(const int projectId, const int taskId) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -219,12 +220,12 @@ void Session::getWorkData(const int projectId, const int taskId) const
 void Session::getUserInfo() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -238,12 +239,12 @@ void Session::getUserInfo() const
 void Session::joinProject(const int projectId) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -264,12 +265,12 @@ void Session::joinProject(const int projectId) const
 void Session::getTransactionsData() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -283,12 +284,12 @@ void Session::getTransactionsData() const
 void Session::getWalletBalance() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -302,12 +303,12 @@ void Session::getWalletBalance() const
 void Session::getWalletQRCode() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -321,12 +322,12 @@ void Session::getWalletQRCode() const
 void Session::getFacilitatorList() const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -340,12 +341,12 @@ void Session::getFacilitatorList() const
 void Session::cashOut(const QString &amount, const QString &phone) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -359,12 +360,12 @@ void Session::cashOut(const QString &amount, const QString &phone) const
 void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -378,18 +379,18 @@ void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
 void Session::getProjectDetails(const int projectId) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
     auto request = QSharedPointer<ProjectDetailsRequest>::create(getToken(), projectId);
     connect(request.data(), &ProjectDetailsRequest::projectDetailsReply,
-            m_dataManager, &DataManager::projectDetailsReply);
+            m_dataManager, &DataManager::onProjectDetailsReply);
 
     m_apiClient->send(request);
 }
@@ -397,12 +398,12 @@ void Session::getProjectDetails(const int projectId) const
 void Session::downloadPhoto(const QString &fileName, const int workId) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -416,12 +417,12 @@ void Session::downloadPhoto(const QString &fileName, const int workId) const
 void Session::sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData)
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -458,12 +459,12 @@ void Session::sendWorkRequest(const int projectId, const int taskId, const QVari
 void Session::saveUserInfo(const QString &firstName, const QString &lastName, const QString &phone, const QString &village) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -491,12 +492,12 @@ void Session::saveUserInfo(const QString &firstName, const QString &lastName, co
 void Session::changePassword(const QString &oldPassword, const QString &newPassword) const
 {
     if (m_apiClient.isNull()) {
-        qCDebug(session) << "Client class not set - cannot send request!";
+        qCCritical(session) << "Client class not set - cannot send request!";
         return;
     }
 
-    if(!hasToken()) {
-        qCDebug(session) << "Token is not set";
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
         return;
     }
 
@@ -539,6 +540,11 @@ void Session::getMyTasks(const QVariantList &taskIds) const
         return;
     }
 
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
+        return;
+    }
+
     if (taskIds.isEmpty()) {
         return;
     }
@@ -546,6 +552,36 @@ void Session::getMyTasks(const QVariantList &taskIds) const
     auto request = QSharedPointer<MyTasksRequest>::create(taskIds, getToken());
     connect(request.get(), &MyTasksRequest::myTasksReceived,
             m_dataManager, &DataManager::myTasksReceived);
+
+    m_apiClient->send(request);
+}
+
+void Session::getTaskDetails(const int taskId) const
+{
+    if (m_apiClient.isNull()) {
+        qCCritical(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<TaskDetailsRequest>::create(taskId, getToken());
+    connect(request.get(), &TaskDetailsRequest::taskDetailsReply,
+            m_dataManager, &DataManager::onTaskDetailsReply);
+    connect(request.get(), &TaskDetailsRequest::taskDetailsReplyError,
+            this, [&](const QString &errorMessage)
+    {
+        const QString message = tr("Could not get task details.") + "\n" + errorMessage;
+
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", message}
+                                                      });
+
+        emit taskDetailsError();
+    });
 
     m_apiClient->send(request);
 }

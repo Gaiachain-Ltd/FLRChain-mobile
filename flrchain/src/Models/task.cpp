@@ -260,3 +260,9 @@ TaskPtr Task::createFromJson(const QJsonObject &taskObject)
                            taskMilestoneId,
                            taskMilestoneName);
 }
+
+TaskPtr Task::emptyTask()
+{
+    return TaskPtr::create(-1, QString(), 0, 0, false, QString(), QString(),
+                           DataTagList(), -1, QString(), -1, QString(), -1, QString());
+}

@@ -89,6 +89,7 @@ public:
     void setMilestoneName(const QString &milestoneName);
 
     static TaskPtr createFromJson(const QJsonObject &taskObject);
+    static TaskPtr emptyTask();
 
 signals:
     void nameChanged(const QString &action);
