@@ -16,11 +16,11 @@
 # Provide version number to application
 COMMIT = $$system(git rev-parse --short HEAD)
 
-VERSION=0.0.1
+VERSION=0.0.2
 
 android: {
     ANDROID_VERSION_NAME = $$VERSION
-    ANDROID_VERSION_CODE = 100
+    ANDROID_VERSION_CODE = 101
 }
 
 HOST_MACHINE = $$[QMAKE_SPEC]
