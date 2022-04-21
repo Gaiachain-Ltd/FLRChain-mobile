@@ -24,7 +24,7 @@ Q_LOGGING_CATEGORY(requestRegister, "request.register")
 
 RegisterRequest::RegisterRequest(const QString &email, const QString &password, const QString &firstName,
                                  const QString &lastName, const QString &phone, const QString &village)
-    : ApiRequest("register")
+    : ApiRequest("register/")
 {
     if (!email.isEmpty() && !password.isEmpty()) {
         QJsonObject object;

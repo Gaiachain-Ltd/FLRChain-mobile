@@ -4,7 +4,7 @@
 #include <QJsonArray>
 
 ResetPasswordRequest::ResetPasswordRequest(const QString &email)
-    : ApiRequest(QLatin1String("password_reset"))
+    : ApiRequest(QLatin1String("password_reset/"))
 {
     QJsonObject object;
     object.insert(QLatin1String("email"), email);

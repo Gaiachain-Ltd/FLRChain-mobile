@@ -1,7 +1,7 @@
 #include "walletqrcoderequest.h"
 
 WalletQRCodeRequest::WalletQRCodeRequest(const QByteArray &token)
-    : ApiRequest("accounts/qrcode")
+    : ApiRequest("accounts/qrcode/")
 {
     setType(Type::Get);
     setToken(token);

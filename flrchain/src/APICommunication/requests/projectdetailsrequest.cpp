@@ -20,7 +20,7 @@
 #include <QJsonObject>
 
 ProjectDetailsRequest::ProjectDetailsRequest(const QByteArray &token, const int projectId)
-    : ApiRequest(QString("projects/%1").arg(projectId))
+    : ApiRequest(QString("projects/%1/").arg(projectId))
 {
     setType(Type::Get);
     setToken(token);

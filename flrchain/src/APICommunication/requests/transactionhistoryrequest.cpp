@@ -20,7 +20,7 @@
 #include <QJsonArray>
 
 TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token)
-    : ApiRequest("transactions")
+    : ApiRequest("transactions/")
 {
     setType(Type::Get);
     setToken(token);

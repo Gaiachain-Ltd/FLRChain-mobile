@@ -20,7 +20,7 @@
 #include <QJsonValue>
 
 JoinProjectRequest::JoinProjectRequest(const int projectId, const QByteArray &token)
-    : ApiRequest(QString("projects/%1/assignments").arg(projectId))
+    : ApiRequest(QString("projects/%1/assignments/").arg(projectId))
     , m_projectId(projectId)
 {
     setType(Type::Post);

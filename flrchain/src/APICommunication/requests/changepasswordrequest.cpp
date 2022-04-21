@@ -5,7 +5,7 @@
 ChangePasswordRequest::ChangePasswordRequest(const QString &oldPassword,
                                              const QString &newPassword,
                                              const QByteArray &token)
-    : ApiRequest(QLatin1String("change_password"))
+    : ApiRequest(QLatin1String("change_password/"))
 {
     QJsonObject object;
     object.insert(QLatin1String("old_password"), oldPassword);

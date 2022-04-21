@@ -3,7 +3,7 @@
 #include <QJsonObject>
 
 FacilitatorCashOutRequest::FacilitatorCashOutRequest(const QString &amount, int facilitatorId, const QByteArray &token)
-    : ApiRequest("payments/facililator")
+    : ApiRequest("payments/facililator/")
 {
     if (!amount.isEmpty() && facilitatorId > 0) {
         QJsonObject object;

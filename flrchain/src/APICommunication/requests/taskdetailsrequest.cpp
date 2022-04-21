@@ -20,7 +20,7 @@
 #include <QJsonObject>
 
 TaskDetailsRequest::TaskDetailsRequest(const int taskId, const QByteArray &token)
-    : ApiRequest(QLatin1String("projects/task/%1").arg(QString::number(taskId)))
+    : ApiRequest(QLatin1String("projects/task/%1/").arg(QString::number(taskId)))
 {
     setType(Type::Get);
     setToken(token);

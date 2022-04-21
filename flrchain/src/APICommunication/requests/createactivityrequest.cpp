@@ -23,7 +23,7 @@ CreateActivityRequest::CreateActivityRequest(const int projectId,
                                              const int taskId,
                                              const QVariantMap &data,
                                              const QByteArray &token)
-    : ApiRequest(QLatin1String("projects/%1/tasks/%2/activities").arg(QString::number(projectId),
+    : ApiRequest(QLatin1String("projects/%1/tasks/%2/activities/").arg(QString::number(projectId),
                                                                       QString::number(taskId)))
 {
     setType(Type::Post);

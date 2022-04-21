@@ -21,7 +21,7 @@
 #include <QJsonArray>
 
 MyTasksRequest::MyTasksRequest(const QVariantList &myTaskIds, const QByteArray &token)
-    : ApiRequest("projects/tasks")
+    : ApiRequest("projects/tasks/")
 {
     setType(Type::Post);
     setToken(token);

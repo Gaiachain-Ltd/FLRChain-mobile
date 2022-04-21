@@ -3,7 +3,7 @@
 SendActivityPhotoRequest::SendActivityPhotoRequest(const QString &activityId,
                                                    const QFileInfo &photo,
                                                    const QByteArray &token)
-    : ApiMultiPartRequest(QLatin1String("projects/activity/%1/photo").arg(activityId))
+    : ApiMultiPartRequest(QLatin1String("projects/activity/%1/photo/").arg(activityId))
 {
     setType(Type::Post);
     setToken(token);

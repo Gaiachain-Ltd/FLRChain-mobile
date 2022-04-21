@@ -20,7 +20,7 @@
 #include <QJsonObject>
 
 CashOutRequest::CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token)
-    : ApiRequest("payments/mtn/payout")
+    : ApiRequest("payments/mtn/payout/")
 {
     if (!phone.isEmpty() && amount != 0) {
         QJsonObject object;

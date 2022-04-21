@@ -23,8 +23,8 @@
 WorkDataRequest::WorkDataRequest(const int projectId,
                                  const int taskId,
                                  const QByteArray &token)
-    : ApiRequest(QString("projects/%1/tasks/%2/activities").arg(QString::number(projectId),
-                                                                QString::number(taskId)))
+    : ApiRequest(QString("projects/%1/tasks/%2/activities/").arg(QString::number(projectId),
+                                                                 QString::number(taskId)))
 {
     setType(Type::Get);
     setToken(token);
