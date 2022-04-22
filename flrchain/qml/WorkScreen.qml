@@ -41,6 +41,8 @@ AppPage {
     readonly property string actionName: task ? task.actionName : ""
     readonly property string milestoneName: task ? task.milestoneName : ""
     readonly property string taskName: task ? task.name : ""
+    readonly property real taskReward: task ? task.reward : 0
+    readonly property real taskBatch: task ? task.batch : 0
     readonly property string taskTypeOfInformation: task ? task.dataTypeTag : ""
     readonly property string taskInstructions: task ? task.instructions : ""
     readonly property var taskRequiredData: task ? task.dataTags : null
@@ -190,6 +192,50 @@ AppPage {
                         color: Style.lightLabelColor
                         wrapMode: Label.WordWrap
                         text: taskName
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Reward")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: String("%1 USDC").arg(taskReward)
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Batch")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: String("%1 USDC (%2)").arg(taskBatch).arg(qsTr("evenly divided among all participants"))
                     }
                 }
 

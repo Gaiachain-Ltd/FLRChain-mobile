@@ -126,7 +126,7 @@ Pane {
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
                 wrapMode: Label.WordWrap
-                text: taskReward + " USDC"
+                text: String("%1 USDC").arg(taskReward)
             }
         }
 
