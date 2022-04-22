@@ -53,5 +53,6 @@
         <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>
         <file>Popups/CashOutSuccessPopup.qml</file>
         <file>Popups/ConfirmCashOutPopup.qml</file>
+        <file>CustomControls/WorkActivityStatusLabel.qml</file>
     </qresource>
 </RCC>

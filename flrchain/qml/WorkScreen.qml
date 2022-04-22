@@ -431,26 +431,37 @@ AppPage {
                     readonly property var submittedNumber: modelData.number
                     readonly property var submittedArea: modelData.area
                     readonly property var submittedPhotos: modelData.photos
+                    readonly property int submittedWorkStatus: modelData.status
 
-                    ColumnLayout {
+                    RowLayout {
                         Layout.fillWidth: true
                         Layout.fillHeight: false
-                        spacing: Style.taskDetailsTitleDataSpacing
 
-                        Label {
+                        ColumnLayout {
                             Layout.fillWidth: true
-                            font: Style.semiBoldSmallFont
-                            color: Style.accentColor
-                            wrapMode: Label.WordWrap
-                            text: qsTr("Submitted at")
+                            Layout.fillHeight: false
+                            spacing: Style.taskDetailsTitleDataSpacing
+
+                            Label {
+                                Layout.fillWidth: true
+                                font: Style.semiBoldSmallFont
+                                color: Style.accentColor
+                                wrapMode: Label.WordWrap
+                                text: qsTr("Submitted at")
+                            }
+
+                            Label {
+                                Layout.fillWidth: true
+                                font: Style.semiBoldTinyFont
+                                color: Style.lightLabelColor
+                                wrapMode: Label.WordWrap
+                                text: new Date(modelData.created).toLocaleString()
+                            }
                         }
 
-                        Label {
-                            Layout.fillWidth: true
-                            font: Style.semiBoldTinyFont
-                            color: Style.lightLabelColor
-                            wrapMode: Label.WordWrap
-                            text: new Date(modelData.created).toLocaleString()
+                        Custom.WorkActivityStatusLabel {
+                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                            status: submittedWorkStatus
                         }
                     }
 

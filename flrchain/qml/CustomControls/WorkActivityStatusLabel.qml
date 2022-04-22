@@ -24,13 +24,13 @@ import com.flrchain.objects 1.0
 Pane {
     id: root
 
-    property int status: Project.AssignmentStatus.Undefined
+    property int status: -1
 
     topPadding: Style.assignmentStatusLabelTopBottomPadding
     bottomPadding: Style.assignmentStatusLabelTopBottomPadding
     leftPadding: Style.assignmentStatusLabelLeftRightPadding
     rightPadding: Style.assignmentStatusLabelLeftRightPadding
-    visible: status !== Project.AssignmentStatus.Undefined
+    visible: status !== -1
 
     background: Rectangle {
         radius: Style.assignmentStatusLabelRadius
@@ -38,16 +38,13 @@ Pane {
         {
             switch (root.status)
             {
-            case Project.AssignmentStatus.New:
-                return Style.assignmentNewColor
-
-            case Project.AssignmentStatus.Waiting:
+            case 0:
                 return Style.assignmentWaitingColor
 
-            case Project.AssignmentStatus.Accepted:
+            case 1:
                 return Style.assignmentAcceptedColor
 
-            case Project.AssignmentStatus.Rejected:
+            case 2:
                 return Style.assignmentRejectedColor
             }
 
@@ -63,16 +60,13 @@ Pane {
         {
             switch (root.status)
             {
-            case Project.AssignmentStatus.New:
-                return qsTr("NEW")
-
-            case Project.AssignmentStatus.Waiting:
+            case 0:
                 return qsTr("WAITING")
 
-            case Project.AssignmentStatus.Accepted:
+            case 1:
                 return qsTr("ACCEPTED")
 
-            case Project.AssignmentStatus.Rejected:
+            case 2:
                 return qsTr("REJECTED")
             }
 
