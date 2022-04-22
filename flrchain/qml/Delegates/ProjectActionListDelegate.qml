@@ -43,14 +43,14 @@ Pane {
 
             Label {
                 font: Qt.font({family: Style.appFontFamily, styleName: "Regular", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 text: String("%1 %2: ").arg(qsTr("FLR Action")).arg(actionNumber)
             }
 
             Label {
                 Layout.fillWidth: true
                 font: Qt.font({family: Style.appFontFamily, styleName: "SemiBold", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 wrapMode: Label.WordWrap
                 text: actionName
             }

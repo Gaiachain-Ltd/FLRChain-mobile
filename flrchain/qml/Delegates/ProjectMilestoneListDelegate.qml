@@ -44,14 +44,14 @@ Pane {
 
             Label {
                 font: Qt.font({family: Style.appFontFamily, styleName: "Regular", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 text: String("%1 %2.%3: ").arg(qsTr("Milestone")).arg(actionNumber).arg(milestoneNumber)
             }
 
             Label {
                 Layout.fillWidth: true
                 font: Qt.font({family: Style.appFontFamily, styleName: "SemiBold", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 wrapMode: Label.WordWrap
                 text: milestoneName
             }
