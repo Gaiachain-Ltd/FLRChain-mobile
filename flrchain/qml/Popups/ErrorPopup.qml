@@ -42,7 +42,7 @@ Custom.Popup {
         Layout.fillWidth: true
         backgroundColor: Style.popupErrorColor
         borderColor: backgroundColor
-        text: qsTr("Ok")
+        text: qsTr("OK")
 
         onClicked: {
             popup.close()

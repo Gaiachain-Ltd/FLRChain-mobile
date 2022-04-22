@@ -21,6 +21,8 @@
 
 CashOutRequest::CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token)
     : ApiRequest("payments/mtn/payout/")
+    , m_amount(amount)
+    , m_phone(phone)
 {
     if (!phone.isEmpty() && amount != 0) {
         QJsonObject object;
@@ -32,18 +34,24 @@ CashOutRequest::CashOutRequest(const QString& amount, const QString &phone, cons
         setType(Type::Post);
         setToken(token);
     } else {
-        qDebug() << "Error: missing info";
+        qCritical() << "Error: missing info";
     }
 }
 
 void CashOutRequest::parse()
 {
-    emit transferReply(m_replyDocument.object().value("success").toBool());
+    const QJsonObject replyObject = m_replyDocument.object();
+
+    if (replyObject.value(u"success").toBool()) {
+        emit transferSuccess(m_amount, m_phone);
+    } else {
+        emit transferFailed(tr("Unknown issue occurred."));
+    }
 }
 
 void CashOutRequest::handleError(const QString &errorMessage, const QNetworkReply::NetworkError errorCode)
 {
     ApiRequest::handleError(errorMessage, errorCode);
 
-    emit transferReply(false);
+    emit transferFailed(errorMessage);
 }

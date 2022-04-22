@@ -51,5 +51,7 @@
         <file>Delegates/TaskTextDataDelegate.qml</file>
         <file>Delegates/TaskRequiredDataInputDelegate.qml</file>
         <file>Delegates/TaskRequiredDataPhotoDelegate.qml</file>
+        <file>Popups/CashOutSuccessPopup.qml</file>
+        <file>Popups/ConfirmCashOutPopup.qml</file>
     </qresource>
 </RCC>

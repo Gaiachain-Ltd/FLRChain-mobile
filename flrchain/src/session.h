@@ -62,7 +62,9 @@ public:
     Q_INVOKABLE void getWalletQRCode() const;
     Q_INVOKABLE void getFacilitatorList() const;
     Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
-    Q_INVOKABLE void facilitatorCashOut(const QString &amount, int facilitatorId) const;
+    Q_INVOKABLE void facilitatorCashOut(const QString &amount,
+                                        int facilitatorId,
+                                        const QString &facilitatorName) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData);
@@ -104,7 +106,6 @@ private:
                     const QString &phone,
                     const QString &village,
                     bool optedIn);
-    void onCashOutReplyReceived(const bool result);
 
     UserPtr m_currentUser;
     QPointer<RestAPIClient> m_apiClient;

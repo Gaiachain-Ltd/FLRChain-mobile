@@ -66,6 +66,7 @@ AppPopup {
                 horizontalAlignment: Controls.Label.AlignHCenter
                 font: Style.popupTitleFont
                 color: Style.popupTitleFontColor
+                wrapMode: Controls.Label.WordWrap
                 text: popup.title
             }
         }

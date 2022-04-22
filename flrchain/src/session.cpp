@@ -351,13 +351,33 @@ void Session::cashOut(const QString &amount, const QString &phone) const
     }
 
     auto request = QSharedPointer<CashOutRequest>::create(amount, phone, getToken());
-    connect(request.data(), &CashOutRequest::transferReply,
-            this, &Session::onCashOutReplyReceived);
+
+    connect(request.get(), &CashOutRequest::transferSuccess,
+            this, [&](const QString &amount, const QString &phone)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::CashOutSuccessPopup,
+                                                      {
+                                                          {"cashOutAmount", amount},
+                                                          {"cashOutPhone", phone}
+                                                      });
+    });
+
+    connect(request.get(), &CashOutRequest::transferFailed,
+            this, [&](const QString &errorMessage)
+    {
+        const QString message = tr("Could not send money.") + "\n" + errorMessage;
+
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
+                                                          {"errorMessage", message}
+                                                      });
+    });
 
     m_apiClient->send(request);
 }
 
-void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
+void Session::facilitatorCashOut(const QString &amount,
+                                 int facilitatorId,
+                                 const QString &facilitatorName) const
 {
     if (m_apiClient.isNull()) {
         qCCritical(session) << "Client class not set - cannot send request!";
@@ -369,9 +389,20 @@ void Session::facilitatorCashOut(const QString &amount, int facilitatorId) const
         return;
     }
 
-    auto request = QSharedPointer<FacilitatorCashOutRequest>::create(amount, facilitatorId, getToken());
-    connect(request.data(), &FacilitatorCashOutRequest::transferReply,
-            this, &Session::onCashOutReplyReceived);
+    auto request = QSharedPointer<FacilitatorCashOutRequest>::create(amount, facilitatorId,
+                                                                     facilitatorName, getToken());
+    connect(request.data(), &FacilitatorCashOutRequest::transferSuccess,
+            this, [&](const QString &amount,
+                      const QString &facilitatorName,
+                      const QString &transactionId)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::CashOutSuccessPopup,
+                                                      {
+                                                          {"cashOutAmount", amount},
+                                                          {"cashOutFacilitator", facilitatorName},
+                                                          {"cashOutTransactionId", transactionId}
+                                                      });
+    });
 
     m_apiClient->send(request);
 }
@@ -599,19 +630,6 @@ bool Session::getRememberMe() const
 void Session::setToken(const QByteArray &val)
 {
     Settings::instance()->setValue(Settings::Token, val);
-}
-
-void Session::onCashOutReplyReceived(const bool result)
-{
-    if (result) {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::SuccessPopup, {
-                                                          {"message", tr("Cashed out successfully.")}
-                                                      });
-    } else {
-        AppNavigationController::instance().openPopup(AppNavigation::PopupID::ErrorPopup, {
-                                                          {"errorMessage", tr("Cash out request failed.")}
-                                                      });
-    }
 }
 
 QByteArray Session::getToken() const
