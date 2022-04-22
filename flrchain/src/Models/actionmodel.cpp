@@ -19,6 +19,7 @@
 #include "action.h"
 
 #include <QDebug>
+#include <QPointer>
 
 ActionModel::ActionModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -121,7 +122,7 @@ void ActionModel::reload(const ActionList &actions)
 
     for (const ActionPtr &action : qAsConst(m_actions)) {
         disconnect(action.get(), &Action::hasFavouriteTaskChanged,
-                   this, &ActionModel::hasFavouriteTaskChanged);
+                   this, &ActionModel::onActionHasFavouriteTaskChanged);
     }
 
     m_actions.clear();
@@ -129,7 +130,7 @@ void ActionModel::reload(const ActionList &actions)
 
     for (const ActionPtr &action : qAsConst(m_actions)) {
         connect(action.get(), &Action::hasFavouriteTaskChanged,
-                this, &ActionModel::hasFavouriteTaskChanged);
+                this, &ActionModel::onActionHasFavouriteTaskChanged);
     }
 
     endResetModel();
@@ -140,4 +141,31 @@ bool ActionModel::hasFavouriteTask() const
     return std::find_if(m_actions.constBegin(), m_actions.constEnd(), [&](const ActionPtr& action){
         return action->hasFavouriteTask();
     }) != m_actions.constEnd();
+}
+
+void ActionModel::onActionHasFavouriteTaskChanged()
+{
+    QPointer<Action> action = qobject_cast<Action*>(sender());
+
+    if(action.isNull()) {
+        return;
+    }
+
+    const int actionIndex = indexOfActionWithId(action->id());
+    emit dataChanged(index(actionIndex), index(actionIndex), {ActionHasFavouriteTaskRole});
+
+    emit hasFavouriteTaskChanged();
+}
+
+int ActionModel::indexOfActionWithId(const int id) const
+{
+    auto it = std::find_if(m_actions.constBegin(), m_actions.constEnd(), [&](const ActionPtr &action){
+        return action->id() == id;
+    });
+
+    if (it == m_actions.constEnd()) {
+        return -1;
+    }
+
+    return std::distance(m_actions.begin(), it);
 }

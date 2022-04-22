@@ -19,6 +19,7 @@
 #include "milestone.h"
 
 #include <QDebug>
+#include <QPointer>
 
 MilestoneModel::MilestoneModel(QObject *parent)
     : QAbstractListModel(parent)
@@ -116,7 +117,7 @@ void MilestoneModel::reload(const MilestoneList &milestones)
 
     for (const MilestonePtr &milestone : qAsConst(m_milestones)) {
         disconnect(milestone.get(), &Milestone::hasFavouriteTaskChanged,
-                   this, &MilestoneModel::hasFavouriteTaskChanged);
+                   this, &MilestoneModel::onMilestoneHasFavouriteTaskChanged);
     }
 
     m_milestones.clear();
@@ -124,7 +125,7 @@ void MilestoneModel::reload(const MilestoneList &milestones)
 
     for (const MilestonePtr &milestone : qAsConst(m_milestones)) {
         connect(milestone.get(), &Milestone::hasFavouriteTaskChanged,
-                this, &MilestoneModel::hasFavouriteTaskChanged);
+                this, &MilestoneModel::onMilestoneHasFavouriteTaskChanged);
     }
 
     endResetModel();
@@ -135,4 +136,31 @@ bool MilestoneModel::hasFavouriteTask() const
     return std::find_if(m_milestones.constBegin(), m_milestones.constEnd(), [&](const MilestonePtr &milestone){
         return milestone->hasFavouriteTask();
     }) != m_milestones.constEnd();
+}
+
+void MilestoneModel::onMilestoneHasFavouriteTaskChanged()
+{
+    QPointer<Milestone> milestone = qobject_cast<Milestone*>(sender());
+
+    if(milestone.isNull()) {
+        return;
+    }
+
+    const int milestoneIndex = indexOfMilestoneWithId(milestone->id());
+    emit dataChanged(index(milestoneIndex), index(milestoneIndex), {MilestoneHasFavouriteTaskRole});
+
+    emit hasFavouriteTaskChanged();
+}
+
+int MilestoneModel::indexOfMilestoneWithId(const int id) const
+{
+    auto it = std::find_if(m_milestones.constBegin(), m_milestones.constEnd(), [&](const MilestonePtr &milestone){
+        return milestone->id() == id;
+    });
+
+    if (it == m_milestones.constEnd()) {
+        return -1;
+    }
+
+    return std::distance(m_milestones.begin(), it);
 }
