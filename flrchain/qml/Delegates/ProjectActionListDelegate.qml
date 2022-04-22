@@ -30,7 +30,7 @@ Pane {
     padding: 0
     background: null
 
-    readonly property int actionNumber: model.index + 1
+    property int actionNumber: -1
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -61,9 +61,15 @@ Pane {
             Layout.preferredHeight: contentHeight
             spacing: 20
             interactive: false
-            delegate: milestoneDelegate
+
+            delegate: Delegates.ProjectMilestoneListDelegate {
+                width: ListView.view.width
+                actionNumber: model.actionNumber
+                milestoneNumber: filterModel.mapToSource(model.index) + 1
+            }
 
             model: SortFilterProxyModel {
+                id: filterModel
                 sourceModel: actionMilestones
 
                 filters: [

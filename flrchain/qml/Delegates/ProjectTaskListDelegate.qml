@@ -31,9 +31,9 @@ Pane {
     leftPadding: Style.panePadding
     rightPadding: Style.panePadding
 
-    readonly property int actionNumber: model.actionNumber
-    readonly property int milestoneNumber: model.milestoneNumber
-    readonly property int taskNumber: model.index + 1
+    property int actionNumber: -1
+    property int milestoneNumber: -1
+    property int taskNumber: -1
 
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor

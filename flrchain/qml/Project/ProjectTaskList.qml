@@ -26,7 +26,6 @@ ListView {
     id: projectTaskList
     spacing: 20
     interactive: false
-    delegate: actionDelegate
 
     property alias sourceModel: filterModel.sourceModel
 
@@ -41,16 +40,9 @@ ListView {
     property bool showActionInfo: true
     property bool showMilestoneInfo: true
 
-    property Component actionDelegate: Delegates.ProjectActionListDelegate {
+    delegate: Delegates.ProjectActionListDelegate {
         width: ListView.view.width
-    }
-
-    property Component milestoneDelegate: Delegates.ProjectMilestoneListDelegate {
-        width: ListView.view.width
-    }
-
-    property Component taskDelegate: Delegates.ProjectTaskListDelegate {
-        width: ListView.view.width
+        actionNumber: filterModel.mapToSource(model.index) + 1
     }
 
     model: SortFilterProxyModel {
