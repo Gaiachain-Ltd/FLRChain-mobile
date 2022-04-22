@@ -26,6 +26,8 @@ AppPopup {
     id: popup
     anchors.centerIn: parent
     implicitWidth: parent.width - 2 * Style.popupSideMargins
+    leftPadding: Style.popupLeftRightPadding
+    rightPadding: Style.popupLeftRightPadding
     modal: true
     dim: true
     focus: true

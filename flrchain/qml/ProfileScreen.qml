@@ -37,17 +37,19 @@ AppPage {
     }
 
     Flickable {
-        anchors {
-            fill: parent
-            leftMargin: Style.profileScreenMargins
-            rightMargin: Style.profileScreenMargins
-        }
+        id: profileFlickable
+        anchors.fill: parent
         contentHeight: mainColumn.height
         boundsBehavior: Flickable.DragOverBounds
 
         ColumnLayout {
             id: mainColumn
-            width: parent.width
+            anchors {
+                left: parent.left
+                right: parent.right
+                leftMargin: Style.profileScreenMargins
+                rightMargin: Style.profileScreenMargins
+            }
             spacing: Style.profileScreenSpacing
 
             Custom.Pane {
@@ -55,73 +57,89 @@ AppPage {
                 Layout.topMargin: Style.profileScreenMargins
                 Layout.bottomMargin: Style.profileScreenMargins
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: nameInputTitle
+                        Layout.fillWidth: true
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
+                        wrapMode: Label.WordWrap
                         text: qsTr("First name")
                     }
 
                     Custom.TextInput {
                         id: nameInput
+                        Layout.fillWidth: true
                         placeholderText: nameInputTitle.text
                         text: session.user.firstName
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: lastNameInputTitle
+                        Layout.fillWidth: true
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
+                        wrapMode: Label.WordWrap
                         text: qsTr("Last name")
                     }
 
                     Custom.TextInput {
                         id: lastNameInput
+                        Layout.fillWidth: true
                         placeholderText: lastNameInputTitle.text
                         text: session.user.lastName
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: phoneInputTitle
+                        Layout.fillWidth: true
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
+                        wrapMode: Label.WordWrap
                         text: qsTr("Phone")
                     }
 
                     Custom.TextInput {
                         id: phoneInput
+                        Layout.fillWidth: true
                         placeholderText: phoneInputTitle.text
                         text: session.user.phone
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     Layout.fillWidth: true
+                    Layout.fillHeight: false
                     spacing: 5
 
                     Label {
                         id: villageNameInputTitle
+                        Layout.fillWidth: true
                         font: Style.loginPanelInputTitleFont
                         color: Style.loginPanelInputTitleFontColor
+                        wrapMode: Label.WordWrap
                         text: qsTr("Village name")
                     }
 
                     Custom.TextInput {
                         id: villageNameInput
+                        Layout.fillWidth: true
                         placeholderText: villageNameInputTitle.text
                         text: session.user.village
                     }
