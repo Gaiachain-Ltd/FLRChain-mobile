@@ -23,8 +23,8 @@ SendWorkRequest::SendWorkRequest(const QString &filePath,
                                  const int projectId,
                                  const int taskId,
                                  const QByteArray &token)
-    : ApiMultiPartRequest(QLatin1String("projects/%1/tasks/%2/activities").arg(QString::number(projectId),
-                                                                               QString::number(taskId)))
+    : ApiMultiPartRequest(QLatin1String("projects/%1/tasks/%2/activities/").arg(QString::number(projectId),
+                                                                                QString::number(taskId)))
 {
     setType(Type::Post);
     setToken(token);

@@ -30,12 +30,16 @@ public:
     CashOutRequest(const QString& amount, const QString &phone, const QByteArray &token);
 
 signals:
-    void transferReply(const bool successful) const;
+    void transferSuccess(const QString &amount, const QString &phone);
+    void transferFailed(const QString &errorMessage);
 
 private:
     void parse() final;
     void handleError(const QString &errorMessage,
                      const QNetworkReply::NetworkError errorCode) final;
+
+    QString m_amount;
+    QString m_phone;
 };
 
 #endif // CASHOUTREQUEST_H

@@ -126,7 +126,7 @@ Flickable {
                         font: Style.myTaskDelegateTaskDataFont
                         color: Style.myTaskDelegateDataFontColor
                         wrapMode: Label.WordWrap
-                        text: modelData.reward
+                        text: String("%1 USDC").arg(modelData.reward)
                     }
 
                     Custom.PrimaryButton {

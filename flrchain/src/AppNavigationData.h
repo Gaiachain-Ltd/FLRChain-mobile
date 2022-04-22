@@ -66,6 +66,8 @@ namespace AppNavigation
         JoinProjectPopup,
         WorkSuccessPopup,
         ChangePasswordPopup,
+        ConfirmCashOutPopup,
+        CashOutSuccessPopup,
         
         InvalidPopup = -1 // DO NOT MODIFY THIS VALUE
     };
@@ -78,7 +80,9 @@ namespace AppNavigation
         { PopupID::ConfirmLogoutPopup, QUrl("qrc:/Popups/ConfirmLogoutPopup.qml") },
         { PopupID::JoinProjectPopup, QUrl("qrc:/Popups/JoinProjectPopup.qml") },
         { PopupID::WorkSuccessPopup, QUrl("qrc:/Popups/WorkSuccessPopup.qml") },
-        { PopupID::ChangePasswordPopup, QUrl("qrc:/Popups/ChangePasswordPopup.qml") }
+        { PopupID::ChangePasswordPopup, QUrl("qrc:/Popups/ChangePasswordPopup.qml") },
+        { PopupID::ConfirmCashOutPopup, QUrl("qrc:/Popups/ConfirmCashOutPopup.qml") },
+        { PopupID::CashOutSuccessPopup, QUrl("qrc:/Popups/CashOutSuccessPopup.qml") }
     };
 
     inline uint qHash(const PageID &pageId, uint seed)

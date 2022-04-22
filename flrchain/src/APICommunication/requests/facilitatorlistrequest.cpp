@@ -3,7 +3,7 @@
 #include <QJsonArray>
 
 FacilitatorListRequest::FacilitatorListRequest(const QByteArray &token)
-    : ApiRequest("payments/facililator")
+    : ApiRequest("payments/facililator/")
 {
     setType(Type::Get);
     setToken(token);

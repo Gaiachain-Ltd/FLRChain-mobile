@@ -26,55 +26,67 @@ Custom.Popup {
     id: popup
     title: qsTr("Change password")
 
-    Column {
+    ColumnLayout {
         Layout.fillWidth: true
+        Layout.fillHeight: false
         spacing: 5
 
         Label {
             id: oldPasswordInputTitle
+            Layout.fillWidth: true
             font: Style.loginPanelInputTitleFont
             color: Style.loginPanelInputTitleFontColor
+            wrapMode: Label.WordWrap
             text: qsTr("Old password")
         }
 
         Custom.TextInput {
             id: oldPasswordInput
+            Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: passwordInputTitle.text
         }
     }
 
-    Column {
+    ColumnLayout {
         Layout.fillWidth: true
+        Layout.fillHeight: false
         spacing: 5
 
         Label {
             id: passwordInputTitle
+            Layout.fillWidth: true
             font: Style.loginPanelInputTitleFont
             color: Style.loginPanelInputTitleFontColor
+            wrapMode: Label.WordWrap
             text: qsTr("Password")
         }
 
         Custom.TextInput {
             id: passwordInput
+            Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: passwordInputTitle.text
         }
     }
 
-    Column {
+    ColumnLayout {
         Layout.fillWidth: true
+        Layout.fillHeight: false
         spacing: 5
 
         Label {
             id: repeatPasswordInput
+            Layout.fillWidth: true
             font: Style.loginPanelInputTitleFont
             color: Style.loginPanelInputTitleFontColor
+            wrapMode: Label.WordWrap
             text: qsTr("Repeat password")
         }
 
         Custom.TextInput {
             id: repeatPassword
+            Layout.fillWidth: true
             echoMode: TextInput.Password
             placeholderText: repeatPasswordInput.text
         }

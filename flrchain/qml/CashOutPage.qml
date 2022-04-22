@@ -188,11 +188,18 @@ AppPage {
 
             onClicked: {
                 if (root.state == root.sendToMobileNumberState) {
-                    session.cashOut(amountInput.text, phoneNumberInput.text)
-                    AppNavigationController.goBack()
+                    AppNavigationController.openPopup(AppNavigation.ConfirmCashOutPopup,
+                                                      {
+                                                          cashOutAmount: amountInput.text,
+                                                          cashOutPhone: phoneNumberInput.text
+                                                      })
                 } else {
-                    session.facilitatorCashOut(amountInput.text, receiverInput.currentValue)
-                    AppNavigationController.goBack()
+                    AppNavigationController.openPopup(AppNavigation.ConfirmCashOutPopup,
+                                                      {
+                                                          cashOutAmount: amountInput.text,
+                                                          cashOutFacilitatorId: receiverInput.currentValue,
+                                                          cashOutFacilitatorName: receiverInput.currentText
+                                                      })
                 }
             }
         }

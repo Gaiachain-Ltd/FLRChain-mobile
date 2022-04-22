@@ -31,9 +31,9 @@ Pane {
     leftPadding: Style.panePadding
     rightPadding: Style.panePadding
 
-    readonly property int actionNumber: model.actionNumber
-    readonly property int milestoneNumber: model.milestoneNumber
-    readonly property int taskNumber: model.index + 1
+    property int actionNumber: -1
+    property int milestoneNumber: -1
+    property int taskNumber: -1
 
     background: Custom.ShadowedRectangle {
         color: Style.paneBackgroundColor
@@ -126,7 +126,7 @@ Pane {
                 font: Style.projectDetailsPaneContentFont
                 color: Style.projectDetailsPaneContentFontColor
                 wrapMode: Label.WordWrap
-                text: taskReward + " USDC"
+                text: String("%1 USDC").arg(taskReward)
             }
         }
 
@@ -159,18 +159,7 @@ Pane {
             text: qsTr("Earn reward")
 
             onClicked: {
-                AppNavigationController.enterPage(AppNavigation.WorkPage,
-                                                  {
-                                                      projectId: taskProjectId,
-                                                      projectName: taskProjectName,
-                                                      actionName: taskActionName,
-                                                      milestoneName: taskMilestoneName,
-                                                      taskId: taskId,
-                                                      taskName: taskName,
-                                                      taskTypeOfInformation: taskTypeOfInformation,
-                                                      taskInstructions: taskInstructions,
-                                                      taskRequiredData: taskRequiredData
-                                                  })
+                AppNavigationController.enterPage(AppNavigation.WorkPage, {taskId: taskId})
             }
         }
     }

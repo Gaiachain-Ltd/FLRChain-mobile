@@ -202,12 +202,14 @@ ProjectPtr Project::createFromJson(const QJsonObject &projectObject)
     }
 
     ActionList projectActions;
-    const QJsonArray actionsArray = projectObject.value(u"actions").toArray();
+    if (projectObject.contains(u"actions")) {
+        const QJsonArray actionsArray = projectObject.value(u"actions").toArray();
 
-    for (const QJsonValue &value : actionsArray) {
-        const QJsonObject actionObject = value.toObject();
-        const ActionPtr &action = Action::createFromJson(actionObject);
-        projectActions.append(action);
+        for (const QJsonValue &value : actionsArray) {
+            const QJsonObject actionObject = value.toObject();
+            const ActionPtr &action = Action::createFromJson(actionObject);
+            projectActions.append(action);
+        }
     }
 
     return ProjectPtr::create(projectId,

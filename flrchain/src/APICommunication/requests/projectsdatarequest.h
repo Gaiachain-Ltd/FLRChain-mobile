@@ -25,7 +25,7 @@ class ProjectsDataRequest : public ApiRequest
     Q_OBJECT
 
 public:
-    ProjectsDataRequest(const QByteArray &token);
+    ProjectsDataRequest(const QByteArray &token, const bool loadAllData = false);
 
 signals:
     void projectsDataReply(const QJsonObject &projectsList) const;

@@ -18,7 +18,7 @@
 #include "apirequest.h"
 
 ApiRequest::ApiRequest(const QString &apiEndpoint)
-    : MRestRequest(QLatin1String("%1/api/v1/%2/?format=json").arg(APIUrl, apiEndpoint))
+    : MRestRequest(QLatin1String("%1/api/v1/%2").arg(APIUrl, apiEndpoint))
 {
     setPriority(Priority::Normal);
 

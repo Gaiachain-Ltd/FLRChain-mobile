@@ -22,12 +22,12 @@ import com.flrchain.style 1.0
 
 TextField {
     id: textInput
-    implicitWidth: Style.defaultTextInputSize.width
-    implicitHeight: Style.defaultTextInputSize.height
 
     property bool isValid: true
 
     background: Rectangle {
+        implicitWidth: Style.defaultTextInputSize.width
+        implicitHeight: Style.defaultTextInputSize.height
         radius: Style.baseRadius
         color: textInput.isValid ? Style.textInputValidBackgroundColor
                                  : Style.textInputInvalidBackgroundColor

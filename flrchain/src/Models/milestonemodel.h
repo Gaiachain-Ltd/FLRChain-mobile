@@ -52,7 +52,12 @@ signals:
     void countChanged();
     void hasFavouriteTaskChanged();
 
+private slots:
+    void onMilestoneHasFavouriteTaskChanged();
+
 private:
+    int indexOfMilestoneWithId(const int id) const;
+
     MilestoneList m_milestones;
 };
 

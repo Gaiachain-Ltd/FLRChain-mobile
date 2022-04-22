@@ -20,7 +20,7 @@
 #include <QJsonObject>
 
 UserInfoRequest::UserInfoRequest(const QByteArray &token)
-    : ApiRequest("info")
+    : ApiRequest("info/")
 {
     setType(Type::Get);
     setToken(token);

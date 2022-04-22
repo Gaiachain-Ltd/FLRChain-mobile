@@ -32,6 +32,9 @@ Action::Action(const int id,
     , m_milestones(new MilestoneModel)
 {
     reloadMilestones(milestones);
+
+    connect(m_milestones.get(), &MilestoneModel::hasFavouriteTaskChanged,
+            this, &Action::hasFavouriteTaskChanged);
 }
 
 int Action::id() const

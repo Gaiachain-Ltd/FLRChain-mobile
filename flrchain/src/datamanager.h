@@ -19,39 +19,40 @@
 #define DATAMANAGER_H
 
 #include <QObject>
-#include <QThread>
-#include <QVariantList>
-#include <QVariant>
 
-#include "project.h"
-#include "projectmodel.h"
-#include "transactionsmodel.h"
-#include "workmodel.h"
+#include "types.h"
 
+class QThread;
 class FileManager;
+class TransactionsModel;
+class WorkModel;
 
 class DataManager : public QObject
 {
     Q_OBJECT
 
     Q_PROPERTY(Project* detailedProject READ detailedProject NOTIFY detailedProjectChanged)
+    Q_PROPERTY(Task* detailedTask READ detailedTask NOTIFY detailedTaskChanged)
 
 public:
     explicit DataManager(QObject *parent = nullptr);
     ~DataManager();
 
     void cleanData();
-    void projectDetailsReply(const QJsonObject &projectObject);
 
     Q_INVOKABLE QString getPhotosPath();
     Q_INVOKABLE void cleanPhotosDir();
     Q_INVOKABLE void removeCurrentWorkPhoto();
-    Q_INVOKABLE void loadProjectDetails(const int projectId);
 
     ProjectModel *projectsModel() const;
     Project *detailedProject() const;
+    Task *detailedTask() const;
     TransactionsModel *transactionsModel() const;
     WorkModel *workModel() const;
+
+public slots:
+    void onProjectDetailsReply(const QJsonObject &projectDetails);
+    void onTaskDetailsReply(const QJsonObject &taskDetails);
 
 signals:
     void displayPhoto(const QString &filePath);
@@ -61,14 +62,15 @@ signals:
     void photoDownloadResult(const int workId, const QString &path);
     void projectsDataReply(const QJsonObject &projects);
     void transactionsDataReply(const QJsonArray &transactions);
-    void workReply(const QJsonObject &work);
     void downloadRequest(const QString &photoPath, const int workId);
     void detailedProjectChanged();
+    void detailedTaskChanged();
     void myTasksReceived(const QVariantList &myTasks);
 
 private:
-    QSharedPointer<ProjectModel> m_projectsModel;
+    ProjectModelPtr m_projectsModel;
     ProjectPtr m_detailedProject;
+    TaskPtr m_detailedTask;
     QScopedPointer<TransactionsModel, QScopedPointerDeleteLater> m_transactionsModel;
     QScopedPointer<WorkModel, QScopedPointerDeleteLater> m_workModel;
     QThread *m_workerThread;

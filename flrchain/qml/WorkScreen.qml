@@ -17,11 +17,13 @@
 
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 
 import com.flrchain.style 1.0
 import com.flrchain.objects 1.0
 import com.milosolutions.AppNavigation 1.0
+import com.melije.pulltorefresh 2.0
 
 import "qrc:/AppNavigation"
 import "qrc:/CustomControls" as Custom
@@ -31,21 +33,40 @@ import "qrc:/Popups" as Popups
 AppPage {
     id: workScreen
 
-    property int projectId: -1
-    property string projectName: ""
-    property string actionName: ""
-    property string milestoneName: ""
     property int taskId: -1
-    property string taskName: ""
-    property string taskTypeOfInformation: ""
-    property string taskInstructions: ""
-    property var taskRequiredData: null
+
+    readonly property Task task: dataManager.detailedTask
+    readonly property int projectId: task ? task.projectId : -1
+    readonly property string projectName: task ? task.projectName : ""
+    readonly property string actionName: task ? task.actionName : ""
+    readonly property string milestoneName: task ? task.milestoneName : ""
+    readonly property string taskName: task ? task.name : ""
+    readonly property real taskReward: task ? task.reward : 0
+    readonly property real taskBatch: task ? task.batch : 0
+    readonly property string taskTypeOfInformation: task ? task.dataTypeTag : ""
+    readonly property string taskInstructions: task ? task.instructions : ""
+    readonly property var taskRequiredData: task ? task.dataTags : null
+
+    property var taskSubmittedWork: null
     property bool errorMode: false
 
-    Custom.BusyIndicator {
-        id: busyIndicator
-        anchors.centerIn: parent
-        visible: false
+    Component.onCompleted: {
+        reloadData()
+    }
+
+    function reloadData() {
+        if (taskId != -1) {
+            busyIndicator.visible = true
+            session.getTaskDetails(taskId)
+        }
+    }
+
+    Connections {
+        target: dataManager
+
+        function onDetailedTaskChanged() {
+            session.getWorkData(projectId, taskId)
+        }
     }
 
     Connections {
@@ -54,6 +75,21 @@ AppPage {
         function onSendWorkJobFinished() {
             busyIndicator.visible = false
         }
+
+        function onWorkDataReceived(workData) {
+            busyIndicator.visible = false
+            taskSubmittedWork = workData
+        }
+
+        function onTaskDetailsError() {
+            busyIndicator.visible = false
+        }
+    }
+
+    Custom.BusyIndicator {
+        id: busyIndicator
+        anchors.centerIn: parent
+        visible: false
     }
 
     background: null
@@ -91,12 +127,12 @@ AppPage {
 
             Custom.Pane {
                 Layout.fillWidth: true
-                Layout.bottomMargin: Style.taskDetailsPageBottomMargin
                 contentSpacing: Style.taskDetailsContentSpacing
 
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -119,6 +155,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -141,6 +178,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -163,6 +201,53 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Reward")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: String("%1 USDC").arg(taskReward)
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
+                    spacing: Style.taskDetailsTitleDataSpacing
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Batch")
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldTinyFont
+                        color: Style.lightLabelColor
+                        wrapMode: Label.WordWrap
+                        text: String("%1 USDC (%2)").arg(taskBatch).arg(qsTr("evenly divided among all participants"))
+                    }
+                }
+
+                ColumnLayout {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -204,6 +289,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -226,6 +312,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -370,6 +457,197 @@ AppPage {
                         }
                     }
                 }
+            }
+
+            Label {
+                Layout.fillWidth: true
+                Layout.topMargin: Style.taskDetailsPageTopMargin
+                font: Style.semiBoldExtraLargeFont
+                color: Style.darkLabelColor
+                wrapMode: Label.WordWrap
+                text: qsTr("Submitted work")
+                visible: submittedWorkList.count > 0
+            }
+
+            ListView {
+                id: submittedWorkList
+                Layout.fillWidth: true
+                Layout.preferredHeight: contentHeight
+                Layout.bottomMargin: Style.taskDetailsPageBottomMargin
+                spacing: 20
+                interactive: false
+                model: taskSubmittedWork
+
+                delegate: Custom.Pane {
+                    width: ListView.view.width
+
+                    readonly property var submittedText: modelData.text
+                    readonly property var submittedNumber: modelData.number
+                    readonly property var submittedArea: modelData.area
+                    readonly property var submittedPhotos: modelData.photos
+                    readonly property int submittedWorkStatus: modelData.status
+
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Layout.fillHeight: false
+
+                        ColumnLayout {
+                            Layout.fillWidth: true
+                            Layout.fillHeight: false
+                            spacing: Style.taskDetailsTitleDataSpacing
+
+                            Label {
+                                Layout.fillWidth: true
+                                font: Style.semiBoldSmallFont
+                                color: Style.accentColor
+                                wrapMode: Label.WordWrap
+                                text: qsTr("Submitted at")
+                            }
+
+                            Label {
+                                Layout.fillWidth: true
+                                font: Style.semiBoldTinyFont
+                                color: Style.lightLabelColor
+                                wrapMode: Label.WordWrap
+                                text: new Date(modelData.created).toLocaleString()
+                            }
+                        }
+
+                        Custom.WorkActivityStatusLabel {
+                            Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                            status: submittedWorkStatus
+                        }
+                    }
+
+                    Label {
+                        Layout.fillWidth: true
+                        font: Style.semiBoldSmallFont
+                        color: Style.accentColor
+                        wrapMode: Label.WordWrap
+                        text: qsTr("Submitted data")
+                    }
+
+                    ListView {
+                        id: dataList
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: contentHeight
+                        spacing: parent.spacing
+                        interactive: false
+                        model: taskRequiredData
+
+                        delegate: ColumnLayout {
+                            width: ListView.view.width
+                            spacing: ListView.view.spacing
+
+                            readonly property int dataTagType: taskRequiredData && Array.isArray(taskRequiredData)
+                                                               ? modelData.tag_type
+                                                               : model.dataTagType
+                            readonly property string dataTagName: taskRequiredData && Array.isArray(taskRequiredData)
+                                                                  ? modelData.name
+                                                                  : model.dataTagName
+
+                            Label {
+                                Layout.fillWidth: true
+                                font: Style.semiBoldTinyFont
+                                color: Style.lightLabelColor
+                                wrapMode: Label.WordWrap
+                                text: dataTagName
+                            }
+
+                            Loader {
+                                Layout.fillWidth: true
+
+                                sourceComponent:
+                                {
+                                    switch (dataTagType)
+                                    {
+                                    case DataTag.Type.Text:
+                                    case DataTag.Type.Number:
+                                    case DataTag.Type.Area:
+                                        return inputDelegate
+
+                                    case DataTag.Type.Photo:
+                                        return photoDelegate
+                                    }
+                                }
+
+                                Component {
+                                    id: inputDelegate
+
+                                    Custom.TextInput {
+                                        Layout.fillWidth: true
+                                        font: Style.semiBoldTinyFont
+                                        color: Style.lightLabelColor
+                                        wrapMode: Label.WordWrap
+                                        readOnly: true
+
+                                        text:
+                                        {
+                                            switch (dataTagType)
+                                            {
+                                            case DataTag.Type.Text:
+                                                return submittedText
+
+                                            case DataTag.Type.Number:
+                                                return submittedNumber
+
+                                            case DataTag.Type.Area:
+                                                return submittedArea
+                                            }
+
+                                            return ""
+                                        }
+                                    }
+                                }
+
+                                Component {
+                                    id: photoDelegate
+
+                                    Pane {
+                                        id: thumbnailPane
+                                        Layout.fillWidth: true
+                                        padding: 10
+
+                                        background: Rectangle {
+                                            implicitHeight: 120
+                                            color: "#F7F9FB"
+                                            radius: 7
+                                        }
+
+                                        contentItem: ListView {
+                                            id: thumbnailListView
+                                            width: thumbnailPane.availableWidth
+                                            height: thumbnailPane.availableHeight
+                                            boundsBehavior: ListView.DragOverBounds
+                                            orientation: ListView.Horizontal
+                                            spacing: 10
+                                            clip: true
+
+                                            model: submittedPhotos
+
+                                            delegate: Image {
+                                                width: 100
+                                                height: ListView.view.height
+                                                source: session.apiUrl + modelData.file
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        PullToRefreshHandler {
+            target: taskDetailsFlickable
+            refreshIndicatorDelegate: RefreshIndicator {
+                Material.accent: Style.accentColor
+            }
+
+            onPullDownRelease: {
+                reloadData()
             }
         }
     }

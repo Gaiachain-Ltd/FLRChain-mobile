@@ -19,8 +19,8 @@
 
 #include <QJsonObject>
 
-ProjectsDataRequest::ProjectsDataRequest(const QByteArray &token)
-    : ApiRequest("projects")
+ProjectsDataRequest::ProjectsDataRequest(const QByteArray &token, const bool loadAllData)
+    : ApiRequest(QLatin1String("projects") + (loadAllData ? "/" : "/?nodetails=true"))
 {
     setType(Type::Get);
     setToken(token);

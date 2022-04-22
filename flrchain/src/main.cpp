@@ -25,7 +25,11 @@
 #include "datamanager.h"
 #include "user.h"
 #include "project.h"
+#include "task.h"
 #include "settings.h"
+#include "projectmodel.h"
+#include "transactionsmodel.h"
+#include "workmodel.h"
 
 void cleanUp() {
    PlatformBridge::instance()->cleanup();
@@ -54,14 +58,14 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("session", QVariant::fromValue(&session));
     engine.rootContext()->setContextProperty("platform", PlatformBridge::instance());
     engine.rootContext()->setContextProperty("dataManager", QVariant::fromValue(&dataManager));
-    engine.rootContext()->setContextProperty("projectsModel", dataManager.projectsModel());
-    engine.rootContext()->setContextProperty("transactionsModel", dataManager.transactionsModel());
-    engine.rootContext()->setContextProperty("workModel", dataManager.workModel());
-//    engine.rootContext()->setContextProperty("tasksModel", dataManager.tasksModel());
+    engine.rootContext()->setContextProperty("projectsModel", QVariant::fromValue(dataManager.projectsModel()));
+    engine.rootContext()->setContextProperty("transactionsModel", QVariant::fromValue(dataManager.transactionsModel()));
+    engine.rootContext()->setContextProperty("workModel", QVariant::fromValue(dataManager.workModel()));
 
     qmlRegisterType<User>("com.flrchain.objects", 1, 0, "User");
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
     qmlRegisterUncreatableType<Project>("com.flrchain.objects", 1, 0, "Project", "");
+    qmlRegisterUncreatableType<Task>("com.flrchain.objects", 1, 0, "Task", "");
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();

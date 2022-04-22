@@ -15,18 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "transactionhistoryrequest.h"
+#ifndef TASKDETAILSREQUEST_H
+#define TASKDETAILSREQUEST_H
 
-#include <QJsonArray>
+#include "apirequest.h"
 
-TransactionHistoryRequest::TransactionHistoryRequest(const QByteArray &token)
-    : ApiRequest("transactions/")
+class TaskDetailsRequest : public ApiRequest
 {
-    setType(Type::Get);
-    setToken(token);
-}
+    Q_OBJECT
 
-void TransactionHistoryRequest::parse()
-{
-    emit walletDataReply(m_replyDocument.array());
-}
+public:
+    TaskDetailsRequest(const int taskId, const QByteArray &token);
+
+signals:
+    void taskDetailsReply(const QJsonObject &taskData);
+    void taskDetailsReplyError(const QString &errorMessage);
+
+private:
+    void parse() final;
+    void handleError(const QString &errorMessage,
+                     const QNetworkReply::NetworkError errorCode) final;
+};
+
+#endif // TASKDETAILSREQUEST_H

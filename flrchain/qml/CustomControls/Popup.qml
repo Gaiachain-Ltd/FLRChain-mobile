@@ -26,6 +26,8 @@ AppPopup {
     id: popup
     anchors.centerIn: parent
     implicitWidth: parent.width - 2 * Style.popupSideMargins
+    leftPadding: Style.popupLeftRightPadding
+    rightPadding: Style.popupLeftRightPadding
     modal: true
     dim: true
     focus: true
@@ -66,6 +68,7 @@ AppPopup {
                 horizontalAlignment: Controls.Label.AlignHCenter
                 font: Style.popupTitleFont
                 color: Style.popupTitleFontColor
+                wrapMode: Controls.Label.WordWrap
                 text: popup.title
             }
         }

@@ -30,8 +30,8 @@ Pane {
     padding: 0
     background: null
 
-    readonly property int actionNumber: model.actionNumber
-    readonly property int milestoneNumber: model.index + 1
+    property int actionNumber: -1
+    property int milestoneNumber: -1
 
     contentItem: ColumnLayout {
         width: parent.availableWidth
@@ -44,14 +44,14 @@ Pane {
 
             Label {
                 font: Qt.font({family: Style.appFontFamily, styleName: "Regular", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 text: String("%1 %2.%3: ").arg(qsTr("Milestone")).arg(actionNumber).arg(milestoneNumber)
             }
 
             Label {
                 Layout.fillWidth: true
                 font: Qt.font({family: Style.appFontFamily, styleName: "SemiBold", pixelSize: 16})
-                color: "#414D55"
+                color: Style.darkLabelColor
                 wrapMode: Label.WordWrap
                 text: milestoneName
             }
@@ -62,9 +62,16 @@ Pane {
             Layout.preferredHeight: contentHeight
             spacing: 10
             interactive: false
-            delegate: taskDelegate
+
+            delegate: Delegates.ProjectTaskListDelegate {
+                width: ListView.view.width
+                actionNumber: model.actionNumber
+                milestoneNumber: model.milestoneNumber
+                taskNumber: filterModel.mapToSource(model.index) + 1
+            }
 
             model: SortFilterProxyModel {
+                id: filterModel
                 sourceModel: milestoneTasks
 
                 filters: [

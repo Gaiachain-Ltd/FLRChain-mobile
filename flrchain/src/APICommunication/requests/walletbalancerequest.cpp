@@ -20,7 +20,7 @@
 #include <QJsonObject>
 
 WalletBalanceRequest::WalletBalanceRequest(const QByteArray &token)
-    : ApiRequest("accounts/balance")
+    : ApiRequest("accounts/balance/")
 {
     setType(Type::Get);
     setToken(token);

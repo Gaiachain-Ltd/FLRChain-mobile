@@ -53,7 +53,12 @@ signals:
     void countChanged();
     void hasFavouriteTaskChanged();
 
+private slots:
+    void onActionHasFavouriteTaskChanged();
+
 private:
+    int indexOfActionWithId(const int id) const;
+
     ActionList m_actions;
 };
 

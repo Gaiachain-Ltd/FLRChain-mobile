@@ -17,28 +17,33 @@
 
 #include "datamanager.h"
 #include "filemanager.h"
+#include "project.h"
+#include "projectmodel.h"
+#include "task.h"
+#include "transactionsmodel.h"
+#include "workmodel.h"
 #include "AppNavigationController.h"
 
 #include <QDebug>
+#include <QThread>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QJsonArray>
 
-DataManager::DataManager(QObject *parent) :
-    QObject(parent),
-    m_projectsModel(new ProjectModel),
-    m_detailedProject(Project::emptyProject()),
-    m_transactionsModel(new TransactionsModel),
-    m_workModel(new WorkModel),
-    m_workerThread(new QThread),
-    m_fileManager(new FileManager)
+DataManager::DataManager(QObject *parent)
+    : QObject(parent)
+    , m_projectsModel(new ProjectModel)
+    , m_detailedProject(Project::emptyProject())
+    , m_detailedTask(Task::emptyTask())
+    , m_transactionsModel(new TransactionsModel)
+    , m_workModel(new WorkModel)
+    , m_workerThread(new QThread)
+    , m_fileManager(new FileManager)
 {
     connect(this, &DataManager::projectsDataReply,
             m_projectsModel.get(), &ProjectModel::reloadFromJson, Qt::QueuedConnection);
     connect(this, &DataManager::transactionsDataReply,
             m_transactionsModel.get(), &TransactionsModel::parseJsonObject, Qt::QueuedConnection);
-    connect(this, &DataManager::workReply,
-            m_workModel.get(), &WorkModel::parseJsonObject, Qt::QueuedConnection);
     connect(m_workModel.get(), &WorkModel::downloadPhoto,
             this, &DataManager::downloadRequest, Qt::QueuedConnection);
     connect(this, &DataManager::photoDownloadResult,
@@ -88,12 +93,6 @@ void DataManager::removeCurrentWorkPhoto()
     m_fileManager->removeCurrentFile();
 }
 
-void DataManager::loadProjectDetails(const int projectId)
-{
-    m_detailedProject = m_projectsModel->projectWithId(projectId);
-    emit detailedProjectChanged();
-}
-
 ProjectModel *DataManager::projectsModel() const
 {
     return m_projectsModel.get();
@@ -102,6 +101,11 @@ ProjectModel *DataManager::projectsModel() const
 Project *DataManager::detailedProject() const
 {
     return m_detailedProject.get();
+}
+
+Task *DataManager::detailedTask() const
+{
+    return m_detailedTask.get();
 }
 
 TransactionsModel *DataManager::transactionsModel() const
@@ -114,12 +118,14 @@ WorkModel *DataManager::workModel() const
     return m_workModel.get();
 }
 
-void DataManager::projectDetailsReply(const QJsonObject &projectObject)
+void DataManager::onProjectDetailsReply(const QJsonObject &projectDetails)
 {
-    m_detailedProject = m_projectsModel->projectWithId(projectObject.value("id").toInt());
+    m_detailedProject = Project::createFromJson(projectDetails);
+    emit detailedProjectChanged();
+}
 
-    if (m_detailedProject) {
-        m_detailedProject = Project::createFromJson(projectObject);
-        emit detailedProjectChanged();
-    }
+void DataManager::onTaskDetailsReply(const QJsonObject &taskDetails)
+{
+    m_detailedTask = Task::createFromJson(taskDetails);
+    emit detailedTaskChanged();
 }

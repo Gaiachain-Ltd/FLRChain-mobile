@@ -54,7 +54,7 @@ public:
     Q_INVOKABLE void logout();
 
     Q_INVOKABLE void getProjectsData() const;
-    Q_INVOKABLE void getWorkData(const int projectId) const;
+    Q_INVOKABLE void getWorkData(const int projectId, const int taskId) const;
     Q_INVOKABLE void getUserInfo() const;
     Q_INVOKABLE void joinProject(const int projectId) const;
     Q_INVOKABLE void getTransactionsData() const;
@@ -62,7 +62,9 @@ public:
     Q_INVOKABLE void getWalletQRCode() const;
     Q_INVOKABLE void getFacilitatorList() const;
     Q_INVOKABLE void cashOut(const QString &amount, const QString &phone) const;
-    Q_INVOKABLE void facilitatorCashOut(const QString &amount, int facilitatorId) const;
+    Q_INVOKABLE void facilitatorCashOut(const QString &amount,
+                                        int facilitatorId,
+                                        const QString &facilitatorName) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData);
@@ -74,6 +76,7 @@ public:
                                     const QString &newPassword) const;
     Q_INVOKABLE void resetPassword(const QString &email) const;
     Q_INVOKABLE void getMyTasks(const QVariantList &taskIds) const;
+    Q_INVOKABLE void getTaskDetails(const int taskId) const;
 
 signals:
     void loginError(const QString& error);
@@ -88,7 +91,9 @@ signals:
     void walletQRCodeReceived(const QString &qrCode);
     void facilitatorListReceived(const QJsonArray &facilitators);
     void sendWorkJobFinished();
+    void workDataReceived(const QJsonArray &workData);
     void joinRequestSent(const int projectId);
+    void taskDetailsError() const;
 
 private:
     void setInternetConnection(const bool internetConnection);
@@ -101,7 +106,6 @@ private:
                     const QString &phone,
                     const QString &village,
                     bool optedIn);
-    void onCashOutReplyReceived(const bool result);
 
     UserPtr m_currentUser;
     QPointer<RestAPIClient> m_apiClient;

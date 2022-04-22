@@ -23,7 +23,7 @@
 Q_LOGGING_CATEGORY(requestLogin, "request.login")
 
 LoginRequest::LoginRequest(const QString &email, const QString &password)
-    : ApiRequest("login")
+    : ApiRequest("login/")
 {
     if (!email.isEmpty() && !password.isEmpty()) {
         QJsonObject object;
