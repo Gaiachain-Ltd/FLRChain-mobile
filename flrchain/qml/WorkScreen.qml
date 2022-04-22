@@ -132,6 +132,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -154,6 +155,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -176,6 +178,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -198,6 +201,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -220,6 +224,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -242,6 +247,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -283,6 +289,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
@@ -305,6 +312,7 @@ AppPage {
                 ColumnLayout {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
+                    Layout.maximumWidth: parent.width
                     spacing: Style.taskDetailsTitleDataSpacing
 
                     Label {
