@@ -23,7 +23,8 @@ Transaction::Transaction(QObject *parent) :
     m_title(QString()),
     m_action(0),
     m_amount(0),
-    m_status(2)
+    m_status(2),
+    m_note(QString())
 {
 
 }
@@ -56,6 +57,11 @@ QString Transaction::creationDate() const
 int Transaction::status() const
 {
     return m_status;
+}
+
+const QString &Transaction::note() const
+{
+    return m_note;
 }
 
 void Transaction::setId(const int id)
@@ -105,4 +111,12 @@ void Transaction::setStatus(int status)
 
     m_status = status;
     emit statusChanged(m_status);
+}
+
+void Transaction::setNote(const QString &newNote)
+{
+    if (m_note == newNote)
+        return;
+    m_note = newNote;
+    emit noteChanged(newNote);
 }

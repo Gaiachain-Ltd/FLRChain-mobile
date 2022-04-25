@@ -35,6 +35,7 @@ public:
         Amount,
         CreationDate,
         Status,
+        Note
     };
 
     explicit TransactionsModel(QObject *parent = nullptr);
