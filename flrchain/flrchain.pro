@@ -166,7 +166,7 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 dev {
     API_URL = "https://dev.flrchain.milosolutions.com:8000"
 } else {
-    API_URL = "http://192.168.1.64:8000"
+    API_URL = "https://flrchain.milosolutions.com:8000"
 }
 DEFINES += APIUrl='"\\\"$$API_URL\\\""'
 
