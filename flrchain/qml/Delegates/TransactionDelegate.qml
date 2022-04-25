@@ -28,9 +28,28 @@ ColumnLayout {
     property int transactionType
     property real transactionAmount
     property bool separatorVisible
+    property string transactionNote
 
     function signType() {
         return transactionType == 1 ? "+" : "-";
+    }
+
+    function label() {
+        if (transactionNote.startsWith("C|F")) {
+            return qsTr("To facilitator");
+        } else if (transactionNote.startsWith("C|M")) {
+            return qsTr("MTN");
+        } else {
+            return root.transactionProjectName;
+        }
+    }
+
+    function rewardName() {
+        if (transactionNote.startsWith("W|B")) {
+            return qsTr("Batch");
+        } else {
+            return qsTr("Reward");
+        }
     }
 
     RowLayout {
@@ -46,7 +65,7 @@ ColumnLayout {
                 font: Style.transactionProjectFont
                 color: Style.transactionProjectFontColor
                 wrapMode: Label.WordWrap
-                text: root.transactionProjectName
+                text: label()
                 visible: text.length > 0
             }
 
@@ -54,7 +73,7 @@ ColumnLayout {
                 id: transactionTypeLabel
                 font: Style.transactionTypeFont
                 color: Style.transactionTypeFontColor
-                text: root.transactionType == 1 ? qsTr("Reward") : qsTr("Cash out")
+                text: root.transactionType == 1 ? rewardName() : qsTr("Cash out")
             }
         }
 

@@ -30,6 +30,7 @@ class Transaction : public QObject
     Q_PROPERTY(double amount READ amount WRITE setAmount NOTIFY amountChanged)
     Q_PROPERTY(QString creationDate READ creationDate WRITE setCreationDate NOTIFY creationDateChanged)
     Q_PROPERTY(int status READ status WRITE setStatus NOTIFY statusChanged)
+    Q_PROPERTY(QString note READ note WRITE setNote NOTIFY noteChanged)
 
 public:
     Transaction(QObject *parent = nullptr);
@@ -40,6 +41,7 @@ public:
     double amount() const;
     QString creationDate() const;
     int status() const;
+    const QString &note() const;
 
 public slots:
     void setId(const int id);
@@ -48,6 +50,7 @@ public slots:
     void setAmount(const double amount);
     void setCreationDate(const QString &creationDate);
     void setStatus(int status);
+    void setNote(const QString &newNote);
 
 signals:
     void idChanged(int id);
@@ -56,6 +59,7 @@ signals:
     void amountChanged(double amount);
     void creationDateChanged(QString creationDate);
     void statusChanged(int status);
+    void noteChanged(QString node);
 
 private:
     int m_id;
@@ -64,6 +68,7 @@ private:
     double m_amount;
     QString m_creationDate;
     int m_status;
+    QString m_note;
 };
 
 #endif // PROJECT_H

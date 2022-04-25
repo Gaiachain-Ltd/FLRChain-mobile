@@ -220,6 +220,7 @@ AppPage {
                         transactionProjectName: title
                         transactionType: action
                         transactionAmount: amount
+                        transactionNote: note
                         separatorVisible: index !== listView.count - 1
                     }
                 }

@@ -31,6 +31,7 @@ TransactionsModel::TransactionsModel(QObject *parent) :
     m_customNames[Amount] = "amount";
     m_customNames[CreationDate] = "creationDate";
     m_customNames[Status] = "status";
+    m_customNames[Note] = "note";
 }
 
 int TransactionsModel::rowCount(const QModelIndex &parent) const
@@ -66,6 +67,8 @@ QVariant TransactionsModel::data(const QModelIndex &index, int role) const
         return item->creationDate();
     case Status:
         return item->status();
+    case Note:
+        return item->note();
     default:
         Q_UNREACHABLE();
         break;
@@ -102,6 +105,9 @@ bool TransactionsModel::setData(const QModelIndex &index, const QVariant &value,
     case Status:
         item->setStatus(value.toInt());
         break;
+    case Note:
+        item->setNote(value.toString());
+        break;
     default:
         return false;
     }
@@ -135,6 +141,7 @@ void TransactionsModel::parseJsonObject(const QJsonArray &response)
         transaction->setCreationDate(date.toString(QLatin1String("dd.MM.yyyy")));
         transaction->setStatus(projectObject.value(QLatin1String("status")).toInt());
         transaction->setAction(projectObject.value(QLatin1String("action")).toInt());
+        transaction->setNote((projectObject.value(QLatin1String("note")).toString()));
 
         m_items.append(transaction);
     }
