@@ -16,7 +16,7 @@
 # Provide version number to application
 COMMIT = $$system(git rev-parse --short HEAD)
 
-VERSION=0.0.3
+VERSION=0.0.4
 
 android: {
     ANDROID_VERSION_NAME = $$VERSION
