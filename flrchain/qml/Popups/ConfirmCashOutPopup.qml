@@ -30,7 +30,7 @@ Custom.Popup {
                                     : qsTr("Do you really want to send the money to faciliator?")
     iconSource: "qrc:/img/icon-confirmation.svg"
 
-    property real cashOutAmount: 0.0
+    property string cashOutAmount: "0.0"
     property string cashOutPhone: ""
     property int cashOutFacilitatorId: -1
     property string cashOutFacilitatorName: ""
