@@ -39,6 +39,8 @@ ColumnLayout {
             return qsTr("To facilitator");
         } else if (transactionNote.startsWith("C|M")) {
             return qsTr("MTN");
+        } else if (transactionNote.startsWith("C|A")) {
+            return qsTr("To wallet address");
         } else {
             return root.transactionProjectName;
         }

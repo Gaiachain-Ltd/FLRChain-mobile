@@ -38,6 +38,7 @@ namespace AppNavigation
         CashOutPage,
         ReceiveMoneyPage,
         ProfilePage,
+        SendMoneyPage,
         
         InvalidPage = -1 // DO NOT MODIFY THIS VALUE
     };
@@ -55,7 +56,8 @@ namespace AppNavigation
         { PageID::WalletPage, QUrl("qrc:/WalletScreen.qml") },
         { PageID::CashOutPage, QUrl("qrc:/CashOutPage.qml") },
         { PageID::ReceiveMoneyPage, QUrl("qrc:/ReceiveMoneyPage.qml") },
-        { PageID::ProfilePage, QUrl("qrc:/ProfileScreen.qml") }
+        { PageID::ProfilePage, QUrl("qrc:/ProfileScreen.qml") },
+        { PageID::SendMoneyPage, QUrl("qrc:/SendMoneyPage.qml") }
     };
 
     enum class PopupID

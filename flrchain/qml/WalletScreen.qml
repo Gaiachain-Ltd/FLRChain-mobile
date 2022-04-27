@@ -189,6 +189,21 @@ AppPage {
                         AppNavigationController.enterPage(AppNavigation.ReceiveMoneyPage)
                     }
                 }
+
+                Custom.PrimaryButton {
+                    Layout.fillWidth: true
+                    icon.source: "qrc:/img/icon-send.svg"
+                    icon.color: labelColor
+                    text: qsTr("Send USDC")
+
+                    onClicked: {
+                        AppNavigationController.enterPage(AppNavigation.SendMoneyPage,
+                                                          {
+                                                              maxAmount: root.walletBalance,
+                                                              state: "ScanCodeState"
+                                                          })
+                    }
+                }
             }
 
             Label {

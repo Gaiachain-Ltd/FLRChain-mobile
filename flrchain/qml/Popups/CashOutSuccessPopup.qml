@@ -29,10 +29,20 @@ Custom.Popup {
     title: String("%1 %2 USDC").arg(qsTr("You have just sent")).arg(cashOutAmount)
     iconSource: "qrc:/img/icon-success.svg"
 
+    readonly property int cashOutMode: {
+        if (cashOutPhone.length > 0) {
+            return 1;
+        } else if (cashOutFacilitator.length > 0) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
     property real cashOutAmount: 0.0
     property string cashOutPhone: ""
     property string cashOutFacilitator: ""
     property string cashOutTransactionId: ""
+    property string cashOutAddress: ""
 
     ColumnLayout {
         Layout.fillWidth: false
@@ -78,8 +88,16 @@ Custom.Popup {
                 font: Style.regularSmallFont
                 color: Style.darkLabelColor
                 wrapMode: Label.NoWrap
-                text: cashOutPhone.length > 0 ? qsTr("to phone number")
-                                              : qsTr("to facilitator")
+                text: {
+                    switch(cashOutMode) {
+                    case 1:
+                        return qsTr("to phone number");
+                    case 2:
+                        return qsTr("to facilitator");
+                    case 3:
+                        return qsTr("to wallet address");
+                    }
+                }
             }
 
             Label {
@@ -87,9 +105,17 @@ Custom.Popup {
                 horizontalAlignment: Label.AlignLeft
                 font: Style.boldSmallFont
                 color: Style.successColor
-                wrapMode: Label.WordWrap
-                text: cashOutPhone.length > 0 ? cashOutPhone
-                                              : cashOutFacilitator
+                wrapMode: Label.WrapAtWordBoundaryOrAnywhere
+                text: {
+                    switch(cashOutMode) {
+                    case 1:
+                        return cashOutPhone;
+                    case 2:
+                        return cashOutFacilitatorName;
+                    case 3:
+                        return cashOutAddress;
+                    }
+                }
             }
         }
     }

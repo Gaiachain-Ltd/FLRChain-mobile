@@ -14,3 +14,6 @@
 [submodule "pulltorefreshhandler"]
 	path = addons/pulltorefreshhandler
 	url = https://github.com/milosolutions/pulltorefreshhandler.git
+[submodule "addons/qzxing"]
+	path = addons/qzxing
+	url = https://github.com/ftylitak/qzxing.git

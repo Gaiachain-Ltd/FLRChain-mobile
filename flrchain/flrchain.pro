@@ -19,13 +19,12 @@ include(../version.pri)
 # https://www.kdab.com/uncovering-32-qt-best-practices-compile-time-clazy/
 # !!!
 DEFINES *= QT_USE_QSTRINGBUILDER
-QMAKE_CXXFLAGS += -Werror
 
 QT += quick core network svg
 android: QT += androidextras
 
 TEMPLATE = app
-CONFIG += c++14
+CONFIG += c++14 qzxing_qml qzxing_multimedia
 TARGET = FLRChain
 
 INCLUDEPATH += \
@@ -45,6 +44,7 @@ HEADERS += \
     src/APICommunication/requests/sendactivityphotorequest.h \
     src/APICommunication/requests/sendworkjob.h \
     src/APICommunication/requests/taskdetailsrequest.h \
+    src/APICommunication/requests/walletcashoutrequest.h \
     src/APICommunication/requests/walletqrcoderequest.h \
     src/Models/action.h \
     src/Models/actionmodel.h \
@@ -97,6 +97,7 @@ SOURCES += src/main.cpp  \
     src/APICommunication/requests/sendactivityphotorequest.cpp \
     src/APICommunication/requests/sendworkjob.cpp \
     src/APICommunication/requests/taskdetailsrequest.cpp \
+    src/APICommunication/requests/walletcashoutrequest.cpp \
     src/APICommunication/requests/walletqrcoderequest.cpp \
     src/Models/action.cpp \
     src/Models/actionmodel.cpp \
@@ -175,3 +176,4 @@ include(../addons/mrestapi/mrestapi.pri)
 include(../addons/SortFilterProxyModel/SortFilterProxyModel.pri)
 include(../addons/qml-app-navigation/AppNavigation/AppNavigation.pri)
 include(../addons/pulltorefreshhandler/src/PullToRefreshHandler.pri)
+include(../addons/qzxing/src/QZXing.pri)
