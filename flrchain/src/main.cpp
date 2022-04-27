@@ -30,6 +30,7 @@
 #include "projectmodel.h"
 #include "transactionsmodel.h"
 #include "workmodel.h"
+#include "QZXing.h"
 
 void cleanUp() {
    PlatformBridge::instance()->cleanup();
@@ -66,6 +67,9 @@ int main(int argc, char *argv[])
     qmlRegisterSingletonType(QUrl(QStringLiteral("qrc:/AppStyle.qml")), "com.flrchain.style", 1, 0, "Style");
     qmlRegisterUncreatableType<Project>("com.flrchain.objects", 1, 0, "Project", "");
     qmlRegisterUncreatableType<Task>("com.flrchain.objects", 1, 0, "Task", "");
+
+    QZXing::registerQMLTypes();
+
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
