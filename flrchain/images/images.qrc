@@ -42,5 +42,6 @@
         <file>icon-remove-fav.svg</file>
         <file>padlock.svg</file>
         <file>icon-gallery.svg</file>
+        <file>icon-send.svg</file>
     </qresource>
 </RCC>

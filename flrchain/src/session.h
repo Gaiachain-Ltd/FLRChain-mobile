@@ -65,6 +65,7 @@ public:
     Q_INVOKABLE void facilitatorCashOut(const QString &amount,
                                         int facilitatorId,
                                         const QString &facilitatorName) const;
+    Q_INVOKABLE void walletCashOut(const QString &amount, const QString &address) const;
     Q_INVOKABLE void getProjectDetails(const int projectId) const;
     Q_INVOKABLE void downloadPhoto(const QString &fileName, const int workId) const;
     Q_INVOKABLE void sendWorkRequest(const int projectId, const int taskId, const QVariantMap &requiredData);

@@ -48,6 +48,7 @@
 #include "requests/sendworkjob.h"
 #include "requests/mytasksrequest.h"
 #include "requests/taskdetailsrequest.h"
+#include "requests/walletcashoutrequest.h"
 
 Q_LOGGING_CATEGORY(session, "core.session")
 
@@ -400,6 +401,35 @@ void Session::facilitatorCashOut(const QString &amount,
                                                       {
                                                           {"cashOutAmount", amount},
                                                           {"cashOutFacilitator", facilitatorName},
+                                                          {"cashOutTransactionId", transactionId}
+                                                      });
+    });
+
+    m_apiClient->send(request);
+}
+
+void Session::walletCashOut(const QString &amount, const QString &address) const
+{
+    if (m_apiClient.isNull()) {
+        qCCritical(session) << "Client class not set - cannot send request!";
+        return;
+    }
+
+    if (!hasToken()) {
+        qCCritical(session) << "Token is not set";
+        return;
+    }
+
+    auto request = QSharedPointer<WalletCashOutRequest>::create(amount, address, getToken());
+    connect(request.data(), &WalletCashOutRequest::transferSuccess,
+            this, [&](const QString &amount,
+                      const QString &address,
+                      const QString &transactionId)
+    {
+        AppNavigationController::instance().openPopup(AppNavigation::PopupID::CashOutSuccessPopup,
+                                                      {
+                                                          {"cashOutAmount", amount},
+                                                          {"cashOutAddress", address},
                                                           {"cashOutTransactionId", transactionId}
                                                       });
     });
