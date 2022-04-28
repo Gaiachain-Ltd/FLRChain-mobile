@@ -38,7 +38,7 @@ Custom.Popup {
             return 3;
         }
     }
-    property real cashOutAmount: 0.0
+    property string cashOutAmount: "0.0"
     property string cashOutPhone: ""
     property string cashOutFacilitator: ""
     property string cashOutTransactionId: ""
