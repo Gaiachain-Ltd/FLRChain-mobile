@@ -42,6 +42,12 @@ void PlatformBridge::dealloc()
     }
 }
 
+void PlatformBridge::scan() const
+{
+    d_ptr->scan();
+}
+
+
 QAbstractNativeEventFilter *PlatformBridge::nativeeventFilter()
 {
     return d_ptr;

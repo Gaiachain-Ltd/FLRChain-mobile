@@ -67,6 +67,18 @@ AppPage {
         }
     }
 
+    Connections {
+        target: platform
+
+        function onScannerReady() {
+            AppNavigationController.enterPage(AppNavigation.SendMoneyPage,
+                                              {
+                                                  maxAmount: root.walletBalance,
+                                                  state: "ScanCodeState"
+                                              })
+        }
+    }
+
     background: null
 
     header: Custom.Header {
@@ -197,11 +209,7 @@ AppPage {
                     text: qsTr("Send USDC")
 
                     onClicked: {
-                        AppNavigationController.enterPage(AppNavigation.SendMoneyPage,
-                                                          {
-                                                              maxAmount: root.walletBalance,
-                                                              state: "ScanCodeState"
-                                                          })
+                        platform.scan();
                     }
                 }
             }
@@ -213,10 +221,10 @@ AppPage {
                 text: qsTr("Transaction history")
             }
 
-            Custom.Pane {
+            ColumnLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Style.walletPageTitleSpacing
-                Layout.bottomMargin: Style.walletPagePadding
+                Layout.margins: Style.walletPagePadding
 
                 ListView {
                     id: listView

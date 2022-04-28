@@ -37,6 +37,7 @@ class PlatformBridgePrivate : public QObject, public QAbstractNativeEventFilter
     void init();
     void uninit();
 
+    void scan();
     void capture();
     void selectFile();
     void checkConnection();
@@ -48,6 +49,7 @@ public:
     static void fileSelectionCallback(JNIEnv *env, jobject, jstring path);
     static void activityClosedCallback(JNIEnv *env, jobject);
     static void networkAvailableCallback(JNIEnv *env, jobject, jboolean isAvailable);
+    static void scanCallback(JNIEnv *env, jobject);
 
 }; // class PlatformBridgePrivate
 
