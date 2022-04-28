@@ -221,10 +221,10 @@ AppPage {
                 text: qsTr("Transaction history")
             }
 
-            Custom.Pane {
+            ColumnLayout {
                 Layout.fillWidth: true
                 Layout.topMargin: Style.walletPageTitleSpacing
-                Layout.bottomMargin: Style.walletPagePadding
+                Layout.margins: Style.walletPagePadding
 
                 ListView {
                     id: listView

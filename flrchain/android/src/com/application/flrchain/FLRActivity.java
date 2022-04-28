@@ -138,7 +138,6 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
             }
         }
 
-        System.out.println("RESULT REQUEST " + requestCode);
         switch (requestCode) {
             case REQUEST_PERMISSION_CAMERA:
                 capture();
@@ -162,11 +161,12 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     }
 
     public void scan() {
-    boolean cameraPermissionGranted = (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA));
+        boolean cameraPermissionGranted = (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA));
         if (cameraPermissionGranted) {
             scanCallback();
             return;
-            }
+        }
+
         ArrayList <String> permissions = new ArrayList <String> ();
         permissions.add(Manifest.permission.CAMERA);
         ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSION_SCAN);

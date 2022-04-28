@@ -17,9 +17,6 @@
 
 #include "platformbridge.h"
 #include "platformbridgeprivate.h"
-#include "AppNavigationController.h"
-#include "AppNavigationData.h"
-#include <QDebug>
 
 PlatformBridge *PlatformBridge::m_instance = Q_NULLPTR;
 
