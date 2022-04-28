@@ -17,6 +17,9 @@
 
 #include "platformbridge.h"
 #include "platformbridgeprivate.h"
+#include "AppNavigationController.h"
+#include "AppNavigationData.h"
+#include <QDebug>
 
 PlatformBridge *PlatformBridge::m_instance = Q_NULLPTR;
 
@@ -41,6 +44,12 @@ void PlatformBridge::dealloc()
         m_instance = Q_NULLPTR;
     }
 }
+
+void PlatformBridge::scan() const
+{
+    d_ptr->scan();
+}
+
 
 QAbstractNativeEventFilter *PlatformBridge::nativeeventFilter()
 {

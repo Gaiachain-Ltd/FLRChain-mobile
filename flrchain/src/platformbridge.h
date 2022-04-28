@@ -32,6 +32,7 @@ public:
     static PlatformBridge *instance();
     static void dealloc();
 
+    Q_INVOKABLE void scan() const;
     Q_INVOKABLE void capture() const;
     Q_INVOKABLE void selectFile() const;
     Q_INVOKABLE void checkConnection() const;
@@ -49,6 +50,7 @@ signals:
     void capturedMedia(const QString &pathToFile) const;
     void fileSelected(const QString &pathToFile) const;
     void networkAvailableChanged(bool internetAvailable) const;
+    void scannerReady() const;
 }; // class PlatformBridge
 
 #endif // PLATFORMBRIDGE_H

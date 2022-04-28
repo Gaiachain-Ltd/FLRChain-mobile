@@ -32,6 +32,7 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     static final int REQUEST_PERMISSION_READ_STORAGE = 2;
     static final int REQUEST_PERMISSION_WRITE_STORAGE = 3;
     static final int REQUEST_PERMISSION_CAMERA_READ = 4;
+    static final int REQUEST_PERMISSION_SCAN = 5;
 
     private FLRMedia capture = new FLRMedia(this);
 
@@ -137,6 +138,7 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
             }
         }
 
+        System.out.println("RESULT REQUEST " + requestCode);
         switch (requestCode) {
             case REQUEST_PERMISSION_CAMERA:
                 capture();
@@ -149,7 +151,25 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
             case REQUEST_PERMISSION_CAMERA_READ:
                 activityClosedCallback();
                 break;
+
+            case REQUEST_PERMISSION_SCAN:
+                scanCallback();
+                break;
+
+            default:
+                return;
         }
+    }
+
+    public void scan() {
+    boolean cameraPermissionGranted = (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA));
+        if (cameraPermissionGranted) {
+            scanCallback();
+            return;
+            }
+        ArrayList <String> permissions = new ArrayList <String> ();
+        permissions.add(Manifest.permission.CAMERA);
+        ActivityCompat.requestPermissions(this, permissions.toArray(new String[permissions.size()]), REQUEST_PERMISSION_SCAN);
     }
 
     public void capture() {
@@ -306,4 +326,5 @@ public class FLRActivity extends org.qtproject.qt5.android.bindings.QtActivity {
     public native void activityClosedCallback();
     public static native void fileSelectionCallback(String path);
     public native void backButtonCallback();
+    public native void scanCallback();
 }

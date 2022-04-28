@@ -40,6 +40,11 @@ void PlatformBridgePrivate::uninit()
     sptr_q_ptr = Q_NULLPTR;
 }
 
+void PlatformBridgePrivate::scan()
+{
+    QtAndroid::androidActivity().callMethod<void>("scan", "()V");
+}
+
 bool PlatformBridgePrivate::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
 {
     Q_UNUSED(eventType);
@@ -132,9 +137,18 @@ void PlatformBridgePrivate::networkAvailableCallback(JNIEnv *env, jobject, jbool
     }
 }
 
+void PlatformBridgePrivate::scanCallback(JNIEnv *env, jobject)
+{
+    Q_UNUSED(env);
+    if (sptr_q_ptr != nullptr){
+        sptr_q_ptr->scannerReady();
+    }
+}
+
 static JNINativeMethod flr_activity_methods[] = {
     { "fileSelectionCallback", "(Ljava/lang/String;)V", (void*)&PlatformBridgePrivate::fileSelectionCallback },
-    { "activityClosedCallback", "()V", (void*)&PlatformBridgePrivate::activityClosedCallback }
+    { "activityClosedCallback", "()V", (void*)&PlatformBridgePrivate::activityClosedCallback },
+    { "scanCallback", "()V", (void*)&PlatformBridgePrivate::scanCallback },
 };
 
 
@@ -157,7 +171,7 @@ jint JNI_OnLoad(JavaVM *vm, void *reserved)
     }
 
     env->RegisterNatives(env->FindClass("com/application/flrchain/FLRMedia"), media_activity_methods, 1);
-    env->RegisterNatives(env->FindClass("com/application/flrchain/FLRActivity"), flr_activity_methods, 2);
+    env->RegisterNatives(env->FindClass("com/application/flrchain/FLRActivity"), flr_activity_methods, 3);
     env->RegisterNatives(env->FindClass("com/application/flrchain/FLRNetworkReceiver"), flr_network_methods, 1);
     return JNI_VERSION_1_6;
 }

@@ -67,6 +67,18 @@ AppPage {
         }
     }
 
+    Connections {
+        target: platform
+
+        function onScannerReady() {
+            AppNavigationController.enterPage(AppNavigation.SendMoneyPage,
+                                              {
+                                                  maxAmount: root.walletBalance,
+                                                  state: "ScanCodeState"
+                                              })
+        }
+    }
+
     background: null
 
     header: Custom.Header {
@@ -197,11 +209,7 @@ AppPage {
                     text: qsTr("Send USDC")
 
                     onClicked: {
-                        AppNavigationController.enterPage(AppNavigation.SendMoneyPage,
-                                                          {
-                                                              maxAmount: root.walletBalance,
-                                                              state: "ScanCodeState"
-                                                          })
+                        platform.scan();
                     }
                 }
             }
